@@ -8,16 +8,14 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/src/assets/css/reset.css">
-
-    <link rel="stylesheet" href="/src/assets/css/index.css">
-    <title>Trang chủ</title>
+    <title>Thêm nhân sự</title>
 </head>
 
 <body>
     <div id="header bg-dark">
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
-            <div class="container-fluid">
+            <div class=" container-fluid">
                 <a class="navbar-brand fs-3" href="#">SUBA MANAGER</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,16 +24,18 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link active fs-6 text-primary" aria-current="page" href="#">Trang chủ</a>
+                            <a class="nav-link fs-6" aria-current="page" href="/src/index.html">Trang chủ</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-primary fs-6 " href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Quản lý nhân sự
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/pages/updateEmployee.html">Thêm nhân sự</a></li>
-                                <li><a class="dropdown-item" href="/pages/listEmployee.html">Danh sách nhân sự</a></li>
+                                <li><a class="dropdown-item active" href="/pages/updateEmployee.html">Thêm nhân
+                                        sự</a>
+                                </li>
+                                <li><a class="dropdown-item " href="/pages/listEmployee.html">Danh sách nhân sự</a></li>
 
                                 <li><a class="dropdown-item" href="#"> </a></li>
                             </ul>
@@ -87,148 +87,98 @@
         </nav>
     </div>
     <main class="container main_content mt-3">
+
         <div class="row">
             <div class="col">
 
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Trang chủ</li>
-                        <li class="breadcrumb-item"></li>
-                    </ol>
+                        <li class="breadcrumb-item text-primary">Quản lý nhân sự</li>
+                        <li class="breadcrumb-item active">Thêm nhân sự</li>
+
                     </ol>
                 </nav>
                 <div class="text-success">
                     <hr>
                 </div>
-
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="card text-center">
+        <div class="row add_employee mt-3">
+            <form class="row col">
+                <div class="col-12 col-xl-6 mb-2">
+                    <input type="text" class="form-control" placeholder="Họ và tên" aria-label="FullName">
+                </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title">Xin chào!</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="col  mb-1">
+                    <div class="form-floating ">
+                        <select class="form-select" id="floatingSelect" aria-label="">
+                            <option selected value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                        <label for="floatingSelect">Giới tính</label>
+                    </div>
+                </div>
+                <div class="col mb-1">
+                    <div class="form-floating ">
+                        <select class="form-select" id="floatingSelect" aria-label="">
+                            <option value="#">Chọn chức vụ</option>
+                            <option value="bep">Phụ bếp</option>
+                            <option value="banhang">Bán hàng</option>
+                        </select>
+                        <label for="floatingSelect">Chức vụ</label>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-6 mt-2 mb-1">
+                    <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                </div>
+                <div class="col-12 col-xl-6 mt-2 mb-1">
+                    <input type="text" class="form-control" placeholder="Số điện thoại" aria-label="phone">
+                </div>
+                <div class="col-12 col-xl-6 mt-2 mb-1">
+                    <input type="text" class="form-control" placeholder="Địa chỉ" aria-label="place">
+                </div>
+                <div class="col-xl-6 col-12 mt-2 mb-1">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping" role="button">
+                            <select class="p-1 border border-0 bg-transparent">
+                                <option checked value="#">Tên ngân hàng</option>
+                                <option value="Agribank">Agribank</option>
+                            </select>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Số tài khoản" aria-label="search_employer"
+                            aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+                <div class="col mt-2 mb-1">
+                    <div class="avatar_input">
+                        <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
+                        <input class="form-control w-100" type="file" id="formFile" placeholder="">
                     </div>
 
                 </div>
-            </div>
-        </div>
-        <div class="row mt-3">
+                <div class="row">
+                    <div class="col">
+                        <button style="width: 100px;" type="submit" class="btn btn-primary mt-2">Thêm</button>
 
-            <div class="col-8">
+                    </div>
+                </div>
+            </form>
+            <div class="col-5 just_add">
                 <div class="card">
-                    <div class="card-header fw-bold">
-                        Nhân sự mới trong 6 tháng gần đây
-                    </div>
+                    <div class="card-header text-white fw-bold bg-success">Gần đây</div>
                     <div class="card-body">
-                        <canvas id="chart"></canvas>
+                        <ul></ul>
                     </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header text-white fw-bold bg-success">
-                        Tổng quan:
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between ">Tổng nhân sự:
-                                <span class="badge bg-primary">24</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">Mới trong tháng
-                                <span class="badge bg-success">1</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">Phụ bếp
-                                <span class="badge bg-secondary">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">Bán hàng
-                                <span class="badge bg-secondary">10</span>
-                            </li>
 
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="card mt-3">
-                    <div class="card-header text-white fw-bold bg-success">
-                        Làm việc hôm nay
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between ">Tổng:
-                                <span class="badge bg-primary">16</span>
-                            </li>
-
-                            <li class="list-group-item d-flex justify-content-between">Phụ bếp
-                                <span class="badge bg-secondary">9</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">Bán hàng
-                                <span class="badge bg-secondary">7</span>
-                            </li>
-
-
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
 
     </main>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"]
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Tuyển nhân sự mới',
-            data: [4, 2, 1, 0, 0, 1, 2],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Nhân sự nghỉ việc',
-            data: [1, 0, 0, 0, 4, 0, 1],
-            backgroundColor: [
-                'rgba(255, 159, 64)',
-
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-
-            ],
-            borderWidth: 1
-        }
-        ]
-    };
-
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
-    };
-    let chart = document.getElementById("chart")
-    new Chart(chart, config)
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-<script src="/src/assets/javascript/index.js"></script>
 
 </html>
