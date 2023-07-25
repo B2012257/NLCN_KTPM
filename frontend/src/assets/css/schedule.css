@@ -1,0 +1,7 @@
+.add_employee_schedule_btn .btn {
+    display: none;
+}
+
+.add_employee_schedule_btn:hover .btn {
+    display: block;
+}
