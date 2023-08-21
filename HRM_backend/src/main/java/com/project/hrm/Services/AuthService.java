@@ -7,6 +7,6 @@ public interface AuthService {
     public ResponseEntity Register();
     public ResponseEntity Login();
     public ResponseEntity Logout();
-    public ResponseEntity RfToken(a);
+    public ResponseEntity RfToken();
 
 }
