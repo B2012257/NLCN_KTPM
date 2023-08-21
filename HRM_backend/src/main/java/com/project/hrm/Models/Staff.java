@@ -2,7 +2,7 @@ package com.project.hrm.Models;
 
 import jakarta.persistence.Id;
 
-public class User {
+public class Staff {
     @Id
     private String uid;
     private String name;
