@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
     @PostMapping(URLConfigs.REGISTER)
     public Object getAllUser() {
-        return Object;
+        return new String("");
     }
 }
