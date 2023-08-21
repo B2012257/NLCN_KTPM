@@ -1,5 +1,8 @@
 package com.project.hrm.Models;
 
-public class Manager {
+import jakarta.persistence.Id;
 
+public class Manager {
+    @Id
+    private Integer uid;
 }
