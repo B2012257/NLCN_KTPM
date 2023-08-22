@@ -9,4 +9,20 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity Register() {
         return null;
     }
+
+    @Override
+    public ResponseEntity Login() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity Logout() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity RfToken() {
+        return null;
+    }
+
 }
