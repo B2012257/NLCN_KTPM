@@ -19,9 +19,16 @@ public class Manager {
     private String phone;
     private Date beginWork;
     private String location;
+    private String role = "Quản Lý";
     private String bankName;
     private String bankAccount;
     public Manager() {
+
+    }
+    public Manager(String username, String password) {
+        this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);
+        this.userName = username;
+        this.password = password;
     }
     public Manager(Manager manager) {
         this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);

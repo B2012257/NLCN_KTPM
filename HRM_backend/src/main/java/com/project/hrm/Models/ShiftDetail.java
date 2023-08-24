@@ -16,8 +16,6 @@ public class ShiftDetail {
     private Time end;
     private Integer overTime;
 
-    // Các thuộc tính khác của ShiftDetail
-
     @ManyToOne
     private Staff staff;
 
