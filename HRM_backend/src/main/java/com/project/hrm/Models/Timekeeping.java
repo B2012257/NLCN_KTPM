@@ -15,7 +15,7 @@ public class Timekeeping {
     private Time end;
     private Long overTime;
 
-   @ManyToOne
+   @OneToOne
    private ShiftDetail shiftDetail;
     public Timekeeping() {
     }
