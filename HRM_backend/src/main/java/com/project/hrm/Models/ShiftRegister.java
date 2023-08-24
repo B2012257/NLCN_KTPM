@@ -1,9 +1,6 @@
 package com.project.hrm.Models;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -14,9 +11,10 @@ public class ShiftRegister {
     @Id
     @GeneratedValue
     private Long id;
-    @ElementCollection
-    private List<WorkTime>  workTimeList;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "work_time_id")
+    private List<WorkTime> workTime;
     public ShiftRegister() {
     }
 }

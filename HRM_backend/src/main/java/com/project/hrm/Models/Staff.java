@@ -2,17 +2,18 @@ package com.project.hrm.Models;
 
 import com.project.hrm.Configs.ValueConfigs;
 import com.project.hrm.Utils.UidUtil;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Staff {
     @Id
     private String uid;
+
     private String userName;
     private String password;
     private String fullName;
@@ -21,6 +22,10 @@ public class Staff {
     private String location;
     private String bankName;
     private String bankAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
     public Staff() {
     }
     public Staff(Staff newStaff) {

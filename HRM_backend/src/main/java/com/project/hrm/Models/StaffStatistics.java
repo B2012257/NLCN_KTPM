@@ -1,8 +1,6 @@
 package com.project.hrm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,7 +8,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-public class WorkStatistics {
+public class StaffStatistics {
     @Id
     @GeneratedValue
     private Long id;
@@ -21,6 +19,8 @@ public class WorkStatistics {
     private Timestamp dateExport;
     private Timestamp paymentDate;
 
-    public WorkStatistics() {
+    @ManyToOne
+    private Staff staff;
+    public StaffStatistics() {
     }
 }

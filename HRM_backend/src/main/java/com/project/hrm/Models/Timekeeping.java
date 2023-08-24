@@ -1,8 +1,6 @@
 package com.project.hrm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Time;
@@ -13,10 +11,12 @@ public class Timekeeping {
     @Id
     @GeneratedValue
     private Long id;
-    private Time Start;
-    private Time End;
-    private Long Overtime;
+    private Time start;
+    private Time end;
+    private Long overTime;
 
+   @ManyToOne
+   private ShiftDetail shiftDetail;
     public Timekeeping() {
     }
 }

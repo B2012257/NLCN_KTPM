@@ -9,11 +9,29 @@ import lombok.Data;
 import java.sql.Date;
 @Entity
 @Data
-public class Manager extends Staff{
+public class Manager {
+    @Id
+    private String uid;
+
+    private String userName;
+    private String password;
+    private String fullName;
+    private String phone;
+    private Date beginWork;
+    private String location;
+    private String bankName;
+    private String bankAccount;
     public Manager() {
-        super();
     }
-    public Manager(Staff newStaff) {
-        super(newStaff);
+    public Manager(Manager manager) {
+        this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);
+        this.userName = manager.getUserName();
+        this.password = manager.getPassword();
+        this.fullName = manager.getFullName();
+        this.phone = manager.getPhone();
+        this.beginWork = manager.getBeginWork();
+        this.location = manager.getLocation();
+        this.bankName = manager.getBankName();
+        this.bankAccount = manager.getBankAccount();
     }
 }

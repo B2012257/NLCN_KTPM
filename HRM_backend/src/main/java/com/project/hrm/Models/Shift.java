@@ -1,8 +1,6 @@
 package com.project.hrm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
@@ -15,6 +13,12 @@ public class Shift {
     private Integer id;
     private Date date;
     private String task;
+
+    @ManyToOne
+    private ShiftType shiftType;
+
+    @ManyToOne
+    private Manager manager;
 
     public Shift() {
     }
