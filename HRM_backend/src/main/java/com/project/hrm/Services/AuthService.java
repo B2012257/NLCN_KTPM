@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 public interface AuthService {
     public Response Register(String username, String password);
-    public Response Login(String username, String password);
-    public Response Logout();
+    public ResponseEntity Login(String username, String password);
+    public ResponseEntity Logout();
     public Response RfToken();
-
+    public String testCookie();
 }

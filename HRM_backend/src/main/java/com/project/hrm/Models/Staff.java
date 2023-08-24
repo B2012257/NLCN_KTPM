@@ -9,7 +9,6 @@ import java.sql.Date;
 
 @Entity
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Staff {
     @Id
     private String uid;

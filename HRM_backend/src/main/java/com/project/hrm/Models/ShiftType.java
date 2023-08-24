@@ -19,4 +19,10 @@ public class ShiftType {
 
     public ShiftType() {
     }
+
+    public ShiftType(String name, Time start, Time end) {
+        this.name = name;
+        this.start = start;
+        this.end = end;
+    }
 }

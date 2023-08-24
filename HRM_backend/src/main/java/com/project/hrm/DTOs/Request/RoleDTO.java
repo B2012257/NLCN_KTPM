@@ -1,19 +1,14 @@
-package com.project.hrm.Models;
+package com.project.hrm.DTOs.Request;
 
-import jakarta.persistence.Entity;
+import com.project.hrm.Models.Salary;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
-@Entity
 @Data
-public class Role {
-    @Id
+public class RoleDTO {
     private Integer id;
     private String name;
-    @OneToOne
     private Salary salary;
 
-    public Role() {
-    }
 }

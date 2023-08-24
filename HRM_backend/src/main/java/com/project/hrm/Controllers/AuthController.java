@@ -3,7 +3,10 @@ package com.project.hrm.Controllers;
 import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.DTOs.Response.Response;
 import com.project.hrm.Services.ServiceImplements.AuthServiceImpl;
+import com.project.hrm.Utils.LoginRequired;
+import com.project.hrm.Utils.RoleRequired;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +19,20 @@ public class AuthController {
         return authService.Register(username, password);
     }
     @PostMapping(URLConfigs.LOGIN)
-    public Response Login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity Login(@RequestParam String username, @RequestParam String password) {
         return authService.Login(username, password);
     }
 
+
+    @LoginRequired
+    @GetMapping (URLConfigs.LOGOUT)
+    public ResponseEntity Logout() {
+        return authService.Logout();
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản Lý"})
+    @GetMapping("/test")
+    public String testCookie() {
+        return authService.testCookie();
+    }
 }

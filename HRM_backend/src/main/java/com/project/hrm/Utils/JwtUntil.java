@@ -3,9 +3,11 @@ package com.project.hrm.Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JwtUntil {
     private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000; // Cài đặt thời gian sống token là 1 ngày
 
