@@ -1,6 +1,5 @@
 package com.project.hrm.Services;
 
-import com.project.hrm.DTOs.Request.ManagerDTO;
 import com.project.hrm.DTOs.Request.ShiftDetailDTO;
 import com.project.hrm.DTOs.Request.StaffDTO;
 import com.project.hrm.DTOs.Request.WorkTimeDTO;
@@ -11,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface StaffService {
+    //Tín làm
+    
     //    ############### Chức năng thông tin cá nhân ###################
 
     //Lấy thông tin cá nhân

@@ -3,16 +3,13 @@ package com.project.hrm.Services;
 import com.project.hrm.DTOs.Request.*;
 import com.project.hrm.DTOs.Response.Response;
 import com.project.hrm.DTOs.Response.ResponseWithData;
-import com.project.hrm.Models.Shift;
-import com.project.hrm.Models.ShiftDetail;
-import com.project.hrm.Models.ShiftType;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ManagerService {
     //    ############### Chức năng thông tin cá nhân ###################
-
+    //Phong làm
     //Lấy thông tin cá nhân
     public ResponseWithData<ManagerDTO> getInformation(ManagerDTO manager);
 

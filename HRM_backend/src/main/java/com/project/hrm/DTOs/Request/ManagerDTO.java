@@ -7,7 +7,6 @@ import java.sql.Date;
 @Data
 public class ManagerDTO {
 
-    @Id
     private String uid;
 
     private String userName;

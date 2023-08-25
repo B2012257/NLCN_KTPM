@@ -14,21 +14,23 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private AuthServiceImpl authService;
+
     @PostMapping(URLConfigs.REGISTER)
     public Response Register(@RequestParam String username, @RequestParam String password) {
         return authService.Register(username, password);
     }
+
     @PostMapping(URLConfigs.LOGIN)
     public ResponseEntity Login(@RequestParam String username, @RequestParam String password) {
         return authService.Login(username, password);
     }
-
 
     @LoginRequired
     @GetMapping (URLConfigs.LOGOUT)
     public ResponseEntity Logout() {
         return authService.Logout();
     }
+
     @LoginRequired
     @RoleRequired(value = {"Quản Lý"})
     @GetMapping("/test")

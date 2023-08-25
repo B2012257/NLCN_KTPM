@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
         }
         //Mã hóa mật khẩu
         String hashPassword = encoder.encode(password);
-        System.out.println(hashPassword);
+
         Manager newManager = new Manager(username, hashPassword);
         Manager saved = managerRepository.saveAndFlush(newManager);
 
@@ -85,12 +85,12 @@ public class AuthServiceImpl implements AuthService {
                 return ResponseEntity.ok()
                         .headers(headers)
                         .body(loginResponseRs);
-            }else
-               return ResponseEntity.ok().body(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không đúng!"));
+            } else
+                return ResponseEntity.ok().body(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không đúng!"));
         }
         //Nếu có trong bảng Staff
         Staff isStaffExistByUserName = staffRepository.findByUserName(username);
-        if(isStaffExistByUserName != null) {
+        if (isStaffExistByUserName != null) {
 
             if (encoder.matches(password, isManagerExistByUserName.getPassword())) {
                 //Trùng khớp mật khẩu
@@ -113,11 +113,11 @@ public class AuthServiceImpl implements AuthService {
                 return ResponseEntity.ok()
                         .headers(headers)
                         .body(loginResponseRs);
-            }else {
-                return  ResponseEntity.ok().body(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không đúng!"));
+            } else {
+                return ResponseEntity.ok().body(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Tài khoản hoặc mật khẩu không đúng!"));
             }
         }
-//Nếu không tồn tại
+        //Nếu không tồn tại
         return ResponseEntity.ok()
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND, "Tài khoản không tồn tại!"));
     }
