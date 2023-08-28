@@ -1,6 +1,7 @@
 package com.project.hrm.Services.ServiceImplements;
 
 import com.project.hrm.Repositorys.ManagerRepository;
+import com.project.hrm.Repositorys.SalaryRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
@@ -8,12 +9,10 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +25,8 @@ public class ManagerServiceImpl implements ManagerService {
     ManagerRepository managerRepository;
     @Autowired
     StaffRepository staffRepository;
-
+    @Autowired
+    SalaryRepository salaryRepository;
     private Argon2PasswordEncoder encoder;
 
     @Override
@@ -142,18 +142,44 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ResponseWithData<Salary> addSalary(Salary salary) {
-        return new ResponseWithData<Salary>(salary, HttpStatus.ACCEPTED, "Xong");
+    public Response addSalary (Salary salary) {
+        try {
+            Salary salaryToSave = new Salary(salary);
+            salaryRepository.saveAndFlush(salaryToSave);
+            return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");
+
+        }catch(RuntimeException ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi khi lưu bậc lương");
+        }
     }
 
     @Override
-    public ResponseWithData<Salary> getAllSalary() {
-        return null;
+    public ResponseWithData<List<Salary>> getAllSalary() {
+        List<Salary> salaries = salaryRepository.findAll();
+        return new ResponseWithData<List<Salary>>(salaries, HttpStatus.OK, "Danh sách bậc lương");
     }
 
     @Override
     public Response editSalary(Salary salary) {
-        return null;
+        String levelEdit = salary.getLevel();
+        
+        Salary salaryDB = salaryRepository.findOneByLevel(levelEdit);
+        //Nếu null thì báo không tìm thấy bậc lương cần chỉnh sửa
+        if(salaryDB == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
+        }
+
+        try {
+            Salary newSalary = new Salary(salary);
+            Salary savedSalary= salaryRepository.saveAndFlush(newSalary);
+            return new Response(HttpStatus.OK, "Chỉnh sửa thành công");
+
+        }catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Chỉnh sửa không thành công");
+        }
+
     }
 
     @Override

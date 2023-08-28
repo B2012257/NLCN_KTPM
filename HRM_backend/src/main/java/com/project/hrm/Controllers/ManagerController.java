@@ -2,6 +2,7 @@ package com.project.hrm.Controllers;
 
 import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.Models.Manager;
+import com.project.hrm.Models.Salary;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.Utils.LoginRequired;
 import com.project.hrm.Utils.RoleRequired;
@@ -37,6 +38,13 @@ public class ManagerController {
     }
 
     @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SALARY)
+    public Response addSalary(@RequestBody Salary salary) {
+        return managerService.addSalary(salary);
+    }
+
+    @LoginRequired
     @GetMapping(URLConfigs.GET_INFO_MANAGER)
     public Response getInformation(@RequestParam(name = "uid") String uid){
         return managerService.getInformation(uid);
@@ -62,6 +70,19 @@ public class ManagerController {
     @GetMapping(URLConfigs.GET_ALL_STAFF)
     public ResponseWithData<List<Staff>> getAllStaff(){
         return managerService.getAllStaff();
+    }
+
+
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SALARY)
+    public ResponseWithData<List<Salary>> getAllSalary(){
+        return managerService.getAllSalary();
+    }
+
+    @LoginRequired
+    @PostMapping(URLConfigs.EDIT_SALARY)
+    public Response editSalary(@RequestBody Salary salary){
+        return managerService.editSalary(salary);
     }
 
 }

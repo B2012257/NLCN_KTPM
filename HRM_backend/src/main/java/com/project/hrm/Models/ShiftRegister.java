@@ -3,6 +3,9 @@ package com.project.hrm.Models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,9 +15,15 @@ public class ShiftRegister {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "work_time_id")
-    private List<WorkTime> workTime;
+    private Date dateStart;
+    private Date dateEnd;
+
+    @ManyToOne
+    private Staff staff;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shiftRegister")
+    private List<WorkTime> workTimes = new ArrayList<>();
+
     public ShiftRegister() {
     }
 }
