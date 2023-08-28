@@ -14,7 +14,7 @@ public interface ManagerService {
     public Response getInformation(String uid);
 
     //Chỉnh sửa thông tin cá nhân
-    public ResponseWithData<Manager> editProfileInformation(Manager managerNewInfo);
+    public Response editProfileInformation(Manager managerNewInfo);
 
     //Thay đổi mật khẩu
     public Response changePassword(String newPassword, String uid);

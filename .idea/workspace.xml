@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "phongdepzai",
     "last_opened_file_path": "D:/NLCN_KTPM",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "9f485c3799f69e9daf81ed139cc9f6a3",
