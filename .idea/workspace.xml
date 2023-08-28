@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
@@ -17,6 +18,9 @@
       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" afterDir="false" />
     </list>
+=======
+    <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1" />
+>>>>>>> 840214eed0af093c566fa8db0223a8d1755f0c46
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +50,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+<<<<<<< HEAD
     "git-widget-placeholder": "main",
+=======
+    "git-widget-placeholder": "Merging main",
+>>>>>>> 840214eed0af093c566fa8db0223a8d1755f0c46
     "last_opened_file_path": "D:/NLCN_KTPM",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "9f485c3799f69e9daf81ed139cc9f6a3",

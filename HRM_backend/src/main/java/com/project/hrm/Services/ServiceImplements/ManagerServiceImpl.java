@@ -72,7 +72,12 @@ public class ManagerServiceImpl implements ManagerService {
     public Response addStaff(Staff newStaff) {
         System.out.print("Tín chó" + newStaff);
         Staff addStaff = new Staff(newStaff);
+<<<<<<< HEAD
         return new ResponseWithData<>(addStaff,HttpStatus.OK, "Tạo thành công");
+=======
+       Staff saveStaff= staffRepository.saveAndFlush(addStaff);
+        return new ResponseWithData<>(saveStaff,HttpStatus.OK, "Tạo thành công");
+>>>>>>> 840214eed0af093c566fa8db0223a8d1755f0c46
     }
 
     @Override
