@@ -14,7 +14,7 @@ public interface ManagerService {
     public Response getInformation(String uid);
 
     //Chỉnh sửa thông tin cá nhân
-    public ResponseWithData<Manager> editProfileInformation(Manager managerNewInfo);
+    public Response editProfileInformation(Manager managerNewInfo);
 
     //Thay đổi mật khẩu
     public Response changePassword(String newPassword, String uid);
@@ -59,10 +59,10 @@ public interface ManagerService {
     public Response deleteRole(Role role);
 
     //Thêm một bậc lương
-    public ResponseWithData<Salary> addSalary(Salary salary);
+    public Response addSalary(Salary salary);
 
     //Lấy ra các bậc lương
-    public ResponseWithData<Salary> getAllSalary();
+    public ResponseWithData<List<Salary>> getAllSalary();
 
     //Chỉnh sửa thông tin bậc lương
     public Response editSalary(Salary salary);
