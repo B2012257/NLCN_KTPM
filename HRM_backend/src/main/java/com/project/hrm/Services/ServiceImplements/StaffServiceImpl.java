@@ -3,6 +3,7 @@ package com.project.hrm.Services.ServiceImplements;
 import com.project.hrm.Models.ShiftDetail;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.Models.WorkTime;
+import com.project.hrm.Repositorys.ShiftDetailRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Services.StaffService;
 import com.project.hrm.payloads.Response.Response;
@@ -18,6 +19,8 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffRepository staffRepository;
+
+    private ShiftDetailRepository shiftDetailRepository;
     @Override
     public ResponseWithData<Staff> getInformation(Staff staff) {
 
@@ -81,7 +84,12 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end) {
-        return null;
+
+        List<ShiftDetail> shiftDetails=shiftDetailRepository.findAllByDateBetween(start,end);
+
+        return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"Lay thanh cong");
+
+
     }
 
     @Override
