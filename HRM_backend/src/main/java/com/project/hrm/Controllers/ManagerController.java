@@ -53,4 +53,15 @@ public class ManagerController {
     public Response addStaff(@RequestBody Staff newStaff){
             return managerService.addStaff(newStaff);
     }
+    @LoginRequired
+    @PutMapping(URLConfigs.EDIT_INFO_MANAGER)
+    public Response editProfileInformation(@RequestBody Manager managerNewInfo){
+        return managerService.editProfileInformation(managerNewInfo);
+    }
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_STAFF)
+    public ResponseWithData<List<Staff>> getAllStaff(){
+        return managerService.getAllStaff();
+    }
+
 }

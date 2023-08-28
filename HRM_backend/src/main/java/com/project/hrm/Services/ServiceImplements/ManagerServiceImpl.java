@@ -40,8 +40,20 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ResponseWithData<Manager> editProfileInformation(Manager managerNewInfo) {
-        return null;
+    public Response editProfileInformation(Manager managerNewInfo) {
+        Manager editManager = managerRepository.findById(managerNewInfo.getUid()).orElse(null);
+        if(editManager!=null){
+            editManager.setLocation(managerNewInfo.getLocation());
+            editManager.setPhone(managerNewInfo.getPhone());
+            editManager.setBeginWork(managerNewInfo.getBeginWork());
+            editManager.setFullName(managerNewInfo.getFullName());
+            editManager.setBankAccount(managerNewInfo.getBankAccount());
+            editManager.setBankName(managerNewInfo.getBankName());
+            editManager.setRole(managerNewInfo.getRole());
+            managerRepository.saveAndFlush(editManager);
+            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
+        }
+        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay quản lý này");
     }
 
     @Override
@@ -65,13 +77,16 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<List<Staff>> getAllStaff() {
-        return null;
+
+        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Thành công");
+
     }
 
     @Override
     public Response addStaff(Staff newStaff) {
         Staff addStaff = new Staff(newStaff);
         Staff saveStaff= staffRepository.saveAndFlush(addStaff);
+        System.out.println(saveStaff);
         return new ResponseWithData<>(saveStaff,HttpStatus.OK, "Tạo thành công");
     }
 

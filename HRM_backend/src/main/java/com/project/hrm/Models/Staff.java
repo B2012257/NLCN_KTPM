@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.text.Normalizer;
 
 import static com.project.hrm.Configs.ValueConfigs.passwordStaff;
 
@@ -32,8 +33,8 @@ public class Staff {
     }
     public Staff(Staff newStaff) {
         this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);
-        this.userName = newStaff.getUserName();
-        this.password = newStaff.getPassword();
+        this.userName = generateUsernameFromFullName(removeAccents(newStaff.getFullName())); // Lấy giá trị userName từ newStaff
+        this.password = passwordStaff;
         this.fullName = newStaff.getFullName();
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
@@ -45,22 +46,38 @@ public class Staff {
         //
     }
 
-    public void setUserName(String fullName) {
-        // Xóa khoảng trắng thừa và chuyển đổi tất cả ký tự thành chữ thường
+    public String removeAccents(String input) {
+        return Normalizer.normalize(input, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                .toLowerCase();
+    }
+    public String generateUsernameFromFullName(String fullName) {
+        // Xử lý và chuyển đổi fullname thành username ngẫu nhiên
         String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
-
-        // Xây dựng username từ các phần tên
         StringBuilder usernameBuilder = new StringBuilder();
         for (String part : nameParts) {
             usernameBuilder.append(part);
         }
-
-        // Đặt giá trị username
-        this.userName = usernameBuilder.toString();
+        return usernameBuilder.toString();
     }
 
-    public void setPassword() {
+//    public void setUserName(String fullName) {
+//        // Xóa khoảng trắng thừa và chuyển đổi tất cả ký tự thành chữ thường
+//        String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
+//
+//        // Xây dựng username từ các phần tên
+//        StringBuilder usernameBuilder = new StringBuilder();
+//        for (String part : nameParts) {
+//            usernameBuilder.append(part);
+//        }
+//
+//        // Đặt giá trị username
+//        this.userName = usernameBuilder.toString();
+//    }
 
-        this.password = passwordStaff;
-    }
+
+
+
+
+
 }

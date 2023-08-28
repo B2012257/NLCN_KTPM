@@ -27,7 +27,9 @@ public class URLConfigs {
     public static final String ADD_ROLE = "/addRole";
     public static final String GET_ALL_ROLE = "/roles";
     public static final String GET_INFO_MANAGER ="/infoManager";
+    public static final String EDIT_INFO_MANAGER ="/edit";
     public static final String GET_INFO_STAFF ="/infoStaff";
     public static final String ADD_STAFF ="/addStaff";
+    public static final String GET_ALL_STAFF ="/allStaff";
 
 }
