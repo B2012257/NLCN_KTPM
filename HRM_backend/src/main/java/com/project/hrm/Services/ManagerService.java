@@ -11,7 +11,7 @@ public interface ManagerService {
     //    ############### Chức năng thông tin cá nhân ###################
     //Phong làm
     //Lấy thông tin cá nhân
-    public ResponseWithData<Manager> getInformation(Manager manager);
+    public Response getInformation(String uid);
 
     //Chỉnh sửa thông tin cá nhân
     public ResponseWithData<Manager> editProfileInformation(Manager managerNewInfo);
@@ -26,7 +26,7 @@ public interface ManagerService {
     //############ Chức năng thao tác nhân sự ###############
 
     //Lấy thông tin 1 nhân sự qua uid
-    public ResponseWithData<Staff> getStaff(String uid);
+    public Response getStaff(String uid);
 
     //Lấy thông tin 1 danh sách nhân sự
     public ResponseWithData<List<Staff>> getAllStaff();

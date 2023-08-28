@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/ManagerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/ManagerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/StaffRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/StaffRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +33,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2UHufEMPhcxEITzVTUP9Us9z6k4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,7 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/thaipham/Documents/GitHub/NLCN_KTPM/HRM_backend",
+    "last_opened_file_path": "D:/NLCN_KTPM",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "9f485c3799f69e9daf81ed139cc9f6a3",
     "vue.rearranger.settings.migration": "true"

@@ -37,6 +37,7 @@ public class Staff {
         this.location = newStaff.getLocation();
         this.bankName = newStaff.getBankName();
         this.bankAccount = newStaff.getBankAccount();
+        this.role =newStaff.getRole();
     }
 
 }
