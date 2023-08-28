@@ -1,5 +1,7 @@
 package com.project.hrm.Services.ServiceImplements;
 
+import com.project.hrm.Repositorys.ManagerRepository;
+import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
@@ -8,7 +10,9 @@ import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -17,11 +21,21 @@ import java.util.List;
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    ManagerRepository managerRepository;
+    @Autowired
+    StaffRepository staffRepository;
 
+    private Argon2PasswordEncoder encoder;
 
     @Override
-    public ResponseWithData<Manager> getInformation(Manager manager) {
-        return null;
+    public Response getInformation(String uid) {
+        Manager managerId = managerRepository.findByUid(uid);
+
+        if(managerId != null){
+            return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
     }
 
     @Override
@@ -40,8 +54,12 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ResponseWithData<Staff> getStaff(String uid) {
-        return null;
+    public Response getStaff(String uid) {
+        Staff staffId = staffRepository.findByUid(uid);
+        if(staffId != null){
+            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "OK") ;
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
     }
 
     @Override
@@ -51,7 +69,10 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response addStaff(Staff newStaff) {
-        return null;
+        System.out.print("Tín chó" + newStaff);
+        Staff addStaff = new Staff(newStaff);
+       Staff saveStaff= staffRepository.saveAndFlush(addStaff);
+        return new ResponseWithData<>(saveStaff,HttpStatus.OK, "Tạo thành công");
     }
 
     @Override
