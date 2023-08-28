@@ -3,12 +3,15 @@ package com.project.hrm.Controllers;
 
 import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.Models.Staff;
+import com.project.hrm.Models.WorkTime;
 import com.project.hrm.Services.ServiceImplements.StaffServiceImpl;
 
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = URLConfigs.STAFF_SERVICE_URL)
@@ -41,8 +44,16 @@ public class StaffController {
         return staffService.changeAvatar(newUrl,Uid);
     }
 
+    @PostMapping("/registerSchedule")
+    public Response registerSchedule(@RequestBody WorkTime newWorkTime){
+        return staffService.registerSchedule(newWorkTime);
+    }
 
+    @PutMapping("/editRegisterSchedule")
+    public Response editRegisterSchedule(@RequestBody List<WorkTime> workTime){
+        return staffService.editRegisterSchedule(workTime);
 
+    }
 
 
 }
