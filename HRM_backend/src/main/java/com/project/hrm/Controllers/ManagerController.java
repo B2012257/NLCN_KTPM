@@ -51,7 +51,6 @@ public class ManagerController {
     @LoginRequired
     @PostMapping(URLConfigs.ADD_STAFF)
     public Response addStaff(@RequestBody Staff newStaff){
-        System.out.println("Tín chó"+ newStaff);
             return managerService.addStaff(newStaff);
     }
 }

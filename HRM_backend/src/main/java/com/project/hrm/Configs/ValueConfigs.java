@@ -4,4 +4,5 @@ public class ValueConfigs {
     public static final String uidPrefix = "NS"; //Nhan Su
     public static final String uidManagerPrefix = "QL"; //Quan Ly
 
+    public static final String passwordStaff = "NS123"; //Quan Ly
 }

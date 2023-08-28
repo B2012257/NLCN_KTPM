@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.sql.Date;
 
+import static com.project.hrm.Configs.ValueConfigs.passwordStaff;
+
 @Entity
 @Data
 public class Staff {
@@ -43,4 +45,22 @@ public class Staff {
         //
     }
 
+    public void setUserName(String fullName) {
+        // Xóa khoảng trắng thừa và chuyển đổi tất cả ký tự thành chữ thường
+        String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
+
+        // Xây dựng username từ các phần tên
+        StringBuilder usernameBuilder = new StringBuilder();
+        for (String part : nameParts) {
+            usernameBuilder.append(part);
+        }
+
+        // Đặt giá trị username
+        this.userName = usernameBuilder.toString();
+    }
+
+    public void setPassword() {
+
+        this.password = passwordStaff;
+    }
 }

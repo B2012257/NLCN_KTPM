@@ -85,9 +85,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end) {
 
-        List<ShiftDetail> shiftDetails=shiftDetailRepository.findAllByDateBetween(start,end);
-
-        return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"Lay thanh cong");
+       return null;
 
 
     }

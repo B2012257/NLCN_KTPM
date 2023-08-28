@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
 
-    List<ShiftDetail> findAllByDateBetween(Date start,Date end);
+    
 }

@@ -1,0 +1,102 @@
+Index: HRM_backend/src/main/java/com/project/hrm/Models/Staff.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.project.hrm.Models;\r\n\r\nimport com.project.hrm.Configs.ValueConfigs;\r\nimport com.project.hrm.Utils.UidUtil;\r\nimport jakarta.persistence.*;\r\nimport lombok.Data;\r\n\r\nimport java.sql.Date;\r\n\r\n@Entity\r\n@Data\r\npublic class Staff {\r\n    @Id\r\n    private String uid;\r\n\r\n    private String userName;\r\n    private String password;\r\n    private String fullName;\r\n    private String phone;\r\n    private Date beginWork;\r\n    private String location;\r\n    private String bankName;\r\n    private String bankAccount;\r\n    private String urlAvatar;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"role_id\")\r\n    private Role role;\r\n    public Staff() {\r\n    }\r\n    public Staff(Staff newStaff) {\r\n        this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);\r\n        this.userName = newStaff.getUserName();\r\n        this.password = newStaff.getPassword();\r\n        this.fullName = newStaff.getFullName();\r\n        this.phone = newStaff.getPhone();\r\n        this.beginWork = newStaff.getBeginWork();\r\n        this.location = newStaff.getLocation();\r\n        this.bankName = newStaff.getBankName();\r\n        this.bankAccount = newStaff.getBankAccount();\r\n        this.role =newStaff.getRole();\r\n        this.urlAvatar=newStaff.getUrlAvatar();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java b/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java
+--- a/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java	(revision b15329413699eb6c84671040d32d6f757eb6aacb)
++++ b/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java	(date 1693210403009)
+@@ -42,4 +42,22 @@
+         this.urlAvatar=newStaff.getUrlAvatar();
+     }
+ 
++    public void setUserName(String fullName) {
++        // Xóa khoảng trắng thừa và chuyển đổi tất cả ký tự thành chữ thường
++        String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
++
++        // Xây dựng username từ các phần tên
++        StringBuilder usernameBuilder = new StringBuilder();
++        for (String part : nameParts) {
++            usernameBuilder.append(part);
++        }
++
++        // Đặt giá trị username
++        this.userName = usernameBuilder.toString();
++    }
++
++    public void setPassword(String password) {
++        String pass =
++        this.password = password;
++    }
+ }
+Index: HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.project.hrm.Configs;\r\n\r\npublic class ValueConfigs {\r\n    public static final String uidPrefix = \"NS\"; //Nhan Su\r\n    public static final String uidManagerPrefix = \"QL\"; //Quan Ly\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java b/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java
+--- a/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java	(revision b15329413699eb6c84671040d32d6f757eb6aacb)
++++ b/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java	(date 1693210403000)
+@@ -4,4 +4,5 @@
+     public static final String uidPrefix = "NS"; //Nhan Su
+     public static final String uidManagerPrefix = "QL"; //Quan Ly
+ 
++    public static final String passwordStaff = "NS123"; //Quan Ly
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"81bbbfca-0041-421d-b6d9-b1472104e6c0\" name=\"Changes\" comment=\"Create ShiftRegister.java&#10;&#10;config base 1\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PREVIOUS_COMMIT_AUTHORS\">\r\n      <list>\r\n        <option value=\"NguyenTrungTin02 &lt;nguyentrungtin160802@gmail.com&gt;\" />\r\n      </list>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"f8bc421840f82b2aec1a6e0635a4a4aa9bcdef7a\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2UHufEMPhcxEITzVTUP9Us9z6k4\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"last_opened_file_path\": \"D:/NLCN_KTPM\",\r\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\r\n    \"spring.configuration.checksum\": \"9f485c3799f69e9daf81ed139cc9f6a3\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"81bbbfca-0041-421d-b6d9-b1472104e6c0\" name=\"Changes\" comment=\"\" />\r\n      <created>1692608927629</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1692608927629</updated>\r\n      <workItem from=\"1692882412531\" duration=\"175000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Create ShiftRegister.java&#10;&#10;config base 1\">\r\n      <created>1692615952345</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1692615952345</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Create ShiftRegister.java&#10;&#10;config base 1\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Create ShiftRegister.java&#10;&#10;config base 1\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision afdc8708981aeeeb5608969898df9cd5af27dcac)
++++ b/.idea/workspace.xml	(date 1693210086078)
+@@ -5,10 +5,9 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1">
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_08_2023_2_28_PM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/ValueConfigs.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -20,11 +19,6 @@
+       <list>
+         <option value="NguyenTrungTin02 &lt;nguyentrungtin160802@gmail.com&gt;" />
+       </list>
+-    </option>
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="f8bc421840f82b2aec1a6e0635a4a4aa9bcdef7a" />
+-      </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+Index: HRM_backend/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>server.port=8081\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.datasource.url=jdbc:mysql://localhost:3306/staffmanagement\r\nspring.datasource.username=root\r\nspring.datasource.password=160802\r\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\r\n#spring.jpa.show-sql: true
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/HRM_backend/src/main/resources/application.properties b/HRM_backend/src/main/resources/application.properties
+--- a/HRM_backend/src/main/resources/application.properties	(revision afdc8708981aeeeb5608969898df9cd5af27dcac)
++++ b/HRM_backend/src/main/resources/application.properties	(date 1693209640106)
+@@ -2,6 +2,6 @@
+ spring.jpa.hibernate.ddl-auto=update
+ spring.datasource.url=jdbc:mysql://localhost:3306/staffmanagement
+ spring.datasource.username=root
+-spring.datasource.password=160802
++spring.datasource.password=123123
+ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+ #spring.jpa.show-sql: true
+\ No newline at end of file
