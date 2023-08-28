@@ -17,7 +17,7 @@ public class WorkTime {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "shiftRegister_id")
+    @JoinColumn(name = "shift_register_id")
     private ShiftRegister shiftRegister;
     public WorkTime() {
     }

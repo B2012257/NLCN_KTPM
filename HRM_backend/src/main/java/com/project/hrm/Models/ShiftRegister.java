@@ -3,6 +3,7 @@ package com.project.hrm.Models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +21,8 @@ public class ShiftRegister {
     @ManyToOne
     private Staff staff;
 
-    @OneToMany(mappedBy = "shiftRegister")
-    private Collection<WorkTime> workTimes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shiftRegister")
+    private List<WorkTime> workTimes = new ArrayList<>();
 
     public ShiftRegister() {
     }
