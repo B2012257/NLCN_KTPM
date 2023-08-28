@@ -23,7 +23,7 @@ public interface StaffService {
     public Response changePassword(String newPassword, String uid);
 
     //Đổi ảnh đại diện
-    public Response changeAvatar(String newUrl);
+    public Response changeAvatar(String newUrl, String uid);
 
 
     // ####################Chức năng lịch làm của nhân sự #########
