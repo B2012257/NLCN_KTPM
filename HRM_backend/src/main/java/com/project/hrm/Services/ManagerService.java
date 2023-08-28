@@ -59,10 +59,10 @@ public interface ManagerService {
     public Response deleteRole(Role role);
 
     //Thêm một bậc lương
-    public ResponseWithData<Salary> addSalary(Salary salary);
+    public Response addSalary(Salary salary);
 
     //Lấy ra các bậc lương
-    public ResponseWithData<Salary> getAllSalary();
+    public ResponseWithData<List<Salary>> getAllSalary();
 
     //Chỉnh sửa thông tin bậc lương
     public Response editSalary(Salary salary);
