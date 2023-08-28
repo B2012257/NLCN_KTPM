@@ -6,6 +6,7 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -107,7 +108,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<Salary> addSalary(Salary salary) {
-        return null;
+        return new ResponseWithData<Salary>(salary, HttpStatus.ACCEPTED, "Xong");
     }
 
     @Override

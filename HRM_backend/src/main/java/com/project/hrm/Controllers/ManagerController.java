@@ -28,7 +28,7 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @GetMapping(URLConfigs.GET_ALL_ROLE)    
+    @GetMapping(URLConfigs.GET_ALL_ROLE)
     public ResponseWithData<List<Role>> getAllRole() {
         return managerService.getAllRole();
     }

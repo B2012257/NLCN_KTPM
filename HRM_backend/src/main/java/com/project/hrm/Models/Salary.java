@@ -2,6 +2,7 @@ package com.project.hrm.Models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,7 +13,8 @@ public class Salary {
     private String level;
     private BigDecimal basic;
     private BigDecimal allowance;
-    private BigDecimal overtime;
+
+    private BigDecimal overtime = BigDecimal.valueOf(0);
 
     public Salary() {
     }
