@@ -1,7 +1,7 @@
 package com.project.hrm.Controllers;
 
 import com.project.hrm.Configs.URLConfigs;
-import com.project.hrm.DTOs.Response.Response;
+import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.Services.ServiceImplements.AuthServiceImpl;
 import com.project.hrm.Utils.LoginRequired;
 import com.project.hrm.Utils.RoleRequired;

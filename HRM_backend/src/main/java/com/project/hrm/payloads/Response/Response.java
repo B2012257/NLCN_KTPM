@@ -1,4 +1,4 @@
-package com.project.hrm.DTOs.Response;
+package com.project.hrm.payloads.Response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

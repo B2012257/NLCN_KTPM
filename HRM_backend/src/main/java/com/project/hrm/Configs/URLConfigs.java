@@ -23,4 +23,8 @@ public class URLConfigs {
     public static final String LOGOUT = "/logout";
     public static final String REFRESH_TOKEN = "/rf";
 
+    //Chức năng quản lý
+    public static final String ADD_ROLE = "/addRole";
+    public static final String GET_ALL_ROLE = "/roles";
+
 }

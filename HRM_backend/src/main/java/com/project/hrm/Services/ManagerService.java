@@ -1,8 +1,8 @@
 package com.project.hrm.Services;
 
-import com.project.hrm.DTOs.Request.*;
-import com.project.hrm.DTOs.Response.Response;
-import com.project.hrm.DTOs.Response.ResponseWithData;
+import com.project.hrm.payloads.Response.Response;
+import com.project.hrm.payloads.Response.ResponseWithData;
+import com.project.hrm.Models.*;
 
 import java.util.Date;
 import java.util.List;
@@ -11,10 +11,10 @@ public interface ManagerService {
     //    ############### Chức năng thông tin cá nhân ###################
     //Phong làm
     //Lấy thông tin cá nhân
-    public ResponseWithData<ManagerDTO> getInformation(ManagerDTO manager);
+    public ResponseWithData<Manager> getInformation(Manager manager);
 
     //Chỉnh sửa thông tin cá nhân
-    public ResponseWithData<ManagerDTO> editProfileInformation(ManagerDTO managerNewInfo);
+    public ResponseWithData<Manager> editProfileInformation(Manager managerNewInfo);
 
     //Thay đổi mật khẩu
     public Response changePassword(String newPassword, String uid);
@@ -26,99 +26,99 @@ public interface ManagerService {
     //############ Chức năng thao tác nhân sự ###############
 
     //Lấy thông tin 1 nhân sự qua uid
-    public ResponseWithData<StaffDTO> getStaff(String uid);
+    public ResponseWithData<Staff> getStaff(String uid);
 
     //Lấy thông tin 1 danh sách nhân sự
-    public ResponseWithData<List<StaffDTO>> getAllStaff();
+    public ResponseWithData<List<Staff>> getAllStaff();
 
     //Thêm mới 1 nhân sự
-    public Response addStaff(StaffDTO newStaff);
+    public Response addStaff(Staff newStaff);
 
     //Chỉnh sửa thông tin 1 nhân sự
-    public ResponseWithData<StaffDTO> editStaff(StaffDTO newStaff);
+    public ResponseWithData<Staff> editStaff(Staff newStaff);
 
     //Xóa 1 nhân sự
     public Response deleteStaff();
 
     //Tìm kiếm theo họ và tên nhân viên
-    public ResponseWithData<List<StaffDTO>> searchStaffByFullName(String fullName);
+    public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName);
 
 
     //    ############## Chưc năng thao tác lịch làm việc #####################
 
     //Thêm một chức vụ mới
-    public Response addRole(RoleDTO role);
+    public Response addRole(Role role);
 
     //Lấy thông tin tất cả các chức vụ trong hệ thống
-    public ResponseWithData<List<RoleDTO>> getAllRole();
+    public ResponseWithData<List<Role>> getAllRole();
 
     //Chỉnh sửa thông tin chức vụ
-    public Response editRole(RoleDTO role);
+    public Response editRole(Role role);
 
     //Xóa một chức vụ
-    public Response deleteRole(RoleDTO role);
+    public Response deleteRole(Role role);
 
     //Thêm một bậc lương
-    public ResponseWithData<SalaryDTO> addSalary(SalaryDTO salary);
+    public ResponseWithData<Salary> addSalary(Salary salary);
 
     //Lấy ra các bậc lương
-    public ResponseWithData<SalaryDTO> getAllSalary();
+    public ResponseWithData<Salary> getAllSalary();
 
     //Chỉnh sửa thông tin bậc lương
-    public Response editSalary(SalaryDTO salary);
+    public Response editSalary(Salary salary);
 
     //Xóa 1 bậc lương
-    public Response deleteSalary(SalaryDTO salary);
+    public Response deleteSalary(Salary salary);
 
     //Thêm 1 loại ca làm
-    public Response addShiftType(ShiftTypeDTO shiftType);
+    public Response addShiftType(ShiftType shiftType);
 
     //Lấy ra thông tất cả loại ca làm
-    public ResponseWithData<List<ShiftTypeDTO>> getAllShiftType();
+    public ResponseWithData<List<ShiftType>> getAllShiftType();
 
     //Chỉnh sửa thông tin 1 loại ca làm
-    public Response editShiftType(ShiftTypeDTO shiftType);
+    public Response editShiftType(ShiftType shiftType);
 
     //Xóa 1 loại ca làm
-    public Response deleteShiftType(ShiftTypeDTO shiftType);
+    public Response deleteShiftType(ShiftType shiftType);
 
     //Thêm 1 ca làm
-    public ResponseWithData<ShiftDTO> addShift(ShiftDTO shift);
+    public ResponseWithData<Shift> addShift(Shift shift);
 
     //Xóa 1 ca làm
-    public Response deleteShift(ShiftDTO shift);
+    public Response deleteShift(Shift shift);
 
     //Sửa 1 ca làm
-    public Response editShift(ShiftDTO shift);
+    public Response editShift(Shift shift);
 
     //Lập lịch làm (shiftDetail) // Xử lí tạo 1 ca trong ngày,
     // rồi tạo 1 danh sach chi tiết ca cho danh sách nhân viên
     // Mặc định sau khi tạo 1 ca thì tạo luôn bảng chấm công
-    public Response schedule(ShiftDetailDTO shiftDetail);
+    public Response schedule(ShiftDetail shiftDetail);
 
     //Xóa 1 lịch làm (shiftDetail) của 1 ca trong ngày
-    public Response deleteSchedule(ShiftDetailDTO shiftDetail);
+    public Response deleteSchedule(ShiftDetail shiftDetail);
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ca
-    public ResponseWithData<List<ShiftDetailDTO>> getAllSchedules(ShiftDTO shift);
+    public ResponseWithData<List<ShiftDetail>> getAllSchedules(Shift shift);
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ngày
-    public ResponseWithData<List<ShiftDetailDTO>> getAllSchedulesOfDay(Date date);
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date);
 
     //Xóa 1 danh sách nhân viên ra khỏi ca
-    public Response deleteListStaffOnSchedule(List<StaffDTO> staffs, ShiftDTO shift);
+    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
 
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ca
-    public ResponseWithData<TimeKeepingDTO> getAllWorkCheckeds(ShiftDTO shift);
+    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);
 
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ngày (tất cả các ca trong ngày)
-    public ResponseWithData<TimeKeepingDTO> getAllWorkCheckeds(Date date);
+    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date);
 
     //Chấm công một danh sách nhân sự
-    public Response workCheckeds(List<TimeKeepingDTO> timeKeepings);
+    public Response workCheckeds(List<Timekeeping> timeKeepings);
 
     //Xóa chấm công một danh sách nhân sự
-    public Response deleteListWorkCheckeds(List<TimeKeepingDTO> timeKeepings);
+    public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings);
 
     //...
 }

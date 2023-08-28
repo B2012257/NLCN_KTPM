@@ -19,7 +19,7 @@ public class Manager {
     private String phone;
     private Date beginWork;
     private String location;
-    private String role = "Quản Lý";
+    private String role = "Quản lý";
     private String bankName;
     private String bankAccount;
     public Manager() {

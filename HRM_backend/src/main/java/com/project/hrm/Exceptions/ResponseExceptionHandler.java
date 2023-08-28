@@ -1,9 +1,8 @@
 package com.project.hrm.Exceptions;
 
-import com.project.hrm.DTOs.Response.ErrorResponse;
-import com.project.hrm.DTOs.Response.Response;
+import com.project.hrm.payloads.Response.ErrorResponse;
+import com.project.hrm.payloads.Response.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +22,8 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse;
     }
 
-    @ExceptionHandler(AuthenticationException.class) //Match với lớp AuthenticationException
-    protected Response handleAuthenticationException(AuthenticationException ex) {
+    @ExceptionHandler(AuthorizationException.class) //Match với lớp AuthorizationException
+    protected Response handleAuthenticationException(AuthorizationException ex) {
         String errorMessage = ex.getMessage();
         // Xây dựng đối tượng ErrorResponse chứa thông báo lỗi
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NON_AUTHORITATIVE_INFORMATION, errorMessage);

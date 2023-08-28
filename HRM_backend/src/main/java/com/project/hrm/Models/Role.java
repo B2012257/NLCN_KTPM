@@ -1,19 +1,29 @@
 package com.project.hrm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
 public class Role {
     @Id
+    @GeneratedValue
     private Integer id;
     private String name;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "salary_level")
     private Salary salary;
 
-    public Role() {
+    public Role() {}
+
+    public Role(Role role) {
+        this.id = role.getId();
+        this.name = role.getName();
+        this.salary = role.getSalary();
+    }
+
+    public Role(String name, Salary salary) {
+        this.name = name;
+        this.salary = salary;
     }
 }

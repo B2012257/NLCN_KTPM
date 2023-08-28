@@ -1,6 +1,6 @@
 package com.project.hrm.Utils;
 
-import com.project.hrm.Exceptions.AuthenticationException;
+import com.project.hrm.Exceptions.AuthorizationException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,7 +36,7 @@ public class RoleInterceptor implements HandlerInterceptor {
                 //Nếu đúng role mới được truy cập (đáp ứng 1 trong các role là được)
                 if (!Arrays.asList(requiredRoles).contains(userRole)) {
 
-                    throw new AuthenticationException("Bạn không có quyền truy cập tính năng này");
+                    throw new AuthorizationException("Bạn không có quyền truy cập tính năng này");
                 }
             }
         }

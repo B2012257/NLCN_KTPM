@@ -1,8 +1,8 @@
 package com.project.hrm.Services.ServiceImplements;
 
-import com.project.hrm.DTOs.Response.ErrorResponse;
-import com.project.hrm.DTOs.Response.ResponseWithData;
-import com.project.hrm.DTOs.Response.Response;
+import com.project.hrm.payloads.Response.ErrorResponse;
+import com.project.hrm.payloads.Response.ResponseWithData;
+import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.Models.Manager;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.Repositorys.ManagerRepository;
