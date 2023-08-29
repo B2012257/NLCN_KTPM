@@ -15,6 +15,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -57,8 +58,31 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+//    public Response changePassword(String newPassword, String uid) {
+//        Manager managerId = managerRepository.findByUid(uid);
+//        if(managerId != null){
+//            String newPass= encoder.encode(newPassword);
+//           managerId.setPassword(newPass);
+//
+//            managerRepository.saveAndFlush(managerId);
+//            return new Response(HttpStatus.OK,"Thay đổi thành công");
+//        }
+//        return new Response(HttpStatus.NOT_FOUND,"Không thể thay đổi");
+//    }
     public Response changePassword(String newPassword, String uid) {
-        return null;
+        Manager managerId = managerRepository.findByUid(uid);
+        if (managerId != null) {
+            try {
+                String newPass = Base64.getEncoder().encodeToString(newPassword.getBytes());
+                managerId.setPassword(newPass);
+
+                managerRepository.saveAndFlush(managerId);
+                return new Response(HttpStatus.OK, "Thay đổi thành công");
+            } catch (Exception e) {
+                return new Response(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình mã hóa mật khẩu");
+            }
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
     }
 
     @Override

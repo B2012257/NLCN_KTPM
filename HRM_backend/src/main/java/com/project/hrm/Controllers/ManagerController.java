@@ -64,4 +64,11 @@ public class ManagerController {
         return managerService.getAllStaff();
     }
 
+    @LoginRequired
+    @PutMapping("/changePassword/{uid}")
+    public Response changePassword(@RequestParam String password, @PathVariable String uid){
+        return managerService.changePassword(password,uid);
+
+    }
+
 }
