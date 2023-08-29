@@ -5,6 +5,7 @@ import com.project.hrm.Models.Staff;
 import com.project.hrm.Models.WorkTime;
 import com.project.hrm.Repositorys.ShiftDetailRepository;
 import com.project.hrm.Repositorys.StaffRepository;
+import com.project.hrm.Repositorys.WorkTimeRepository;
 import com.project.hrm.Services.StaffService;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
@@ -21,6 +22,9 @@ public class StaffServiceImpl implements StaffService {
     private StaffRepository staffRepository;
 
     private ShiftDetailRepository shiftDetailRepository;
+
+
+    private WorkTimeRepository workTimeRepository;
     @Override
     public ResponseWithData<Staff> getInformation(Staff staff) {
 
@@ -92,11 +96,35 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Response registerSchedule(WorkTime workTime) {
-        return null;
+         WorkTime addWorkTime = new WorkTime();
+         addWorkTime.setId(workTime.getId());
+         addWorkTime.setWeekName(workTime.getWeekName());
+         addWorkTime.setStart(workTime.getStart());
+         addWorkTime.setEnd(workTime.getEnd());
+
+
+         workTimeRepository.save(addWorkTime);
+
+        return new Response(HttpStatus.OK,"Them thanh cong");
     }
 
     @Override
     public Response editRegisterSchedule(List<WorkTime> workTime) {
-        return null;
+        for (WorkTime workTimeId : workTime){
+            WorkTime workTime1 = workTimeRepository.findById(workTimeId.getId()).orElse(null);
+            if(workTime1 !=null){
+                workTime1.setWeekName(workTimeId.getWeekName());
+                workTime1.setStart(workTimeId.getStart());
+                workTime1.setEnd(workTimeId.getEnd());
+
+                workTimeRepository.save(workTime1);
+
+            }
+
+
+        }
+
+
+        return new Response(HttpStatus.OK,"sua thanh cong");
     }
 }
