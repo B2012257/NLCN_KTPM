@@ -21,4 +21,13 @@ public class WorkTime {
     private ShiftRegister shiftRegister;
     public WorkTime() {
     }
+
+
+    public WorkTime (WorkTime newWorkTime){
+        this.weekName=newWorkTime.getWeekName();
+        this.start=newWorkTime.getStart();
+        this.end= newWorkTime.getEnd();
+        this.date=newWorkTime.getDate();
+        this.shiftRegister=newWorkTime.getShiftRegister();
+    }
 }

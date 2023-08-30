@@ -23,6 +23,21 @@ public class URLConfigs {
     public static final String LOGOUT = "/logout";
     public static final String REFRESH_TOKEN = "/rf";
 
+    //Chức năng nhân viên
+    public static final String GET_INFO_STA="/info";
+
+    public static final String EDIT_STAFF="/editStaff";
+
+    public static final String CHANGE_PASSWORD_STAFF="/changePass";
+
+    public static final String CHANGE_AVATAR_STAFF="/changeAvatar";
+
+    public static final String GET_ALL_SCHEDULE_BETWEEN="/getAllSchedule";
+
+    public static final String REGISTER_SCHEDULE="/registerSchedule";
+
+    public static final String EDIT_REGISTER_SCHEDULE="/editRegister";
+
     //Chức năng quản lý
     public static final String ADD_ROLE = "/addRole";
     public static final String GET_ALL_ROLE = "/roles";
@@ -34,5 +49,7 @@ public class URLConfigs {
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
+
+
 
 }

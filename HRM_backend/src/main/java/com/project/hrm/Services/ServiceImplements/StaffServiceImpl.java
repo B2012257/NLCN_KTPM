@@ -1,9 +1,11 @@
 package com.project.hrm.Services.ServiceImplements;
 
+import com.project.hrm.Models.Shift;
 import com.project.hrm.Models.ShiftDetail;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.Models.WorkTime;
 import com.project.hrm.Repositorys.ShiftDetailRepository;
+import com.project.hrm.Repositorys.ShiftRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Repositorys.WorkTimeRepository;
 import com.project.hrm.Services.StaffService;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +23,14 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffRepository staffRepository;
-
+    @Autowired
     private ShiftDetailRepository shiftDetailRepository;
 
-
+    @Autowired
     private WorkTimeRepository workTimeRepository;
+
+    @Autowired
+    private ShiftRepository shiftRepository;
     @Override
     public ResponseWithData<Staff> getInformation(Staff staff) {
 
@@ -88,24 +94,25 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end) {
+        List<Shift> shift = shiftRepository.findAllByDateBetween(start,end);
+        List<ShiftDetail> shiftDetails = new ArrayList<>();
 
-       return null;
+        for(Shift shiftId : shift){
+            List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
+            shiftDetails.addAll(shiftDetailList);
+        }
+        return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"Lay thanh cong");
+
+
 
 
     }
 
     @Override
     public Response registerSchedule(WorkTime workTime) {
-         WorkTime addWorkTime = new WorkTime();
-         addWorkTime.setId(workTime.getId());
-         addWorkTime.setWeekName(workTime.getWeekName());
-         addWorkTime.setStart(workTime.getStart());
-         addWorkTime.setEnd(workTime.getEnd());
-
-
-         workTimeRepository.save(addWorkTime);
-
-        return new Response(HttpStatus.OK,"Them thanh cong");
+         WorkTime workTimeId = new WorkTime(workTime);
+         WorkTime saveWorkTime = workTimeRepository.saveAndFlush(workTime);
+         return new Response(HttpStatus.OK,"Them thanh cong");
     }
 
     @Override
@@ -116,15 +123,11 @@ public class StaffServiceImpl implements StaffService {
                 workTime1.setWeekName(workTimeId.getWeekName());
                 workTime1.setStart(workTimeId.getStart());
                 workTime1.setEnd(workTimeId.getEnd());
-
+                workTime1.setDate(workTimeId.getDate());
+                workTime1.setShiftRegister(workTimeId.getShiftRegister());
                 workTimeRepository.save(workTime1);
-
             }
-
-
         }
-
-
         return new Response(HttpStatus.OK,"sua thanh cong");
     }
 }

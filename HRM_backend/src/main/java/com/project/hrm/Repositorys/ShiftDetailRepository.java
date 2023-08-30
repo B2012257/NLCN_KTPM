@@ -1,12 +1,16 @@
 package com.project.hrm.Repositorys;
 
+import com.project.hrm.Models.Shift;
 import com.project.hrm.Models.ShiftDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
-public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
 
+@Repository
+public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
+        List<ShiftDetail>findAllByShift(Shift shift);
     
 }
