@@ -30,7 +30,6 @@ public class StaffController {
         return staffService.getInformation(staff);
     }
 
-
     @PutMapping (URLConfigs.EDIT_STAFF)
     public Response editProfileInformation(@RequestBody Staff newStaffInfo){
         return staffService.editProfileInfomation(newStaffInfo);
@@ -52,13 +51,11 @@ public class StaffController {
         return staffService.getAllMyScheduleBetweenStartAndEnd(start,end);
     }
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
-
     public Response registerSchedule(@RequestBody WorkTime newWorkTime){
         return staffService.registerSchedule(newWorkTime);
     }
 
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
-
     public Response editRegisterSchedule(@RequestBody List<WorkTime> workTime){
         return staffService.editRegisterSchedule(workTime);
 
