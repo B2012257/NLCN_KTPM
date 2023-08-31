@@ -85,4 +85,10 @@ public class ManagerController {
         return managerService.editSalary(salary);
     }
 
+    @LoginRequired
+    @PostMapping(URLConfigs.DELETE_SALARY)
+    public Response deleteSalary(@RequestBody Salary salary){
+        return managerService.deleteSalary(salary);
+    }
+
 }

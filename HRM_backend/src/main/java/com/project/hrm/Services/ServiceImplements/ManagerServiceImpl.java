@@ -33,7 +33,7 @@ public class ManagerServiceImpl implements ManagerService {
     public Response getInformation(String uid) {
         Manager managerId = managerRepository.findByUid(uid);
 
-        if(managerId != null){
+        if (managerId != null) {
             return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
         }
         return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
@@ -42,7 +42,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response editProfileInformation(Manager managerNewInfo) {
         Manager editManager = managerRepository.findById(managerNewInfo.getUid()).orElse(null);
-        if(editManager!=null){
+        if (editManager != null) {
             editManager.setLocation(managerNewInfo.getLocation());
             editManager.setPhone(managerNewInfo.getPhone());
             editManager.setBeginWork(managerNewInfo.getBeginWork());
@@ -51,9 +51,9 @@ public class ManagerServiceImpl implements ManagerService {
             editManager.setBankName(managerNewInfo.getBankName());
             editManager.setRole(managerNewInfo.getRole());
             managerRepository.saveAndFlush(editManager);
-            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
+            return new Response(HttpStatus.OK, "Thay doi thong tin thanh cong");
         }
-        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay quản lý này");
+        return new Response(HttpStatus.NOT_FOUND, "Khong tim thay quản lý này");
     }
 
     @Override
@@ -69,8 +69,8 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response getStaff(String uid) {
         Staff staffId = staffRepository.findByUid(uid);
-        if(staffId != null){
-            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "OK") ;
+        if (staffId != null) {
+            return new ResponseWithData<>(staffRepository.findByUid(uid), HttpStatus.OK, "OK");
         }
         return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
     }
@@ -78,16 +78,16 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public ResponseWithData<List<Staff>> getAllStaff() {
 
-        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Thành công");
+        return new ResponseWithData<>(staffRepository.findAll(), HttpStatus.OK, "Thành công");
 
     }
 
     @Override
     public Response addStaff(Staff newStaff) {
         Staff addStaff = new Staff(newStaff);
-        Staff saveStaff= staffRepository.saveAndFlush(addStaff);
+        Staff saveStaff = staffRepository.saveAndFlush(addStaff);
         System.out.println(saveStaff);
-        return new ResponseWithData<>(saveStaff,HttpStatus.OK, "Tạo thành công");
+        return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
     }
 
     @Override
@@ -110,16 +110,17 @@ public class ManagerServiceImpl implements ManagerService {
         String roleName = role.getName();
         Role roleDB = roleRepository.findByName(roleName);
         //Nếu có tồn tại trong db thì báo lỗi
-        if(roleDB != null) {
+        if (roleDB != null) {
             return new Response(HttpStatus.CONFLICT, "Chức vụ đã tồn tại trong hệ thống");
         }
         System.out.println(role);
-        Role roleSave =  new Role(role.getName(), role.getSalary());
+        Role roleSave = new Role(role.getName(), role.getSalary());
 
         try {
-            Role saved =  roleRepository.saveAndFlush(roleSave);
+            Role saved = roleRepository.save(roleSave);
+            roleRepository.flush();
             return new Response(HttpStatus.OK, "Thêm chức vụ thành công");
-        }catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình thêm chức vụ");
         }
 
@@ -142,13 +143,14 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Response addSalary (Salary salary) {
+    public Response addSalary(Salary salary) {
         try {
             Salary salaryToSave = new Salary(salary);
-            salaryRepository.saveAndFlush(salaryToSave);
+            salaryRepository.save(salaryToSave);
+            salaryRepository.flush();
             return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");
 
-        }catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi khi lưu bậc lương");
         }
@@ -163,28 +165,57 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response editSalary(Salary salary) {
         String levelEdit = salary.getLevel();
-        
+
         Salary salaryDB = salaryRepository.findOneByLevel(levelEdit);
         //Nếu null thì báo không tìm thấy bậc lương cần chỉnh sửa
-        if(salaryDB == null) {
+        if (salaryDB == null) {
             return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
         }
 
         try {
             Salary newSalary = new Salary(salary);
-            Salary savedSalary= salaryRepository.saveAndFlush(newSalary);
+            Salary savedSalary = salaryRepository.saveAndFlush(newSalary);
             return new Response(HttpStatus.OK, "Chỉnh sửa thành công");
 
-        }catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Chỉnh sửa không thành công");
         }
 
     }
 
+    //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary
     @Override
     public Response deleteSalary(Salary salary) {
-        return null;
+
+        Salary salaryDB = salaryRepository.findOneByLevel(salary.getLevel());
+        if(salaryDB == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
+        }
+        System.out.println(salaryDB);
+        List<Role> rolesToDelete = roleRepository.findAllBySalary(salaryDB);
+        //Nếu rỗng thì xóa luôn salary
+        if (rolesToDelete.isEmpty()) {
+            salaryRepository.delete(salaryDB);
+            salaryRepository.flush();
+            // Kiểm tra xem đối tượng đã bị xóa thành công hay chưa
+            Salary deletedSalary = salaryRepository.findOneByLevel(salaryDB.getLevel());
+            if (deletedSalary == null) {
+                // Đối tượng đã bị xóa thành công
+                return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
+            } else {
+                // Đối tượng chưa được xóa
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa không thành công");
+            }
+        }
+        roleRepository.deleteAll(rolesToDelete);
+        roleRepository.flush();
+        if(roleRepository.findAllBySalary(salaryDB)== null) {
+            salaryRepository.delete(salaryDB);
+            salaryRepository.flush();
+            return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
+        }else
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa bậc lương không thành công");
     }
 
     @Override
