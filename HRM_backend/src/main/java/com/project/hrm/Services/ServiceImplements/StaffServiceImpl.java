@@ -9,6 +9,7 @@ import com.project.hrm.Repositorys.ShiftRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Repositorys.WorkTimeRepository;
 import com.project.hrm.Services.StaffService;
+import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,6 @@ public class StaffServiceImpl implements StaffService {
         if(staff != null){
             staff.setUrlAvatar(newUrl);
             staffRepository.save(staff);
-
             return new Response(HttpStatus.OK,"Thay doi avatar thanh cong");
         }
 
@@ -101,18 +101,23 @@ public class StaffServiceImpl implements StaffService {
             List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
             shiftDetails.addAll(shiftDetailList);
         }
-        return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"Lay thanh cong");
 
-
-
-
+        if(shiftDetails.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Khomg tim thay ca lam viec");
+        }
+        return new ResponseWithData<>(shiftDetails, HttpStatus.OK, "Lay thanh cong");
     }
 
     @Override
     public Response registerSchedule(WorkTime workTime) {
-         WorkTime workTimeId = new WorkTime(workTime);
-         WorkTime saveWorkTime = workTimeRepository.saveAndFlush(workTime);
-         return new Response(HttpStatus.OK,"Them thanh cong");
+        try {
+            WorkTime workTimeId = new WorkTime(workTime);
+            WorkTime saveWorkTime = workTimeRepository.saveAndFlush(workTime);
+            return new Response(HttpStatus.OK,"Them thanh cong");
+        }catch (RuntimeException ex){
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Co loi");
+        }
+
     }
 
     @Override
@@ -126,8 +131,12 @@ public class StaffServiceImpl implements StaffService {
                 workTime1.setDate(workTimeId.getDate());
                 workTime1.setShiftRegister(workTimeId.getShiftRegister());
                 workTimeRepository.save(workTime1);
+
+                return new Response(HttpStatus.OK,"sua thanh cong");
             }
         }
-        return new Response(HttpStatus.OK,"sua thanh cong");
+        return new Response(HttpStatus.NOT_FOUND,"khong tim thay");
     }
+
+
 }

@@ -30,4 +30,12 @@ public class WorkTime {
         this.date=newWorkTime.getDate();
         this.shiftRegister=newWorkTime.getShiftRegister();
     }
+
+    public WorkTime(String weekName, String start, String end, Date date, ShiftRegister shiftRegister) {
+        this.weekName = weekName;
+        this.start = start;
+        this.end = end;
+        this.date = date;
+        this.shiftRegister = shiftRegister;
+    }
 }
