@@ -32,6 +32,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Autowired
     private ShiftRepository shiftRepository;
+
     @Override
     public ResponseWithData<Staff> getInformation(Staff staff) {
 
@@ -118,6 +119,7 @@ public class StaffServiceImpl implements StaffService {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Co loi");
         }
 
+
     }
 
     @Override
@@ -136,6 +138,7 @@ public class StaffServiceImpl implements StaffService {
             }
         }
         return new Response(HttpStatus.NOT_FOUND,"khong tim thay");
+
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+
 import java.util.List;
 
 @RestController
@@ -51,11 +52,13 @@ public class StaffController {
         return staffService.getAllMyScheduleBetweenStartAndEnd(start,end);
     }
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
+
     public Response registerSchedule(@RequestBody WorkTime newWorkTime){
         return staffService.registerSchedule(newWorkTime);
     }
 
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
+
     public Response editRegisterSchedule(@RequestBody List<WorkTime> workTime){
         return staffService.editRegisterSchedule(workTime);
 

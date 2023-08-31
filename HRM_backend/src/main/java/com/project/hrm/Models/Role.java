@@ -10,7 +10,7 @@ public class Role {
     @GeneratedValue
     private Integer id;
     private String name;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salary_level")
     private Salary salary;
 
