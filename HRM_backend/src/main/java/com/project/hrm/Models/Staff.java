@@ -43,7 +43,7 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.role =newStaff.getRole();
         this.urlAvatar=newStaff.getUrlAvatar();
-        //
+
     }
 
     public String removeAccents(String input) {

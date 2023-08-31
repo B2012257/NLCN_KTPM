@@ -22,6 +22,7 @@ public class Manager {
     private String role = "Quản lý";
     private String bankName;
     private String bankAccount;
+    private String urlAvatar;
     public Manager() {
 
     }
@@ -40,5 +41,6 @@ public class Manager {
         this.location = manager.getLocation();
         this.bankName = manager.getBankName();
         this.bankAccount = manager.getBankAccount();
+        this.urlAvatar=manager.getUrlAvatar();
     }
 }

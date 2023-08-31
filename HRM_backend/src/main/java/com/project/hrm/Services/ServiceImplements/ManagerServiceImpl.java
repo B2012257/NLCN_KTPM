@@ -1,13 +1,10 @@
 package com.project.hrm.Services.ServiceImplements;
 
-import com.project.hrm.Repositorys.ManagerRepository;
-import com.project.hrm.Repositorys.SalaryRepository;
-import com.project.hrm.Repositorys.StaffRepository;
+import com.project.hrm.Repositorys.*;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
-import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +25,13 @@ public class ManagerServiceImpl implements ManagerService {
     StaffRepository staffRepository;
     @Autowired
     SalaryRepository salaryRepository;
+
+    @Autowired
+    ShiftTypeRepository shiftTypeRepository;
+    @Autowired
+    ShiftRepository shiftRepository;
+    @Autowired
+    ShiftDetailRepository shiftDetailRepository;
     private Argon2PasswordEncoder encoder;
 
     @Override
@@ -86,8 +90,14 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Response changeAvatar(String newUrl) {
-        return null;
+    public Response changeAvatar(String newUrl, String uid) {
+        Manager managerId = managerRepository.findById(uid).orElse(null);
+        if (managerId != null) {
+               managerId.setUrlAvatar(newUrl);
+                managerRepository.saveAndFlush(managerId);
+                return new Response(HttpStatus.OK, "Thay đổi thành công");
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
     }
 
     @Override
@@ -115,18 +125,37 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ResponseWithData<Staff> editStaff(Staff newStaff) {
-        return null;
+    public Response editStaff(Staff newStaff) {
+        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+        if(staff != null){
+            staff.setFullName(newStaff.getFullName());
+            staff.setPhone(newStaff.getPhone());
+            staff.setBankAccount(newStaff.getBankAccount());
+            staff.setBankName(newStaff.getBankName());
+            staff.setRole(newStaff.getRole());
+            staff.setLocation(newStaff.getLocation());
+            staff.setUrlAvatar(newStaff.getUrlAvatar());
+            staffRepository.saveAndFlush(staff);
+            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
+        }
+
+        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay nhan vien");
     }
 
     @Override
-    public Response deleteStaff() {
-        return null;
+    public Response deleteStaff(String uid) {
+        staffRepository.deleteById(uid);
+        return new Response(HttpStatus.OK, "Xóa thành công");
     }
 
     @Override
     public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName) {
-        return null;
+        List<Staff> nameStaff = (List<Staff>) staffRepository.findByFullName(fullName);
+        if(nameStaff != null){
+
+            return new ResponseWithData<>(nameStaff,HttpStatus.OK, "Tìm kiếm thành công");
+        }
+        return new ResponseWithData<>(null,HttpStatus.NOT_FOUND, "Không có ");
     }
 
     @Override
@@ -157,12 +186,22 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response editRole(Role role) {
-        return null;
+        Role isrole = roleRepository.findById(role.getId()).orElse(null);
+        if(isrole != null){
+            isrole.setName(role.getName());
+            isrole.setSalary(role.getSalary());
+            roleRepository.saveAndFlush(isrole);
+            return new Response(HttpStatus.OK, "Sửa thành công");
+
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Sửa thất bại");
+
     }
 
     @Override
     public Response deleteRole(Role role) {
-        return null;
+        roleRepository.deleteById(role.getId());
+        return new Response(HttpStatus.OK, "Xóa thành công");
     }
 
     @Override
@@ -208,62 +247,120 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response deleteSalary(Salary salary) {
-        return null;
-    }
+        Salary salaryLevel = salaryRepository.findOneByLevel(salary.getLevel());
+        if(salaryLevel != null){
+
+            salaryRepository.delete(salaryLevel);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        }
+
+        return new Response(HttpStatus.NOT_FOUND, "Xóa thất bại");    }
 
     @Override
     public Response addShiftType(ShiftType shiftType) {
-        return null;
+        ShiftType shift = new ShiftType(shiftType);
+        shiftTypeRepository.saveAndFlush(shift);
+        return new Response(HttpStatus.OK, "Thêm thành công");
+
     }
 
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
-        return null;
+        return new ResponseWithData<>(shiftTypeRepository.findAll(),HttpStatus.OK,"OK");
+
     }
 
     @Override
     public Response editShiftType(ShiftType shiftType) {
-        return null;
+        ShiftType shiftTypeId = shiftTypeRepository.findById(shiftType.getId()).orElse(null);
+        if(shiftTypeId !=null){
+            shiftTypeId.setName(shiftType.getName());
+            shiftTypeId.setStart(shiftType.getStart());
+            shiftTypeId.setEnd(shiftType.getEnd());
+            shiftTypeRepository.saveAndFlush(shiftTypeId);
+            return new Response(HttpStatus.OK, "Thay đổi thành công");
+        }
+        return new Response(HttpStatus.OK, "Thay đổi thất bại");
     }
 
     @Override
     public Response deleteShiftType(ShiftType shiftType) {
-        return null;
+        ShiftType shiftTypeId = shiftTypeRepository.findById(shiftType.getId()).orElse(null);
+        if(shiftTypeId != null){
+            shiftTypeRepository.delete(shiftTypeId);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Xóa thất bại");
     }
 
     @Override
-    public ResponseWithData<Shift> addShift(Shift shift) {
-        return null;
+    public ResponseWithData<Shift> addShift(Shift newShift) {
+        Shift shiftNew = new Shift(newShift);
+        shiftRepository.saveAndFlush(shiftNew);
+        return new ResponseWithData<>(shiftNew,HttpStatus.OK,"Thêm thành công");
     }
 
     @Override
     public Response deleteShift(Shift shift) {
-        return null;
+        Shift shiftId= shiftRepository.findById(shift.getId()).orElse(null);
+        if(shiftId !=null){
+            shiftRepository.delete(shiftId);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        }
+        return new Response(HttpStatus.OK, "Xóa thất bại");
     }
 
     @Override
     public Response editShift(Shift shift) {
-        return null;
+        Shift shiftId= shiftRepository.findById(shift.getId()).orElse(null);
+        if(shiftId !=null){
+            shiftId.setDate(shift.getDate());
+            shiftId.setTask(shift.getTask());
+            shiftId.setManager(shift.getManager());
+            shiftId.setShiftType(shift.getShiftType());
+            shiftRepository.saveAndFlush(shiftId);
+            return new Response(HttpStatus.OK, "Sửa thành công");
+        }
+        return new Response(HttpStatus.OK, "Sửa thất bại");
     }
 
     @Override
     public Response schedule(ShiftDetail shiftDetail) {
-        return null;
+
+        ShiftDetail newShiftDetail = new ShiftDetail(shiftDetail);
+        shiftDetailRepository.saveAndFlush(newShiftDetail);
+        return  new Response(HttpStatus.OK, "Thêm thành công");
+
     }
 
     @Override
     public Response deleteSchedule(ShiftDetail shiftDetail) {
-        return null;
+        ShiftDetail shiftDetailId = shiftDetailRepository.findById(shiftDetail.getId()).orElse(null);
+        if(shiftDetailId != null){
+            shiftDetailRepository.delete(shiftDetailId);
+            return new Response(HttpStatus.OK, "Xóa thành công ");
+        }
+        return new Response(HttpStatus.OK, "Xóa không thành công");
+
     }
 
     @Override
-    public ResponseWithData<List<ShiftDetail>> getAllSchedules(Shift shift) {
-        return null;
+    public ResponseWithData<List<ShiftDetail>> getAllSchedules() {
+        List<ShiftDetail> shiftDetails = shiftDetailRepository.findAll();
+        return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"OK");
+
     }
 
     @Override
     public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date) {
-        return null;
+//        List<ShiftDetail> shiftDetails = shiftDetailRepository.findAllByShift_Date(date);
+//
+//        if (shiftDetails.isEmpty()) {
+//            return new ResponseWithData<>(shiftDetails,HttpStatus.NOT_FOUND,"No schedules found for the given date.");
+//        } else {
+//            return new ResponseWithData<>(shiftDetails,HttpStatus.OK,"Success");
+//        }
+        return new ResponseWithData<>(shiftDetailRepository.findAllByShift_Date(date),HttpStatus.OK, "OK");
     }
 
     @Override
@@ -273,6 +370,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
+
         return null;
     }
 

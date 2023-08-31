@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface StaffRepository extends JpaRepository<Staff, String> {
     Staff findByUserName(String username);
     Staff findByUid(String uid);
-
+    Staff findByFullName(String fullName);
 }

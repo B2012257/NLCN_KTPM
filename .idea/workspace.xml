@@ -6,8 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="81bbbfca-0041-421d-b6d9-b1472104e6c0" name="Changes" comment="Create ShiftRegister.java&#10;&#10;config base 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Configs/URLConfigs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Controllers/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Shift.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Shift.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/ShiftDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/ShiftDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/ShiftType.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/ShiftType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Models/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/ShiftDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/ShiftDetailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/StaffRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Repositorys/StaffRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ManagerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/java/com/project/hrm/Services/ServiceImplements/ManagerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HRM_backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

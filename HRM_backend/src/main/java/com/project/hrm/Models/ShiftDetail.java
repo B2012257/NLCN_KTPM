@@ -24,4 +24,12 @@ public class ShiftDetail {
 
     public ShiftDetail() {
     }
+
+    public ShiftDetail(ShiftDetail newShiftDetail) {
+        this.start =newShiftDetail.getStart();
+        this.end = newShiftDetail.getEnd();
+        this.overTime = newShiftDetail.getOverTime();
+        this.staff = newShiftDetail.getStaff();
+        this.shift = newShiftDetail.getShift();
+    }
 }

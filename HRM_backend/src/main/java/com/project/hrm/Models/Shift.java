@@ -22,4 +22,11 @@ public class Shift {
 
     public Shift() {
     }
+
+    public Shift(Shift newShift) {
+        this.date = newShift.getDate();
+        this.task = newShift.getTask();
+        this.shiftType = newShift.getShiftType();
+        this.manager = newShift.getManager();
+    }
 }

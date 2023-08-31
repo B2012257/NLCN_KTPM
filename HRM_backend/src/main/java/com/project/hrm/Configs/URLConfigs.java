@@ -27,10 +27,18 @@ public class URLConfigs {
     public static final String ADD_ROLE = "/addRole";
     public static final String GET_ALL_ROLE = "/roles";
     public static final String GET_INFO_MANAGER ="/infoManager";
+
     public static final String EDIT_INFO_MANAGER ="/edit";
+
     public static final String GET_INFO_STAFF ="/infoStaff";
     public static final String ADD_STAFF ="/addStaff";
     public static final String GET_ALL_STAFF ="/allStaff";
+    public static final String ADD_SHIFTTYPE ="/addShiftType";
+    public static final String GET_ALL_SHIFTTYPE ="/allShiftType";
+    public static final String EDIT_SHIFTTYPE ="/ShiftType/edit";
+    public static final String ADD_SHIFT = "/addShift";
+    public static final String ADD_SHIFTDETAIL = "/addShiftDetail";
+    public static final String GET_ALL_SHIFTDETAIL ="/allShiftDetail";
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
