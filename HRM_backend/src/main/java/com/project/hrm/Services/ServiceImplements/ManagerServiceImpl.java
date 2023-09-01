@@ -39,7 +39,7 @@ public class ManagerServiceImpl implements ManagerService {
         Manager managerId = managerRepository.findByUid(uid);
 
         if(managerId != null){
-            return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
+            return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có thông tin tài khoản");
         }
         return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
     }
@@ -56,23 +56,12 @@ public class ManagerServiceImpl implements ManagerService {
             editManager.setBankName(managerNewInfo.getBankName());
             editManager.setRole(managerNewInfo.getRole());
             managerRepository.saveAndFlush(editManager);
-            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
+            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
         }
-        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay quản lý này");
+        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy thông tin quản lý này");
     }
 
     @Override
-//    public Response changePassword(String newPassword, String uid) {
-//        Manager managerId = managerRepository.findByUid(uid);
-//        if(managerId != null){
-//            String newPass= encoder.encode(newPassword);
-//           managerId.setPassword(newPass);
-//
-//            managerRepository.saveAndFlush(managerId);
-//            return new Response(HttpStatus.OK,"Thay đổi thành công");
-//        }
-//        return new Response(HttpStatus.NOT_FOUND,"Không thể thay đổi");
-//    }
     public Response changePassword(String newPassword, String uid) {
         Manager managerId = managerRepository.findByUid(uid);
         if (managerId != null) {
@@ -104,7 +93,7 @@ public class ManagerServiceImpl implements ManagerService {
     public Response getStaff(String uid) {
         Staff staffId = staffRepository.findByUid(uid);
         if(staffId != null){
-            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "OK") ;
+            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "Tìm kiếm thành công") ;
         }
         return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
     }
@@ -112,7 +101,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public ResponseWithData<List<Staff>> getAllStaff() {
 
-        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Thành công");
+        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Tìm kiếm thành công");
 
     }
 
@@ -136,10 +125,10 @@ public class ManagerServiceImpl implements ManagerService {
             staff.setLocation(newStaff.getLocation());
             staff.setUrlAvatar(newStaff.getUrlAvatar());
             staffRepository.saveAndFlush(staff);
-            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
+            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
         }
 
-        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay nhan vien");
+        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
     }
 
     @Override
@@ -155,7 +144,7 @@ public class ManagerServiceImpl implements ManagerService {
 
             return new ResponseWithData<>(nameStaff,HttpStatus.OK, "Tìm kiếm thành công");
         }
-        return new ResponseWithData<>(null,HttpStatus.NOT_FOUND, "Không có ");
+        return new ResponseWithData<>(null,HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó ");
     }
 
     @Override
@@ -266,7 +255,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
-        return new ResponseWithData<>(shiftTypeRepository.findAll(),HttpStatus.OK,"OK");
+        return new ResponseWithData<>(shiftTypeRepository.findAll(),HttpStatus.OK,"Tìm kiếm thành công");
 
     }
 
