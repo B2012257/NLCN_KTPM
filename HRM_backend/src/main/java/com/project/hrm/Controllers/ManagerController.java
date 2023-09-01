@@ -39,6 +39,13 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.EDIT_ROLE)
+    public Response editRole(Role role) {
+        return managerService.editRole(role);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_SALARY)
     public Response addSalary(@RequestBody Salary salary) {
         return managerService.addSalary(salary);

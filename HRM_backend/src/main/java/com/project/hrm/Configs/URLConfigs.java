@@ -40,6 +40,8 @@ public class URLConfigs {
 
     //Chức năng quản lý
     public static final String ADD_ROLE = "/addRole";
+    public static final String EDIT_ROLE = "/editRole";
+
     public static final String GET_ALL_ROLE = "/roles";
     public static final String GET_INFO_MANAGER ="/infoManager";
     public static final String EDIT_INFO_MANAGER ="/edit";

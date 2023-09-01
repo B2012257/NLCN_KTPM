@@ -132,9 +132,21 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<List<Role>>(roles, HttpStatus.OK, "Danh sách chức vụ");
     }
 
+    //Chưa test
     @Override
     public Response editRole(Role role) {
-        roleRepository.
+        Role roleDB = roleRepository.findOneById(role.getId());
+        if(roleDB == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy chức vụ");
+        }
+        try {
+            Role roleSaved = roleRepository.saveAndFlush(new Role(role));
+            return new Response(HttpStatus.OK, "Chỉnh sửa chức vụ thành công");
+        }
+        catch (RuntimeException ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
+        }
+
     }
 
     @Override
