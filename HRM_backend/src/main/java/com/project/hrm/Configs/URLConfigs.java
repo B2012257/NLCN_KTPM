@@ -51,6 +51,6 @@ public class URLConfigs {
     public static final String EDIT_SALARY = "/editSalary";
     public static final String DELETE_SALARY = "/deleteSalary";
 
-
+    public static final String ADD_SHIFT = "/addShift";
 
 }

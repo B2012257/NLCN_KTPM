@@ -134,7 +134,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response editRole(Role role) {
-        return null;
+        roleRepository.
     }
 
     @Override
@@ -210,12 +210,15 @@ public class ManagerServiceImpl implements ManagerService {
         }
         roleRepository.deleteAll(rolesToDelete);
         roleRepository.flush();
-        if(roleRepository.findAllBySalary(salaryDB)== null) {
+
+        if(roleRepository.findAllBySalary(salaryDB).isEmpty()) {
             salaryRepository.delete(salaryDB);
             salaryRepository.flush();
             return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
-        }else
+        }else {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa bậc lương không thành công");
+        }
+
     }
 
     @Override
