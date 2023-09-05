@@ -7,10 +7,12 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 
@@ -231,7 +233,7 @@ public class ManagerServiceImpl implements ManagerService {
         }
 
     }
-    
+
     @Override
     public Response addShiftType(ShiftType shiftType) {
         //Kiểm tra trùng tên
@@ -261,7 +263,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
-        return null;
+
+        List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
+        return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
     }
 
     @Override

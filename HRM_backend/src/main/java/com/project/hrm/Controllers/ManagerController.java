@@ -101,5 +101,10 @@ public class ManagerController {
         return managerService.addShiftType(shiftType);
     }
 
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
+    public Response getAllShiftType() {
+        return managerService.getAllShiftType();
+    }
 
 }
