@@ -48,11 +48,14 @@ public class URLConfigs {
     public static final String GET_INFO_STAFF ="/infoStaff";
     public static final String ADD_STAFF ="/addStaff";
     public static final String GET_ALL_STAFF ="/allStaff";
+
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
     public static final String DELETE_SALARY = "/deleteSalary";
 
     public static final String ADD_SHIFT = "/addShift";
+
+    public static final String ADD_SHIFT_TYPE = "/addShiftType";
 
 }

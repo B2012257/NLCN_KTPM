@@ -1,13 +1,10 @@
 package com.project.hrm.Services.ServiceImplements;
 
-import com.project.hrm.Repositorys.ManagerRepository;
-import com.project.hrm.Repositorys.SalaryRepository;
-import com.project.hrm.Repositorys.StaffRepository;
+import com.project.hrm.Repositorys.*;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
-import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +24,9 @@ public class ManagerServiceImpl implements ManagerService {
     StaffRepository staffRepository;
     @Autowired
     SalaryRepository salaryRepository;
+    @Autowired
+    ShiftTypeRepository shiftTypeRepository;
+
     private Argon2PasswordEncoder encoder;
 
     @Override
@@ -136,14 +136,13 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response editRole(Role role) {
         Role roleDB = roleRepository.findOneById(role.getId());
-        if(roleDB == null) {
+        if (roleDB == null) {
             return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy chức vụ");
         }
         try {
             Role roleSaved = roleRepository.saveAndFlush(new Role(role));
             return new Response(HttpStatus.OK, "Chỉnh sửa chức vụ thành công");
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
         }
 
@@ -196,12 +195,12 @@ public class ManagerServiceImpl implements ManagerService {
 
     }
 
-    //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary
+    //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary, Client sẽ có thông báo xác thực
     @Override
     public Response deleteSalary(Salary salary) {
 
         Salary salaryDB = salaryRepository.findOneByLevel(salary.getLevel());
-        if(salaryDB == null) {
+        if (salaryDB == null) {
             return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
         }
         System.out.println(salaryDB);
@@ -223,19 +222,41 @@ public class ManagerServiceImpl implements ManagerService {
         roleRepository.deleteAll(rolesToDelete);
         roleRepository.flush();
 
-        if(roleRepository.findAllBySalary(salaryDB).isEmpty()) {
+        if (roleRepository.findAllBySalary(salaryDB).isEmpty()) {
             salaryRepository.delete(salaryDB);
             salaryRepository.flush();
             return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
-        }else {
+        } else {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa bậc lương không thành công");
         }
 
     }
-
+    
     @Override
     public Response addShiftType(ShiftType shiftType) {
-        return null;
+        //Kiểm tra trùng tên
+        String shiftTypeRqName = shiftType.getName();
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneByName(shiftTypeRqName);
+        if (shiftTypeDb != null) {
+            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
+        }
+        //Thời gian bắt đầu và kết thúc không được  để trống or null
+        System.out.println(shiftType.getEnd().toString());
+        if ((shiftType.getEnd() != null && !(shiftType.getEnd().toString().equalsIgnoreCase(""))) &&
+                ((shiftType.getStart() != null && !(shiftType.getStart().toString().equalsIgnoreCase("")))))
+        {
+            ShiftType shiftTypeToSave = new ShiftType(shiftType.getName(), shiftType.getStart(), shiftType.getEnd());
+
+            try {
+                ShiftType shiftTypeSaved = shiftTypeRepository.saveAndFlush(shiftTypeToSave);
+                return new Response(HttpStatus.OK, "Thêm loại ca thành công");
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình lưu");
+            }
+        }
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, "Vui lòng nhập đầy đủ thông tin loại ca");
     }
 
     @Override

@@ -1,13 +1,10 @@
 package com.project.hrm.Controllers;
 
 import com.project.hrm.Configs.URLConfigs;
-import com.project.hrm.Models.Manager;
-import com.project.hrm.Models.Salary;
-import com.project.hrm.Models.Staff;
+import com.project.hrm.Models.*;
 import com.project.hrm.Utils.LoginRequired;
 import com.project.hrm.Utils.RoleRequired;
 import com.project.hrm.payloads.Response.Response;
-import com.project.hrm.Models.Role;
 import com.project.hrm.Services.ServiceImplements.ManagerServiceImpl;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +76,6 @@ public class ManagerController {
         return managerService.getAllStaff();
     }
 
-
     @LoginRequired
     @GetMapping(URLConfigs.GET_ALL_SALARY)
     public ResponseWithData<List<Salary>> getAllSalary(){
@@ -97,5 +93,13 @@ public class ManagerController {
     public Response deleteSalary(@RequestBody Salary salary){
         return managerService.deleteSalary(salary);
     }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SHIFT_TYPE)
+    public Response addShiftType(@RequestBody ShiftType shiftType){
+        return managerService.addShiftType(shiftType);
+    }
+
 
 }

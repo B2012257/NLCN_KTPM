@@ -19,7 +19,12 @@ public class ShiftType {
 
     public ShiftType() {
     }
-
+    public ShiftType(ShiftType shiftType) {
+        this.id = shiftType.getId();
+        this.name = shiftType.getName();
+        this.start = shiftType.getStart();
+        this.end = shiftType.getEnd();
+    }
     public ShiftType(String name, Time start, Time end) {
         this.name = name;
         this.start = start;

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShiftTypeRepository extends JpaRepository<ShiftType,Integer> {
+    ShiftType findOneByName(String name);
 }
