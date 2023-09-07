@@ -263,18 +263,44 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
-
         List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
         return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
     }
 
     @Override
     public Response editShiftType(ShiftType shiftType) {
-        return null;
+        //Lấy id ca cần chỉnh sửa
+        Integer shiftTypeId = shiftType.getId();
+        if(shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null) {
+            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Không có id");
+        }
+        //Tìm trong db
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftTypeId);
+        //Nếu không tìm thấy trong db thì báo lỗi
+        if(shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
+
+        //Kiểm tra trùng tên
+        if(shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
+            return  new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
+        }
+        try {
+            shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
+            return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+
+            return  new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
+        }
     }
 
     @Override
     public Response deleteShiftType(ShiftType shiftType) {
+        //ShiftType DB
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftType.getId());
+        if(shiftTypeDb == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca");
+        }
+
         return null;
     }
 

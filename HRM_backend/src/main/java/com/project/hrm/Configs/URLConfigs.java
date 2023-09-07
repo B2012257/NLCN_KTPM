@@ -58,7 +58,7 @@ public class URLConfigs {
 
     public static final String ADD_SHIFT_TYPE = "/addShiftType";
     public static final String GET_ALL_SHIFT_TYPE = "/allShiftType";
-
+    public static final String EDIT_SHIFT_TYPE = "/editShiftType";
 
 
 }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface ShiftTypeRepository extends JpaRepository<ShiftType,Integer> {
     ShiftType findOneByName(String name);
 
+    ShiftType findOneById(Integer id);
 }
