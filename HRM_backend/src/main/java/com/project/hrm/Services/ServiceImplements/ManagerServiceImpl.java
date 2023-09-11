@@ -48,15 +48,19 @@ public class ManagerServiceImpl implements ManagerService {
     public Response editProfileInformation(Manager managerNewInfo) {
         Manager editManager = managerRepository.findById(managerNewInfo.getUid()).orElse(null);
         if(editManager!=null){
-            editManager.setLocation(managerNewInfo.getLocation());
-            editManager.setPhone(managerNewInfo.getPhone());
-            editManager.setBeginWork(managerNewInfo.getBeginWork());
-            editManager.setFullName(managerNewInfo.getFullName());
-            editManager.setBankAccount(managerNewInfo.getBankAccount());
-            editManager.setBankName(managerNewInfo.getBankName());
-            editManager.setRole(managerNewInfo.getRole());
-            managerRepository.saveAndFlush(editManager);
-            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
+            try{
+                editManager.setLocation(managerNewInfo.getLocation());
+                editManager.setPhone(managerNewInfo.getPhone());
+                editManager.setBeginWork(managerNewInfo.getBeginWork());
+                editManager.setFullName(managerNewInfo.getFullName());
+                editManager.setBankAccount(managerNewInfo.getBankAccount());
+                editManager.setBankName(managerNewInfo.getBankName());
+                editManager.setRole(managerNewInfo.getRole());
+                managerRepository.saveAndFlush(editManager);
+                return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
+            } catch (Exception e){
+                return new Response(HttpStatus.INTERNAL_SERVER_ERROR,"Lỗi trong quá trình chỉnh sửa");
+            }
         }
         return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy thông tin quản lý này");
     }
@@ -82,9 +86,14 @@ public class ManagerServiceImpl implements ManagerService {
     public Response changeAvatar(String newUrl, String uid) {
         Manager managerId = managerRepository.findById(uid).orElse(null);
         if (managerId != null) {
-               managerId.setUrlAvatar(newUrl);
+            try{
+                managerId.setUrlAvatar(newUrl);
                 managerRepository.saveAndFlush(managerId);
                 return new Response(HttpStatus.OK, "Thay đổi thành công");
+            } catch (Exception e){
+                return new Response(HttpStatus.OK, "Lỗi trong quá trình thay đổi");
+            }
+
         }
         return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
     }
@@ -107,44 +116,77 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response addStaff(Staff newStaff) {
-        Staff addStaff = new Staff(newStaff);
-        Staff saveStaff= staffRepository.saveAndFlush(addStaff);
-        System.out.println(saveStaff);
-        return new ResponseWithData<>(saveStaff,HttpStatus.OK, "Tạo thành công");
+        try {
+            Staff addStaff = new Staff(newStaff);
+            Staff saveStaff = staffRepository.saveAndFlush(addStaff);
+            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+        }
     }
 
     @Override
+//    public Response editStaff(Staff newStaff) {
+//        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+//        if(staff != null){
+//            staff.setFullName(newStaff.getFullName());
+//            staff.setPhone(newStaff.getPhone());
+//            staff.setBankAccount(newStaff.getBankAccount());
+//            staff.setBankName(newStaff.getBankName());
+//            staff.setRole(newStaff.getRole());
+//            staff.setLocation(newStaff.getLocation());
+//            staff.setUrlAvatar(newStaff.getUrlAvatar());
+//            staffRepository.saveAndFlush(staff);
+//            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
+//        }
+//
+//        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
+//    }
     public Response editStaff(Staff newStaff) {
-        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
-        if(staff != null){
-            staff.setFullName(newStaff.getFullName());
-            staff.setPhone(newStaff.getPhone());
-            staff.setBankAccount(newStaff.getBankAccount());
-            staff.setBankName(newStaff.getBankName());
-            staff.setRole(newStaff.getRole());
-            staff.setLocation(newStaff.getLocation());
-            staff.setUrlAvatar(newStaff.getUrlAvatar());
-            staffRepository.saveAndFlush(staff);
-            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
-        }
+        try {
+            Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+            if (staff != null) {
+                staff.setFullName(newStaff.getFullName());
+                staff.setPhone(newStaff.getPhone());
+                staff.setBankAccount(newStaff.getBankAccount());
+                staff.setBankName(newStaff.getBankName());
+                staff.setRole(newStaff.getRole());
+                staff.setLocation(newStaff.getLocation());
+                staff.setUrlAvatar(newStaff.getUrlAvatar());
+                staffRepository.saveAndFlush(staff);
+                return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
+            }
 
-        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
+            return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy nhân viên");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình thay đổi thông tin nhân viên");
+        }
     }
 
     @Override
     public Response deleteStaff(String uid) {
-        staffRepository.deleteById(uid);
-        return new Response(HttpStatus.OK, "Xóa thành công");
+        try {
+            staffRepository.deleteById(uid);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
+        }
     }
 
     @Override
-    public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName) {
-        List<Staff> nameStaff = (List<Staff>) staffRepository.findByFullName(fullName);
-        if(nameStaff != null){
-
-            return new ResponseWithData<>(nameStaff,HttpStatus.OK, "Tìm kiếm thành công");
+    public Response searchStaffByFullName(String fullName) {
+        try {
+            System.out.println("Fullname" + fullName);
+            List<Staff> nameStaff =  staffRepository.findAllByFullName(fullName);
+            System.out.println("Name staff" + nameStaff);
+            if (nameStaff != null && !nameStaff.isEmpty()) {
+                return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
+            } else {
+                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó");
+            }
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
         }
-        return new ResponseWithData<>(null,HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó ");
     }
 
     @Override

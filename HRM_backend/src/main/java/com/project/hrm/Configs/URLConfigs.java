@@ -25,6 +25,11 @@ public class URLConfigs {
 
     //Chức năng quản lý
     public static final String ADD_ROLE = "/addRole";
+    public static final String EDIT_ROLE = "/role/edit";
+    public static final String DELETE_ROLE = "/role/delete";
+
+
+
     public static final String GET_ALL_ROLE = "/roles";
     public static final String GET_INFO_MANAGER ="/infoManager";
 
@@ -36,10 +41,31 @@ public class URLConfigs {
     public static final String ADD_SHIFTTYPE ="/addShiftType";
     public static final String GET_ALL_SHIFTTYPE ="/allShiftType";
     public static final String EDIT_SHIFTTYPE ="/ShiftType/edit";
+    public static final String DELETE_SHIFTTYPE ="/shiftType/delete";
     public static final String ADD_SHIFT = "/addShift";
+    public static final String DELETE_SHIFT = "/shift/delete";
+    public static final String EDIT_SHIFT = "/shift/edit";
+
     public static final String ADD_SHIFTDETAIL = "/addShiftDetail";
+    public static final String DELETE_SHIFTDETAIL = "/shiftDetail/delete";
+
+
+
     public static final String GET_ALL_SHIFTDETAIL ="/allShiftDetail";
+
+
+    public static final String CHANGE_PASSWORD ="/changePassword/{uid}";
+    public static final String CHANGE_AVATAR ="/changeAvatar/{uid}";
+    public static final String EDIT_STAFF ="/editStaff";
+    public static final String DELETE_STAFF ="/staff/{uid}";
+    public static final String SEARCH_STAFF ="/search/staff";
+
+
+
+
     public static final String ADD_SALARY = "/addSalary";
+    public static final String DELETE_SALARY = "/salary/delete";
+
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
 

@@ -67,46 +67,46 @@ public class ManagerController {
     }
 
     @LoginRequired
-    @PutMapping("/changePassword/{uid}")
+    @PutMapping(URLConfigs.CHANGE_PASSWORD)
     public Response changePassword(@RequestParam String password, @PathVariable String uid){
         return managerService.changePassword(password,uid);
 
     }
 
 
-    @PutMapping("/changeAvatar/{uid}")
+    @PutMapping(URLConfigs.CHANGE_AVATAR)
     public Response changeAvatar(@RequestBody Map<String, String> requestBody, @PathVariable String uid) {
         String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
         return managerService.changeAvatar(newUrl, uid);
     }
 
-    @PutMapping("/editStaff")
+    @PutMapping(URLConfigs.EDIT_STAFF)
     public Response editStaff(@RequestBody Staff newStaff) {
         return managerService.editStaff(newStaff);
     }
 
-    @DeleteMapping("/staff/{uid}")
+    @DeleteMapping(URLConfigs.DELETE_STAFF)
     public  Response deleteStaff(@PathVariable String uid){
         return managerService.deleteStaff(uid);
     }
 
-    @GetMapping("/search/staff") //Lỗi không tìm thấy dữ liệu bảng staff
-    public ResponseWithData<List<Staff>> searchStaffByFullName(@RequestBody String fullName){
+    @GetMapping(URLConfigs.SEARCH_STAFF) //Lỗi không tìm thấy dữ liệu bảng staff
+    public Response searchStaffByFullName(@RequestParam String fullName){
         return managerService.searchStaffByFullName(fullName);
     }
 
 
-    @PutMapping("/role/edit")
+    @PutMapping(URLConfigs.EDIT_ROLE)
     public Response editRole(@RequestBody Role role){
         return managerService.editRole(role);
     }
 
-    @DeleteMapping("/role/delete")
+    @DeleteMapping(URLConfigs.DELETE_ROLE)
     public Response deleteRole(@RequestBody Role role){
         return managerService.deleteRole(role);
     }
 
-    @DeleteMapping("/salary/delete")
+    @DeleteMapping(URLConfigs.DELETE_SALARY)
     public Response deleteSalary(@RequestBody Salary salary){
         return managerService.deleteSalary(salary);
     }
@@ -126,7 +126,7 @@ public class ManagerController {
         return managerService.editShiftType(shiftType);
     }
 
-    @DeleteMapping("/shiftType/delete")
+    @DeleteMapping(URLConfigs.DELETE_SHIFTTYPE)
     public Response deleteShiftType(@RequestBody ShiftType shiftType){
         return managerService.deleteShiftType(shiftType);
     }
@@ -135,12 +135,12 @@ public class ManagerController {
     public ResponseWithData<Shift> addShift(@RequestBody Shift newShift){
         return managerService.addShift(newShift);
     }
-    @DeleteMapping("/shift/delete")
+    @DeleteMapping(URLConfigs.DELETE_SHIFT)
     public Response deleteShift(@RequestBody  Shift shift){
         return managerService.deleteShift(shift);
     }
 
-    @PutMapping("/shift/edit")
+    @PutMapping(URLConfigs.EDIT_SHIFT)
     public Response editShift(@RequestBody Shift shift){
         return managerService.editShift(shift);
     }
@@ -149,7 +149,7 @@ public class ManagerController {
         return managerService.schedule(shiftDetail);
     }
 
-    @DeleteMapping("/shiftDetail/delete")
+    @DeleteMapping(URLConfigs.DELETE_SHIFTDETAIL)
     public Response deleteSchedule(@RequestBody ShiftDetail shiftDetail){
         return managerService.deleteSchedule(shiftDetail);
     }

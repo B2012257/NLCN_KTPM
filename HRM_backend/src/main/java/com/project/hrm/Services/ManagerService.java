@@ -41,7 +41,7 @@ public interface ManagerService {
     public Response deleteStaff(String uid);
 
     //Tìm kiếm theo họ và tên nhân viên
-    public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName);
+    public Response searchStaffByFullName(String fullName);
 
 
     //    ############## Chưc năng thao tác lịch làm việc #####################
