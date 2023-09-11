@@ -83,7 +83,7 @@ public interface ManagerService {
     public Response deleteShiftType(ShiftType shiftType);
 
     //Thêm 1 ca làm
-    public ResponseWithData<Shift> addShift(Shift shift);
+    public Response addShift(Shift shift);
 
     //Xóa 1 ca làm
     public Response deleteShift(Shift shift);

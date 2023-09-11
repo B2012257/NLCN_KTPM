@@ -122,4 +122,11 @@ public class ManagerController {
     public Response deleteShiftType(@RequestBody ShiftType shiftType) {
         return managerService.deleteShiftType(shiftType);
     }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping (URLConfigs.ADD_SHIFT)
+    public Response addShift(@RequestBody Shift shift) {
+        return managerService.addShift(shift);
+    }
 }

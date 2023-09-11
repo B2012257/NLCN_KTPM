@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.awt.print.Pageable;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.zone.ZoneRulesProvider;
 import java.util.Date;
 import java.util.List;
 
@@ -310,12 +311,6 @@ public class ManagerServiceImpl implements ManagerService {
         if(!shiftDb.isEmpty()) {
             return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, "Không thể thực hiện xóa do có ca làm phụ thuộc");
         }
-
-
-        //Lấy ra shift phụ thuộc
-
-        //set ngày xóa cho shiftType
-        //Lưu lại vào db
         try {
             shiftTypeRepository.delete(shiftTypeDb);
             shiftTypeRepository.flush();
@@ -327,9 +322,20 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
+    //Tạo 1 ca trong ngày
     @Override
-    public ResponseWithData<Shift> addShift(Shift shift) {
-        return null;
+    public Response addShift(Shift shift) {
+        try {
+            Shift shiftToSave = new Shift(shift);
+            ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
+
+
+            Shift shiftSaved =  shiftRepository.saveAndFlush(shiftToSave);
+            return new Response(HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate() + " thành công");
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
+        }
     }
 
     @Override
