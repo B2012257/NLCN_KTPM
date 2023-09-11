@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Data
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"staff_uid", "shift_id"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"staff_uid", "shift_id"})}) //Cặp giá trị Staff_uid và Shift_id là duy nhất
 public class ShiftDetail {
     @Id
     @GeneratedValue
@@ -15,7 +16,6 @@ public class ShiftDetail {
     private Time start;
     private Time end;
     private Integer overTime;
-
     @ManyToOne
     private Staff staff;
 

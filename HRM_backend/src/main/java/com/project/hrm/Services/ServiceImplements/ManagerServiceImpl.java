@@ -13,6 +13,8 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +30,8 @@ public class ManagerServiceImpl implements ManagerService {
     SalaryRepository salaryRepository;
     @Autowired
     ShiftTypeRepository shiftTypeRepository;
-
+    @Autowired
+    ShiftRepository shiftRepository;
     private Argon2PasswordEncoder encoder;
 
     @Override
@@ -300,8 +303,28 @@ public class ManagerServiceImpl implements ManagerService {
         if(shiftTypeDb == null) {
             return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca");
         }
+        //#################Còn thiếu xóa các chi tiết ca, và xóa các chấm công
+        //Tìm xem có phụ thuộc trong shift không
+        List<Shift> shiftDb = shiftRepository.findAllByShiftType(shiftTypeDb);
+        //Nếu có ca bị phụ thuộc thì không cho xóa
+        if(!shiftDb.isEmpty()) {
+            return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, "Không thể thực hiện xóa do có ca làm phụ thuộc");
+        }
 
-        return null;
+
+        //Lấy ra shift phụ thuộc
+
+        //set ngày xóa cho shiftType
+        //Lưu lại vào db
+        try {
+            shiftTypeRepository.delete(shiftTypeDb);
+            shiftTypeRepository.flush();
+            return new Response(HttpStatus.OK, "Xóa thành công ca làm");
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình xóa");
+        }
     }
 
     @Override

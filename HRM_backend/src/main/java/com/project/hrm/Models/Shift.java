@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -13,7 +14,6 @@ public class Shift {
     private Integer id;
     private Date date;
     private String task;
-
     @ManyToOne
     private ShiftType shiftType;
 

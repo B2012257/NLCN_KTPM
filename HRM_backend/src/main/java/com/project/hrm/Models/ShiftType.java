@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -16,7 +17,6 @@ public class ShiftType {
     private String name;
     private Time start;
     private Time end;
-
     public ShiftType() {
     }
     public ShiftType(ShiftType shiftType) {

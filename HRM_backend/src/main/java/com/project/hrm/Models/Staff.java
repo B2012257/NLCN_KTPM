@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.Normalizer;
 
 import static com.project.hrm.Configs.ValueConfigs.passwordStaff;
@@ -25,7 +26,6 @@ public class Staff {
     private String bankName;
     private String bankAccount;
     private String urlAvatar;
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

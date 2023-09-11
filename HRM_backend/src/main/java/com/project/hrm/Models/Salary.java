@@ -13,7 +13,6 @@ public class Salary {
     private String level;
     private BigDecimal basic;
     private BigDecimal allowance;
-
     private BigDecimal overtime = BigDecimal.valueOf(0);
 
     public Salary() {

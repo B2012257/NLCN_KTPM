@@ -3,6 +3,7 @@ package com.project.hrm.Models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,6 @@ public class WorkTime {
     private String start;
     private String end;
     private Date date;
-
     @ManyToOne
     @JoinColumn(name = "shift_register_id")
     private ShiftRegister shiftRegister;
