@@ -1,5 +1,6 @@
 package com.project.hrm.Services;
 
+import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
@@ -94,7 +95,7 @@ public interface ManagerService {
     //Lập lịch làm (shiftDetail) // Xử lí tạo 1 ca trong ngày,
     // rồi tạo 1 danh sach chi tiết ca cho danh sách nhân viên
     // Mặc định sau khi tạo 1 ca thì tạo luôn bảng chấm công
-    public Response schedule(ShiftDetail shiftDetail);
+    public Response schedule(ShiftDetailRequest shiftDetailRq);
 
     //Xóa 1 lịch làm (shiftDetail) của 1 ca trong ngày
     public Response deleteSchedule(ShiftDetail shiftDetail);

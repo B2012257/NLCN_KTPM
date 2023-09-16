@@ -61,4 +61,7 @@ public class URLConfigs {
     public static final String EDIT_SHIFT_TYPE = "/editShiftType";
     public static final String DELETE_SHIFT_TYPE = "/deleteShiftType";
 
+    public static final String SCHEDULE = "/schedule";
+
+
 }

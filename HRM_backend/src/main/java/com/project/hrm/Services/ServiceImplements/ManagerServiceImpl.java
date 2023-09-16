@@ -1,23 +1,22 @@
 package com.project.hrm.Services.ServiceImplements;
 
 import com.project.hrm.Repositorys.*;
+import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.zone.ZoneRulesProvider;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -198,7 +197,6 @@ public class ManagerServiceImpl implements ManagerService {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Chỉnh sửa không thành công");
         }
-
     }
 
     //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary, Client sẽ có thông báo xác thực
@@ -249,15 +247,13 @@ public class ManagerServiceImpl implements ManagerService {
         //Thời gian bắt đầu và kết thúc không được  để trống or null
         System.out.println(shiftType.getEnd().toString());
         if ((shiftType.getEnd() != null && !(shiftType.getEnd().toString().equalsIgnoreCase(""))) &&
-                ((shiftType.getStart() != null && !(shiftType.getStart().toString().equalsIgnoreCase("")))))
-        {
+                ((shiftType.getStart() != null && !(shiftType.getStart().toString().equalsIgnoreCase(""))))) {
             ShiftType shiftTypeToSave = new ShiftType(shiftType.getName(), shiftType.getStart(), shiftType.getEnd());
 
             try {
                 ShiftType shiftTypeSaved = shiftTypeRepository.saveAndFlush(shiftTypeToSave);
                 return new Response(HttpStatus.OK, "Thêm loại ca thành công");
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình lưu");
             }
@@ -275,25 +271,25 @@ public class ManagerServiceImpl implements ManagerService {
     public Response editShiftType(ShiftType shiftType) {
         //Lấy id ca cần chỉnh sửa
         Integer shiftTypeId = shiftType.getId();
-        if(shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null) {
+        if (shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null) {
             return new ErrorResponse(HttpStatus.BAD_REQUEST, "Không có id");
         }
         //Tìm trong db
         ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftTypeId);
         //Nếu không tìm thấy trong db thì báo lỗi
-        if(shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
+        if (shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
 
         //Kiểm tra trùng tên
-        if(shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
-            return  new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
+        if (shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
+            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
         }
         try {
             shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
             return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
 
-            return  new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
         }
     }
 
@@ -301,22 +297,21 @@ public class ManagerServiceImpl implements ManagerService {
     public Response deleteShiftType(ShiftType shiftType) {
         //ShiftType DB
         ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftType.getId());
-        if(shiftTypeDb == null) {
+        if (shiftTypeDb == null) {
             return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca");
         }
         //#################Còn thiếu xóa các chi tiết ca, và xóa các chấm công
         //Tìm xem có phụ thuộc trong shift không
         List<Shift> shiftDb = shiftRepository.findAllByShiftType(shiftTypeDb);
         //Nếu có ca bị phụ thuộc thì không cho xóa
-        if(!shiftDb.isEmpty()) {
+        if (!shiftDb.isEmpty()) {
             return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, "Không thể thực hiện xóa do có ca làm phụ thuộc");
         }
         try {
             shiftTypeRepository.delete(shiftTypeDb);
             shiftTypeRepository.flush();
             return new Response(HttpStatus.OK, "Xóa thành công ca làm");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình xóa");
         }
@@ -330,9 +325,9 @@ public class ManagerServiceImpl implements ManagerService {
             ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
 
 
-            Shift shiftSaved =  shiftRepository.saveAndFlush(shiftToSave);
+            Shift shiftSaved = shiftRepository.saveAndFlush(shiftToSave);
             return new Response(HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate() + " thành công");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
         }
@@ -348,9 +343,29 @@ public class ManagerServiceImpl implements ManagerService {
         return null;
     }
 
+
+    //Sắp lịch làm
     @Override
-    public Response schedule(ShiftDetail shiftDetail) {
-        return null;
+    public Response schedule(ShiftDetailRequest shiftDetailRequests) {
+        Map<String, String> listError = new HashMap<>();
+        //Lấy danh sách sắp lịch
+//         datas = new HashMap<>(shiftDetailRequests.getDataSet());
+        return new ResponseWithData<> (shiftDetailRequests, HttpStatus.OK, "OK");
+        //Lặp qua danh sách shiftDetails
+//        for (ShiftDetail shiftDetail : shiftDetails) {
+//            //Với mỗi 1 đối tượng -> kiểm tra shift_id và staff uid
+//            //Tồn tại thỏa điều kiện thì lưu
+//            //Đối tượng nào lỗi thì lưu vào một danh sách và trả về kèm theo
+//            Staff staffDb = staffRepository.findByUid(shiftDetail.getStaff().getUid());
+//            Shift shiftDb = shiftRepository.findOneById(shiftDetail.getShift().getId());
+//            if(staffDb == null) {
+//                listError.put("Không thể thêm nhân sự vào ca làm. Do không tồn tại nhân sự", staffDb.getFullName());
+//            }
+//            if(shiftDb == null) {
+//                listError.put("Không thể thêm nhân sự vào ca làm. Do không tồn tại ca làm", staffDb.getFullName());
+//            }
+//        }
+//        return null;
     }
 
     @Override

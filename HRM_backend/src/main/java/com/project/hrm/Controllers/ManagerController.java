@@ -4,6 +4,7 @@ import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.Models.*;
 import com.project.hrm.Utils.LoginRequired;
 import com.project.hrm.Utils.RoleRequired;
+import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.Services.ServiceImplements.ManagerServiceImpl;
 import com.project.hrm.payloads.Response.ResponseWithData;
@@ -128,5 +129,12 @@ public class ManagerController {
     @PostMapping (URLConfigs.ADD_SHIFT)
     public Response addShift(@RequestBody Shift shift) {
         return managerService.addShift(shift);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping (URLConfigs.SCHEDULE)
+    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
+        return managerService.schedule(shiftDetailRequest);
     }
 }
