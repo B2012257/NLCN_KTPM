@@ -13,9 +13,9 @@ public class ShiftDetail {
     @Id
     @GeneratedValue
     private Long id;
-    private Time start;
-    private Time end;
+
     private Integer overTime;
+    
     @ManyToOne
     private Staff staff;
 
@@ -26,8 +26,6 @@ public class ShiftDetail {
     }
 
     public ShiftDetail(ShiftDetail newShiftDetail) {
-        this.start =newShiftDetail.getStart();
-        this.end = newShiftDetail.getEnd();
         this.overTime = newShiftDetail.getOverTime();
         this.staff = newShiftDetail.getStaff();
         this.shift = newShiftDetail.getShift();

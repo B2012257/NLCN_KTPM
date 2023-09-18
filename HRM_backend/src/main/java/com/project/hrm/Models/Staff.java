@@ -27,8 +27,8 @@ public class Staff {
     private String bankAccount;
     private String urlAvatar;
     @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @JoinColumn(name = "type_id")
+    private Type type;
     public Staff() {
     }
     public Staff(Staff newStaff) {
@@ -41,7 +41,7 @@ public class Staff {
         this.location = newStaff.getLocation();
         this.bankName = newStaff.getBankName();
         this.bankAccount = newStaff.getBankAccount();
-        this.role =newStaff.getRole();
+        this.type =newStaff.getType();
         this.urlAvatar=newStaff.getUrlAvatar();
 
     }

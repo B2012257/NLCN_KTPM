@@ -30,11 +30,4 @@ public class ShiftType {
         this.start = start;
         this.end = end;
     }
-    public ShiftType(ShiftType newShiftType){
-        this.name= newShiftType.getName();
-        this.start = newShiftType.getStart();
-        this.end= newShiftType.getEnd();
-    }
-
-
 }

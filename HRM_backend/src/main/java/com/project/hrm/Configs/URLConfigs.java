@@ -49,8 +49,6 @@ public class URLConfigs {
     public static final String ADD_STAFF ="/addStaff";
     public static final String GET_ALL_STAFF ="/allStaff";
     public static final String ADD_SALARY = "/addSalary";
-    public static final String DELETE_SALARY = "/salary/delete";
-
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
     public static final String DELETE_SALARY = "/deleteSalary";

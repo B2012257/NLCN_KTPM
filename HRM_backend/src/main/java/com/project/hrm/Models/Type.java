@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Role {
+public class Type {
     @Id
     @GeneratedValue
     private Integer id;
@@ -14,15 +14,15 @@ public class Role {
     @JoinColumn(name = "salary_level")
     private Salary salary;
 
-    public Role() {}
+    public Type() {}
 
-    public Role(Role role) {
+    public Type(Type role) {
         this.id = role.getId();
         this.name = role.getName();
         this.salary = role.getSalary();
     }
 
-    public Role(String name, Salary salary) {
+    public Type(String name, Salary salary) {
         this.name = name;
         this.salary = salary;
     }

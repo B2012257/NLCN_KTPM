@@ -1,17 +1,17 @@
-package com.project.hrm.Repositorys;
-
-import com.project.hrm.Models.Shift;
-import com.project.hrm.Models.ShiftType;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Date;
-import java.util.List;
-
-public interface ShiftRepository extends JpaRepository<Shift, Integer> {
-
-    List<Shift> findAllByDateBetween(Date start, Date end);
-
-    List<Shift> findAllByShiftType(ShiftType shiftType);
-
-    Shift findOneById(Integer id);
-}
+//package com.project.hrm.Repositorys;
+//
+//import com.project.hrm.Models.Shift;
+//import com.project.hrm.Models.ShiftType;
+//import org.springframework.data.jpa.repository.JpaRepository;
+//
+//import java.util.Date;
+//import java.util.List;
+//
+//public interface ShiftRepository extends JpaRepository<Shift, Integer> {
+//
+//    List<Shift> findAllByDateBetween(Date start, Date end);
+//
+//    List<Shift> findAllByShiftType(ShiftType shiftType);
+//
+//    Shift findOneById(Integer id);
+//}
