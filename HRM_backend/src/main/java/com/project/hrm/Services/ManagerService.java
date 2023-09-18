@@ -21,7 +21,7 @@ public interface ManagerService {
     public Response changePassword(String newPassword, String uid);
 
     //Đổi ảnh đại diện
-    public Response changeAvatar(String newUrl);
+    public Response changeAvatar(String newUrl, String uid);
 
 
     //############ Chức năng thao tác nhân sự ###############
@@ -36,13 +36,13 @@ public interface ManagerService {
     public Response addStaff(Staff newStaff);
 
     //Chỉnh sửa thông tin 1 nhân sự
-    public ResponseWithData<Staff> editStaff(Staff newStaff);
+    public Response editStaff(Staff newStaff);
 
     //Xóa 1 nhân sự
-    public Response deleteStaff();
+    public Response deleteStaff(String uid);
 
     //Tìm kiếm theo họ và tên nhân viên
-    public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName);
+    public Response searchStaffByFullName(String fullName);
 
 
     //    ############## Chưc năng thao tác lịch làm việc #####################
@@ -101,7 +101,7 @@ public interface ManagerService {
     public Response deleteSchedule(ShiftDetail shiftDetail);
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ca
-    public ResponseWithData<List<ShiftDetail>> getAllSchedules(Shift shift);
+    public ResponseWithData<List<ShiftDetail>> getAllSchedules();
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ngày
     public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date);

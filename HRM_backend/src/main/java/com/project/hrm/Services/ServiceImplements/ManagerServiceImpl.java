@@ -1,22 +1,21 @@
 package com.project.hrm.Services.ServiceImplements;
 
-import com.project.hrm.Repositorys.*;
-import com.project.hrm.payloads.Request.ShiftDetailRequest;
+import com.project.hrm.Repositorys.ManagerRepository;
+import com.project.hrm.Repositorys.SalaryRepository;
+import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
+import com.project.hrm.Repositorys.RoleRepository;
 import com.project.hrm.Services.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -28,17 +27,13 @@ public class ManagerServiceImpl implements ManagerService {
     StaffRepository staffRepository;
     @Autowired
     SalaryRepository salaryRepository;
-    @Autowired
-    ShiftTypeRepository shiftTypeRepository;
-    @Autowired
-    ShiftRepository shiftRepository;
     private Argon2PasswordEncoder encoder;
 
     @Override
     public Response getInformation(String uid) {
         Manager managerId = managerRepository.findByUid(uid);
 
-        if (managerId != null) {
+        if(managerId != null){
             return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
         }
         return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
@@ -47,7 +42,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response editProfileInformation(Manager managerNewInfo) {
         Manager editManager = managerRepository.findById(managerNewInfo.getUid()).orElse(null);
-        if (editManager != null) {
+        if(editManager!=null){
             editManager.setLocation(managerNewInfo.getLocation());
             editManager.setPhone(managerNewInfo.getPhone());
             editManager.setBeginWork(managerNewInfo.getBeginWork());
@@ -56,26 +51,49 @@ public class ManagerServiceImpl implements ManagerService {
             editManager.setBankName(managerNewInfo.getBankName());
             editManager.setRole(managerNewInfo.getRole());
             managerRepository.saveAndFlush(editManager);
-            return new Response(HttpStatus.OK, "Thay doi thong tin thanh cong");
+            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
         }
-        return new Response(HttpStatus.NOT_FOUND, "Khong tim thay quản lý này");
+        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay quản lý này");
     }
 
     @Override
     public Response changePassword(String newPassword, String uid) {
-        return null;
+        Manager managerId = managerRepository.findByUid(uid);
+        if (managerId != null) {
+            try {
+                String newPass = Base64.getEncoder().encodeToString(newPassword.getBytes());
+                managerId.setPassword(newPass);
+
+                managerRepository.saveAndFlush(managerId);
+                return new Response(HttpStatus.OK, "Thay đổi thành công");
+            } catch (Exception e) {
+                return new Response(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình mã hóa mật khẩu");
+            }
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
     }
 
     @Override
-    public Response changeAvatar(String newUrl) {
-        return null;
+    public Response changeAvatar(String newUrl, String uid) {
+        Manager managerId = managerRepository.findById(uid).orElse(null);
+        if (managerId != null) {
+            try{
+                managerId.setUrlAvatar(newUrl);
+                managerRepository.saveAndFlush(managerId);
+                return new Response(HttpStatus.OK, "Thay đổi thành công");
+            } catch (Exception e){
+                return new Response(HttpStatus.OK, "Lỗi trong quá trình thay đổi");
+            }
+
+        }
+        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
     }
 
     @Override
     public Response getStaff(String uid) {
         Staff staffId = staffRepository.findByUid(uid);
-        if (staffId != null) {
-            return new ResponseWithData<>(staffRepository.findByUid(uid), HttpStatus.OK, "OK");
+        if(staffId != null){
+            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "Tìm kiếm thành công") ;
         }
         return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
     }
@@ -83,31 +101,83 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public ResponseWithData<List<Staff>> getAllStaff() {
 
-        return new ResponseWithData<>(staffRepository.findAll(), HttpStatus.OK, "Thành công");
+        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Tìm kiếm thành công");
 
     }
 
     @Override
     public Response addStaff(Staff newStaff) {
-        Staff addStaff = new Staff(newStaff);
-        Staff saveStaff = staffRepository.saveAndFlush(addStaff);
-        System.out.println(saveStaff);
-        return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
+        try {
+            Staff addStaff = new Staff(newStaff);
+            Staff saveStaff = staffRepository.saveAndFlush(addStaff);
+            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+        }
     }
 
     @Override
-    public ResponseWithData<Staff> editStaff(Staff newStaff) {
-        return null;
+//    public Response editStaff(Staff newStaff) {
+//        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+//        if(staff != null){
+//            staff.setFullName(newStaff.getFullName());
+//            staff.setPhone(newStaff.getPhone());
+//            staff.setBankAccount(newStaff.getBankAccount());
+//            staff.setBankName(newStaff.getBankName());
+//            staff.setRole(newStaff.getRole());
+//            staff.setLocation(newStaff.getLocation());
+//            staff.setUrlAvatar(newStaff.getUrlAvatar());
+//            staffRepository.saveAndFlush(staff);
+//            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
+//        }
+//
+//        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
+//    }
+    public Response editStaff(Staff newStaff) {
+        try {
+            Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+            if (staff != null) {
+                staff.setFullName(newStaff.getFullName());
+                staff.setPhone(newStaff.getPhone());
+                staff.setBankAccount(newStaff.getBankAccount());
+                staff.setBankName(newStaff.getBankName());
+                staff.setRole(newStaff.getRole());
+                staff.setLocation(newStaff.getLocation());
+                staff.setUrlAvatar(newStaff.getUrlAvatar());
+                staffRepository.saveAndFlush(staff);
+                return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
+            }
+
+            return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy nhân viên");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình thay đổi thông tin nhân viên");
+        }
     }
 
     @Override
-    public Response deleteStaff() {
-        return null;
+    public Response deleteStaff(String uid) {
+        try {
+            staffRepository.deleteById(uid);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
+        }
     }
 
     @Override
-    public ResponseWithData<List<Staff>> searchStaffByFullName(String fullName) {
-        return null;
+    public Response searchStaffByFullName(String fullName) {
+        try {
+            System.out.println("Fullname" + fullName);
+            List<Staff> nameStaff =  staffRepository.findAllByFullName(fullName);
+            System.out.println("Name staff" + nameStaff);
+            if (nameStaff != null && !nameStaff.isEmpty()) {
+                return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
+            } else {
+                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó");
+            }
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
+        }
     }
 
     @Override
@@ -137,7 +207,6 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<List<Role>>(roles, HttpStatus.OK, "Danh sách chức vụ");
     }
 
-    //Chưa test
     @Override
     public Response editRole(Role role) {
         Role roleDB = roleRepository.findOneById(role.getId());
@@ -155,7 +224,8 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response deleteRole(Role role) {
-        return null;
+        roleRepository.deleteById(role.getId());
+        return new Response(HttpStatus.OK, "Xóa thành công");
     }
 
     @Override
@@ -390,6 +460,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
+
         return null;
     }
 

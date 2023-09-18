@@ -1,11 +1,9 @@
 package com.project.hrm.Models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -18,6 +16,7 @@ public class Shift {
     @NotNull
     private Date date;
     private String task;
+
     @ManyToOne
     @JoinColumn(name = "shiftType_id")
     private ShiftType shiftType;

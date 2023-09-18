@@ -6,6 +6,7 @@ import com.project.hrm.Utils.LoginRequired;
 import com.project.hrm.Utils.RoleRequired;
 import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.Response;
+import com.project.hrm.Models.Role;
 import com.project.hrm.Services.ServiceImplements.ManagerServiceImpl;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,29 +58,75 @@ public class ManagerController {
 
     @LoginRequired
     @GetMapping(URLConfigs.GET_INFO_STAFF)
-    public Response getStaff(@RequestParam(name = "uid") String uid) {
+    public Response getStaff(@RequestParam(name = "uid") String uid){
         return managerService.getStaff(uid);
     }
 
     @LoginRequired
     @PostMapping(URLConfigs.ADD_STAFF)
-    public Response addStaff(@RequestBody Staff newStaff) {
-        return managerService.addStaff(newStaff);
+    public Response addStaff(@RequestBody Staff newStaff){
+            return managerService.addStaff(newStaff);
     }
-
     @LoginRequired
     @PutMapping(URLConfigs.EDIT_INFO_MANAGER)
-    public Response editProfileInformation(@RequestBody Manager managerNewInfo) {
+    public Response editProfileInformation(@RequestBody Manager managerNewInfo){
         return managerService.editProfileInformation(managerNewInfo);
     }
-
     @LoginRequired
     @GetMapping(URLConfigs.GET_ALL_STAFF)
-    public ResponseWithData<List<Staff>> getAllStaff() {
+    public ResponseWithData<List<Staff>> getAllStaff(){
         return managerService.getAllStaff();
     }
 
+
     @LoginRequired
+    @PutMapping(URLConfigs.CHANGE_PASSWORD)
+    public Response changePassword(@RequestParam String password, @PathVariable String uid){
+        return managerService.changePassword(password,uid);
+
+    }
+
+
+    @PutMapping(URLConfigs.CHANGE_AVATAR)
+    public Response changeAvatar(@RequestBody Map<String, String> requestBody, @PathVariable String uid) {
+        String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
+        return managerService.changeAvatar(newUrl, uid);
+    }
+
+    @PutMapping(URLConfigs.EDIT_STAFF)
+    public Response editStaff(@RequestBody Staff newStaff) {
+        return managerService.editStaff(newStaff);
+    }
+
+    @DeleteMapping(URLConfigs.DELETE_STAFF)
+    public  Response deleteStaff(@PathVariable String uid){
+        return managerService.deleteStaff(uid);
+    }
+
+    @GetMapping(URLConfigs.SEARCH_STAFF) //Lỗi không tìm thấy dữ liệu bảng staff
+    public Response searchStaffByFullName(@RequestParam String fullName){
+        return managerService.searchStaffByFullName(fullName);
+    }
+
+
+    @PutMapping(URLConfigs.EDIT_ROLE)
+    public Response editRole(@RequestBody Role role){
+        return managerService.editRole(role);
+    }
+
+    @DeleteMapping(URLConfigs.DELETE_ROLE)
+    public Response deleteRole(@RequestBody Role role){
+        return managerService.deleteRole(role);
+    }
+
+    @DeleteMapping(URLConfigs.DELETE_SALARY)
+    public Response deleteSalary(@RequestBody Salary salary){
+        return managerService.deleteSalary(salary);
+    }
+
+    @PostMapping(URLConfigs.ADD_SHIFTTYPE)
+    public  Response addShiftType(@RequestBody ShiftType newShiftType){
+        return managerService.addShiftType(newShiftType);
     @GetMapping(URLConfigs.GET_ALL_SALARY)
     public ResponseWithData<List<Salary>> getAllSalary() {
         return managerService.getAllSalary();

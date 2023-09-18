@@ -16,4 +16,5 @@ import java.util.List;
 public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
         List<ShiftDetail>findAllByShift(Shift shift);
 
+    
 }
