@@ -24,6 +24,7 @@ public class WorkTime {
 
 
     public WorkTime (WorkTime newWorkTime){
+        this.id= newWorkTime.getId();
         this.weekName=newWorkTime.getWeekName();
         this.start=newWorkTime.getStart();
         this.end= newWorkTime.getEnd();
