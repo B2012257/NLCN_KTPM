@@ -31,7 +31,6 @@ public class AuthServiceImpl implements AuthService {
         jwtUntitl = new JwtUntil();
     }
 
-    
     //Tạo tài khỏan quản lý
     @Override
     public Response Register(Staff staff) {
@@ -53,7 +52,6 @@ public class AuthServiceImpl implements AuthService {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình luư thông tin!");
         }
-
     }
 //
     @Override

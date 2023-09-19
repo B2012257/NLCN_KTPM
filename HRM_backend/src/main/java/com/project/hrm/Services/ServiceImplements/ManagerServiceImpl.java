@@ -1,63 +1,53 @@
-//package com.project.hrm.Services.ServiceImplements;
-//
-//import com.project.hrm.Repositorys.ManagerRepository;
-//import com.project.hrm.Repositorys.SalaryRepository;
-//import com.project.hrm.Repositorys.StaffRepository;
-//import com.project.hrm.payloads.Response.ErrorResponse;
-//import com.project.hrm.payloads.Response.Response;
-//import com.project.hrm.payloads.Response.ResponseWithData;
-//import com.project.hrm.Models.*;
-//import com.project.hrm.Repositorys.RoleRepository;
-//import com.project.hrm.Services.ManagerService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.Date;
-//import java.util.List;
-//
-//@Service
-//public class ManagerServiceImpl implements ManagerService {
-//    @Autowired
-//    RoleRepository roleRepository;
-//    @Autowired
-//    ManagerRepository managerRepository;
-//    @Autowired
-//    StaffRepository staffRepository;
-//    @Autowired
-//    SalaryRepository salaryRepository;
-//    private Argon2PasswordEncoder encoder;
-//
-//    @Override
-//    public Response getInformation(String uid) {
+package com.project.hrm.Services.ServiceImplements;
+import com.project.hrm.Repositorys.SalaryRepository;
+import com.project.hrm.Repositorys.StaffRepository;
+import com.project.hrm.Services.ManagerService;
+import com.project.hrm.Utils.JwtUntil;
+import com.project.hrm.payloads.Request.ShiftDetailRequest;
+import com.project.hrm.payloads.Response.ErrorResponse;
+import com.project.hrm.payloads.Response.Response;
+import com.project.hrm.payloads.Response.ResponseWithData;
+import com.project.hrm.Models.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class ManagerServiceImpl implements ManagerService {
+
+    @Autowired
+    StaffRepository staffRepository;
+
+    @Autowired
+    SalaryRepository salaryRepository;
+
+    private Argon2PasswordEncoder encoder;
+
+    public ManagerServiceImpl() {
+        this.encoder = new Argon2PasswordEncoder(
+                12,
+                64,
+                1, 15 * 1024,
+                2);
+    }
+
+    @Override
+    public Response getInformation(String uid) {
 //        Manager managerId = managerRepository.findByUid(uid);
 //
 //        if(managerId != null){
 //            return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
-//    }
-//
-//    @Override
-//    public Response editProfileInformation(Manager managerNewInfo) {
-//        Manager editManager = managerRepository.findById(managerNewInfo.getUid()).orElse(null);
-//        if(editManager!=null){
-//            editManager.setLocation(managerNewInfo.getLocation());
-//            editManager.setPhone(managerNewInfo.getPhone());
-//            editManager.setBeginWork(managerNewInfo.getBeginWork());
-//            editManager.setFullName(managerNewInfo.getFullName());
-//            editManager.setBankAccount(managerNewInfo.getBankAccount());
-//            editManager.setBankName(managerNewInfo.getBankName());
-//            editManager.setRole(managerNewInfo.getRole());
-//            managerRepository.saveAndFlush(editManager);
-//            return new Response(HttpStatus.OK,"Thay doi thong tin thanh cong");
-//        }
-//        return new Response(HttpStatus.NOT_FOUND,"Khong tim thay quản lý này");
-//    }
-//
-//    @Override
-//    public Response changePassword(String newPassword, String uid) {
+        return null;
+    }
+
+    @Override
+    public Response changePassword(String newPassword, String uid) {
 //        Manager managerId = managerRepository.findByUid(uid);
 //        if (managerId != null) {
 //            try {
@@ -71,10 +61,12 @@
 //            }
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response changeAvatar(String newUrl, String uid) {
+    @Override
+    public Response changeAvatar(String newUrl, String uid) {
 //        Manager managerId = managerRepository.findById(uid).orElse(null);
 //        if (managerId != null) {
 //            try{
@@ -87,37 +79,76 @@
 //
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response getStaff(String uid) {
+    @Override
+    public Response getStaff(String uid) {
 //        Staff staffId = staffRepository.findByUid(uid);
 //        if(staffId != null){
 //            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "Tìm kiếm thành công") ;
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public ResponseWithData<List<Staff>> getAllStaff() {
+    @Override
+    public ResponseWithData<List<Staff>> getAllStaff() {
 //
 //        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Tìm kiếm thành công");
+        return null;
 //
-//    }
+    }
 //
-//    @Override
-//    public Response addStaff(Staff newStaff) {
-//        try {
-//            Staff addStaff = new Staff(newStaff);
-//            Staff saveStaff = staffRepository.saveAndFlush(addStaff);
-//            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
-//        } catch (Exception ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
-//        }
-//    }
+    @Override
+    public Response addStaff(Staff newStaff) {
+        //Kiểm tra trùng userName
+        //Kiểm tra trùng sdt
+        //Kiểm tra trùng số tài khỏan ngân hàng
+        String userNameRq = newStaff.getUserName();
+        String passWordRq = newStaff.getPassword();
+        String bankNumberRq = newStaff.getBankAccount();
+        if(userNameRq.equalsIgnoreCase("") || userNameRq.equalsIgnoreCase(" ") || userNameRq == null) {
+            //Kỉểm tra trùng userName
+            System.out.println("check username");
+
+            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Tên nguời dùng không đuợc bỏ trống");
+        }
+
+        System.out.println(userNameRq);
+        Staff staffByUsername =  staffRepository.findByUserName(userNameRq);
+
+        if(staffByUsername != null) {
+            return new ErrorResponse(HttpStatus.CONFLICT, "Tên nguời dùng đã đuơc sữ dụng");
+        }
+
+        if(passWordRq.equalsIgnoreCase("") || passWordRq.equalsIgnoreCase(" ") || passWordRq == null) {
+
+            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Mật khẩu không đuợc bỏ trống");
+        }
+        //Nếu có số tài khỏan đụocw gũi lên
+        if(bankNumberRq != null || !(bankNumberRq.equalsIgnoreCase(""))) {
+            Staff staffByBankAccount =  staffRepository.findByBankAccount(bankNumberRq);
+            if(staffByBankAccount != null) {
+                return new ErrorResponse(HttpStatus.CONFLICT, "Số tài khỏan ngân hàng đã đựoc sử dụng");
+            }
+        }
+
+        try {
+            Staff addStaff = new Staff(newStaff);
+            addStaff.setPassword(encoder.encode(newStaff.getPassword()));
+            Staff saveStaff = staffRepository.saveAndFlush(addStaff);
+            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+        }
+    }
 //
-//    @Override
-////    public Response editStaff(Staff newStaff) {
+    @Override
+    public Response editStaff(Staff newStaff) {
 ////        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
 ////        if(staff != null){
 ////            staff.setFullName(newStaff.getFullName());
@@ -132,40 +163,25 @@
 ////        }
 ////
 ////        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
-////    }
-//    public Response editStaff(Staff newStaff) {
-//        try {
-//            Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
-//            if (staff != null) {
-//                staff.setFullName(newStaff.getFullName());
-//                staff.setPhone(newStaff.getPhone());
-//                staff.setBankAccount(newStaff.getBankAccount());
-//                staff.setBankName(newStaff.getBankName());
-//                staff.setRole(newStaff.getRole());
-//                staff.setLocation(newStaff.getLocation());
-//                staff.setUrlAvatar(newStaff.getUrlAvatar());
-//                staffRepository.saveAndFlush(staff);
-//                return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
-//            }
+        return null;
+
+    }
+
 //
-//            return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy nhân viên");
-//        } catch (Exception ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình thay đổi thông tin nhân viên");
-//        }
-//    }
-//
-//    @Override
-//    public Response deleteStaff(String uid) {
+    @Override
+    public Response deleteStaff(String uid) {
 //        try {
 //            staffRepository.deleteById(uid);
 //            return new Response(HttpStatus.OK, "Xóa thành công");
 //        } catch (Exception ex) {
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
 //        }
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response searchStaffByFullName(String fullName) {
+    @Override
+    public Response searchStaffByFullName(String fullName) {
 //        try {
 //            System.out.println("Fullname" + fullName);
 //            List<Staff> nameStaff =  staffRepository.findAllByFullName(fullName);
@@ -178,58 +194,39 @@
 //        } catch (Exception ex) {
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
 //        }
-//    }
+        return null;
+
+    }
+
+    @Override
+    public Response addType(Type type) {
+        return null;
+    }
+
+    @Override
+    public ResponseWithData<List<Type>> getAllType() {
+        return null;
+    }
+
+    @Override
+    public Response editType(Type type) {
+        return null;
+    }
+
+    @Override
+    public Response deleteType(Type type) {
+        return null;
+    }
 //
-//    @Override
-//    public Response addRole(Role role) {
-//        String roleName = role.getName();
-//        Role roleDB = roleRepository.findByName(roleName);
-//        //Nếu có tồn tại trong db thì báo lỗi
-//        if (roleDB != null) {
-//            return new Response(HttpStatus.CONFLICT, "Chức vụ đã tồn tại trong hệ thống");
-//        }
-//        System.out.println(role);
-//        Role roleSave = new Role(role.getName(), role.getSalary());
+
 //
-//        try {
-//            Role saved = roleRepository.save(roleSave);
-//            roleRepository.flush();
-//            return new Response(HttpStatus.OK, "Thêm chức vụ thành công");
-//        } catch (RuntimeException ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình thêm chức vụ");
-//        }
+
+
 //
-//    }
+
 //
-//    @Override
-//    public ResponseWithData<List<Role>> getAllRole() {
-//        List<Role> roles = roleRepository.findAll();
-//        return new ResponseWithData<List<Role>>(roles, HttpStatus.OK, "Danh sách chức vụ");
-//    }
-//
-//    @Override
-//    public Response editRole(Role role) {
-//        Role roleDB = roleRepository.findOneById(role.getId());
-//        if (roleDB == null) {
-//            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy chức vụ");
-//        }
-//        try {
-//            Role roleSaved = roleRepository.saveAndFlush(new Role(role));
-//            return new Response(HttpStatus.OK, "Chỉnh sửa chức vụ thành công");
-//        } catch (RuntimeException ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
-//        }
-//
-//    }
-//
-//    @Override
-//    public Response deleteRole(Role role) {
-//        roleRepository.deleteById(role.getId());
-//        return new Response(HttpStatus.OK, "Xóa thành công");
-//    }
-//
-//    @Override
-//    public Response addSalary(Salary salary) {
+    @Override
+    public Response addSalary(Salary salary) {
 //        try {
 //            Salary salaryToSave = new Salary(salary);
 //            salaryRepository.save(salaryToSave);
@@ -240,16 +237,20 @@
 //            System.out.println(ex.getMessage());
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi khi lưu bậc lương");
 //        }
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public ResponseWithData<List<Salary>> getAllSalary() {
+    @Override
+    public ResponseWithData<List<Salary>> getAllSalary() {
 //        List<Salary> salaries = salaryRepository.findAll();
 //        return new ResponseWithData<List<Salary>>(salaries, HttpStatus.OK, "Danh sách bậc lương");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response editSalary(Salary salary) {
+    @Override
+    public Response editSalary(Salary salary) {
 //        String levelEdit = salary.getLevel();
 //
 //        Salary salaryDB = salaryRepository.findOneByLevel(levelEdit);
@@ -267,11 +268,13 @@
 //            System.out.println(ex.getMessage());
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Chỉnh sửa không thành công");
 //        }
-//    }
+        return null;
+
+    }
 //
 //    //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary, Client sẽ có thông báo xác thực
-//    @Override
-//    public Response deleteSalary(Salary salary) {
+    @Override
+    public Response deleteSalary(Salary salary) {
 //
 //        Salary salaryDB = salaryRepository.findOneByLevel(salary.getLevel());
 //        if (salaryDB == null) {
@@ -303,11 +306,12 @@
 //        } else {
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa bậc lương không thành công");
 //        }
+        return null;
 //
-//    }
+    }
 //
-//    @Override
-//    public Response addShiftType(ShiftType shiftType) {
+    @Override
+    public Response addShiftType(ShiftType shiftType) {
 //        //Kiểm tra trùng tên
 //        String shiftTypeRqName = shiftType.getName();
 //        ShiftType shiftTypeDb = shiftTypeRepository.findOneByName(shiftTypeRqName);
@@ -329,16 +333,20 @@
 //            }
 //        }
 //        return new ErrorResponse(HttpStatus.BAD_REQUEST, "Vui lòng nhập đầy đủ thông tin loại ca");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public ResponseWithData<List<ShiftType>> getAllShiftType() {
+    @Override
+    public ResponseWithData<List<ShiftType>> getAllShiftType() {
 //        List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
 //        return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response editShiftType(ShiftType shiftType) {
+    @Override
+    public Response editShiftType(ShiftType shiftType) {
 //        //Lấy id ca cần chỉnh sửa
 //        Integer shiftTypeId = shiftType.getId();
 //        if (shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null) {
@@ -361,10 +369,12 @@
 //
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
 //        }
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response deleteShiftType(ShiftType shiftType) {
+    @Override
+    public Response deleteShiftType(ShiftType shiftType) {
 //        //ShiftType DB
 //        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftType.getId());
 //        if (shiftTypeDb == null) {
@@ -385,11 +395,13 @@
 //            System.out.println(ex.getMessage());
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình xóa");
 //        }
-//    }
+        return null;
+
+    }
 //
 //    //Tạo 1 ca trong ngày
-//    @Override
-//    public Response addShift(Shift shift) {
+    @Override
+    public Response addShift(Shift shift) {
 //        try {
 //            Shift shiftToSave = new Shift(shift);
 //            ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
@@ -401,22 +413,24 @@
 //            System.out.println(ex.getMessage());
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
 //        }
-//    }
+        return null;
+
+    }
 //
-//    @Override
-//    public Response deleteShift(Shift shift) {
-//        return null;
-//    }
+    @Override
+    public Response deleteShift(Shift shift) {
+        return null;
+    }
+
+    @Override
+    public Response editShift(Shift shift) {
+        return null;
+    }
 //
-//    @Override
-//    public Response editShift(Shift shift) {
-//        return null;
-//    }
 //
-//
-//    //Sắp lịch làm
-//    @Override
-//    public Response schedule(ShiftDetailRequest shiftDetailRequests) {
+    //Sắp lịch làm
+    @Override
+    public Response schedule(ShiftDetailRequest shiftDetailRequests) {
 //        Map<String, String> listError = new HashMap<>();
 //        //Lấy danh sách sắp lịch
 ////         datas = new HashMap<>(shiftDetailRequests.getDataSet());
@@ -435,47 +449,48 @@
 ////                listError.put("Không thể thêm nhân sự vào ca làm. Do không tồn tại ca làm", staffDb.getFullName());
 ////            }
 ////        }
-////        return null;
-//    }
+        return null;
+    }
 //
-//    @Override
-//    public Response deleteSchedule(ShiftDetail shiftDetail) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ResponseWithData<List<ShiftDetail>> getAllSchedules(Shift shift) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
-//
-//        return null;
-//    }
-//
-//    @Override
-//    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Response workCheckeds(List<Timekeeping> timeKeepings) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {
-//        return null;
-//    }
-//}
+    @Override
+    public Response deleteSchedule(ShiftDetail shiftDetail) {
+        return null;
+    }
+
+    @Override
+    public ResponseWithData<List<ShiftDetail>> getAllSchedules() {
+        return null;
+    }
+
+
+    @Override
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date) {
+        return null;
+    }
+
+    @Override
+    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
+        return null;
+    }
+
+    @Override
+    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
+
+        return null;
+    }
+
+    @Override
+    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date) {
+        return null;
+    }
+
+    @Override
+    public Response workCheckeds(List<Timekeeping> timeKeepings) {
+        return null;
+    }
+
+    @Override
+    public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {
+        return null;
+    }
+}
