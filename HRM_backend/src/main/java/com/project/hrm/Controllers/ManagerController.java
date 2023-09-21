@@ -182,11 +182,11 @@ public class ManagerController {
     public Response addShift(@RequestBody Shift shift) {
         return managerService.addShift(shift);
     }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping (URLConfigs.SCHEDULE)
-//    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
-//        return managerService.schedule(shiftDetailRequest);
-//    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping (URLConfigs.SCHEDULE)
+    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
+        return managerService.schedule(shiftDetailRequest);
+    }
     }
