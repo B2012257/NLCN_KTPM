@@ -30,8 +30,8 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @GetMapping(URLConfigs.GET_ALL_ROLE)
-    public ResponseWithData<List<Type>> getAllType() {
+    @GetMapping(URLConfigs.GET_ALL_TYPE)
+    public Response getAllType() {
         return managerService.getAllType();
     }
 

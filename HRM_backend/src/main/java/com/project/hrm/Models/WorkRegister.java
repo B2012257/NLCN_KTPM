@@ -1,6 +1,7 @@
 package com.project.hrm.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -11,9 +12,16 @@ public class WorkRegister {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
     private String weekName;
+
+    @NotNull
     private String start;
+
+    @NotNull
     private String end;
+
+    @NotNull
     @ManyToOne
     private Date date;
 

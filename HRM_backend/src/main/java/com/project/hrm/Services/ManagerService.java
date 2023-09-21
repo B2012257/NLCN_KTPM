@@ -4,6 +4,7 @@ import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public interface ManagerService {
     public Response addType(Type type);
 
     //Lấy thông tin tất cả các chức vụ trong hệ thống
-    public ResponseWithData<List<Type>> getAllType();
+    public Response getAllType();
 
     //Chỉnh sửa thông tin chức vụ
     public Response editType(Type type);

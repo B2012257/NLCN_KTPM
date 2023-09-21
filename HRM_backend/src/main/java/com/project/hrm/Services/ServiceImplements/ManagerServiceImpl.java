@@ -9,6 +9,10 @@ import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -210,13 +214,24 @@ public class ManagerServiceImpl implements ManagerService {
 
         }catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lôỗi trong quá trình thêm loại nhân sự");
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm loại nhân sự mơới");
         }
     }
 
     @Override
-    public ResponseWithData<List<Type>> getAllType() {
-        return null;
+    public Response getAllType() {
+
+       try {
+//           Pageable firstPageWithTwoElements = PageRequest.of(1, 1, Sort.by("name"));
+//
+//           Page<Type> types = typeRepository.findAll(firstPageWithTwoElements);
+
+            List<Type> types = typeRepository.findAll();
+           return new ResponseWithData<List<Type>>(types, HttpStatus.OK, "Danh sách loại nhân sự");
+       }catch (Exception ex) {
+           System.out.println(ex.getMessage());
+           return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra!");
+       }
     }
 
     @Override
