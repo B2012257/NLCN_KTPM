@@ -239,14 +239,19 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             System.out.println(type.getId());
             Type typeDb = typeRepository.findOneById(type.getId());
+            String typeNameDb = typeDb.getName();
             Salary salaryLevelDb = typeDb.getSalary();
 
             if(typeDb == null)
                 return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy loại nhân sự cần chỉnh sửa");
 
             Type typeSave = new Type(type);
+            //Nếu không có truyền thông tin chỉnh sửa thì set lại giá trị cũ trong db
             if(type.getSalary() == null)
                 typeSave.setSalary(salaryLevelDb);
+            if(type.getName() == null)
+                typeSave.setName(typeNameDb);
+            
             typeRepository.saveAndFlush(typeSave);
             return new Response(HttpStatus.OK, "Chỉnh sửa thành công");
         }catch (Exception ex) {
@@ -258,7 +263,24 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response deleteType(Type type) {
-        return null;
+        //Kiểm tra phụ thuộc của bảng staff
+        //Nếu có phụ thuộc thì không cho xóa
+        try {
+            Type typeDb = typeRepository.findOneById(type.getId());
+            if(typeDb == null)
+                return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy loại nhân sự!");
+            List<Staff> staffs = staffRepository.findAllByType(typeDb);
+            //Nếu không có phụ thuộc thì xóa
+            if(staffs.isEmpty()) {
+                typeRepository.delete(typeDb);
+                typeRepository.flush();
+                return new Response(HttpStatus.OK, "Xóa thành công loại nhân sự " + typeDb.getName());
+            }
+            return  new ErrorResponse(HttpStatus.CONFLICT, "Không thể xóa loại nhân sự " + typeDb.getName() + " bởi vì dữ liệu đang được sử dụng");
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong ở máy chủ");
+        }
     }
 //
 

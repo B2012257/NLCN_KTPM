@@ -42,6 +42,9 @@ public class URLConfigs {
     public static final String ADD_TYPE = "/addType";
     public static final String GET_ALL_TYPE = "/types";
     public static final String EDIT_TYPE = "/editType";
+    public static final String DELETE_TYPE = "/deleteType";
+
+
     public static final String GET_INFO_MANAGER ="/infoManager";
 
     public static final String EDIT_INFO_MANAGER ="/edit";

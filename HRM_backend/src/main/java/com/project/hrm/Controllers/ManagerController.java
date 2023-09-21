@@ -114,10 +114,10 @@ public class ManagerController {
 //        return managerService.editRole(role);
 //    }
 //
-//    @DeleteMapping(URLConfigs.DELETE_ROLE)
-//    public Response deleteRole(@RequestBody Role role){
-//        return managerService.deleteRole(role);
-//    }
+    @DeleteMapping(URLConfigs.DELETE_TYPE)
+    public Response deleteType(@RequestBody Type type){
+        return managerService.deleteType(type);
+    }
 //
 //    @DeleteMapping(URLConfigs.DELETE_SALARY)
 //    public Response deleteSalary(@RequestBody Salary salary){
