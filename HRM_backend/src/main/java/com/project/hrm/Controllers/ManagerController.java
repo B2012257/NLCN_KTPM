@@ -93,11 +93,11 @@ public class ManagerController {
 //        return managerService.changeAvatar(newUrl, uid);
 //    }
 //
-//    @PutMapping(URLConfigs.EDIT_STAFF)
-//    public Response editStaff(@RequestBody Staff newStaff) {
-//        return managerService.editStaff(newStaff);
-//    }
-//
+    @PutMapping(URLConfigs.EDIT_STAFF)
+    public Response editStaff(@RequestBody Staff newStaff) {
+        return managerService.editStaff(newStaff);
+    }
+
 //    @DeleteMapping(URLConfigs.DELETE_STAFF)
 //    public  Response deleteStaff(@PathVariable String uid){
 //        return managerService.deleteStaff(uid);

@@ -1,0 +1,13 @@
+package com.project.hrm.Repositorys;
+
+import com.project.hrm.Models.Staff;
+import com.project.hrm.Models.Type;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface TypeRepository extends JpaRepository<Type, String> {
+    Type findByName(String name);
+}

@@ -32,7 +32,6 @@ public class Staff {
     private String bankAccount;
     private String urlAvatar;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;

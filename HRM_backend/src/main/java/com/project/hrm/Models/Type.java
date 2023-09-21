@@ -26,4 +26,7 @@ public class Type {
         this.name = name;
         this.salary = salary;
     }
+    public Type(String name) {
+        this.name = name;
+    }
 }

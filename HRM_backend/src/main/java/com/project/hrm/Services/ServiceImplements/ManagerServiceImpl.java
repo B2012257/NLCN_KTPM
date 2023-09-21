@@ -2,7 +2,6 @@ package com.project.hrm.Services.ServiceImplements;
 import com.project.hrm.Repositorys.SalaryRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Services.ManagerService;
-import com.project.hrm.Utils.JwtUntil;
 import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
@@ -149,22 +148,19 @@ public class ManagerServiceImpl implements ManagerService {
 //
     @Override
     public Response editStaff(Staff newStaff) {
-////        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
-////        if(staff != null){
-////            staff.setFullName(newStaff.getFullName());
-////            staff.setPhone(newStaff.getPhone());
-////            staff.setBankAccount(newStaff.getBankAccount());
-////            staff.setBankName(newStaff.getBankName());
-////            staff.setRole(newStaff.getRole());
-////            staff.setLocation(newStaff.getLocation());
-////            staff.setUrlAvatar(newStaff.getUrlAvatar());
-////            staffRepository.saveAndFlush(staff);
-////            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
-////        }
-////
-////        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
-        return null;
-
+        Staff staff = staffRepository.findById(newStaff.getUid()).orElse(null);
+        if(staff != null){
+            staff.setFullName(newStaff.getFullName());
+            staff.setPhone(newStaff.getPhone());
+            staff.setBankAccount(newStaff.getBankAccount());
+            staff.setBankName(newStaff.getBankName());
+            staff.setType(newStaff.getType());
+            staff.setLocation(newStaff.getLocation());
+            staff.setUrlAvatar(newStaff.getUrlAvatar());
+            staffRepository.saveAndFlush(staff);
+            return new Response(HttpStatus.OK,"Thay đổi thông tin thành công");
+        }
+        return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
     }
 
 //
