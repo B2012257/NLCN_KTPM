@@ -39,7 +39,7 @@ public class URLConfigs {
     public static final String EDIT_REGISTER_SCHEDULE="/editRegister";
 
     //Chức năng quản lý
-    public static final String ADD_ROLE = "/addRole";
+    public static final String ADD_TYPE = "/addType";
     public static final String GET_ALL_ROLE = "/roles";
     public static final String GET_INFO_MANAGER ="/infoManager";
 
@@ -47,6 +47,8 @@ public class URLConfigs {
 
     public static final String GET_INFO_STAFF ="/infoStaff";
     public static final String ADD_STAFF ="/addStaff";
+    public static final String SEARCH_STAFF = "/search/staff";
+
     public static final String GET_ALL_STAFF ="/allStaff";
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";

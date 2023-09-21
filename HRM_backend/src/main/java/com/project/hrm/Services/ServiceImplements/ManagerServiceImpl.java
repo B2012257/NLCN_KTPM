@@ -1,6 +1,7 @@
 package com.project.hrm.Services.ServiceImplements;
 import com.project.hrm.Repositorys.SalaryRepository;
 import com.project.hrm.Repositorys.StaffRepository;
+import com.project.hrm.Repositorys.TypeRepository;
 import com.project.hrm.Services.ManagerService;
 import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.ErrorResponse;
@@ -23,6 +24,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Autowired
     SalaryRepository salaryRepository;
+
+    @Autowired
+    TypeRepository typeRepository;
 
     private Argon2PasswordEncoder encoder;
 
@@ -163,9 +167,10 @@ public class ManagerServiceImpl implements ManagerService {
         return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy nhân viên");
     }
 
-//
+// Xóa nhân sự, xóa các bảng liên quan trước bảng workRegister, Bảng timeKeeping, shiftDetail,
     @Override
     public Response deleteStaff(String uid) {
+
 //        try {
 //            staffRepository.deleteById(uid);
 //            return new Response(HttpStatus.OK, "Xóa thành công");
@@ -178,25 +183,35 @@ public class ManagerServiceImpl implements ManagerService {
 //
     @Override
     public Response searchStaffByFullName(String fullName) {
-//        try {
-//            System.out.println("Fullname" + fullName);
-//            List<Staff> nameStaff =  staffRepository.findAllByFullName(fullName);
-//            System.out.println("Name staff" + nameStaff);
-//            if (nameStaff != null && !nameStaff.isEmpty()) {
-//                return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
-//            } else {
-//                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó");
-//            }
-//        } catch (Exception ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
-//        }
-        return null;
+        try {
+            System.out.println("Fullname" + fullName);
+            List<Staff> nameStaff =  staffRepository.findAllByFullName(fullName);
+            System.out.println("Name staff" + nameStaff);
+            if (nameStaff != null && !nameStaff.isEmpty()) {
+                return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
+            } else {
+                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó");
+            }
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
+        }
 
     }
 
     @Override
     public Response addType(Type type) {
-        return null;
+        String nameType = type.getName();
+        if(nameType.equalsIgnoreCase("") || nameType.equalsIgnoreCase(" "))
+            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Tên loại nhân sự không được bỏ trống");
+        Type typeToSave = new Type(type);
+        try {
+            typeRepository.saveAndFlush(typeToSave);
+            return new Response(HttpStatus.OK, "Thêm loại nhân sự thành công!");
+
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lôỗi trong quá trình thêm loại nhân sự");
+        }
     }
 
     @Override

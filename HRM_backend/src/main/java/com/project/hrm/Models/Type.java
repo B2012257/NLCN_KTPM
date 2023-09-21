@@ -10,6 +10,7 @@ public class Type {
     @GeneratedValue
     private Integer id;
     private String name;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salary_level")
     private Salary salary;

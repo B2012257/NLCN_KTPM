@@ -23,7 +23,7 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @PostMapping(URLConfigs.ADD_ROLE)
+    @PostMapping(URLConfigs.ADD_TYPE)
     public Response addType(@RequestBody Type type) {
         return managerService.addType(type);
     }
@@ -103,10 +103,10 @@ public class ManagerController {
 //        return managerService.deleteStaff(uid);
 //    }
 //
-//    @GetMapping(URLConfigs.SEARCH_STAFF) //Lỗi không tìm thấy dữ liệu bảng staff
-//    public Response searchStaffByFullName(@RequestParam String fullName){
-//        return managerService.searchStaffByFullName(fullName);
-//    }
+    @GetMapping(URLConfigs.SEARCH_STAFF)
+    public Response searchStaffByFullName(@RequestParam String fullName){
+        return managerService.searchStaffByFullName(fullName);
+    }
 //
 //
 //    @PutMapping(URLConfigs.EDIT_ROLE)
