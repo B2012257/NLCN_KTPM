@@ -20,7 +20,6 @@ public class ManagerController {
     @Autowired
     ManagerServiceImpl managerService;
 
-
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_TYPE)
@@ -38,7 +37,7 @@ public class ManagerController {
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PutMapping(URLConfigs.EDIT_TYPE)
-    public Response editType(@RequestBody  Type type) {
+    public Response editType(@RequestBody Type type) {
         return managerService.editType(type);
     }
 
@@ -48,7 +47,8 @@ public class ManagerController {
     public Response addSalary(@RequestBody Salary salary) {
         return managerService.addSalary(salary);
     }
-//
+
+    //
 //    @LoginRequired
 //    @GetMapping(URLConfigs.GET_INFO_MANAGER)
 //    public Response getInformation(@RequestParam(name = "uid") String uid) {
@@ -64,10 +64,11 @@ public class ManagerController {
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_STAFF)
-    public Response addStaff(@RequestBody Staff newStaff){
-            return managerService.addStaff(newStaff);
+    public Response addStaff(@RequestBody Staff newStaff) {
+        return managerService.addStaff(newStaff);
     }
-//    @LoginRequired
+
+    //    @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_INFO_MANAGER)
 //    public Response editProfileInformation(@RequestBody Manager managerNewInfo){
 //        return managerService.editProfileInformation(managerNewInfo);
@@ -93,21 +94,26 @@ public class ManagerController {
 //        return managerService.changeAvatar(newUrl, uid);
 //    }
 //
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @PutMapping(URLConfigs.EDIT_STAFF)
     public Response editStaff(@RequestBody Staff newStaff) {
         return managerService.editStaff(newStaff);
     }
 
-//    @DeleteMapping(URLConfigs.DELETE_STAFF)
+    //    @DeleteMapping(URLConfigs.DELETE_STAFF)
 //    public  Response deleteStaff(@PathVariable String uid){
 //        return managerService.deleteStaff(uid);
 //    }
 //
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.SEARCH_STAFF)
-    public Response searchStaffByFullName(@RequestParam String fullName){
+    public Response searchStaffByFullName(@RequestParam String fullName) {
         return managerService.searchStaffByFullName(fullName);
     }
-//
+
+    //
 //
 //    @PutMapping(URLConfigs.EDIT_ROLE)
 //    public Response editRole(@RequestBody Role role){
@@ -115,18 +121,17 @@ public class ManagerController {
 //    }
 //
     @DeleteMapping(URLConfigs.DELETE_TYPE)
-    public Response deleteType(@RequestBody Type type){
+    public Response deleteType(@RequestBody Type type) {
         return managerService.deleteType(type);
     }
-//
+
+    //
 //    @DeleteMapping(URLConfigs.DELETE_SALARY)
 //    public Response deleteSalary(@RequestBody Salary salary){
 //        return managerService.deleteSalary(salary);
 //    }
 //
-//    @PostMapping(URLConfigs.ADD_SHIFTTYPE)
-//    public  Response addShiftType(@RequestBody ShiftType newShiftType){
-//        return managerService.addShiftType(newShiftType);
+
 //    @GetMapping(URLConfigs.GET_ALL_SALARY)
 //    public ResponseWithData<List<Salary>> getAllSalary() {
 //        return managerService.getAllSalary();
@@ -144,39 +149,39 @@ public class ManagerController {
 //        return managerService.deleteSalary(salary);
 //    }
 //
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping(URLConfigs.ADD_SHIFT_TYPE)
-//    public Response addShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.addShiftType(shiftType);
-//    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SHIFT_TYPE)
+    public Response addShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.addShiftType(shiftType);
+    }
 //
-//    @LoginRequired
-//    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
-//    public Response getAllShiftType() {
-//        return managerService.getAllShiftType();
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PutMapping(URLConfigs.EDIT_SHIFT_TYPE)
-//    public Response editShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.editShiftType(shiftType);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @DeleteMapping (URLConfigs.DELETE_SHIFT_TYPE)
-//    public Response deleteShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.deleteShiftType(shiftType);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping (URLConfigs.ADD_SHIFT)
-//    public Response addShift(@RequestBody Shift shift) {
-//        return managerService.addShift(shift);
-//    }
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
+    public Response getAllShiftType() {
+        return managerService.getAllShiftType();
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PutMapping(URLConfigs.EDIT_SHIFT_TYPE)
+    public Response editShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.editShiftType(shiftType);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SHIFT_TYPE)
+    public Response deleteShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.deleteShiftType(shiftType);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping (URLConfigs.ADD_SHIFT)
+    public Response addShift(@RequestBody Shift shift) {
+        return managerService.addShift(shift);
+    }
 //
 //    @LoginRequired
 //    @RoleRequired(value = {"Quản lý"})
@@ -184,4 +189,4 @@ public class ManagerController {
 //    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
 //        return managerService.schedule(shiftDetailRequest);
 //    }
-}
+    }

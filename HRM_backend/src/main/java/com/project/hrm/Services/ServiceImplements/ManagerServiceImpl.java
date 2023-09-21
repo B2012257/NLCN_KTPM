@@ -1,7 +1,5 @@
 package com.project.hrm.Services.ServiceImplements;
-import com.project.hrm.Repositorys.SalaryRepository;
-import com.project.hrm.Repositorys.StaffRepository;
-import com.project.hrm.Repositorys.TypeRepository;
+import com.project.hrm.Repositorys.*;
 import com.project.hrm.Services.ManagerService;
 import com.project.hrm.payloads.Request.ShiftDetailRequest;
 import com.project.hrm.payloads.Response.ErrorResponse;
@@ -32,6 +30,11 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     TypeRepository typeRepository;
 
+    @Autowired
+    ShiftTypeRepository shiftTypeRepository;
+
+    @Autowired
+    ShiftRepository shiftRepository;
     private Argon2PasswordEncoder encoder;
 
     public ManagerServiceImpl() {
@@ -251,7 +254,7 @@ public class ManagerServiceImpl implements ManagerService {
                 typeSave.setSalary(salaryLevelDb);
             if(type.getName() == null)
                 typeSave.setName(typeNameDb);
-            
+
             typeRepository.saveAndFlush(typeSave);
             return new Response(HttpStatus.OK, "Chỉnh sửa thành công");
         }catch (Exception ex) {
@@ -376,100 +379,94 @@ public class ManagerServiceImpl implements ManagerService {
 //
     @Override
     public Response addShiftType(ShiftType shiftType) {
-//        //Kiểm tra trùng tên
-//        String shiftTypeRqName = shiftType.getName();
-//        ShiftType shiftTypeDb = shiftTypeRepository.findOneByName(shiftTypeRqName);
-//        if (shiftTypeDb != null) {
-//            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
-//        }
-//        //Thời gian bắt đầu và kết thúc không được  để trống or null
-//        System.out.println(shiftType.getEnd().toString());
-//        if ((shiftType.getEnd() != null && !(shiftType.getEnd().toString().equalsIgnoreCase(""))) &&
-//                ((shiftType.getStart() != null && !(shiftType.getStart().toString().equalsIgnoreCase(""))))) {
-//            ShiftType shiftTypeToSave = new ShiftType(shiftType.getName(), shiftType.getStart(), shiftType.getEnd());
-//
-//            try {
-//                ShiftType shiftTypeSaved = shiftTypeRepository.saveAndFlush(shiftTypeToSave);
-//                return new Response(HttpStatus.OK, "Thêm loại ca thành công");
-//            } catch (Exception ex) {
-//                System.out.println(ex.getMessage());
-//                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình lưu");
-//            }
-//        }
-//        return new ErrorResponse(HttpStatus.BAD_REQUEST, "Vui lòng nhập đầy đủ thông tin loại ca");
-        return null;
+        //Kiểm tra trùng tên
+        String shiftTypeRqName = shiftType.getName();
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneByName(shiftTypeRqName);
+        if (shiftTypeDb != null) {
+            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
+        }
+        //Thời gian bắt đầu và kết thúc không được  để trống or null
+        System.out.println(shiftType.getEnd().toString());
+        if ((shiftType.getEnd() != null && !(shiftType.getEnd().toString().equalsIgnoreCase(""))) &&
+                ((shiftType.getStart() != null && !(shiftType.getStart().toString().equalsIgnoreCase(""))))) {
+            ShiftType shiftTypeToSave = new ShiftType(shiftType.getName(), shiftType.getStart(), shiftType.getEnd());
+
+            try {
+                ShiftType shiftTypeSaved = shiftTypeRepository.saveAndFlush(shiftTypeToSave);
+                return new Response(HttpStatus.OK, "Thêm loại ca thành công");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi xảy ra trong quá trình lưu");
+            }
+        }
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, "Vui lòng nhập đầy đủ thông tin loại ca");
 
     }
 //
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
-//        List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
-//        return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
-        return null;
+        List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
+        return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
 
     }
 //
     @Override
     public Response editShiftType(ShiftType shiftType) {
-//        //Lấy id ca cần chỉnh sửa
-//        Integer shiftTypeId = shiftType.getId();
-//        if (shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null) {
-//            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Không có id");
-//        }
-//        //Tìm trong db
-//        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftTypeId);
-//        //Nếu không tìm thấy trong db thì báo lỗi
-//        if (shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
-//
-//        //Kiểm tra trùng tên
-//        if (shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
-//            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
-//        }
-//        try {
-//            shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
-//            return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
-//        }
-        return null;
+        //Lấy id ca cần chỉnh sửa
+        Integer shiftTypeId = shiftType.getId();
+        if (shiftTypeId.toString().equalsIgnoreCase("") || shiftTypeId == null)
+            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Không thành công do không có id được gữi lên");
 
+        //Tìm trong db
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftTypeId);
+        //Nếu không tìm thấy trong db thì báo lỗi
+        if (shiftTypeDb == null)
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
+
+        //Kiểm tra trùng tên
+        if (shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
+            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
+        }
+        try {
+            shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
+            return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình chỉnh sửa");
+        }
     }
-//
+
     @Override
     public Response deleteShiftType(ShiftType shiftType) {
-//        //ShiftType DB
-//        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftType.getId());
-//        if (shiftTypeDb == null) {
-//            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca");
-//        }
-//        //#################Còn thiếu xóa các chi tiết ca, và xóa các chấm công
-//        //Tìm xem có phụ thuộc trong shift không
-//        List<Shift> shiftDb = shiftRepository.findAllByShiftType(shiftTypeDb);
-//        //Nếu có ca bị phụ thuộc thì không cho xóa
-//        if (!shiftDb.isEmpty()) {
-//            return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, "Không thể thực hiện xóa do có ca làm phụ thuộc");
-//        }
-//        try {
-//            shiftTypeRepository.delete(shiftTypeDb);
-//            shiftTypeRepository.flush();
-//            return new Response(HttpStatus.OK, "Xóa thành công ca làm");
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình xóa");
-//        }
-        return null;
+        //ShiftType DB
+        ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftType.getId());
+        if (shiftTypeDb == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca");
+        }
+        //#################Còn thiếu xóa các chi tiết ca, và xóa các chấm công
+        //Tìm xem có phụ thuộc trong shift không
+        List<Shift> shiftDb = shiftRepository.findAllByShiftType(shiftTypeDb);
+        //Nếu có ca bị phụ thuộc thì không cho xóa
+        if (!shiftDb.isEmpty()) {
+            return new ErrorResponse(HttpStatus.METHOD_NOT_ALLOWED, "Không thể thực hiện xóa do có ca làm phụ thuộc");
+        }
+        try {
+            shiftTypeRepository.delete(shiftTypeDb);
+            shiftTypeRepository.flush();
+            return new Response(HttpStatus.OK, "Xóa thành công loại ca làm " + shiftTypeDb.getName());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình xóa loại ca " + shiftTypeDb.getName());
+        }
 
     }
-//
-//    //Tạo 1 ca trong ngày
+
+//Tạo 1 ca trong ngày
     @Override
     public Response addShift(Shift shift) {
 //        try {
 //            Shift shiftToSave = new Shift(shift);
 //            ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
-//
 //
 //            Shift shiftSaved = shiftRepository.saveAndFlush(shiftToSave);
 //            return new Response(HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate() + " thành công");
@@ -477,8 +474,7 @@ public class ManagerServiceImpl implements ManagerService {
 //            System.out.println(ex.getMessage());
 //            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
 //        }
-        return null;
-
+    return null;
     }
 //
     @Override
