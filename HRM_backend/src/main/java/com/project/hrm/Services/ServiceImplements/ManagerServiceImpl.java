@@ -34,7 +34,11 @@ public class ManagerServiceImpl implements ManagerService {
     ShiftTypeRepository shiftTypeRepository;
 
     @Autowired
+    DateRepository dateRepository;
+
+    @Autowired
     ShiftRepository shiftRepository;
+
     private Argon2PasswordEncoder encoder;
 
     public ManagerServiceImpl() {
@@ -310,10 +314,8 @@ public class ManagerServiceImpl implements ManagerService {
 //
     @Override
     public ResponseWithData<List<Salary>> getAllSalary() {
-//        List<Salary> salaries = salaryRepository.findAll();
-//        return new ResponseWithData<List<Salary>>(salaries, HttpStatus.OK, "Danh sách bậc lương");
-        return null;
-
+        List<Salary> salaries = salaryRepository.findAll();
+        return new ResponseWithData<List<Salary>>(salaries, HttpStatus.OK, "Danh sách bậc lương");
     }
 //
     @Override
@@ -464,19 +466,33 @@ public class ManagerServiceImpl implements ManagerService {
 //Tạo 1 ca trong ngày
     @Override
     public Response addShift(Shift shift) {
-//        try {
-//            Shift shiftToSave = new Shift(shift);
-//            ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
-//
-//            Shift shiftSaved = shiftRepository.saveAndFlush(shiftToSave);
-//            return new Response(HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate() + " thành công");
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
-//        }
-    return null;
+        try {
+            Shift shiftToSave = new Shift(shift);
+            ShiftType shiftTypeDb = shiftTypeRepository.findOneById(shiftToSave.getShiftType().getId());
+            //Kiểm tra Date và lưu Date
+            com.project.hrm.Models.Date dateRq = shiftToSave.getDate();
+
+            if(dateRq == null)
+                return new ErrorResponse(HttpStatus.BAD_REQUEST, "Ngày làm không được để trống");
+
+            //Tìm trong db có tồn tại ngày đó chưa
+            com.project.hrm.Models.Date dateDb = dateRepository.findOneByDate(dateRq.getDate());
+            //Nếu chưa có thì lưu ngày vào csdl
+            if(dateDb == null) {
+                com.project.hrm.Models.Date dateToSave = new com.project.hrm.Models.Date(dateRq.getDate());
+                dateRepository.saveAndFlush(dateToSave);
+            }
+
+            shiftRepository.saveAndFlush(shiftToSave);
+            return new Response(HttpStatus.OK, "Thêm ca " +
+                    shiftTypeDb.getName() + " trong ngày " +
+                    shiftToSave.getDate().getDate() + " thành công");
+        } catch (Exception ex) {
+            System.out.println( "Error message " + ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
+        }
     }
-//
+
     @Override
     public Response deleteShift(Shift shift) {
         return null;

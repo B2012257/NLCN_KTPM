@@ -8,4 +8,9 @@ import lombok.Data;
 public class Date {
     @Id
     private java.util.Date date;
+
+    public Date(java.util.Date date) {
+        this.date = date;
+    }
+    public Date() {}
 }

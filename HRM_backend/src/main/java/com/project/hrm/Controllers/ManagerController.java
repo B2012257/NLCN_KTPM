@@ -132,10 +132,10 @@ public class ManagerController {
 //    }
 //
 
-//    @GetMapping(URLConfigs.GET_ALL_SALARY)
-//    public ResponseWithData<List<Salary>> getAllSalary() {
-//        return managerService.getAllSalary();
-//    }
+    @GetMapping(URLConfigs.GET_ALL_SALARY)
+    public ResponseWithData<List<Salary>> getAllSalary() {
+        return managerService.getAllSalary();
+    }
 //
 //    @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_SALARY)
