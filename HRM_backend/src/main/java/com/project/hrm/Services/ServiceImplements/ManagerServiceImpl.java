@@ -527,7 +527,7 @@ public class ManagerServiceImpl implements ManagerService {
             if (shiftDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca làm");
             //Nếu có đúng ca làm
             //Lặp qua lấy ra dataSet
-            if (shiftDetailRequests.getDataSet().isEmpty())
+            if (shiftDetailRequests.getDataSet() == null || shiftDetailRequests.getDataSet().isEmpty())
                 return new ErrorResponse(HttpStatus.BAD_REQUEST, "Lịch làm phải có ít nhất một nhân sự");
             for (ShiftDetail shift : shiftDetailRequests.getDataSet()) {
                 shift.setShift(shiftDb);
