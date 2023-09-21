@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TypeRepository extends JpaRepository<Type, String> {
+public interface TypeRepository extends JpaRepository<Type, Integer> {
     Type findByName(String name);
+    Type findOneById(Integer id);
 }

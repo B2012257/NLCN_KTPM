@@ -35,19 +35,19 @@ public class ManagerController {
         return managerService.getAllType();
     }
 
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @GetMapping(URLConfigs.EDIT_TYPE)
-//    public Response editRole(Type type) {
-//        return managerService.editType(type);
-//    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PutMapping(URLConfigs.EDIT_TYPE)
+    public Response editType(@RequestBody  Type type) {
+        return managerService.editType(type);
+    }
 
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping(URLConfigs.ADD_SALARY)
-//    public Response addSalary(@RequestBody Salary salary) {
-//        return managerService.addSalary(salary);
-//    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SALARY)
+    public Response addSalary(@RequestBody Salary salary) {
+        return managerService.addSalary(salary);
+    }
 //
 //    @LoginRequired
 //    @GetMapping(URLConfigs.GET_INFO_MANAGER)

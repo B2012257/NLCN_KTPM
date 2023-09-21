@@ -9,6 +9,7 @@ public class Type {
     @Id
     @GeneratedValue
     private Integer id;
+
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)

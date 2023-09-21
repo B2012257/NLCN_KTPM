@@ -236,7 +236,24 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Response editType(Type type) {
-        return null;
+        try {
+            System.out.println(type.getId());
+            Type typeDb = typeRepository.findOneById(type.getId());
+            Salary salaryLevelDb = typeDb.getSalary();
+
+            if(typeDb == null)
+                return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy loại nhân sự cần chỉnh sửa");
+
+            Type typeSave = new Type(type);
+            if(type.getSalary() == null)
+                typeSave.setSalary(salaryLevelDb);
+            typeRepository.saveAndFlush(typeSave);
+            return new Response(HttpStatus.OK, "Chỉnh sửa thành công");
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Chỉnh sửa không thành công do có lỗi ở máy chủ");
+        }
+
     }
 
     @Override
@@ -253,17 +270,16 @@ public class ManagerServiceImpl implements ManagerService {
 //
     @Override
     public Response addSalary(Salary salary) {
-//        try {
-//            Salary salaryToSave = new Salary(salary);
-//            salaryRepository.save(salaryToSave);
-//            salaryRepository.flush();
-//            return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");
-//
-//        } catch (RuntimeException ex) {
-//            System.out.println(ex.getMessage());
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi khi lưu bậc lương");
-//        }
-        return null;
+        try {
+            Salary salaryToSave = new Salary(salary);
+            salaryRepository.save(salaryToSave);
+            salaryRepository.flush();
+            return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");
+
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi khi lưu bậc lương");
+        }
 
     }
 //
