@@ -14,5 +14,6 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
     List<Staff> findAllByFullName(String fullName);
     Staff findByBankAccount(String bankNumber);
     List<Staff> findAllByType(Type type);
+    List<Staff> findByFullNameContainingIgnoreCase(String partialName);
 
 }

@@ -28,7 +28,7 @@ public interface ManagerService {
     public Response getStaff(String uid);
 
     //Lấy thông tin 1 danh sách nhân sự
-    public ResponseWithData<List<Staff>> getAllStaff();
+    public Response getAllStaff();
 
     //Thêm mới 1 nhân sự
     public Response addStaff(Staff newStaff);
@@ -40,7 +40,7 @@ public interface ManagerService {
     public Response deleteStaff(String uid);
 
     //Tìm kiếm theo họ và tên nhân viên
-    public Response searchStaffByFullName(String fullName);
+    public Response searchStaffByPartialName(String partialName);
 
 
     //    ############## Chưc năng thao tác lịch làm việc #####################
