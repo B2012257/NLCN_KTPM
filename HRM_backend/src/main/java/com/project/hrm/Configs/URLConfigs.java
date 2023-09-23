@@ -67,6 +67,7 @@ public class URLConfigs {
     public static final String DELETE_SHIFT_TYPE = "/deleteShiftType";
 
     public static final String SCHEDULE = "/schedule";
-
+    public static final String DELETE_SCHEDULE = "/schedule/delete";
+    public static final String GET_ALL_SCHEDULE_BY_DATE = "/getScheduleOfDate";
 
 }

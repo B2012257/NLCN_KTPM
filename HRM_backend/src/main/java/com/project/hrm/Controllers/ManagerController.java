@@ -136,7 +136,8 @@ public class ManagerController {
     public ResponseWithData<List<Salary>> getAllSalary() {
         return managerService.getAllSalary();
     }
-//
+
+    //
 //    @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_SALARY)
 //    public Response editSalary(@RequestBody Salary salary) {
@@ -155,7 +156,8 @@ public class ManagerController {
     public Response addShiftType(@RequestBody ShiftType shiftType) {
         return managerService.addShiftType(shiftType);
     }
-//
+
+    //
     @LoginRequired
     @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
     public Response getAllShiftType() {
@@ -171,22 +173,36 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @DeleteMapping (URLConfigs.DELETE_SHIFT_TYPE)
+    @DeleteMapping(URLConfigs.DELETE_SHIFT_TYPE)
     public Response deleteShiftType(@RequestBody ShiftType shiftType) {
         return managerService.deleteShiftType(shiftType);
     }
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @PostMapping (URLConfigs.ADD_SHIFT)
+    @PostMapping(URLConfigs.ADD_SHIFT)
     public Response addShift(@RequestBody Shift shift) {
         return managerService.addShift(shift);
     }
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
-    @PostMapping (URLConfigs.SCHEDULE)
+    @PostMapping(URLConfigs.SCHEDULE)
     public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
         return managerService.schedule(shiftDetailRequest);
     }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SCHEDULE)
+    public Response deleteSchedule(@RequestBody List<ShiftDetail> shiftDetails) {
+        return managerService.deleteSchedule(shiftDetails);
     }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping (URLConfigs.GET_ALL_SCHEDULE_BY_DATE)
+    public Response getAllSchedulesOfDay(@RequestBody Date date) {
+        return managerService.getAllSchedulesOfDay(date);
+    }
+
+}

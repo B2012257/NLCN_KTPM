@@ -559,8 +559,27 @@ public class ManagerServiceImpl implements ManagerService {
 
     //
     @Override
-    public Response deleteSchedule(ShiftDetail shiftDetail) {
-        return null;
+    public Response deleteSchedule(List<ShiftDetail> shiftDetails) {
+        Map<String, String> responseList = new HashMap<>();
+        for (ShiftDetail shiftDetail : shiftDetails) {
+            // Kiểm tra id có tồn tại không
+            ShiftDetail shiftDetailDb = shiftDetailRepository.findOneById(shiftDetail.getId());
+
+            if (shiftDetailDb != null) {
+                try {
+                    shiftDetailRepository.delete(shiftDetailDb);
+                    shiftDetailRepository.flush();
+                    responseList.put("Success: " + shiftDetailDb.getStaff().getFullName(), "Xóa thành công nhân sự: " + shiftDetailDb.getStaff().getFullName() + " ra khỏi ca " + shiftDetailDb.getShift().getShiftType().getName() + " " +shiftDetailDb.getShift().getDate().getDate());
+
+                } catch (Exception ex) {
+
+                    System.out.println(ex.getMessage());
+                }
+            }else
+                responseList.put("Error: Xóa chi tiết ca id: "  + shiftDetail.getId() + " không thành công", "Không tồn tại chi tiết ca có id: " + shiftDetail.getId());
+
+        }
+        return new ResponseWithData<>(responseList, HttpStatus.OK, "Phản hồi xóa chi tiết ca làm");
     }
 
     @Override
@@ -570,8 +589,10 @@ public class ManagerServiceImpl implements ManagerService {
 
 
     @Override
-    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date) {
-        return null;
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(com.project.hrm.Models.Date date) {
+        // Tìm ca làm của ngày dc gữi lên
+        List<Shift> shiftOfDate = shiftRepository.findByDate(date);
+        return new ResponseWithData<>(shiftDetailRepository.findByShiftIn(shiftOfDate), HttpStatus.OK, "Danh sách thông tin lịch làm ngày: " + date.getDate());
     }
 
     @Override

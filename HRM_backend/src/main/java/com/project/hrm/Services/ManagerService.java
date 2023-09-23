@@ -96,13 +96,13 @@ public interface ManagerService {
     public Response schedule(ShiftDetailRequest shiftDetailRq);
 
     //Xóa 1 lịch làm (shiftDetail) của 1 ca trong ngày
-    public Response deleteSchedule(ShiftDetail shiftDetail);
+    public Response deleteSchedule(List<ShiftDetail> shiftDetails);
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ca
     public ResponseWithData<List<ShiftDetail>> getAllSchedules();
 
     //Lấy tất cả thông tin ca làm của các nhân viên trong 1 ngày
-    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(Date date);
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(com.project.hrm.Models.Date date);
 
     //Xóa 1 danh sách nhân viên ra khỏi ca
     public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
