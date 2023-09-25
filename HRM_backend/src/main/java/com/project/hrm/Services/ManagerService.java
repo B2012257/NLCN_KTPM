@@ -13,13 +13,13 @@ public interface ManagerService {
     //    ############### Chức năng thông tin cá nhân ###################
     //Phong làm
     //Lấy thông tin cá nhân
-    public Response getInformation(String uid);
-
-    //Thay đổi mật khẩu
-    public Response changePassword(String newPassword, String uid);
-
-    //Đổi ảnh đại diện
-    public Response changeAvatar(String newUrl, String uid);
+//    public Response getInformation(String uid);
+//
+//    //Thay đổi mật khẩu
+//    public Response changePassword(String newPassword, String uid);
+//
+//    //Đổi ảnh đại diện
+//    public Response changeAvatar(String newUrl, String uid);
 
 
     //############ Chức năng thao tác nhân sự ###############

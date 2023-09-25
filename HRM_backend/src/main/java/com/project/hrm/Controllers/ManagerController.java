@@ -50,11 +50,11 @@ public class ManagerController {
     }
 
 
-    @LoginRequired
-    @GetMapping(URLConfigs.GET_INFO_MANAGER)
-    public Response getInformation(@RequestParam(name = "uid") String uid) {
-        return managerService.getInformation(uid);
-    }
+//    @LoginRequired
+//    @GetMapping(URLConfigs.GET_INFO_MANAGER)
+//    public Response getInformation(@RequestParam(name = "uid") String uid) {
+//        return managerService.getInformation(uid);
+//    }
 
     @LoginRequired
     @GetMapping(URLConfigs.GET_INFO_STAFF)
@@ -81,19 +81,19 @@ public class ManagerController {
     }
 
 
-    @LoginRequired
-    @PutMapping(URLConfigs.CHANGE_PASSWORD_STAFF)
-    public Response changePassword(@PathVariable String uid, @RequestParam String newPassword){
-        return managerService.changePassword(newPassword,uid);
+//    @LoginRequired
+//    @PutMapping(URLConfigs.CHANGE_PASSWORD_STAFF)
+//    public Response changePassword(@PathVariable String uid, @RequestParam String newPassword){
+//        return managerService.changePassword(newPassword,uid);
+//
+//    }
 
-    }
 
-
-    @PutMapping(URLConfigs.CHANGE_AVATAR_STAFF)
-    public Response changeAvatar(@RequestParam String urlAvatar, @PathVariable String uid) {
-//        String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
-        return managerService.changeAvatar(urlAvatar, uid);
-    }
+//    @PutMapping(URLConfigs.CHANGE_AVATAR_STAFF)
+//    public Response changeAvatar(@RequestParam String urlAvatar, @PathVariable String uid) {
+////        String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
+//        return managerService.changeAvatar(urlAvatar, uid);
+//    }
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})

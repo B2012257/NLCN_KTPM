@@ -50,55 +50,55 @@ public class ManagerServiceImpl implements ManagerService {
         this.encoder = new Argon2PasswordEncoder(12, 64, 1, 15 * 1024, 2);
     }
 
-    @Override
-    public Response getInformation(String uid) {
-        try {
-            Staff managerId = staffRepository.findByUid(uid);
-            if (managerId != null) {
-                return new ResponseWithData<>(staffRepository.findByUid(uid), HttpStatus.OK, "Có ok");
-            }
-            return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
-        } catch (Exception ex) {
-            // Xử lý ngoại lệ tại đây
-            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình lấy thông tin");
-        }
-    }
+//    @Override
+//    public Response getInformation(String uid) {
+//        try {
+//            Staff managerId = staffRepository.findByUid(uid);
+//            if (managerId != null) {
+//                return new ResponseWithData<>(staffRepository.findByUid(uid), HttpStatus.OK, "Có ok");
+//            }
+//            return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
+//        } catch (Exception ex) {
+//            // Xử lý ngoại lệ tại đây
+//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình lấy thông tin");
+//        }
+//    }
 
-    @Override
-    public Response changePassword(String newPassword, String uid) {
-        Staff managerId = staffRepository.findByUid(uid);
-        if (managerId != null) {
-            try {
-                String newPass = Base64.getEncoder().encodeToString(newPassword.getBytes());
-                managerId.setPassword(newPass);
-
-                staffRepository.saveAndFlush(managerId);
-                return new Response(HttpStatus.OK, "Thay đổi thành công");
-            } catch (Exception e) {
-                return new Response(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình mã hóa mật khẩu");
-            }
-        }
-        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-    }
+//    @Override
+//    public Response changePassword(String newPassword, String uid) {
+//        Staff managerId = staffRepository.findByUid(uid);
+//        if (managerId != null) {
+//            try {
+//                String newPass = Base64.getEncoder().encodeToString(newPassword.getBytes());
+//                managerId.setPassword(newPass);
+//
+//                staffRepository.saveAndFlush(managerId);
+//                return new Response(HttpStatus.OK, "Thay đổi thành công");
+//            } catch (Exception e) {
+//                return new Response(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình mã hóa mật khẩu");
+//            }
+//        }
+//        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
+//    }
 
     //
-    @Override
-    public Response changeAvatar(String newUrl, String uid) {
-        Staff managerId = staffRepository.findById(uid).orElse(null);
-        if (managerId != null) {
-            try{
-                managerId.setUrlAvatar(newUrl);
-                staffRepository.saveAndFlush(managerId);
-                return new Response(HttpStatus.OK, "Thay đổi thành công");
-            } catch (Exception e){
-                return new Response(HttpStatus.OK, "Lỗi trong quá trình thay đổi");
-            }
-
-        }
-        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-
-
-    }
+//    @Override
+//    public Response changeAvatar(String newUrl, String uid) {
+//        Staff managerId = staffRepository.findById(uid).orElse(null);
+//        if (managerId != null) {
+//            try{
+//                managerId.setUrlAvatar(newUrl);
+//                staffRepository.saveAndFlush(managerId);
+//                return new Response(HttpStatus.OK, "Thay đổi thành công");
+//            } catch (Exception e){
+//                return new Response(HttpStatus.OK, "Lỗi trong quá trình thay đổi");
+//            }
+//
+//        }
+//        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
+//
+//
+//    }
 
     //
     @Override
@@ -185,6 +185,7 @@ public class ManagerServiceImpl implements ManagerService {
             staff.setType(newStaff.getType());
             staff.setLocation(newStaff.getLocation());
             staff.setUrlAvatar(newStaff.getUrlAvatar());
+            staff.setGender(newStaff.getGender());
             staffRepository.saveAndFlush(staff);
             return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
         }
@@ -212,12 +213,11 @@ public class ManagerServiceImpl implements ManagerService {
             if (nameStaff != null && !nameStaff.isEmpty()) {
                 return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
             } else {
-                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có tên chứa ký tự '" + partialName + "'");
+                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên ");
             }
         } catch (Exception ex) {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
         }
-
     }
 
     @Override
