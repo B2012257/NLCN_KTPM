@@ -20,6 +20,7 @@ public class Staff {
     private String userName;
     private String password;
     private String fullName;
+    private String gender;
     private String phone;
     private Date beginWork;
     private String location;
@@ -36,6 +37,7 @@ public class Staff {
         this.userName = generateUsernameFromFullName(removeAccents(newStaff.getFullName())); // Lấy giá trị userName từ newStaff
         this.password = passwordStaff;
         this.fullName = newStaff.getFullName();
+        this.gender = newStaff.getGender();
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
         this.location = newStaff.getLocation();
