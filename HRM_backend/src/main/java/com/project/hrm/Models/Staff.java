@@ -24,6 +24,8 @@ public class Staff {
     private String password;
     @NotNull
     private String fullName;
+    private String gender;
+
     @NotNull
     private String phone;
     private Date beginWork;
@@ -44,6 +46,7 @@ public class Staff {
         this.userName = newStaff.getUserName(); // Lấy giá trị userName từ newStaff
         this.password = newStaff.getPassword();
         this.fullName = newStaff.getFullName();
+        this.gender = newStaff.getGender();
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
         this.location = newStaff.getLocation();

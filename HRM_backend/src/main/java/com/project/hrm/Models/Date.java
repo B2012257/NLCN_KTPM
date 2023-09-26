@@ -9,8 +9,10 @@ public class Date {
     @Id
     private java.util.Date date;
 
+    public Date() {}
+
     public Date(java.util.Date date) {
         this.date = date;
     }
-    public Date() {}
+
 }

@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 public class ShiftDetailRequest {
 
-    private Long shift_id;
+    private Integer shift_id;
     private List<ShiftDetail> dataSet;
 }

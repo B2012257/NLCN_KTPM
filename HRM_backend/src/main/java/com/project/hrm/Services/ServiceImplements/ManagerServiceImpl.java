@@ -515,7 +515,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response schedule(ShiftDetailRequest shiftDetailRequests) {
         System.out.println(shiftDetailRequests);
-        Long shift_id = shiftDetailRequests.getShift_id();
+        Integer shift_id = shiftDetailRequests.getShift_id();
         Map<String, String> responseList = new HashMap<>();
         //Check shift_id
         if (shift_id == null) {

@@ -29,12 +29,12 @@ public class WorkRegister {
     }
 
 
-    public WorkRegister(WorkRegister newWorkTime) {
-        this.id = newWorkTime.getId();
-        this.weekName = newWorkTime.getWeekName();
-        this.start = newWorkTime.getStart();
-        this.end = newWorkTime.getEnd();
-        this.date = newWorkTime.getDate();
+    public WorkRegister(WorkRegister newWorkRegister) {
+        this.id = newWorkRegister.getId();
+        this.weekName = newWorkRegister.getWeekName();
+        this.start = newWorkRegister.getStart();
+        this.end = newWorkRegister.getEnd();
+        this.date = newWorkRegister.getDate();
     }
 
     public WorkRegister(String weekName, String start, String end, Date date) {
