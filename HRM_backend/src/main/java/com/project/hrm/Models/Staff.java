@@ -24,11 +24,9 @@ public class Staff {
     private String password;
     @NotNull
     private String fullName;
-<<<<<<< HEAD
     private String gender;
-=======
+
     @NotNull
->>>>>>> main
     private String phone;
     private Date beginWork;
     private String location;
