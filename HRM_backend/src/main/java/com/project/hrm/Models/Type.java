@@ -9,7 +9,9 @@ public class Type {
     @Id
     @GeneratedValue
     private Integer id;
+
     private String name;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salary_level")
     private Salary salary;
@@ -25,5 +27,8 @@ public class Type {
     public Type(String name, Salary salary) {
         this.name = name;
         this.salary = salary;
+    }
+    public Type(String name) {
+        this.name = name;
     }
 }

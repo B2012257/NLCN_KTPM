@@ -14,4 +14,5 @@ public class Date {
     public Date(java.util.Date date) {
         this.date = date;
     }
+
 }

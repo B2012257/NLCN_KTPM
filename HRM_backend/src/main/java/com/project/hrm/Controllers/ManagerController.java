@@ -1,54 +1,54 @@
-//package com.project.hrm.Controllers;
-//
-//import com.project.hrm.Configs.URLConfigs;
-//import com.project.hrm.Models.*;
-//import com.project.hrm.Utils.LoginRequired;
-//import com.project.hrm.Utils.RoleRequired;
-//import com.project.hrm.payloads.Request.ShiftDetailRequest;
-//import com.project.hrm.payloads.Response.Response;
-//import com.project.hrm.Services.ServiceImplements.ManagerServiceImpl;
-//import com.project.hrm.payloads.Response.ResponseWithData;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping(path = URLConfigs.MANAGER_SERVICE_URL)
-//public class ManagerController {
-//    @Autowired
-//    ManagerServiceImpl managerService;
-//
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping(URLConfigs.ADD_ROLE)
-//    public Response addRole(@RequestBody Role role) {
-//        return managerService.addRole(role);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @GetMapping(URLConfigs.GET_ALL_ROLE)
-//    public ResponseWithData<List<Role>> getAllRole() {
-//        return managerService.getAllRole();
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @GetMapping(URLConfigs.EDIT_ROLE)
-//    public Response editRole(Role role) {
-//        return managerService.editRole(role);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping(URLConfigs.ADD_SALARY)
-//    public Response addSalary(@RequestBody Salary salary) {
-//        return managerService.addSalary(salary);
-//    }
-//
+package com.project.hrm.Controllers;
+
+import com.project.hrm.Configs.URLConfigs;
+import com.project.hrm.Models.*;
+import com.project.hrm.Utils.LoginRequired;
+import com.project.hrm.Utils.RoleRequired;
+import com.project.hrm.payloads.Request.ShiftDetailRequest;
+import com.project.hrm.payloads.Response.Response;
+import com.project.hrm.Services.ServiceImplements.ManagerServiceImpl;
+import com.project.hrm.payloads.Response.ResponseWithData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(path = URLConfigs.MANAGER_SERVICE_URL)
+public class ManagerController {
+    @Autowired
+    ManagerServiceImpl managerService;
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_TYPE)
+    public Response addType(@RequestBody Type type) {
+        return managerService.addType(type);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.GET_ALL_TYPE)
+    public Response getAllType() {
+        return managerService.getAllType();
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PutMapping(URLConfigs.EDIT_TYPE)
+    public Response editType(@RequestBody Type type) {
+        return managerService.editType(type);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SALARY)
+    public Response addSalary(@RequestBody Salary salary) {
+        return managerService.addSalary(salary);
+    }
+
+    //
 //    @LoginRequired
 //    @GetMapping(URLConfigs.GET_INFO_MANAGER)
 //    public Response getInformation(@RequestParam(name = "uid") String uid) {
@@ -61,12 +61,14 @@
 //        return managerService.getStaff(uid);
 //    }
 //
-//    @LoginRequired
-//    @PostMapping(URLConfigs.ADD_STAFF)
-//    public Response addStaff(@RequestBody Staff newStaff){
-//            return managerService.addStaff(newStaff);
-//    }
-//    @LoginRequired
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_STAFF)
+    public Response addStaff(@RequestBody Staff newStaff) {
+        return managerService.addStaff(newStaff);
+    }
+
+    //    @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_INFO_MANAGER)
 //    public Response editProfileInformation(@RequestBody Manager managerNewInfo){
 //        return managerService.editProfileInformation(managerNewInfo);
@@ -92,45 +94,50 @@
 //        return managerService.changeAvatar(newUrl, uid);
 //    }
 //
-//    @PutMapping(URLConfigs.EDIT_STAFF)
-//    public Response editStaff(@RequestBody Staff newStaff) {
-//        return managerService.editStaff(newStaff);
-//    }
-//
-//    @DeleteMapping(URLConfigs.DELETE_STAFF)
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PutMapping(URLConfigs.EDIT_STAFF)
+    public Response editStaff(@RequestBody Staff newStaff) {
+        return managerService.editStaff(newStaff);
+    }
+
+    //    @DeleteMapping(URLConfigs.DELETE_STAFF)
 //    public  Response deleteStaff(@PathVariable String uid){
 //        return managerService.deleteStaff(uid);
 //    }
 //
-//    @GetMapping(URLConfigs.SEARCH_STAFF) //Lỗi không tìm thấy dữ liệu bảng staff
-//    public Response searchStaffByFullName(@RequestParam String fullName){
-//        return managerService.searchStaffByFullName(fullName);
-//    }
-//
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.SEARCH_STAFF)
+    public Response searchStaffByFullName(@RequestParam String fullName) {
+        return managerService.searchStaffByFullName(fullName);
+    }
+
+    //
 //
 //    @PutMapping(URLConfigs.EDIT_ROLE)
 //    public Response editRole(@RequestBody Role role){
 //        return managerService.editRole(role);
 //    }
 //
-//    @DeleteMapping(URLConfigs.DELETE_ROLE)
-//    public Response deleteRole(@RequestBody Role role){
-//        return managerService.deleteRole(role);
-//    }
-//
+    @DeleteMapping(URLConfigs.DELETE_TYPE)
+    public Response deleteType(@RequestBody Type type) {
+        return managerService.deleteType(type);
+    }
+
+    //
 //    @DeleteMapping(URLConfigs.DELETE_SALARY)
 //    public Response deleteSalary(@RequestBody Salary salary){
 //        return managerService.deleteSalary(salary);
 //    }
 //
-//    @PostMapping(URLConfigs.ADD_SHIFTTYPE)
-//    public  Response addShiftType(@RequestBody ShiftType newShiftType){
-//        return managerService.addShiftType(newShiftType);
-//    @GetMapping(URLConfigs.GET_ALL_SALARY)
-//    public ResponseWithData<List<Salary>> getAllSalary() {
-//        return managerService.getAllSalary();
-//    }
-//
+
+    @GetMapping(URLConfigs.GET_ALL_SALARY)
+    public ResponseWithData<List<Salary>> getAllSalary() {
+        return managerService.getAllSalary();
+    }
+
+    //
 //    @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_SALARY)
 //    public Response editSalary(@RequestBody Salary salary) {
@@ -143,44 +150,59 @@
 //        return managerService.deleteSalary(salary);
 //    }
 //
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping(URLConfigs.ADD_SHIFT_TYPE)
-//    public Response addShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.addShiftType(shiftType);
-//    }
-//
-//    @LoginRequired
-//    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
-//    public Response getAllShiftType() {
-//        return managerService.getAllShiftType();
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PutMapping(URLConfigs.EDIT_SHIFT_TYPE)
-//    public Response editShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.editShiftType(shiftType);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @DeleteMapping (URLConfigs.DELETE_SHIFT_TYPE)
-//    public Response deleteShiftType(@RequestBody ShiftType shiftType) {
-//        return managerService.deleteShiftType(shiftType);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping (URLConfigs.ADD_SHIFT)
-//    public Response addShift(@RequestBody Shift shift) {
-//        return managerService.addShift(shift);
-//    }
-//
-//    @LoginRequired
-//    @RoleRequired(value = {"Quản lý"})
-//    @PostMapping (URLConfigs.SCHEDULE)
-//    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
-//        return managerService.schedule(shiftDetailRequest);
-//    }
-//}
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SHIFT_TYPE)
+    public Response addShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.addShiftType(shiftType);
+    }
+
+    //
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
+    public Response getAllShiftType() {
+        return managerService.getAllShiftType();
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PutMapping(URLConfigs.EDIT_SHIFT_TYPE)
+    public Response editShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.editShiftType(shiftType);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping(URLConfigs.DELETE_SHIFT_TYPE)
+    public Response deleteShiftType(@RequestBody ShiftType shiftType) {
+        return managerService.deleteShiftType(shiftType);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.ADD_SHIFT)
+    public Response addShift(@RequestBody Shift shift) {
+        return managerService.addShift(shift);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @PostMapping(URLConfigs.SCHEDULE)
+    public Response schedule(@RequestBody ShiftDetailRequest shiftDetailRequest) {
+        return managerService.schedule(shiftDetailRequest);
+    }
+
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SCHEDULE)
+    public Response deleteSchedule(@RequestBody List<ShiftDetail> shiftDetails) {
+        return managerService.deleteSchedule(shiftDetails);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping (URLConfigs.GET_ALL_SCHEDULE_BY_DATE)
+    public Response getAllSchedulesOfDay(@RequestBody Date date) {
+        return managerService.getAllSchedulesOfDay(date);
+    }
+
+}

@@ -32,7 +32,9 @@ public class RoleInterceptor implements HandlerInterceptor {
                 String[] requiredRoles = roleRequired.value();
                 String token = getTokenFromCookie(request); //Lấy token từ cookie request
                 String userRole = jwtTokenUtil.getRoleFromToken(token);  //Dùng jwt until giải mã token ra để tìm role
-                System.out.println(userRole);
+                if(userRole.toLowerCase().contains("quan ly") || userRole.toLowerCase().contains("quản lý"))
+                    userRole = "Quản lý";
+                System.out.println(userRole + " type");
                 //Nếu đúng role mới được truy cập (đáp ứng 1 trong các role là được)
                 if (!Arrays.asList(requiredRoles).contains(userRole)) {
 

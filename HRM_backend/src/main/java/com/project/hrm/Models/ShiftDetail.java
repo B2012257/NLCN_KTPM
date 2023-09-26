@@ -26,6 +26,7 @@ public class ShiftDetail {
     }
 
     public ShiftDetail(ShiftDetail newShiftDetail) {
+        this.id = newShiftDetail.getId();
         this.overTime = newShiftDetail.getOverTime();
         this.staff = newShiftDetail.getStaff();
         this.shift = newShiftDetail.getShift();

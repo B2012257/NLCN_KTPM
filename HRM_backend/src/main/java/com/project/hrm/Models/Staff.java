@@ -3,6 +3,7 @@ package com.project.hrm.Models;
 import com.project.hrm.Configs.ValueConfigs;
 import com.project.hrm.Utils.UidUtil;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Date;
@@ -17,25 +18,35 @@ public class Staff {
     @Id
     private String uid;
 
+    @NotNull
     private String userName;
+    @NotNull
     private String password;
+    @NotNull
     private String fullName;
+<<<<<<< HEAD
     private String gender;
+=======
+    @NotNull
+>>>>>>> main
     private String phone;
     private Date beginWork;
     private String location;
     private String bankName;
     private String bankAccount;
     private String urlAvatar;
+
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
+
     public Staff() {
     }
+
     public Staff(Staff newStaff) {
         this.uid = new UidUtil().GenerateUid(ValueConfigs.uidPrefix);
-        this.userName = generateUsernameFromFullName(removeAccents(newStaff.getFullName())); // Lấy giá trị userName từ newStaff
-        this.password = passwordStaff;
+        this.userName = newStaff.getUserName(); // Lấy giá trị userName từ newStaff
+        this.password = newStaff.getPassword();
         this.fullName = newStaff.getFullName();
         this.gender = newStaff.getGender();
         this.phone = newStaff.getPhone();
@@ -43,8 +54,8 @@ public class Staff {
         this.location = newStaff.getLocation();
         this.bankName = newStaff.getBankName();
         this.bankAccount = newStaff.getBankAccount();
-        this.type =newStaff.getType();
-        this.urlAvatar=newStaff.getUrlAvatar();
+        this.type = newStaff.getType();
+        this.urlAvatar = newStaff.getUrlAvatar();
 
     }
 
@@ -53,6 +64,7 @@ public class Staff {
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .toLowerCase();
     }
+
     public String generateUsernameFromFullName(String fullName) {
         // Xử lý và chuyển đổi fullname thành username ngẫu nhiên
         String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
@@ -76,10 +88,6 @@ public class Staff {
 //        // Đặt giá trị username
 //        this.userName = usernameBuilder.toString();
 //    }
-
-
-
-
 
 
 }
