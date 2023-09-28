@@ -105,7 +105,7 @@ public interface ManagerService {
     public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(com.project.hrm.Models.Date date);
 
     //Xóa 1 danh sách nhân viên ra khỏi ca
-    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
+//    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
 
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ca
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);

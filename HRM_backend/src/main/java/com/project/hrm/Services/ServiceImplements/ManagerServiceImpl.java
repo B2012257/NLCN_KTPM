@@ -8,10 +8,7 @@ import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -557,7 +554,7 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    //
+    //Xoá nhân sự ra khỏi ca làm, có thể xo luôn tất cả nhân viên trong ca và đồng thời xoá luôn ca đó
     @Override
     public Response deleteSchedule(List<ShiftDetail> shiftDetails) {
         Map<String, String> responseList = new HashMap<>();
@@ -595,10 +592,10 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<>(shiftDetailRepository.findByShiftIn(shiftOfDate), HttpStatus.OK, "Danh sách thông tin lịch làm ngày: " + date.getDate());
     }
 
-    @Override
-    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
-        return null;
-    }
+//    @Override
+//    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
+//        return null;
+//    }
 
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
