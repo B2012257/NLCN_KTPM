@@ -1,23 +1,28 @@
+<!-- Thái -->
+<!-- //Trang thiết lập thông tin quản lý -->
+<!-- Thêm lương, loại nhân sự, loại ca làm  -->
 <!DOCTYPE html>
 <html lang="en">
-<!-- Thái -->
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./assets/image/HRM.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../assets/css/reset.css">
-    <title>Thêm nhân sự</title>
+    <link rel="stylesheet" href="./assets/css/reset.css">
+
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <title>Thiết lập thông tin quản lý</title>
 </head>
 
 <body>
     <div id="header bg-dark">
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
-            <div class=" container-fluid">
-                <a class="navbar-brand fs-3" href="/src/index.html">SUBA MANAGER</a>
+            <div class="container-fluid">
+                <a class="navbar-brand fs-3" href="">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,21 +30,17 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link fs-6" aria-current="page" href="../index.html">Trang chủ</a>
+                            <a class="nav-link fs-6" aria-current="page" href="#">Trang chủ</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-primary fs-6 " href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Quản lý nhân sự
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item active" href="./updateEmployee.html">Thêm nhân
-                                        sự</a>
+                                <li><a class="dropdown-item" href="./pages/updateEmployee.html">Thêm nhân sự</a></li>
+                                <li><a class="dropdown-item" href="./pages/listEmployee.html">Danh sách nhân sự</a>
                                 </li>
-                                <li><a class="dropdown-item " href="./listEmployee.html">Danh sách nhân sự</a>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#"> </a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -48,9 +49,9 @@
                                 Quản lý làm việc
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="./shedule.html">Cập nhật & Xem
+                                <li><a class="dropdown-item" href="./pages/shedule.html">Cập nhật & Xem
                                         lịch</a></li>
-                                <li><a class="dropdown-item" href="#">Chấm công</a></li>
+                                <li><a class="dropdown-item" href="./pages/workChecked.html">Chấm công</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -65,6 +66,11 @@
                                 <li><a class="dropdown-item" href="#"> Về lương</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6 text-primary active" role="button" href="./pages/setupCompany.html">
+                                Cài đặt thông tin quản lý
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="d-flex">
@@ -74,7 +80,7 @@
                                 Xin chào Admin
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="./accountInformation.html">Thông tin tài
+                                <li><a class="dropdown-item" href="./pages/accountInformation.html">Thông tin tài
                                         khoản</a></li>
 
                                 <li>
@@ -89,11 +95,12 @@
         </nav>
     </div>
     <main class="container main_content mt-3">
-
         <div class="row">
+            <div class="row">
+                <h3>Thiết lập bậc lương</h3>
+            </div>
             <div class="col">
-
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item text-primary">Quản lý nhân sự</li>
                         <li class="breadcrumb-item active">Thêm nhân sự</li>
@@ -285,9 +292,9 @@
 
     </main>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-<script src="/src/assets/javascript/updateEmployee.js"></script>
 
 </html>
