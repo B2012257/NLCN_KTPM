@@ -28,9 +28,9 @@ public class URLConfigs {
 
     public static final String EDIT_STAFF="/editStaff";
 
-    public static final String CHANGE_PASSWORD_STAFF="/changePass";
+    public static final String CHANGE_PASSWORD_STAFF="/changePass/{uid}";
 
-    public static final String CHANGE_AVATAR_STAFF="/changeAvatar";
+    public static final String CHANGE_AVATAR_STAFF="/changeAvatar/{uid}";
 
     public static final String GET_ALL_SCHEDULE_BETWEEN="/getAllSchedule";
 
@@ -51,6 +51,7 @@ public class URLConfigs {
 
     public static final String GET_INFO_STAFF ="/infoStaff";
     public static final String ADD_STAFF ="/addStaff";
+    public static final String DELETE_STAFF ="/deleteStaff/{uid}";
     public static final String SEARCH_STAFF = "/search/staff";
 
     public static final String GET_ALL_STAFF ="/allStaff";
