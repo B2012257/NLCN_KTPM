@@ -13,13 +13,13 @@ public interface ManagerService {
     //    ############### Chức năng thông tin cá nhân ###################
     //Phong làm
     //Lấy thông tin cá nhân
-    public Response getInformation(String uid);
-
-    //Thay đổi mật khẩu
-    public Response changePassword(String newPassword, String uid);
-
-    //Đổi ảnh đại diện
-    public Response changeAvatar(String newUrl, String uid);
+//    public Response getInformation(String uid);
+//
+//    //Thay đổi mật khẩu
+//    public Response changePassword(String newPassword, String uid);
+//
+//    //Đổi ảnh đại diện
+//    public Response changeAvatar(String newUrl, String uid);
 
 
     //############ Chức năng thao tác nhân sự ###############
@@ -28,7 +28,7 @@ public interface ManagerService {
     public Response getStaff(String uid);
 
     //Lấy thông tin 1 danh sách nhân sự
-    public ResponseWithData<List<Staff>> getAllStaff();
+    public Response getAllStaff();
 
     //Thêm mới 1 nhân sự
     public Response addStaff(Staff newStaff);
@@ -40,7 +40,7 @@ public interface ManagerService {
     public Response deleteStaff(String uid);
 
     //Tìm kiếm theo họ và tên nhân viên
-    public Response searchStaffByFullName(String fullName);
+    public Response searchStaffByPartialName(String partialName);
 
 
     //    ############## Chưc năng thao tác lịch làm việc #####################
@@ -105,7 +105,7 @@ public interface ManagerService {
     public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfDay(com.project.hrm.Models.Date date);
 
     //Xóa 1 danh sách nhân viên ra khỏi ca
-    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
+//    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
 
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ca
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);

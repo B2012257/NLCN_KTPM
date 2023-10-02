@@ -25,12 +25,14 @@ public class StaffController {
     private StaffServiceImpl staffService;
 
     @LoginRequired
+
     @GetMapping(URLConfigs.GET_INFO_STA)
     public ResponseWithData<Staff> getInformation(@RequestParam(name = "Uid") String Uid){
         return staffService.getInformation(Uid);
     }
 
     @LoginRequired
+
     @PutMapping (URLConfigs.EDIT_STAFF)
     public Response editProfileInformation(@RequestBody Staff newStaffInfo){
         return staffService.editProfileInformation(newStaffInfo);
@@ -38,12 +40,14 @@ public class StaffController {
 
 
     @LoginRequired
+
     @PutMapping(URLConfigs.CHANGE_PASSWORD_STAFF)
     public Response changePassword(@RequestParam("newPass") String newPassword,@RequestParam(name = "Uid") String Uid ){
         return staffService.changePassword(newPassword,Uid);
     }
 
     @LoginRequired
+
     @PutMapping(URLConfigs.CHANGE_AVATAR_STAFF)
     public Response changeAvatar(@RequestParam(name = "newAvatar") String newUrl,@RequestParam(name = "Uid") String Uid ){
         return staffService.changeAvatar(newUrl,Uid);
@@ -51,13 +55,16 @@ public class StaffController {
 
 
     @LoginRequired
+
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BETWEEN)
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(@RequestParam("start") Date start, @RequestParam("end") Date end){
         return staffService.getAllMyScheduleBetweenStartAndEnd(start,end);
     }
 
 
+
     @LoginRequired
+
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
     public Response registerSchedule(@RequestBody WorkRegister newWorkRegister){
         return staffService.registerSchedule(newWorkRegister);
@@ -65,6 +72,7 @@ public class StaffController {
 
 
     @LoginRequired
+
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
     public Response editRegisterSchedule(@RequestBody List<WorkRegister> workRegisters){
         return staffService.editRegisterSchedule(workRegisters);

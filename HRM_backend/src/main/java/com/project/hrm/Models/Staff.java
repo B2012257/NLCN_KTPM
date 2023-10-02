@@ -28,6 +28,7 @@ public class Staff {
 
     @NotNull
     private String phone;
+    private String gender;
     private Date beginWork;
     private String location;
     private String bankName;
@@ -54,6 +55,7 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.type = newStaff.getType();
         this.urlAvatar = newStaff.getUrlAvatar();
+        this.gender = newStaff.getGender();
 
     }
 

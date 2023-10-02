@@ -8,20 +8,16 @@ import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@Service
+@Service//import com.project.hrm.Models.Date;
+
 public class ManagerServiceImpl implements ManagerService {
 
     @Autowired
@@ -51,44 +47,45 @@ public class ManagerServiceImpl implements ManagerService {
         this.encoder = new Argon2PasswordEncoder(12, 64, 1, 15 * 1024, 2);
     }
 
-    @Override
-    public Response getInformation(String uid) {
-//        Manager managerId = managerRepository.findByUid(uid);
-//
-//        if(managerId != null){
-//            return new ResponseWithData<>(managerRepository.findByUid(uid), HttpStatus.OK, "Có ok");
+//    @Override
+//    public Response getInformation(String uid) {
+//        try {
+//            Staff managerId = staffRepository.findByUid(uid);
+//            if (managerId != null) {
+//                return new ResponseWithData<>(staffRepository.findByUid(uid), HttpStatus.OK, "Có ok");
+//            }
+//            return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
+//        } catch (Exception ex) {
+//            // Xử lý ngoại lệ tại đây
+//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình lấy thông tin");
 //        }
-//        return new Response(HttpStatus.NOT_FOUND, "Không tồn tại tài khoản");
-        return null;
-    }
+//    }
 
-    @Override
-    public Response changePassword(String newPassword, String uid) {
-//        Manager managerId = managerRepository.findByUid(uid);
+//    @Override
+//    public Response changePassword(String newPassword, String uid) {
+//        Staff managerId = staffRepository.findByUid(uid);
 //        if (managerId != null) {
 //            try {
 //                String newPass = Base64.getEncoder().encodeToString(newPassword.getBytes());
 //                managerId.setPassword(newPass);
 //
-//                managerRepository.saveAndFlush(managerId);
+//                staffRepository.saveAndFlush(managerId);
 //                return new Response(HttpStatus.OK, "Thay đổi thành công");
 //            } catch (Exception e) {
 //                return new Response(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình mã hóa mật khẩu");
 //            }
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-        return null;
-
-    }
+//    }
 
     //
-    @Override
-    public Response changeAvatar(String newUrl, String uid) {
-//        Manager managerId = managerRepository.findById(uid).orElse(null);
+//    @Override
+//    public Response changeAvatar(String newUrl, String uid) {
+//        Staff managerId = staffRepository.findById(uid).orElse(null);
 //        if (managerId != null) {
 //            try{
 //                managerId.setUrlAvatar(newUrl);
-//                managerRepository.saveAndFlush(managerId);
+//                staffRepository.saveAndFlush(managerId);
 //                return new Response(HttpStatus.OK, "Thay đổi thành công");
 //            } catch (Exception e){
 //                return new Response(HttpStatus.OK, "Lỗi trong quá trình thay đổi");
@@ -96,29 +93,35 @@ public class ManagerServiceImpl implements ManagerService {
 //
 //        }
 //        return new Response(HttpStatus.NOT_FOUND, "Không thể thay đổi");
-        return null;
-
-    }
+//
+//
+//    }
 
     //
     @Override
     public Response getStaff(String uid) {
-//        Staff staffId = staffRepository.findByUid(uid);
-//        if(staffId != null){
-//            return new ResponseWithData<>(staffRepository.findByUid(uid),HttpStatus.OK, "Tìm kiếm thành công") ;
-//        }
-//        return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
-        return null;
-
+        try {
+            Staff staffId = staffRepository.findByUid(uid);
+            if (staffId != null) {
+                return new ResponseWithData<>(staffId, HttpStatus.OK, "Tìm kiếm thành công");
+            }
+            return new Response(HttpStatus.NOT_FOUND, "Không có nhân viên này");
+        } catch (Exception ex) {
+            // Xử lý ngoại lệ tại đây
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình lấy thông tin nhân viên");
+        }
     }
 
     //
     @Override
-    public ResponseWithData<List<Staff>> getAllStaff() {
-//
-//        return new ResponseWithData<>(staffRepository.findAll(),HttpStatus.OK,"Tìm kiếm thành công");
-        return null;
-//
+    public Response getAllStaff() {
+        try {
+            List<Staff> staffList = staffRepository.findAll();
+            return new ResponseWithData<>(staffList, HttpStatus.OK, "Tìm kiếm thành công");
+        } catch (Exception ex) {
+            // Xử lý ngoại lệ tại đây
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình lấy thông tin nhân viên");
+        }
     }
 
     //
@@ -179,6 +182,7 @@ public class ManagerServiceImpl implements ManagerService {
             staff.setType(newStaff.getType());
             staff.setLocation(newStaff.getLocation());
             staff.setUrlAvatar(newStaff.getUrlAvatar());
+            staff.setGender(newStaff.getGender());
             staffRepository.saveAndFlush(staff);
             return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
         }
@@ -188,33 +192,29 @@ public class ManagerServiceImpl implements ManagerService {
     // Xóa nhân sự, xóa các bảng liên quan trước bảng workRegister, Bảng timeKeeping, shiftDetail,
     @Override
     public Response deleteStaff(String uid) {
-
-//        try {
-//            staffRepository.deleteById(uid);
-//            return new Response(HttpStatus.OK, "Xóa thành công");
-//        } catch (Exception ex) {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
-//        }
-        return null;
-
+        try {
+            staffRepository.deleteById(uid);
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        } catch (Exception ex) {
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
+        }
     }
 
     //
     @Override
-    public Response searchStaffByFullName(String fullName) {
+    public Response searchStaffByPartialName(String partialName) {
         try {
-            System.out.println("Fullname" + fullName);
-            List<Staff> nameStaff = staffRepository.findAllByFullName(fullName);
-            System.out.println("Name staff" + nameStaff);
+            System.out.println("Partial Name: " + partialName);
+            List<Staff> nameStaff = staffRepository.findByFullNameContainingIgnoreCase(partialName);
+            System.out.println("Name staff: " + nameStaff);
             if (nameStaff != null && !nameStaff.isEmpty()) {
                 return new ResponseWithData<>(nameStaff, HttpStatus.OK, "Tìm kiếm thành công");
             } else {
-                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên nào có fullname đó");
+                return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không có nhân viên ");
             }
         } catch (Exception ex) {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tìm kiếm nhân viên");
         }
-
     }
 
     @Override
@@ -557,7 +557,7 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    //
+    //Xoá nhân sự ra khỏi ca làm, có thể xo luôn tất cả nhân viên trong ca và đồng thời xoá luôn ca đó
     @Override
     public Response deleteSchedule(List<ShiftDetail> shiftDetails) {
         Map<String, String> responseList = new HashMap<>();
@@ -595,10 +595,10 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<>(shiftDetailRepository.findByShiftIn(shiftOfDate), HttpStatus.OK, "Danh sách thông tin lịch làm ngày: " + date.getDate());
     }
 
-    @Override
-    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
-        return null;
-    }
+//    @Override
+//    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
+//        return null;
+//    }
 
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = URLConfigs.MANAGER_SERVICE_URL)
@@ -48,19 +49,19 @@ public class ManagerController {
         return managerService.addSalary(salary);
     }
 
-    //
+
 //    @LoginRequired
 //    @GetMapping(URLConfigs.GET_INFO_MANAGER)
 //    public Response getInformation(@RequestParam(name = "uid") String uid) {
 //        return managerService.getInformation(uid);
 //    }
-//
-//    @LoginRequired
-//    @GetMapping(URLConfigs.GET_INFO_STAFF)
-//    public Response getStaff(@RequestParam(name = "uid") String uid){
-//        return managerService.getStaff(uid);
-//    }
-//
+
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_INFO_STAFF)
+    public Response getStaff(@RequestParam(name = "uid") String uid){
+        return managerService.getStaff(uid);
+    }
+
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_STAFF)
@@ -68,32 +69,32 @@ public class ManagerController {
         return managerService.addStaff(newStaff);
     }
 
-    //    @LoginRequired
+//        @LoginRequired
 //    @PutMapping(URLConfigs.EDIT_INFO_MANAGER)
-//    public Response editProfileInformation(@RequestBody Manager managerNewInfo){
+//    public Response editProfileInformation(@RequestBody Staff managerNewInfo){
 //        return managerService.editProfileInformation(managerNewInfo);
 //    }
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_STAFF)
+    public Response getAllStaff(){
+        return managerService.getAllStaff();
+    }
+
+
 //    @LoginRequired
-//    @GetMapping(URLConfigs.GET_ALL_STAFF)
-//    public ResponseWithData<List<Staff>> getAllStaff(){
-//        return managerService.getAllStaff();
-//    }
-//
-//
-//    @LoginRequired
-//    @PutMapping(URLConfigs.CHANGE_PASSWORD)
-//    public Response changePassword(@RequestParam String password, @PathVariable String uid){
-//        return managerService.changePassword(password,uid);
+//    @PutMapping(URLConfigs.CHANGE_PASSWORD_STAFF)
+//    public Response changePassword(@PathVariable String uid, @RequestParam String newPassword){
+//        return managerService.changePassword(newPassword,uid);
 //
 //    }
-//
-//
-//    @PutMapping(URLConfigs.CHANGE_AVATAR)
-//    public Response changeAvatar(@RequestBody Map<String, String> requestBody, @PathVariable String uid) {
-//        String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
-//        return managerService.changeAvatar(newUrl, uid);
+
+
+//    @PutMapping(URLConfigs.CHANGE_AVATAR_STAFF)
+//    public Response changeAvatar(@RequestParam String urlAvatar, @PathVariable String uid) {
+////        String newUrl = requestBody.get("urlAvatar");  // Lấy giá trị của trường urlAvatar ra và gọi phương thức dịch vụ:
+//        return managerService.changeAvatar(urlAvatar, uid);
 //    }
-//
+
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PutMapping(URLConfigs.EDIT_STAFF)
@@ -101,16 +102,16 @@ public class ManagerController {
         return managerService.editStaff(newStaff);
     }
 
-    //    @DeleteMapping(URLConfigs.DELETE_STAFF)
-//    public  Response deleteStaff(@PathVariable String uid){
-//        return managerService.deleteStaff(uid);
-//    }
-//
+    @DeleteMapping(URLConfigs.DELETE_STAFF)
+    public  Response deleteStaff(@PathVariable String uid){
+        return managerService.deleteStaff(uid);
+    }
+
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.SEARCH_STAFF)
-    public Response searchStaffByFullName(@RequestParam String fullName) {
-        return managerService.searchStaffByFullName(fullName);
+    public Response searchStaffByPartialName(@RequestParam String partialName) {
+        return managerService.searchStaffByPartialName(partialName);
     }
 
     //
