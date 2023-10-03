@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/schedule.css">
+    <title>Quản lý lịch làm</title>
+</head>
+
+<body>
+    <div id="header bg-dark">
+        <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
+            data-bs-theme="dark">
+            <div class=" container-fluid">
+                <a class="navbar-brand fs-3" href="./indexStaff.html">SUBA MANAGER</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                       
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                            <li class="nav-item">
+                                <a class="nav-link fs-6 " aria-current="page" href="./registerShifts.html">Đăng ký ca làm</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link fs-6 text-primary" href="#" role="button" aria-expanded="false">
+                                    Xem lịch làm
+                                </a>
+                            </li>
+    
+                        </ul>
+                    </ul>
+
+                    <div class="d-flex">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Xin chào Admin
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="./accountInformation.html">Thông tin tài
+                                        khoản</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main class="container main_content mt-3">
+
+        <div class="row">
+            <div class="col">
+
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item text-primary">Xem lịch làm việc</li>
+                    </ol>
+                </nav>
+                <div class="text-success">
+                    <hr>
+                </div>
+                <div class="d-flex gap-4">
+                    <!-- <div>
+                        <h4>Ngày</h4>
+                        <input type="date" id="dateInput">
+                    </div> -->
+                   
+                </div>
+            </div>
+        </div>
+        
+       
+       <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white fw-bold">
+                    Lịch ca <span style="padding: 0 20px;" id="result"></span>
+                </div>
+                <div class="card-body overflow-x-scroll">
+
+                    <table class="table table-bordered table-xl align-middle">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">
+                                </th>
+                                <th scope="col">Ca sáng <br> (7.00 - 12.00)
+                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                                    <br>
+                                   
+                                </th>
+                                <th scope="col">Ca chiều <br> (12.00 - 17.00)
+                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                                    <br>
+                                    
+                                </th>
+                                <th scope="col">Ca tối <br> (17.00 - 22.00)
+                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                                    <br>
+                                 
+                                </th>
+                               
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <th scope="row">Thứ 2</th>
+                                <td class=" add_employee_schedule_btn">
+                                  <span class="badge bg-primary">
+                                    Phạm Hoàng Phong
+                                  </span>
+                                  <span class="badge bg-primary">
+                                    Phạm Quang Thái 
+                                  </span>
+                                  <span class="badge bg-primary">
+                                    Nguyễn Trung Tín
+                                  </span>
+                                  <span class="badge bg-primary">
+                                    Phạm Hoàng Phong
+                                  </span>
+                                  <span class="badge bg-primary">
+                                    Phạm Quang Thái 
+                                  </span>
+                                  <span class="badge bg-primary">
+                                    Nguyễn Trung Tín
+                                  </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                                <th scope="row">Thứ 3</th>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                               
+                            </tr>
+                                <th scope="row">Thứ 4</th>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                                <th scope="row">Thứ 5</th>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    <span class="badge bg-primary">
+                                        Phạm Hoàng Phong
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Phạm Quang Thái 
+                                      </span>
+                                      <span class="badge bg-primary">
+                                        Nguyễn Trung Tín
+                                      </span>
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                                <th scope="row">Thứ 6</th>
+                                <td class=" add_employee_schedule_btn">
+                                  
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                   
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                                <th scope="row">Thứ 7</th>
+                                <td class=" add_employee_schedule_btn">
+                                  
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                   
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                                <th scope="row">Chủ nhật</th>
+                                <td class=" add_employee_schedule_btn">
+                                  
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                    
+                                </td>
+                                <td class=" add_employee_schedule_btn">
+                                   
+                                </td>
+                               
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+       
+    </div>
+  
+       
+
+    </main>
+</body>
+<script src="../script/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous">
+</script>
+    
+
+</html>
