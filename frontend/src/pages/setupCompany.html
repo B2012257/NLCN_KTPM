@@ -11,9 +11,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../assets/css/reset.css">
 
-    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/setupCompany.css">
     <title>Thiết lập thông tin quản lý</title>
 </head>
 
@@ -22,7 +25,7 @@
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand fs-3" href="">HR-Management</a>
+                <a class="navbar-brand fs-3" href="../">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -97,204 +100,248 @@
     <main class="container main_content mt-3">
         <div class="row">
             <div class="row">
-                <h3>Thiết lập bậc lương</h3>
-            </div>
-            <div class="col">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item text-primary">Quản lý nhân sự</li>
-                        <li class="breadcrumb-item active">Thêm nhân sự</li>
-
-                    </ol>
-                </nav>
-                <div class="text-success">
-                    <hr>
-                </div>
+                <h3>I. Thiết lập bậc lương</h3>
             </div>
         </div>
-        <div class="row add_employee mt-3">
+        <div class="row mt-3 salarySetting">
             <form class="row col">
-                <div class="col-12 col-xl-6 mb-2">
-                    <input type="text" class="form-control" placeholder="Họ và tên" aria-label="FullName">
+                <div class="col-12 col-xl-12 mb-2 mt-2 ">
+                    <table class="table text-center rounded salary-setting-table">
+                        <thead class="rounded">
+                            <tr class="table-success rounded">
+                                <th scope="col">Tên bậc lương</th>
+                                <th scope="col">Lương cơ bản</th>
+                                <th scope="col">Lương tăng ca</th>
+                                <th scope="col">Trợ cấp</th>
+                                <th scope="col">Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- <tr>
+                                <td>Quản lý</td>
+                                <td>50.000</td>
+                                <td>60.000</td>
+                                <td>500.000</td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phụ bếp 1</td>
+                                <td>20.000</td>
+                                <td>25.000</td>
+                                <td>200.000</td>
+                                <td>
+                                    <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Phụ bếp 2</td>
+                                <td>18.000</td>
+                                <td>20.000</td>
+                                <td>200.000</td>
+                                <td>
+                                    <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="salaryLevel add-salary-btn" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-title="Thêm một bậc lương mới">
+                                    <i class=" fa-solid fa-plus" title="Thêm một bậc lương mới"></i>
+
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="col  mb-1">
-                    <div class="form-floating ">
-                        <select class="form-select" id="floatingSelect" aria-label="">
-                            <option selected value="male">Nam</option>
-                            <option value="female">Nữ</option>
-                        </select>
-                        <label for="floatingSelect">Giới tính</label>
-                    </div>
-                </div>
-                <div class="col mb-1">
-                    <div class="form-floating ">
-                        <select class="form-select" id="floatingSelect" aria-label="">
-                            <option value="#">Chọn chức vụ</option>
-                            <option value="bep">Phụ bếp</option>
-                            <option value="banhang">Bán hàng</option>
-                        </select>
-                        <label for="floatingSelect">Chức vụ</label>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-                </div>
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="text" class="form-control" placeholder="Số điện thoại" aria-label="phone">
-                </div>
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="text" class="form-control" placeholder="Địa chỉ" aria-label="place">
-                </div>
-                <div class="col-xl-6 col-12 mt-2 mb-1">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent">
-                                <option checked value="#">Tên ngân hàng</option>
-                                <option value="Agribank">Agribank</option>
-                            </select>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Số tài khoản" aria-label="search_employer"
-                            aria-describedby="addon-wrapping">
-                    </div>
-                </div>
-                <div class="col mt-2 mb-1">
-                    <div class="avatar_input">
-                        <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
-                        <input class="form-control w-100" type="file" id="formFile" placeholder="">
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button style="width: 100px;" type="submit" class="btn btn-primary mt-2">Thêm</button>
-
-                    </div>
-                </div>
             </form>
-            <div class="col-5 just_add">
-                <div class="card">
-                    <div class="card-header text-white fw-bold bg-success">Gần đây</div>
-                    <div class="card-body">
-                        <div class="list-group">
-                            <button class="list-group-item list-group-item-action"
-                                onclick="handleClickJustAddEmployee(this)" data-bs-toggle="modal"
-                                data-bs-target="#modal">
-                                <div class="d-flex w-100 justify-content-between modalEmployeeInput">
-                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
-                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
-                                    </p>
-                                    <small class="text-body-secondary">1 ngày trước</small>
-                                </div>
-                                <small class="text-body-secondary">And some muted small print.</small>
-                            </button>
 
-                            <button class="list-group-item list-group-item-action"
-                                onclick="handleClickJustAddEmployee(this)" data-bs-toggle="modal"
-                                data-bs-target="#modal">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
-                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
-                                    </p>
-                                    <small class="text-body-secondary">1 ngày trước</small>
-                                </div>
-                                <small class="text-body-secondary">And some muted small print.</small>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal fade modal-lg" id="modal" tabindex="-1">
-                    <div class="modal-dialog-centered modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Chỉnh sửa thông tin</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-
-
-                            <div class="modal-body ">
-                                <form class="row col">
-                                    <div class="col-12 col-xl-6 mb-2">
-                                        <input type="text" class="form-control" placeholder="Họ và tên"
-                                            aria-label="FullName">
-                                    </div>
-
-                                    <div class="col  mb-1">
-                                        <div class="form-floating ">
-                                            <select class="form-select" id="floatingSelect" aria-label="">
-                                                <option selected value="male">Nam</option>
-                                                <option value="female">Nữ</option>
-                                            </select>
-                                            <label for="floatingSelect">Giới tính</label>
-                                        </div>
-                                    </div>
-                                    <div class="col mb-1">
-                                        <div class="form-floating ">
-                                            <select class="form-select" id="floatingSelect" aria-label="">
-                                                <option value="#">Chọn chức vụ</option>
-                                                <option value="bep">Phụ bếp</option>
-                                                <option value="banhang">Bán hàng</option>
-                                            </select>
-                                            <label for="floatingSelect">Chức vụ</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-                                    </div>
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" placeholder="Số điện thoại"
-                                            aria-label="phone">
-                                    </div>
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" placeholder="Địa chỉ"
-                                            aria-label="place">
-                                    </div>
-                                    <div class="col-xl-6 col-12 mt-2 mb-1">
-                                        <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" id="addon-wrapping" role="button">
-                                                <select class="p-1 border border-0 bg-transparent">
-                                                    <option checked value="#">Tên ngân hàng</option>
-                                                    <option value="Agribank">Agribank</option>
-                                                </select>
-                                            </span>
-                                            <input type="text" class="form-control" placeholder="Số tài khoản"
-                                                aria-label="search_employer" aria-describedby="addon-wrapping">
-                                        </div>
-                                    </div>
-                                    <div class="col mt-2 mb-1">
-                                        <div class="avatar_input">
-                                            <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
-                                            <input class="form-control w-100" type="file" id="formFile" placeholder="">
-                                        </div>
-
-                                    </div>
-
-                                </form>
-                            </div>
-
-
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger">Xóa</button>
-                                <button type="button" class="btn btn-primary disabled">Lưu thay đổi</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
+        <div class="row">
+            <div class="row">
+                <h3>II. Thiết lập loại nhân sự</h3>
+            </div>
+        </div>
+        <div class="row mt-3 managerType">
+            <form class="row col">
+                <div class="col-12 col-xl-12 mb-2 mt-2 ">
+                    <table class="table text-center rounded type-setting-table">
+                        <thead class="rounded">
+                            <tr class="table-info rounded">
+                                <th scope="col">Tên loại nhân sự</th>
+                                <th scope="col">Tên bậc lương</th>
+                                <th scope="col">Lương cơ bản</th>
+                                <th scope="col">Lương tăng ca</th>
+                                <th scope="col">Trợ cấp</th>
+                                <th scope="col">Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- <tr>
+                                <td>Quản lý</td>
+                                <td>Quản lý</td>
+                                <td>50.000</td>
+                                <td>60.000</td>
+                                <td>500.000</td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phụ bếp</td>
+                                <td>Phụ bếp 1</td>
+                                <td>20.000</td>
+                                <td>25.000</td>
+                                <td>200.000</td>
+                                <td>
+                                    <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Phụ bếp</td>
+
+                                <td>Phụ bếp 2</td>
+                                <td>18.000</td>
+                                <td>20.000</td>
+                                <td>200.000</td>
+                                <td>
+                                    <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="add-type-btn add-type" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-title="Thêm một loại nhân sự">
+                                    <i class=" fa-solid fa-plus" title="Thêm một loại nhân sự"></i>
+
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="row">
+            <div class="row">
+                <h3>III. Thiết lập loại ca làm</h3>
+            </div>
+        </div>
+        <div class="row mt-3 managerType">
+            <form class="row col">
+                <div class="col-12 col-xl-12 mb-2 mt-2 ">
+                    <table class="table text-center rounded ">
+                        <thead class="rounded">
+                            <tr class="table-secondary rounded">
+                                <th scope="col">Tên loại ca làm</th>
+                                <th class="shiftTypeId" style="display: none;">id</th>
+                                <th scope="col">Giờ vào</th>
+                                <th scope="col">Giờ ra</th>
+                                <th scope="col">Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Sáng</td>
+                                <td>
+                                    <input type="time" disabled value="07:00">
+                                </td>
+                                <td>
+                                    <input type="time" disabled value="12:00">
+                                </td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Chiều</td>
+                                <td>
+                                    <input type="time" disabled value="12:00">
+                                </td>
+                                <td>
+                                    <input type="time" disabled value="17:00">
+                                </td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tối</td>
+                                <td>
+                                    <input type="time" disabled value="17:00">
+                                </td>
+                                <td>
+                                    <input type="time" disabled value="22:00">
+                                </td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="salaryLevel" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    data-bs-title="Thêm một loại ca làm">
+                                    <i class=" fa-solid fa-plus" title="Thêm một loại ca làm"></i>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+        </div>
     </main>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-    crossorigin="anonymous"></script>
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+<script src="../assets/javascript/settingCompany.js"></script>
 
 </html>

@@ -306,6 +306,7 @@ public class ManagerServiceImpl implements ManagerService {
     public Response addSalary(Salary salary) {
         try {
             Salary salaryToSave = new Salary(salary);
+            System.out.println(salaryToSave);
             salaryRepository.save(salaryToSave);
             salaryRepository.flush();
             return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");

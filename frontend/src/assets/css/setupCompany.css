@@ -1,0 +1,9 @@
+.icon {
+    cursor: pointer;
+}
+
+.add-type:hover,
+.salaryLevel:hover {
+    background-color: rgba(227, 227, 227, 0.684);
+    cursor: pointer;
+}
