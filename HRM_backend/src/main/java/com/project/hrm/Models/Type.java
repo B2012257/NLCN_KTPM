@@ -12,7 +12,7 @@ public class Type {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "salary_level")
     private Salary salary;
 

@@ -1,12 +1,17 @@
 const addSalaryApiUrl = `http://localhost:8081/api/v1/manager/addSalary`
 const getAllSalaryApiUrl = "http://localhost:8081/api/v1/manager/salaries"
 const getAllTypeApiUrl = "http://localhost:8081/api/v1/manager/types"
+const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType"
+const addStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/addType"
+
 let salaries; //Lưu lại danh sách bậc lương
 
 function setUp() {
     getAllSalary()
     getAllType()
+    getAllShiftType()
 }
+
 setUp()
 
 
@@ -19,16 +24,16 @@ function addSalaryClickHandler() {
     const rowAdd = document.createElement("tr")
     const trTemplate = `
                         <td>
-                            <input type="text" class="form-control salaryNameAdd" placeholder ="Tên bậc lương" >
+                            <input type="text" class="form-control center salaryNameAdd" placeholder ="Tên bậc lương" >
                         </td>
                         <td>
-                            <input type="text" class="form-control salaryBasicAdd" placeholder="1000=1nghìn">
+                            <input type="text" class="form-control center salaryBasicAdd" placeholder="Nhập 1000 = 1.000 vnd">
                         </td>
                         <td>
-                            <input type="text" class="form-control salaryOvertimeAdd" placeholder="1000=1nghìn">
+                            <input type="text" class="form-control center salaryOvertimeAdd" placeholder="Nhập 10000 = 10.000 vnd">
                         </td>
                         <td>
-                            <input type="text" class="form-control salaryAllowanceAdd" placeholder="1000=1nghìn">
+                            <input type="text" class="form-control center salaryAllowanceAdd" placeholder="Nhập 1000000 = 1.000.000vnd">
                         </td>
                         <td style="vertical-align: middle;">
                             <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
@@ -181,30 +186,30 @@ function addStaffTypeClickHandler() {
     const rowAdd = document.createElement("tr")
     const trTemplate = `
                         <td>
-                            <input type="text" class="form-control typeNameAdd" placeholder ="Tên" >
+                            <input type="text" class="form-control center typeNameAdd" placeholder ="Tên" >
                         </td>
-                        <td>
+                        <td style="min-width:300px;">
                         <select class="form-select salary-select" aria-label="Default select example">
-                            <option selected>Chọn bậc lương</option>
+                            <option selected value="none">Chọn bậc lương</option>
                            
                         </select>
                         </td>
                         <td>
-                            <input type="text" class="form-control typeBasic" value="0" disabled placeholder ="Lương cơ bản" >
+                            <input type="text" class="form-control center typeBasic" value="0" disabled placeholder ="Lương cơ bản" >
                         </td>
                         
                         <td>
-                            <input type="text" class="form-control typeOvertime" value="0" disabled placeholder="Lương tăng ca">
+                            <input type="text" class="form-control center typeOvertime" value="0" disabled placeholder="Lương tăng ca">
                         </td>
                         <td>
-                            <input type="text" class="form-control typeAllowance" value="0" disabled placeholder="Trợ cấp">
+                            <input type="text" class="form-control center typeAllowance" value="0" disabled placeholder="Trợ cấp">
                         </td>
                         <td style="vertical-align: middle;">
                             <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Chỉnh sửa" title="Chỉnh sửa"></i>
                             <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá"></i>
-                            <i class="fa-regular fa-floppy-disk icon add-Type-save" data-bs-toggle="tooltip"
+                            <i class="fa-regular fa-floppy-disk icon add-type-save" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
                         </td>
     `
@@ -251,10 +256,10 @@ function addStaffTypeClickHandler() {
 
     })
 
-    // //Bắt sự kiện lưu bậc lương
-    // const saveTypeBtn = document.querySelector(".add-Type-save")
-    // // console.log(saveTypeBtn);
-    // saveTypeBtn.addEventListener("click", addSalaryHandler)
+    // //Bắt sự kiện lưu loại nhân sự
+    const saveTypeBtn = document.querySelector(".add-type-save")
+    console.log(saveTypeBtn);
+    saveTypeBtn.addEventListener("click", saveStaffType)
 }
 //Lấy danh sách loại nhân sự
 function getAllType() {
@@ -311,5 +316,148 @@ function getAllType() {
             }
 
             return console.log(res);
+        })
+}
+
+
+///// Xử lí chức năng thiết lập loại nhân sự
+
+function getAllShiftType() {
+    fetch(getAllShiftTypeApiUrl, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.status === "OK") {
+                let tbody = document.querySelector(".shift-type-setting-table tbody")
+                const datas = res.data
+                datas.forEach(item => {
+                    tbody.innerHTML += `
+                    <tr>
+                                <td>${item.name}</td>
+                                <td>
+                                    <input type="time" disabled pattern="[0-9]{2}:[0-9]{2}" value="${item.start}">
+                                </td>
+                                <td>
+                                    <input type="time" disabled value="${item.end}">
+                                </td>
+                                <td>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
+                                        data-bs-target="#exampleModal"></i>
+                                    <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                </td>
+                    </tr >
+                    `
+                });
+
+                //Thêm dấu cộng vào cuối
+                let addTypeBtnElement = document.createElement("tr")
+                addTypeBtnElement.innerHTML = `
+                    <td colspan = "6" class= "salaryLevel add-shift-type-btn" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-title="Thêm một loại nhân sự mới" >
+                    <i class=" fa-solid fa-plus" title="Thêm một loại nhân sự mới"></i>
+                                </td >
+                    `
+
+                //Thêm dữ liệu (Nút thêm loại nhân sự, dấu cộng )vào tbody của bảng
+                renderHtmlInnerParent(tbody, addTypeBtnElement)
+
+                //Bắt sự kiện ấn nút dấu cộng thêm loại nhân sự
+                const addSalaryBtn = document.querySelector(".add-shift-type-btn")
+                addSalaryBtn.addEventListener('click', addShiftTypeClickHandler)
+                return;
+            }
+
+            return console.log(res);
+        })
+}
+
+//Xử lí giao diện khi bấm vào dấu cộng thêm vào 1 loại ca làm
+function addShiftTypeClickHandler() {
+    const typeTable = document.querySelector(".shift-type-setting-table")
+    const typeTableBody = typeTable.querySelector("tbody")
+
+    const rowAdd = document.createElement("tr")
+    const trTemplate = `
+        <td class="">
+        <input type="text" class="form-control center" width="200px" placeholder="Tên loại ca">
+        </td>
+        <td>
+            <input type="time" class="form-control center">
+        </td>
+        <td>
+            <input type="time" class="form-control center">
+        </td>
+        <td>
+            <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+            <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
+                data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                <i class="fa-regular fa-floppy-disk icon add-shift-type-save" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
+        </td>
+    `
+    rowAdd.innerHTML = trTemplate
+    //Lấy ra nút cuối
+    const addTypeBtn = document.querySelector(".add-shift-type-btn")
+    //Xoá nút dấu cộng
+    addTypeBtn.remove()
+
+    //Thêm 1 hàng mới để ng dùng nhập dữ liệu
+    renderHtmlInnerParent(typeTableBody, rowAdd)
+
+
+}
+
+function saveStaffType() {
+    //Lấy data
+    let typeNameAdd = document.querySelector(".typeNameAdd")
+    let typeNameValue = typeNameAdd.value
+    let salarySelect = document.querySelector(".salary-select")
+    let salaryValue = salarySelect.value
+
+    if (typeNameValue !== "" && typeNameValue !== " " && typeNameValue !== undefined && salaryValue !== "none") {
+        console.log("a");
+        const data = {
+            name: typeNameValue,
+            salary: {
+                level: salaryValue
+            }
+        }
+        postApi(addStaffTypeApiUrl, JSON.stringify(data))
+    } else {
+        console.log("b");
+        alert("Nhập đầy đủ thông tin")
+    }
+}
+
+//Hàm gữi dữ liệu lên backend
+function postApi(url, payload) {
+    fetch(url, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: payload
+    })
+
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === "OK") {
+                console.log(res);
+                return location.reload()
+            }
+
+            return alert(res);
         })
 }

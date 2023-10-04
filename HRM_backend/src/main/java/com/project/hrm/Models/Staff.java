@@ -40,6 +40,9 @@ public class Staff {
     @JoinColumn(name = "type_id")
     private Type type;
 
+//    @ManyToOne
+//    @JoinColumn(name = "salary_level")
+//    private Salary salary;
     public Staff() {
     }
 

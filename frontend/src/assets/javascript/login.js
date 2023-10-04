@@ -1,6 +1,5 @@
 const loginBtn = document.querySelector(".login-btn");
 
-const loginBtn = document.querySelector(".login-btn")
 
 const loginApi = `http://localhost:8081/api/v1/auth/login`
 
