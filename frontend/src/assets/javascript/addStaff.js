@@ -1,3 +1,13 @@
+const getAllSalaryApiUrl = "http://localhost:8081/api/v1/manager/salaries"
+const getAllTypeApiUrl = "http://localhost:8081/api/v1/manager/types"
+const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType"
+
+function setUp() {
+    getAllSalary()
+    getAllType()
+
+}
+setUp()
 //Hàm xóa dấu tiếng việt
 // https://gist.github.com/hu2di/e80d99051529dbaa7252922baafd40e3
 function StringFormatVietnameseSign(string) {
@@ -15,4 +25,71 @@ function StringFormatVietnameseSign(string) {
     str = str.trim();
     return str;
 }
-console.log(StringFormatVietnameseSign("Phạm Quang Thái"));
+//Cài đặt cloundary widget
+var myWidget = cloudinary.createUploadWidget({
+    cloudName: 'dfcjwhc7o',
+    uploadPreset: 'cdootl7q'
+}, (error, result) => {
+    if (!error && result && result.event === "success") {
+        console.log('Done! Here is the image info: ', result.info);
+    }
+}
+)
+
+document.getElementById("upload_widget").addEventListener("click", function () {
+    myWidget.open();
+}, false
+    //Load chức vụ
+
+    //Load bậc lương
+);
+
+//Lấy danh sách bậc lương khi vừa vào trang
+function getAllSalary() {
+    fetch(getAllSalaryApiUrl, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === "OK") {
+
+                const datas = res.data
+                salaries = datas
+                return console.log(salaries);
+            }
+
+            return console.log(res);
+        })
+}
+function renderHtmlInnerParent(parentElement, elementRendering) {
+    parentElement.appendChild(elementRendering)
+}
+
+//Lấy danh sách loại nhân sự
+function getAllType() {
+    fetch(getAllTypeApiUrl, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+
+
+            if (res.status === "OK") {
+                let datas = res.data
+                console.log(datas);
+                return;
+            }
+
+            return console.log(res);
+        })
+}

@@ -50,7 +50,7 @@ function renderStaff(users) {
     <div class="col col-md-8 mx-auto">
     <div class="row mb-3">
         <div class="col text-center">
-            <img style="width: 200px;" src=${user.urlAvatar}
+            <img style="width: 200px;" src=${user.urlAvatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSySSYZ8Vr_66g-cqvEwxmn8qA2KRRTrbcAPA&usqp=CAU"}
                 class="img-thumbnail rounded mx-auto d-block" alt="avatar">
               
         </div>
