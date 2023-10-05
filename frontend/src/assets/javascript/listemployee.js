@@ -29,14 +29,11 @@ async function getStaff(callback) {
 const radioButtons = document.querySelectorAll(
   'input[name="inlineRadioOptions"]'
 );
-let count = 1;
+
 function renderStaff(staffs) {
-  count = 1;
   const listStaff = document.getElementById("list-staff");
   var htmls = staffs.map(function (staff) {
     const typeName = staff.type ? staff.type.name : "";
-    const salaryBasic = staff.type ? staff.salary.formattedBasic : "";
-    const salaryOvertime = staff.type ? staff.salary.formattedOvertime : "";
 
     const today = new Date();
     const beginWork = new Date(staff.beginWork);
@@ -50,39 +47,22 @@ function renderStaff(staffs) {
     const months = monthsDiff % 12;
     const year = years > 0 ? `${years} năm ` : "";
     const returnHTML = `
-        <tr style="text-align: center">
-        <td>${count}</td>
+        <tr style="text-align: center" role="button" title="Bấm để xem chi tiết" data-bs-toggle="modal"
+        data-bs-target="#modal">
+        <td>${staff.uid}</td>
         <td>${staff.fullName}</td>
         <td>${staff.gender}</td>
         <td>
             <div class="badge bg-primary">${typeName}</div>
         </td>
+        <td>${staff.location}</td>
         <td>${staff.phone}</td>
         <td>${year} ${months} tháng</td>
-        <td>
-            120 giờ
-        </td>
-        <td>
-        ${salaryBasic}
-        </td>
-        <td>
-            30 giờ
-        </td>
-        <td>
-        ${salaryOvertime}
-        </td>
-        <td>
-            23423423
-        </td>
-        <td>
-        ${staff.bankName}
-        </td>
-        <td>
-        ${staff.bankAccount}
-        </td>
+   
+        
     </tr>
         `;
-    count++;
+
     return returnHTML;
   });
   listStaff.innerHTML = htmls.join("");
@@ -117,4 +97,19 @@ radioButtons.forEach((radio) => {
   radio.addEventListener("change", function () {
     filterStaffByRole(data, this.value); // Truyền thêm tham số data vào hàm filterStaffByRole
   });
+});
+
+function filterStaffByName(data, searchTerm) {
+  return data.filter((staff) => {
+    const fullName = staff.fullName.toLowerCase();
+    return fullName.includes(searchTerm);
+  });
+}
+const inputSearch = document.querySelector(".form-control");
+const btnSearch = document.querySelector(".input-group-text");
+btnSearch.addEventListener("click", function () {
+  const searchTerm = inputSearch.value.trim().toLowerCase();
+  console.log("input", searchTerm);
+  const filteredStaff = filterStaffByName(data, searchTerm);
+  renderStaff(filteredStaff);
 });

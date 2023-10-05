@@ -63,6 +63,8 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.type = newStaff.getType();
         this.urlAvatar = newStaff.getUrlAvatar();
+
+
         this.gender = newStaff.getGender();
         this.salary = newStaff.getSalary();
     }
