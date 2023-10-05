@@ -224,7 +224,8 @@ public class ManagerServiceImpl implements ManagerService {
             return new ErrorResponse(HttpStatus.BAD_REQUEST, "Tên loại nhân sự không được bỏ trống");
         Type typeToSave = new Type(type);
         try {
-            typeRepository.saveAndFlush(typeToSave);
+            typeRepository.save(typeToSave);
+            typeRepository.flush();
             return new Response(HttpStatus.OK, "Thêm loại nhân sự thành công!");
 
         } catch (Exception ex) {
@@ -255,14 +256,12 @@ public class ManagerServiceImpl implements ManagerService {
             System.out.println(type.getId());
             Type typeDb = typeRepository.findOneById(type.getId());
             String typeNameDb = typeDb.getName();
-            Salary salaryLevelDb = typeDb.getSalary();
 
             if (typeDb == null)
                 return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy loại nhân sự cần chỉnh sửa");
 
             Type typeSave = new Type(type);
             //Nếu không có truyền thông tin chỉnh sửa thì set lại giá trị cũ trong db
-            if (type.getSalary() == null) typeSave.setSalary(salaryLevelDb);
             if (type.getName() == null) typeSave.setName(typeNameDb);
 
             typeRepository.saveAndFlush(typeSave);
@@ -306,6 +305,7 @@ public class ManagerServiceImpl implements ManagerService {
     public Response addSalary(Salary salary) {
         try {
             Salary salaryToSave = new Salary(salary);
+            System.out.println(salaryToSave);
             salaryRepository.save(salaryToSave);
             salaryRepository.flush();
             return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");

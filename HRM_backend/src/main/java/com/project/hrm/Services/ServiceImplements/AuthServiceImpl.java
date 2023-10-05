@@ -70,6 +70,7 @@ public class AuthServiceImpl implements AuthService {
                 ResponseCookie cookie = ResponseCookie.from("Authentication", jwt)
                         .httpOnly(true)
                         .sameSite("Lax")
+                        .secure(true)
                         .path("/") // Đảm bảo cookie áp dụng cho toàn bộ ứng dụng
                         .build();
 

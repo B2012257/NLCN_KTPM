@@ -12,21 +12,21 @@ public class Type {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salary_level")
-    private Salary salary;
+//    @ManyToOne( fetch = FetchType.EAGER)
+//    @JoinColumn(name = "salary_level")
+//    private Salary salary;
 
     public Type() {}
 
     public Type(Type role) {
         this.id = role.getId();
         this.name = role.getName();
-        this.salary = role.getSalary();
+//        this.salary = role.getSalary();
     }
 
     public Type(String name, Salary salary) {
         this.name = name;
-        this.salary = salary;
+//        this.salary = salary;
     }
     public Type(String name) {
         this.name = name;
