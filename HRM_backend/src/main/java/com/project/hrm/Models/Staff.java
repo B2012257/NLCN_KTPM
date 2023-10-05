@@ -5,10 +5,12 @@ import com.project.hrm.Utils.UidUtil;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.Normalizer;
+import java.time.LocalDateTime;
 
 import static com.project.hrm.Configs.ValueConfigs.passwordStaff;
 
@@ -35,7 +37,9 @@ public class Staff {
     private String bankName;
     private String bankAccount;
     private String urlAvatar;
-
+    
+    @CreationTimestamp
+    private LocalDateTime createdDateTime;
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
@@ -52,7 +56,6 @@ public class Staff {
         this.userName = newStaff.getUserName(); // Lấy giá trị userName từ newStaff
         this.password = newStaff.getPassword();
         this.fullName = newStaff.getFullName();
-        this.gender = newStaff.getGender();
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
         this.location = newStaff.getLocation();
@@ -60,9 +63,10 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.type = newStaff.getType();
         this.urlAvatar = newStaff.getUrlAvatar();
-        this.salary= newStaff.getSalary();
-        this.gender = newStaff.getGender();
 
+
+        this.gender = newStaff.getGender();
+        this.salary = newStaff.getSalary();
     }
 
 //    public String removeAccents(String input) {
