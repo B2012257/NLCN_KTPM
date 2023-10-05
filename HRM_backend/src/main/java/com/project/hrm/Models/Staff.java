@@ -40,9 +40,10 @@ public class Staff {
     @JoinColumn(name = "type_id")
     private Type type;
 
-//    @ManyToOne
-//    @JoinColumn(name = "salary_level")
-//    private Salary salary;
+    @ManyToOne
+    @JoinColumn(name = "salary_level")
+    private Salary salary;
+
     public Staff() {
     }
 
@@ -59,25 +60,23 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.type = newStaff.getType();
         this.urlAvatar = newStaff.getUrlAvatar();
-//        this.gender = newStaff.getGender();
-
     }
 
-    public String removeAccents(String input) {
-        return Normalizer.normalize(input, Normalizer.Form.NFD)
-                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
-                .toLowerCase();
-    }
+//    public String removeAccents(String input) {
+//        return Normalizer.normalize(input, Normalizer.Form.NFD)
+//                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+//                .toLowerCase();
+//    }
 
-    public String generateUsernameFromFullName(String fullName) {
-        // Xử lý và chuyển đổi fullname thành username ngẫu nhiên
-        String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
-        StringBuilder usernameBuilder = new StringBuilder();
-        for (String part : nameParts) {
-            usernameBuilder.append(part);
-        }
-        return usernameBuilder.toString();
-    }
+//    public String generateUsernameFromFullName(String fullName) {
+//        // Xử lý và chuyển đổi fullname thành username ngẫu nhiên
+//        String[] nameParts = fullName.trim().toLowerCase().split("\\s+");
+//        StringBuilder usernameBuilder = new StringBuilder();
+//        for (String part : nameParts) {
+//            usernameBuilder.append(part);
+//        }
+//        return usernameBuilder.toString();
+//    }
 
 //    public void setUserName(String fullName) {
 //        // Xóa khoảng trắng thừa và chuyển đổi tất cả ký tự thành chữ thường

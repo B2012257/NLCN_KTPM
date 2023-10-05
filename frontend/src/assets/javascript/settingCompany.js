@@ -188,22 +188,7 @@ function addStaffTypeClickHandler() {
                         <td>
                             <input type="text" class="form-control center typeNameAdd" placeholder ="Tên" >
                         </td>
-                        <td style="min-width:300px;">
-                        <select class="form-select salary-select" aria-label="Default select example">
-                            <option selected value="none">Chọn bậc lương</option>
-                           
-                        </select>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control center typeBasic" value="0" disabled placeholder ="Lương cơ bản" >
-                        </td>
-                        
-                        <td>
-                            <input type="text" class="form-control center typeOvertime" value="0" disabled placeholder="Lương tăng ca">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control center typeAllowance" value="0" disabled placeholder="Trợ cấp">
-                        </td>
+                    
                         <td style="vertical-align: middle;">
                             <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Chỉnh sửa" title="Chỉnh sửa"></i>
@@ -221,40 +206,40 @@ function addStaffTypeClickHandler() {
     //Thêm 1 hàng mới để ng dùng nhập dữ liệu
     // typeTableBody.appendChild(rowAdd)
     renderHtmlInnerParent(typeTableBody, rowAdd)
-    //Đổ dữ liệu bậc lương vào select
-    let salarySelect = document.querySelector(".salary-select")
-    salaries.forEach(salary => {
-        let optionElement = document.createElement("option")
-        optionElement.value = salary.level
-        optionElement.innerText = salary.level
-        salarySelect.appendChild(optionElement)
-    })
-    //Thêm sự kiện đổi lựa chọn bậc lương trong thẻ select, cập nhật lại giá trị lương tương ứng
-    salarySelect.addEventListener("change", (e) => {
-        let typeBasicInput = document.querySelector(".typeBasic")
-        let typeOvertimeInput = document.querySelector(".typeOvertime")
-        let typeAllowanceInput = document.querySelector(".typeAllowance")
+    // //Đổ dữ liệu bậc lương vào select
+    // let salarySelect = document.querySelector(".salary-select")
+    // salaries.forEach(salary => {
+    //     let optionElement = document.createElement("option")
+    //     optionElement.value = salary.level
+    //     optionElement.innerText = salary.level
+    //     salarySelect.appendChild(optionElement)
+    // })
+    // //Thêm sự kiện đổi lựa chọn bậc lương trong thẻ select, cập nhật lại giá trị lương tương ứng
+    // salarySelect.addEventListener("change", (e) => {
+    //     let typeBasicInput = document.querySelector(".typeBasic")
+    //     let typeOvertimeInput = document.querySelector(".typeOvertime")
+    //     let typeAllowanceInput = document.querySelector(".typeAllowance")
 
-        let targetValue = e.target.value // Giá trị lựa chọn mới
-        let findSalary
-        for (const salary of salaries) {
-            if (salary.level === targetValue) {
-                findSalary = salary;
-                break; // Dừng lại sau khi tìm thấy
-            }
-        }
-        //Cập nhật giá trị vào giao diện
-        if (findSalary) {
-            typeBasicInput.value = findSalary.formattedBasic
-            typeOvertimeInput.value = findSalary.formattedOvertime
-            typeAllowanceInput.value = findSalary.formattedAllowance
-        } else {
-            typeBasicInput.value = 0
-            typeOvertimeInput.value = 0
-            typeAllowanceInput.value = 0
-        }
+    //     let targetValue = e.target.value // Giá trị lựa chọn mới
+    //     let findSalary
+    //     for (const salary of salaries) {
+    //         if (salary.level === targetValue) {
+    //             findSalary = salary;
+    //             break; // Dừng lại sau khi tìm thấy
+    //         }
+    //     }
+    //     //Cập nhật giá trị vào giao diện
+    //     if (findSalary) {
+    //         typeBasicInput.value = findSalary.formattedBasic
+    //         typeOvertimeInput.value = findSalary.formattedOvertime
+    //         typeAllowanceInput.value = findSalary.formattedAllowance
+    //     } else {
+    //         typeBasicInput.value = 0
+    //         typeOvertimeInput.value = 0
+    //         typeAllowanceInput.value = 0
+    //     }
 
-    })
+    // })
 
     // //Bắt sự kiện lưu loại nhân sự
     const saveTypeBtn = document.querySelector(".add-type-save")
@@ -281,11 +266,7 @@ function getAllType() {
                     tbody.innerHTML += `
                     <tr>
                     <td>${item.name || "Không có"}</td>
-                    <td>${(item.salary !== null && item.salary.name !== " ") ? item.salary.level : "Không có"}</td>
-
-                    <td>${(item.salary !== null && item.salary.name !== " ") ? item.salary.formattedBasic : " "}</td>
-                    <td>${(item.salary !== null && item.salary.name !== " ") ? item.salary.formattedOvertime : " "}</td>
-                    <td>${(item.salary !== null && item.salary.name !== " ") ? item.salary.formattedAllowance : " "}</td >
+                    
                 <td>
                     <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
@@ -421,16 +402,12 @@ function saveStaffType() {
     //Lấy data
     let typeNameAdd = document.querySelector(".typeNameAdd")
     let typeNameValue = typeNameAdd.value
-    let salarySelect = document.querySelector(".salary-select")
-    let salaryValue = salarySelect.value
+    // let salarySelect = document.querySelector(".salary-select")
+    // let salaryValue = salarySelect.value
 
-    if (typeNameValue !== "" && typeNameValue !== " " && typeNameValue !== undefined && salaryValue !== "none") {
-        console.log("a");
+    if (typeNameValue !== "" && typeNameValue !== " " && typeNameValue !== undefined) {
         const data = {
-            name: typeNameValue,
-            salary: {
-                level: salaryValue
-            }
+            name: typeNameValue
         }
         postApi(addStaffTypeApiUrl, JSON.stringify(data))
     } else {
