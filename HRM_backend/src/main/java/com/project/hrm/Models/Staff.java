@@ -35,7 +35,7 @@ public class Staff {
     private String bankName;
     private String bankAccount;
     private String urlAvatar;
-
+    
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
@@ -52,7 +52,6 @@ public class Staff {
         this.userName = newStaff.getUserName(); // Lấy giá trị userName từ newStaff
         this.password = newStaff.getPassword();
         this.fullName = newStaff.getFullName();
-        this.gender = newStaff.getGender();
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
         this.location = newStaff.getLocation();
@@ -60,9 +59,8 @@ public class Staff {
         this.bankAccount = newStaff.getBankAccount();
         this.type = newStaff.getType();
         this.urlAvatar = newStaff.getUrlAvatar();
-
         this.gender = newStaff.getGender();
-
+        this.salary = newStaff.getSalary();
     }
 
 //    public String removeAccents(String input) {
