@@ -24,7 +24,7 @@ public class StaffController {
 
     private StaffServiceImpl staffService;
 
-    @LoginRequired
+//    @LoginRequired
 
     @GetMapping(URLConfigs.GET_INFO_STA)
     public ResponseWithData<Staff> getInformation(@RequestParam(name = "Uid") String Uid){
