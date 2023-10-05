@@ -223,8 +223,10 @@ public class ManagerServiceImpl implements ManagerService {
         if (nameType.equalsIgnoreCase("") || nameType.equalsIgnoreCase(" "))
             return new ErrorResponse(HttpStatus.BAD_REQUEST, "Tên loại nhân sự không được bỏ trống");
         Type typeToSave = new Type(type);
+        typeToSave.setSalary(salaryRepository.findOneByLevel(type.getSalary().getLevel()));
         try {
-            typeRepository.saveAndFlush(typeToSave);
+            typeRepository.save(typeToSave);
+            typeRepository.flush();
             return new Response(HttpStatus.OK, "Thêm loại nhân sự thành công!");
 
         } catch (Exception ex) {
@@ -306,6 +308,7 @@ public class ManagerServiceImpl implements ManagerService {
     public Response addSalary(Salary salary) {
         try {
             Salary salaryToSave = new Salary(salary);
+            System.out.println(salaryToSave);
             salaryRepository.save(salaryToSave);
             salaryRepository.flush();
             return new ResponseWithData<Salary>(salary, HttpStatus.OK, "Thêm bậc lương thành công");

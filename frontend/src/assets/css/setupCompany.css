@@ -1,0 +1,19 @@
+.icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.mw-100 {
+    min-width: 100px;
+}
+
+.add-type:hover,
+.salaryLevel:hover {
+    background-color: rgba(227, 227, 227, 0.684);
+    cursor: pointer;
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
