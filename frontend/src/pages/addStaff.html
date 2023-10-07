@@ -9,7 +9,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/reset.css">
     <title>Thêm nhân sự</title>
 </head>
@@ -82,7 +84,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item logout-btn" href="#">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>
@@ -110,19 +112,21 @@
         <label for="formFile" class="form-label fw-bold">Thêm thông tin nhân sự:</label>
 
         <div class="row add_employee mt-2">
-            <form class="row col">
-                <div class="col-12 col-xl-6 mb-2">
-                    <input type="text" class="form-control h-100" required placeholder="Họ và tên"
-                        aria-label="FullName">
+            <form class="row col-xl-8 col-12 mb-2">
+                <div class="col-8">
+                    <input type="text" class="form-control h-100 fullname-add-employee-input" required
+                        placeholder="Họ và tên" aria-label="FullName">
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
                     <div class="input-group">
-                        <span class="input-group-text w-100" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent  w-100">
-                                <option checked value="0">Chức vụ</option>
-                                <option value="Phụ bếp">Phụ bếp</option>
-                                <option value="Bán hàng">Bán hàng</option>
+                        <span class="input-group-text w-100 " id="addon-wrapping" role="button">
+                            <select
+                                class="p-1 border border-0 bg-transparent w-100 type-select staff-type-add-employee-select"
+                                title="Chọn loại nhân sự">
+                                <option checked value="0">Chọn loại nhân sự</option>
+                                <!-- <option value="Phụ bếp">Phụ bếp</option>
+                                <option value="Bán hàng">Bán hàng</option> -->
 
                             </select>
                         </span>
@@ -133,24 +137,26 @@
 
                 <div class="col-12 mt-2">
                     <div class="input-group">
-                        <span class="input-group-text" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent  w-100">
-                                <option checked value="0">Bậc lương</option>
-                                <option value="Nam">Bếp I</option>
-                                <option value="Nu">Bán hàng I</option>
+                        <span class="input-group-text " id="addon-wrapping" role="button">
+                            <select
+                                class="p-1 border border-0 bg-transparent salary-add-employee-salect w-100 salary-select">
+                                <option checked value="0">Chọn bậc lương</option>
+
 
                             </select>
                         </span>
-                        <input type="text" class="form-control" required value="Cơ bản: ; Tăng ca: ; Trợ cấp: ;"
-                            aria-label="search_employer" aria-describedby="addon-wrapping">
+                        <input type="text" class="form-control salary-detail" value="Vui lòng chọn bậc lương trước"
+                            disabled aria-label="search_employer" aria-describedby="addon-wrapping">
                     </div>
                 </div>
 
                 <div class="col-7 mt-3 mb-1">
-                    <input type="text" class="form-control w-100 h-100" required placeholder="Địa chỉ">
+                    <input type="text" class="form-control w-100 h-100 location-add-employee-input" required
+                        placeholder="Địa chỉ">
                 </div>
                 <div class="col-5 mt-3 mb-1">
-                    <input type="text" class="form-control" required placeholder="Số điện thoại" aria-label="phone">
+                    <input type="text" class="form-control phone-add-employee-input" required
+                        placeholder="Số điện thoại" aria-label="phone">
                 </div>
                 <!-- <div class="col-12 col-xl-6 mt-2 mb-1">
                     <input type="text" class="form-control" placeholder="Tên tài khoản" aria-label="place">
@@ -160,8 +166,8 @@
                 </div> -->
                 <div class="col-xl-8 col-12 mt-2 mb-1">
                     <div class="input-group flex-nowrap">
-                        <span class="input-group-text" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent">
+                        <span class="input-group-text " id="addon-wrapping" role="button">
+                            <select class="p-1 border border-0 bg-transparent bank-name-add-employee-select">
                                 <option checked value="0">Tên ngân hàng</option>
                                 <option value="Agribank">Agribank</option>
                                 <option value="Vietcombank">Vietcombank</option>
@@ -176,8 +182,8 @@
 
                             </select>
                         </span>
-                        <input type="text" class="form-control" required placeholder="Số tài khoản"
-                            aria-label="search_employer" aria-describedby="addon-wrapping">
+                        <input type="text" class="form-control bank-number-employee-input" required
+                            placeholder="Số tài khoản" aria-label="search_employer" aria-describedby="addon-wrapping">
                     </div>
                 </div>
                 <!-- <div class="col-4  mb-1">
@@ -192,10 +198,10 @@
                 <div class="col-4 mt-2 mb-1">
                     <div class="input-group">
                         <span class="input-group-text w-100" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent  w-100">
+                            <select class="p-1 border border-0 bg-transparent w-100 gender-employee-select">
                                 <option checked value="0">Giới tính</option>
                                 <option value="Nam">Nam</option>
-                                <option value="Nu">Nữ</option>
+                                <option value="Nữ">Nữ</option>
 
                             </select>
                         </span>
@@ -204,7 +210,8 @@
                 </div>
                 <div class="input-group flex-nowrap mt-2 mb-1">
                     <span class="input-group-text" id="addon-wrapping">Ngày bắt đầu làm việc:</span>
-                    <input type="date" class="form-control  requỉedbegin-work" aria-describedby="addon-wrapping">
+                    <input type="date" class="form-control begin-work-employee-input" required
+                        aria-describedby="addon-wrapping">
                 </div>
                 <div class="col mt-3 mb-1">
                     <div class="avatar_input">
@@ -218,28 +225,40 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="submit" style="width: 100px;" class="btn btn-primary mt-2" value="Thêm">
+                        <input type="submit" class="btn btn-primary mt-2 add-staff-btn" value="Thêm nhân sự">
 
                     </div>
                 </div>
             </form>
-            <div class="col-5 just_add">
+            <div class="col-xl-4 col-12 just_add mb-1">
                 <div class="card">
-                    <div class="card-header text-white fw-bold bg-success">Gần đây</div>
-                    <div class="card-body">
-                        <div class="list-group">
-
-                            <button class="list-group-item list-group-item-action" onclick="" data-bs-toggle="modal"
-                                data-bs-target="#modal">
+                    <div class="card-header text-white fw-bold bg-success">
+                        <i class="fa-solid fa-clock-rotate-left "></i>
+                        <span class="ms-1">7 ngày gần đây</span>
+                    </div>
+                    <div class="card-body card-body-recent" style="max-height: 400px;overflow-y: scroll;">
+                        <!-- <div class="list-group">
+                            <button class="list-group-item list-group-item-action mt-1" onclick=""
+                                data-bs-toggle="modal" data-bs-target="#modal">
                                 <div class="d-flex w-100 justify-content-between">
                                     <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
                                         <span class="badge bg-primary ms-1">Phụ Bếp</span>
                                     </p>
                                     <small class="text-body-secondary">1 ngày trước</small>
                                 </div>
-                                <small class="text-body-secondary">And some muted small print.</small>
                             </button>
                         </div>
+                        <div class="list-group">
+                            <button class="list-group-item list-group-item-action mt-1" onclick=""
+                                data-bs-toggle="modal" data-bs-target="#modal">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
+                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
+                                    </p>
+                                    <small class="text-body-secondary">1 ngày trước</small>
+                                </div>
+                            </button>
+                        </div> -->
                     </div>
 
                 </div>
@@ -326,7 +345,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -336,5 +354,6 @@
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 
 <script src="/src/assets/javascript/addStaff.js"></script>
+<script src="../assets/javascript/logout.js"></script>
 
 </html>

@@ -5,22 +5,25 @@ const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType
 const addStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/addType"
 const addShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/addShiftType"
 let salaries; //Lưu lại danh sách bậc lương
-let salaryLoadingParent = document.querySelector(".salary-loading")
-let typeLoadingParent = document.querySelector(".type-loading")
-let shiftTypeLoadingParent = document.querySelector(".shift-type-loading")
-function setUp() {
 
+
+//Hàm chạy lần đầu khi vào trang
+function setUp() {
+    //Mở hiệu ứng loading
+    turnOnLoadingFunction("salary-loading")
+    turnOnLoadingFunction("type-loading")
+    turnOnLoadingFunction("shift-type-loading")
+
+    //Giả lập loading nữa giây
     setTimeout(() => {
         getAllSalary()
         getAllType()
         getAllShiftType()
     }, 500)
-    setTimeout(() => {
-    }, 1000)
-
 
 }
 
+//Chạy các hàm lần đầu khi loading trang
 setUp()
 
 
@@ -128,7 +131,8 @@ function getAllSalary() {
         .then(res => {
             console.log(res);
             if (res.status === "OK") {
-                salaryLoadingParent.remove()
+                turnOffLoadingFunction("salary-loading")
+                // salaryLoadingParent.remove()
 
                 let tbody = document.querySelector(".salary-setting-table tbody")
                 const datas = res.data
@@ -238,7 +242,9 @@ function getAllType() {
 
 
             if (res.status === "OK") {
-                typeLoadingParent.remove()
+                turnOffLoadingFunction("type-loading")
+
+                // typeLoadingParent.remove()
 
                 let tbody = document.querySelector(".type-setting-table tbody")
                 const datas = res.data
@@ -298,8 +304,8 @@ function getAllShiftType() {
         .then(res => {
             console.log(res);
             if (res.status === "OK") {
-
-                shiftTypeLoadingParent.remove()
+                turnOffLoadingFunction("shift-type-loading")
+                // shiftTypeLoadingParent.remove()
 
                 let tbody = document.querySelector(".shift-type-setting-table tbody")
                 const datas = res.data

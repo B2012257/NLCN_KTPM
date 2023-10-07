@@ -9,10 +9,14 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
@@ -167,6 +171,29 @@ public class ManagerServiceImpl implements ManagerService {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+        }
+    }
+
+    @Override
+    public Response getRecentStaff(Date startDate, Date endDate) {
+/*
+    startDate.toInstant(): Đầu tiên, chúng ta sử dụng phương thức toInstant() để chuyển đổi đối tượng Date thành một đối tượng Instant.
+    Instant trong Java 8+ là một đối tượng biểu diễn thời gian không thay đổi, không phụ thuộc vào múi giờ. atZone(ZoneId.systemDefault()):
+    Sau khi có Instant, chúng ta sử dụng phương thức atZone() để chuyển đổi Instant thành một đối tượng ZonedDateTime,
+     có thông tin về múi giờ. ZoneId.systemDefault() được sử dụng để lấy múi giờ mặc định của hệ thống, và chúng ta tạo một ZonedDateTime dựa trên múi giờ này.
+     ZonedDateTime chứa thông tin về ngày, giờ và múi giờ.
+    toLocalDateTime(): Cuối cùng, chúng ta sử dụng phương thức toLocalDateTime() để chuyển đổi ZonedDateTime thành LocalDateTime.
+     LocalDateTime là một đối tượng chỉ chứa thông tin về ngày và giờ, mà không chứa thông tin về múi giờ.
+* */
+        try {
+            LocalDateTime start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            // Chuyển đổi chuỗi thành LocalDateTime
+            return new ResponseWithData<>(staffRepository.findByCreatedDateTimeBetweenOrderByCreatedDateTimeDesc(start, end), HttpStatus.OK, "Danh sách nhân sự vừa mới thêm từ ngày: " + startDate + " đến " + endDate);
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không lấy được nhân sự vừa thêm");
         }
     }
 

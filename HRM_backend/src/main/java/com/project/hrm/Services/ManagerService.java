@@ -6,6 +6,7 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public interface ManagerService {
     //Thêm mới 1 nhân sự
     public Response addStaff(Staff newStaff);
 
+    //Lấy ra nhân sự vừa mới thêm
+    public Response getRecentStaff(Date start, Date end); //truyền vào ngày mốc để lấy 7 ngày kể từ ngày mốc
     //Chỉnh sửa thông tin 1 nhân sự
     public Response editStaff(Staff newStaff);
 
