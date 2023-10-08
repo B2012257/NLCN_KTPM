@@ -24,7 +24,7 @@ async function setUp() {
 
     recentStaff = await getRecentStaff()
     recentStaffs = recentStaff
-    loadStaffRecentHtml(recentStaff)
+    loadStaffRecentHtml(recentStaffs)
 
 
 }
@@ -275,6 +275,14 @@ async function postAddStaffApi(data) {
 }
 
 function loadStaffRecentHtml(staffs) {
+    if (staffs.length === 0) {
+        let divTag = document.createElement("div")
+        divTag.classList.add("list-group")
+        divTag.innerHTML = `
+       <p class="center"> Không có thông tin  </p>
+`
+        renderElementInnerParent("card-body-recent", divTag)
+    }
     staffs.forEach(staff => {
         //Tạo 1 thẻ option 
         let divTag = document.createElement("div")
@@ -286,10 +294,16 @@ function loadStaffRecentHtml(staffs) {
         // Tính toán khoảng cách giữa hai ngày (đơn vị là mili-giây)
         const timeDifference = new Date().getTime() - createTimeDate.getTime();
 
-        const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); //Đổi ra giây -> Ra phút -> Ra giờ -> ra ngày
+        const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60)); //Đổi ra giây -> Ra phút -> Ra giờ
+
         let dayTimeDifference;
+        console.log(daysDifference, hoursDifference);
         if (daysDifference === 0) {
-            dayTimeDifference = "Hôm nay"
+            if (hoursDifference !== 0)
+                dayTimeDifference = `${hoursDifference} giờ trước`
+            else
+                dayTimeDifference = "Bây giờ"
         }
         else
             dayTimeDifference = `${daysDifference} ngày trước`
