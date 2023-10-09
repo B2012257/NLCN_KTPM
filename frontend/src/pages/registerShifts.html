@@ -87,10 +87,11 @@
                         <th scope="col">Đăng ký giờ rảnh</th>
                         <th scope="col">Thao tác</th>
                     </thead>
-                    <tbody class="align-middle">
-                        <tr>
-                            <td>Thứ 2
-                                <div id="current-time"></div>
+                    <tbody class="align-middle daysOfWeek">
+                        <tr id="monday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 2</div>
+                                <div class="sttOfWeek"><p id="value1"></p></div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -104,8 +105,11 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 3</td>
+                        <tr id="tuesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 3</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -118,8 +122,11 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 4</td>
+                        <tr id="wednesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 4</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -132,8 +139,11 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 5</td>
+                        <tr id="thursday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 5</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -146,8 +156,11 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 6</td>
+                        <tr id="friday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 6</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -160,8 +173,11 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 7</td>
+                        <tr id="saturday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 7</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -174,8 +190,10 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Chủ nhật</td>
+                        <tr id="sunday">
+                            <td>
+                                <div class="sttNameWeek">Chủ nhật</div>
+                                <div class="sttOfWeek"><p></p></div>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -190,7 +208,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);">Gửi lịch</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);" onclick="workRegister(this)">Gửi lịch</button>
             </div>
         </div>
     </main>

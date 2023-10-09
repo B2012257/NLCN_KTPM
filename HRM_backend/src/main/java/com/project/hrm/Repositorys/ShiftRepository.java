@@ -13,6 +13,7 @@ import java.util.List;
 public interface ShiftRepository extends JpaRepository<Shift, Integer> {
 
     List<Shift> findAllByDateBetween(Date start, Date end);
+    List<Shift> findAllByShiftTypeAndDate(ShiftType shiftType, Date date);
 
     List<Shift> findAllByShiftType(ShiftType shiftType);
 

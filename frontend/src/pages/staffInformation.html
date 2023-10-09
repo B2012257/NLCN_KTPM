@@ -93,8 +93,8 @@
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-outline-primary float-end" id="buttonEdit" onclick="enableEdit()">Chỉnh sửa</button>
-                        <button type="button" class="btn btn-outline-primary float-end" id="buttonCompleted" style="display: none;" >Hủy</button>
-                        <button type="button" class="btn btn-outline-primary float-end" id="buttonCancel" style="display: none;margin-right: 10px;" >Lưu lại</button>
+                        <button type="button" class="btn btn-outline-primary float-end" id="buttonCompleted" style="display: none;" onclick="fetchStaffInfo()">Hủy</button>
+                        <button type="button" class="btn btn-outline-primary float-end" id="buttonCancel" style="display: none;margin-right: 10px;"  onclick="updateStaffInfoHandler()">Lưu lại</button>
                     </div>
                 </div>
                 <hr>
@@ -115,10 +115,10 @@
                         </div>
                     </div>
                     <div class="col mb-1">
-                        <input disabled type="text" class="form-control editInfo" id="type" placeholder="Chức vụ" aria-label="position">
+                        <input disabled type="text" class="form-control" id="type" placeholder="Chức vụ" aria-label="position">
                     </div>
                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                        <input disabled type="email" class="form-control editInfo" id="email" placeholder="Email" aria-label="Email">
+                        <input disabled type="text" class="form-control" id="beginWork" placeholder="Ngày vào làm" aria-label="">
                     </div>
                     <div class="col-12 col-xl-6 mt-2 mb-1">
                         <input disabled type="text" class="form-control editInfo" id="phone" placeholder="Số điện thoại" aria-label="phone">

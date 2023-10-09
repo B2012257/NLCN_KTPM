@@ -106,6 +106,7 @@
 
         <h5>Chấm công ngày 
             <input class="rounded-pill p-1" id="current-time" type="date">
+            <div  class="rounded-pill p-1 float-end"  id="current-time1"></div>
         </h5>
         
 
@@ -169,103 +170,58 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-start">
-                                        <tr role="button">
+                                    <tbody id="workCheckMorning">
+                                        <!-- <tr role="button">
                                             <td>
-                                                <span>Phạm Quang thái</span>
+                                                <span></span>
                                             </td>
                                             <td>
-                                                <div class="badge bg-primary">Phụ bếp</div>
-                                            </td>
-                                            <td>
-                                                <input min="0" max="20" type="time"
-                                                    class="form-control" disabled value="07:00">
+                                                <div class="badge bg-primary"></div>
                                             </td>
                                             <td>
                                                 <input min="0" max="20" type="time"
-                                                    class="form-control" disabled value="12:00">
+                                                    class="form-control" disabled value="">
+                                            </td>
+                                            <td>
+                                                <input min="0" max="20" type="time"
+                                                    class="form-control" disabled value="">
                                             </td>
                                             <td>
                                                 <input  min="0" max="20" type="number"
-                                                    class="form-control" disabled value="5">
+                                                    class="form-control" disabled value="">
                                             </td>
                                             <td>
                                                 <input type="time" class="form-control"
-                                                    value="07:00">
+                                                    value="">
                                             </td>
 
                                             <td>
                                                 <input type="time" class="form-control"
-                                                    value="12:00">
+                                                    value="">
                                             </td>
                                             <td>
-                                                <input min="0" max="20" value="0"
+                                                <input min="0" max="20" value=""
                                                     type="number" class="form-control">
                                             </td>
                                             <td>
                                                 <input  min="0" max="20" type="number"
-                                                    class="form-control" disabled value="5">
+                                                    class="form-control" disabled value="">
                                             </td>
                                             <td>
                                                 <div class="form-floating">
                                                     <textarea class="form-control" placeholder="Leave a comment here"
                                                         id="floatingTextarea2" style="height: 60px"></textarea>
-                                                    <label for="floatingTextarea2">Ghi chú</label>
+                                                    <label for="floatingTextarea2"></label>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="badge bg-warning">Đi trễ</div>
+                                                <div class="badge bg-warning"></div>
                                             </td>
-                                        </tr>
-                                        <tr role="button">
-                                            <td>
-                                                <span>Phạm Quang thái</span>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-primary">Phụ bếp</div>
-                                            </td>
-                                            <td>
-                                                <input min="0" max="20" type="time"
-                                                    class="form-control" disabled value="07:00">
-                                            </td>
-                                            <td>
-                                                <input min="0" max="20" type="time"
-                                                    class="form-control" disabled value="12:00">
-                                            </td>
-                                            <td>
-                                                <input  min="0" max="20" type="number"
-                                                    class="form-control" disabled value="5">
-                                            </td>
-                                            <td>
-                                                <input type="time" class="form-control"
-                                                    value="07:00">
-                                            </td>
-
-                                            <td>
-                                                <input type="time" class="form-control"
-                                                    value="12:00">
-                                            </td>
-                                            <td>
-                                                <input min="0" max="20" value="0"
-                                                    type="number" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input min="0" max="20" type="number"
-                                                    class="form-control" disabled value="5">
-                                            </td>
-                                            <td>
-                                                <div class="form-floating">
-                                                    <textarea class="form-control" placeholder="Leave a comment here"
-                                                        id="floatingTextarea2" style="height: 60px"></textarea>
-                                                    <label for="floatingTextarea2">Ghi chú</label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-danger">Nghỉ</div>
-                                            </td>
-                                        </tr>
+                                        </tr> -->
+                                        
                                     </tbody>
                                 </table>
+                                <button type="button" class="btn btn-outline-primary float-end" id="buttonEdit" onclick="">Lưu</button>
                             </div>
                         </div>
                     </div>
@@ -331,8 +287,8 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-start">
-                                        <tr role="button">
+                                    <tbody id="workCheckAfternoon">
+                                        <!-- <tr role="button">
                                             <td>
                                                 <span>Phạm Quang thái</span>
                                             </td>
@@ -425,9 +381,10 @@
                                             <td>
                                                 <div class="badge bg-danger">Nghỉ</div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
+                                <button type="button" class="btn btn-outline-primary float-end" id="buttonEdit" onclick="">Lưu</button>
                             </div>
                         </div>
                     </div>
@@ -493,8 +450,8 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-start">
-                                        <tr role="button">
+                                    <tbody class="text-start" id="workCheckEvening">
+                                        <!-- <tr role="button">
                                             <td>
                                                 <span>Phạm Quang thái</span>
                                             </td>
@@ -587,9 +544,10 @@
                                             <td>
                                                 <div class="badge bg-danger">Nghỉ</div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
+                                <button type="button" class="btn btn-outline-primary float-end" id="buttonEdit" onclick="">Lưu</button>
                             </div>
                         </div>
                     </div>
