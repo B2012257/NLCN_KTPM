@@ -23,7 +23,7 @@ setUp();
 
 
 function getListTimeKeepingMorning() {
-    fetch(`http://localhost:8081/api/v1/manager/getScheduleOfShiftOfDate?date=2023/10/05&shiftType=1`, {
+    fetch(`http://localhost:8081/api/v1/manager/getScheduleOfShiftOfDate?date=${formatDate1}&shiftType=1`, {
         method: "GET",
         mode: "cors",
         credentials: "include",
