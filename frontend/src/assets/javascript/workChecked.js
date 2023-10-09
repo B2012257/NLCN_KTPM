@@ -2,20 +2,20 @@
 const currentDate = new Date();
 const formatDate1 = currentDate.toISOString().split('T')[0].replace(/-/g, '/');
 const formatDate = currentDate.toISOString().split('T')[0];
-document.getElementById("current-time").value=formatDate;
+document.getElementById("current-time").value = formatDate;
 
 
 console.log(formatDate1)
 
-function setUp(){
+function setUp() {
     setInterval(updateCurrentTime, 1000);
 
-// Gọi hàm ban đầu để hiển thị thời gian ngay khi trang được tải
+    // Gọi hàm ban đầu để hiển thị thời gian ngay khi trang được tải
     updateCurrentTime();
     getListTimeKeepingMorning();
     getListTimeKeepingAfternoon();
     getListTimeKeepingEvening();
-    
+
 
 }
 
@@ -31,16 +31,16 @@ function getListTimeKeepingMorning() {
             "Content-Type": "application/json"
         },
     })
-    .then(res => res.json())
-    
-    .then(res => {
-        console.log(res)
-        const tableBody = document.getElementById('workCheckMorning');
-        tableBody.innerHTML = ''; 
-        const dataList = res.data;
-        dataList.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML=`
+        .then(res => res.json())
+
+        .then(res => {
+            console.log(res)
+            const tableBody = document.getElementById('workCheckMorning');
+            tableBody.innerHTML = '';
+            const dataList = res.data;
+            dataList.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
             <td>
                 <span>${item.staff.fullName}</span>
             </td>
@@ -88,53 +88,53 @@ function getListTimeKeepingMorning() {
         </td>
             `;
 
-            tableBody.appendChild(row);
-            const shiftDetail_Id = item.id;
-            const startTime = document.getElementById(`startTimeInput_${item.id}`);
-            const endTime = document.getElementById(`endTimeInput_${item.id}`);
-            const overTime = document.getElementById(`overTimeInput_${item.id}`);
-            const totalTime = document.getElementById( `totalTime_${item.id}`)
-            const startDefault = document.getElementById(`startTime_${item.id}`);
-            const status = document.getElementById(`status_${item.id}`);
-            const dataPost = {};
-            console.log(shiftDetail_Id)
+                tableBody.appendChild(row);
+                const shiftDetail_Id = item.id;
+                const startTime = document.getElementById(`startTimeInput_${item.id}`);
+                const endTime = document.getElementById(`endTimeInput_${item.id}`);
+                const overTime = document.getElementById(`overTimeInput_${item.id}`);
+                const totalTime = document.getElementById(`totalTime_${item.id}`)
+                const startDefault = document.getElementById(`startTime_${item.id}`);
+                const status = document.getElementById(`status_${item.id}`);
+                const dataPost = {};
+                console.log(shiftDetail_Id)
 
-            startTime.addEventListener('input', () => {
-                const startTimeValue = startTime.value;
-                const compare = compareTimes(startDefault.value,startTimeValue);
+                startTime.addEventListener('input', () => {
+                    const startTimeValue = startTime.value;
+                    const compare = compareTimes(startDefault.value, startTimeValue);
 
 
-                if(compare){
-                    status.innerText='Đúng giờ';
-                    status.classList.add('bg-success');
+                    if (compare) {
+                        status.innerText = 'Đúng giờ';
+                        status.classList.add('bg-success');
+                        status.classList.remove('bg-warning');
+                    }
+                    else {
+                        status.innerText = 'Đi trễ';
+                        status.classList.add('bg-warning');
+                    }
+                    console.log('Start Time input value:', startTimeValue);
 
-                }
-                else{
-                    status.innerText='Đi trễ';
-                    status.classList.add('bg-warning');
-                }
-                console.log('Start Time input value:', startTimeValue);
-               
-    
-        
-                
+
+
+
+                });
+
+                endTime.addEventListener('input', () => {
+                    const endTimeValue = endTime.value;
+                    console.log('End Time input value:', endTimeValue);
+                    const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
+                    overTime.value = overTimeValue;
+                    console.log(overTimeValue);
+                    const totalTimeValue = calculateOverTime(endTime.value, startTime.value);
+                    totalTime.value = totalTimeValue;
+
+                });
+
+
+
             });
-    
-            endTime.addEventListener('input', () => {
-                const endTimeValue = endTime.value;
-                console.log('End Time input value:', endTimeValue);
-                const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
-                overTime.value=overTimeValue;
-                console.log(overTimeValue);
-                const totalTimeValue = calculateOverTime(endTime.value,startTime.value);
-                totalTime.value=totalTimeValue;
-
-            });
-            
-           
-
         });
-    } );
 }
 
 
@@ -180,16 +180,16 @@ function getListTimeKeepingAfternoon() {
             "Content-Type": "application/json"
         },
     })
-    .then(res => res.json())
-    
-    .then(res => {
-        console.log(res)
-        const tableBody = document.getElementById('workCheckAfternoon');
-        tableBody.innerHTML = ''; 
-        const dataList = res.data;
-        dataList.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML=`
+        .then(res => res.json())
+
+        .then(res => {
+            console.log(res)
+            const tableBody = document.getElementById('workCheckAfternoon');
+            tableBody.innerHTML = '';
+            const dataList = res.data;
+            dataList.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
             <td>
                 <span>${item.staff.fullName}</span>
             </td>
@@ -237,53 +237,53 @@ function getListTimeKeepingAfternoon() {
         </td>
             `;
 
-            tableBody.appendChild(row);
+                tableBody.appendChild(row);
 
-            const startTime = document.getElementById(`startTimeInput_${item.id}`);
-            const endTime = document.getElementById(`endTimeInput_${item.id}`);
-            const overTime = document.getElementById(`overTimeInput_${item.id}`);
-            const totalTime = document.getElementById( `totalTime_${item.id}`)
-            const startDefault = document.getElementById(`startTime_${item.id}`);
-            const status = document.getElementById(`status_${item.id}`);
-            const shiftDetail_Id = item.id;
-            console.log(shiftDetail_Id)
+                const startTime = document.getElementById(`startTimeInput_${item.id}`);
+                const endTime = document.getElementById(`endTimeInput_${item.id}`);
+                const overTime = document.getElementById(`overTimeInput_${item.id}`);
+                const totalTime = document.getElementById(`totalTime_${item.id}`)
+                const startDefault = document.getElementById(`startTime_${item.id}`);
+                const status = document.getElementById(`status_${item.id}`);
+                const shiftDetail_Id = item.id;
+                console.log(shiftDetail_Id)
 
-            startTime.addEventListener('input', () => {
-                const startTimeValue = startTime.value;
-                const compare = compareTimes(startDefault.value,startTimeValue);
+                startTime.addEventListener('input', () => {
+                    const startTimeValue = startTime.value;
+                    const compare = compareTimes(startDefault.value, startTimeValue);
 
 
-                if(compare){
-                    status.innerText='Đúng giờ';
-                    status.classList.add('bg-success');
+                    if (compare) {
+                        status.innerText = 'Đúng giờ';
+                        status.classList.add('bg-success');
 
-                }
-                else{
-                    status.innerText='Đi trễ';
-                    status.classList.add('bg-warning');
-                }
-                console.log('Start Time input value:', startTimeValue);
-               
-    
-        
-                
+                    }
+                    else {
+                        status.innerText = 'Đi trễ';
+                        status.classList.add('bg-warning');
+                    }
+                    console.log('Start Time input value:', startTimeValue);
+
+
+
+
+                });
+
+                endTime.addEventListener('input', () => {
+                    const endTimeValue = endTime.value;
+                    console.log('End Time input value:', endTimeValue);
+                    const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
+                    overTime.value = overTimeValue;
+                    console.log(overTimeValue);
+                    const totalTimeValue = calculateOverTime(endTime.value, startTime.value);
+                    totalTime.value = totalTimeValue;
+
+                });
+
+
+
             });
-    
-            endTime.addEventListener('input', () => {
-                const endTimeValue = endTime.value;
-                console.log('End Time input value:', endTimeValue);
-                const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
-                overTime.value=overTimeValue;
-                console.log(overTimeValue);
-                const totalTimeValue = calculateOverTime(endTime.value,startTime.value);
-                totalTime.value=totalTimeValue;
-    
-            });
-            
-           
-
         });
-    } );
 }
 
 
@@ -297,16 +297,16 @@ function getListTimeKeepingEvening() {
             "Content-Type": "application/json"
         },
     })
-    .then(res => res.json())
-    
-    .then(res => {
-        console.log(res)
-        const tableBody = document.getElementById('workCheckEvening');
-        tableBody.innerHTML = ''; 
-        const dataList = res.data;
-        dataList.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML=`
+        .then(res => res.json())
+
+        .then(res => {
+            console.log(res)
+            const tableBody = document.getElementById('workCheckEvening');
+            tableBody.innerHTML = '';
+            const dataList = res.data;
+            dataList.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
             <td>
                 <span>${item.staff.fullName}</span>
             </td>
@@ -354,52 +354,52 @@ function getListTimeKeepingEvening() {
         </td>
             `;
 
-            tableBody.appendChild(row);
+                tableBody.appendChild(row);
 
-            const startTime = document.getElementById(`startTimeInput_${item.id}`);
-            const endTime = document.getElementById(`endTimeInput_${item.id}`);
-            const overTime = document.getElementById(`overTimeInput_${item.id}`);
-            const totalTime = document.getElementById( `totalTime_${item.id}`)
-            const startDefault = document.getElementById(`startTime_${item.id}`);
-            const status = document.getElementById(`status_${item.id}`);
-
-
-            startTime.addEventListener('input', () => {
-                const startTimeValue = startTime.value;
-                const compare = compareTimes(startDefault.value,startTimeValue);
+                const startTime = document.getElementById(`startTimeInput_${item.id}`);
+                const endTime = document.getElementById(`endTimeInput_${item.id}`);
+                const overTime = document.getElementById(`overTimeInput_${item.id}`);
+                const totalTime = document.getElementById(`totalTime_${item.id}`)
+                const startDefault = document.getElementById(`startTime_${item.id}`);
+                const status = document.getElementById(`status_${item.id}`);
 
 
-                if(compare){
-                    status.innerText='Đúng giờ';
-                    status.classList.add('bg-success');
+                startTime.addEventListener('input', () => {
+                    const startTimeValue = startTime.value;
+                    const compare = compareTimes(startDefault.value, startTimeValue);
 
-                }
-                else{
-                    status.innerText='Đi trễ';
-                    status.classList.add('bg-warning');
-                }
-                console.log('Start Time input value:', startTimeValue);
-               
-    
-        
-                
+
+                    if (compare) {
+                        status.innerText = 'Đúng giờ';
+                        status.classList.add('bg-success');
+
+                    }
+                    else {
+                        status.innerText = 'Đi trễ';
+                        status.classList.add('bg-warning');
+                    }
+                    console.log('Start Time input value:', startTimeValue);
+
+
+
+
+                });
+
+                endTime.addEventListener('input', () => {
+                    const endTimeValue = endTime.value;
+                    console.log('End Time input value:', endTimeValue);
+                    const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
+                    overTime.value = overTimeValue;
+                    console.log(overTimeValue);
+                    const totalTimeValue = calculateOverTime(endTime.value, startTime.value);
+                    totalTime.value = totalTimeValue;
+
+                });
+
+
+
             });
-    
-            endTime.addEventListener('input', () => {
-                const endTimeValue = endTime.value;
-                console.log('End Time input value:', endTimeValue);
-                const overTimeValue = calculateOverTime(endTimeValue, item.shift.shiftType.end);
-                overTime.value=overTimeValue;
-                console.log(overTimeValue);
-                const totalTimeValue = calculateOverTime(endTime.value,startTime.value);
-                totalTime.value=totalTimeValue;
-    
-            });
-            
-           
-
         });
-    } );
 }
 
 
