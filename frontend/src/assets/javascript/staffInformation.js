@@ -1,7 +1,7 @@
 const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
 const uid = userObject.uid;
-
+let avatar,dbAvatar;
 
 function enableEdit() {
     const inputElements = document.querySelectorAll('.editInfo');
@@ -18,6 +18,46 @@ function enableEdit() {
 
     const buttonCancel= document.getElementById('buttonCancel');
     buttonCancel.style.display='block';
+
+    document.getElementById("upload_widget").addEventListener("click", function () {
+      myWidget.open();
+    }, false
+      
+    );
+    
+}
+
+
+//Cài đặt cloundary widget
+var myWidget = cloudinary.createUploadWidget({
+  cloudName: 'dfcjwhc7o',
+  uploadPreset: 'cdootl7q'
+}, (error, result) => {
+  if (!error && result && result.event === "success") {
+      console.log('Done! Here is the image info: ', result.info);
+      let url = result.info.url
+      avatar = url
+  }
+}
+)
+
+
+
+
+
+
+function cancelInfo(){
+    const buttonCompleted = document.getElementById('buttonCompleted');
+    buttonCompleted.style.display='none';
+    const buttonCancel= document.getElementById('buttonCancel');
+    buttonCancel.style.display='none';
+    const buttonEdit= document.getElementById('buttonEdit');
+    buttonEdit.style.display='block';
+    const inputElements = document.querySelectorAll('.editInfo');
+    inputElements.forEach(inputElement => {
+      inputElement.setAttribute('disabled','disabled');
+    });
+    fetchStaffInfo();
 }
 
 
@@ -61,6 +101,7 @@ function fillStaffInfo(data) {
     document.getElementById('bankName').value=data.data.bankName;
     document.getElementById('avatar').src=data.data.urlAvatar;
     document.getElementById('beginWork').value=data.data.beginWork;
+    dbAvatar=data.data.urlAvatar;
 }
 
 //Lấy thông tin từ giao diện thông tin cá nhân
@@ -71,9 +112,18 @@ function updateStaffInfoHandler(){
     const newLocation = document.getElementById('location').value;
     const newBankAccount = document.getElementById('bankAccount').value;
     const newBankName = document.getElementById('bankName').value;
-    const newAvatar = document.getElementById('avatar').src;
+    
     const beginWork = document.getElementById('beginWork').value;
     const dataUpdate = {};
+
+    if(avatar!==null){
+      dataUpdate.urlAvatar=avatar;
+      console.log(avatar);
+    }
+    else{
+      dataUpdate.urlAvatar=dbAvatar;
+    }
+    
 
     dataUpdate.fullName=newFullName;
     dataUpdate.gender=newGender;
@@ -81,8 +131,10 @@ function updateStaffInfoHandler(){
     dataUpdate.location=newLocation;
     dataUpdate.bankAccount=newBankAccount;
     dataUpdate.bankName= newBankName;
-    dataUpdate.urlAvatar=newAvatar;
+    
     dataUpdate.beginWork=beginWork;
+    
+  
     dataUpdate.uid=uid;
 
     console.log(uid);
