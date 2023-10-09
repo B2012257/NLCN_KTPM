@@ -5,3 +5,11 @@
 .add_employee_schedule_btn:hover .btn {
     display: block;
 }
+
+.max-w-300 {
+    max-width: 300px;
+}
+
+.min-h-200 {
+    height: 200px;
+}

@@ -22,8 +22,8 @@
     <div id="header bg-dark">
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand fs-3" href="./indexStaff.html">SUBA MANAGER</a>
+            <div class=" container-fluid">
+                <a class="navbar-brand fs-3" href="../index.html">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,14 +31,17 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link fs-6 text-primary" aria-current="page" href="#">Đăng ký ca làm</a>
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/staffIndex.html">Trang chủ</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link fs-6 " href="./scheduleStaff.html" role="button" aria-expanded="false">
-                                Xem lịch làm
-                            </a>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/registerShifts.html">Đăng ký lịch làm</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/">Xem lịch làm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/staffStatistics.html">Thống kê</a>
+                        </li>
                     </ul>
 
                     <div class="d-flex">
@@ -64,22 +67,37 @@
     <main class="container-fluid">
         <div class="row">
             <div class="col">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item text-primary">Đăng ký lịch rảnh</li>
+
+                    </ol>
+                </nav>
+                <div class="text-success">
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <table class="table table-striped text-center">
                     <thead>
-                        <th></th>
+                        <th scope="col">Thời gian</th>
                         <th scope="col">Đăng ký giờ rảnh</th>
                         <th scope="col">Thao tác</th>
-
                     </thead>
-                    <tbody class="align-middle">
-                        <tr>
-                            <td>Thứ 2</td>
+                    <tbody class="align-middle daysOfWeek">
+                        <tr id="monday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 2</div>
+                                <div class="sttOfWeek"><p id="value1"></p></div>
+                            </td>
                             <td class="text-center">
-                                <input style="width: 110px;" class="" type="time" name="" id="" disabled>
+                                <input class="" type="time" name="" id="" disabled>
                                 <br>
                                 Đến
                                 <br>
-
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -87,11 +105,16 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 3</td>
+                        <tr id="tuesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 3</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -99,11 +122,16 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 4</td>
+                        <tr id="wednesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 4</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -111,11 +139,16 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 5</td>
+                        <tr id="thursday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 5</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -123,11 +156,16 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 6</td>
+                        <tr id="friday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 6</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -135,11 +173,16 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Thứ 7</td>
+                        <tr id="saturday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 7</div>
+                                <div class="sttOfWeek"><p></p></div>
+                            </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -147,11 +190,15 @@
                                     onchange="operationTimeInput(this)">
                             </td>
                         </tr>
-                        <tr>
-                            <td>Chủ nhật</td>
+                        <tr id="sunday">
+                            <td>
+                                <div class="sttNameWeek">Chủ nhật</div>
+                                <div class="sttOfWeek"><p></p></div>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
+                                <br>
                                 Đến
+                                <br>
                                 <input type="time" name="" id="" disabled>
                             </td>
                             <td>
@@ -161,7 +208,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);">Gửi lịch</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);" onclick="workRegister(this)">Gửi lịch</button>
             </div>
         </div>
     </main>

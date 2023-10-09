@@ -31,13 +31,12 @@ public class Staff {
     @NotNull
     private String phone;
 
-//    private String gender;
     private Date beginWork;
     private String location;
     private String bankName;
     private String bankAccount;
     private String urlAvatar;
-    
+
     @CreationTimestamp
     private LocalDateTime createdDateTime;
     @ManyToOne
@@ -56,6 +55,8 @@ public class Staff {
         this.userName = newStaff.getUserName(); // Lấy giá trị userName từ newStaff
         this.password = newStaff.getPassword();
         this.fullName = newStaff.getFullName();
+        this.gender= newStaff.getGender();
+
         this.phone = newStaff.getPhone();
         this.beginWork = newStaff.getBeginWork();
         this.location = newStaff.getLocation();

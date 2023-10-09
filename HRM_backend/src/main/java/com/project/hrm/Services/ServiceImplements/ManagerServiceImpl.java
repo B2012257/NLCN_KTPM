@@ -9,10 +9,14 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
@@ -40,6 +44,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Autowired
     ShiftDetailRepository shiftDetailRepository;
+
+    @Autowired
+    TimeKeepingRepository timeKeepingRepository;
 
     private Argon2PasswordEncoder encoder;
 
@@ -167,6 +174,29 @@ public class ManagerServiceImpl implements ManagerService {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+        }
+    }
+
+    @Override
+    public Response getRecentStaff(Date startDate, Date endDate) {
+/*
+    startDate.toInstant(): Đầu tiên, chúng ta sử dụng phương thức toInstant() để chuyển đổi đối tượng Date thành một đối tượng Instant.
+    Instant trong Java 8+ là một đối tượng biểu diễn thời gian không thay đổi, không phụ thuộc vào múi giờ. atZone(ZoneId.systemDefault()):
+    Sau khi có Instant, chúng ta sử dụng phương thức atZone() để chuyển đổi Instant thành một đối tượng ZonedDateTime,
+     có thông tin về múi giờ. ZoneId.systemDefault() được sử dụng để lấy múi giờ mặc định của hệ thống, và chúng ta tạo một ZonedDateTime dựa trên múi giờ này.
+     ZonedDateTime chứa thông tin về ngày, giờ và múi giờ.
+    toLocalDateTime(): Cuối cùng, chúng ta sử dụng phương thức toLocalDateTime() để chuyển đổi ZonedDateTime thành LocalDateTime.
+     LocalDateTime là một đối tượng chỉ chứa thông tin về ngày và giờ, mà không chứa thông tin về múi giờ.
+* */
+        try {
+            LocalDateTime start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            // Chuyển đổi chuỗi thành LocalDateTime
+            return new ResponseWithData<>(staffRepository.findByCreatedDateTimeBetweenOrderByCreatedDateTimeDesc(start, end), HttpStatus.OK, "Danh sách nhân sự vừa mới thêm từ ngày: " + startDate + " đến " + endDate);
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Không lấy được nhân sự vừa thêm");
         }
     }
 
@@ -601,20 +631,73 @@ public class ManagerServiceImpl implements ManagerService {
 //    }
 
     @Override
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDate(ShiftType shiftType, Date date) {
+        com.project.hrm.Models.Date date1 = new com.project.hrm.Models.Date(date);
+        List<Shift> shiftOfDate = shiftRepository.findAllByShiftTypeAndDate(shiftType,date1);
+        List<ShiftDetail> shiftDetails = new ArrayList<>();
+        System.out.println(date1);
+        for (Shift shiftId : shiftOfDate) {
+
+            List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
+            shiftDetails.addAll(shiftDetailList);
+        }
+
+
+        List<ShiftDetail> shiftDetailsNotInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetails) {
+            boolean isInTimekeeping = isShiftDetailInTimekeeping(shiftDetailID);
+            if (!isInTimekeeping) {
+                shiftDetailsNotInTimekeeping.add(shiftDetailID);
+            }
+        }
+        if (shiftDetails.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
+        }
+        return new ResponseWithData<>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc");
+
+    }
+
+    private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
+        // Lấy danh sách Timekeeping mà có ShiftDetail tương ứng
+        List<Timekeeping> timekeepingList = timeKeepingRepository.findByShiftDetail(shiftDetail);
+
+        // Kiểm tra xem có bất kỳ Timekeeping nào chứa ShiftDetail này không
+        return !timekeepingList.isEmpty();
+    }
+
+
+
+    @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
 
         return null;
     }
 
+
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date) {
+
         return null;
     }
 
     @Override
     public Response workCheckeds(List<Timekeeping> timeKeepings) {
-        return null;
+        List<Timekeeping> savedTimekeepings = new ArrayList<>();
+
+        for (Timekeeping timekeeping : timeKeepings) {
+            // Save each Timekeeping object to the database
+            Timekeeping savedTimekeeping = timeKeepingRepository.save(timekeeping);
+            savedTimekeepings.add(savedTimekeeping);
+        }
+
+        if (savedTimekeepings.isEmpty()) {
+            return new Response(HttpStatus.NOT_FOUND, "Không có chấm công");
+        }
+
+        return new Response(HttpStatus.OK, "Chấm công thành công");
     }
+
+
 
     @Override
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {

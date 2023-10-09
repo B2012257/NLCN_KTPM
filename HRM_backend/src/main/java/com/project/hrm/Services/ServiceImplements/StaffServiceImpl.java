@@ -52,8 +52,6 @@ public class StaffServiceImpl implements StaffService {
             staff.setBankName(newStaffInfo.getBankName());
             staff.setBeginWork(newStaffInfo.getBeginWork());
             staff.setLocation(newStaffInfo.getLocation());
-            staff.setType(newStaffInfo.getType());
-            staff.setSalary(newStaffInfo.getSalary());
             staffRepository.saveAndFlush(staff);
             return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
         }

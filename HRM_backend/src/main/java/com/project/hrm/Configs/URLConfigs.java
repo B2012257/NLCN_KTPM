@@ -55,6 +55,8 @@ public class URLConfigs {
     public static final String SEARCH_STAFF = "/search/staff";
 
     public static final String GET_ALL_STAFF ="/allStaff";
+    public static final String GET_RECENT_STAFF ="/staff/recent";
+
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
@@ -70,5 +72,10 @@ public class URLConfigs {
     public static final String SCHEDULE = "/schedule";
     public static final String DELETE_SCHEDULE = "/schedule/delete";
     public static final String GET_ALL_SCHEDULE_BY_DATE = "/getScheduleOfDate";
+
+
+    public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
+
+    public static final String WORK_CHECKED="/workCheckeds";
 
 }

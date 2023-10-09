@@ -63,6 +63,12 @@ public class ManagerController {
     }
 
     @LoginRequired
+    @GetMapping(URLConfigs.GET_RECENT_STAFF)
+    public Response getRecentStaff(@RequestParam java.util.Date start, @RequestParam java.util.Date end){
+        return managerService.getRecentStaff(start, end);
+    }
+
+    @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_STAFF)
     public Response addStaff(@RequestBody Staff newStaff) {
@@ -204,6 +210,17 @@ public class ManagerController {
     @GetMapping (URLConfigs.GET_ALL_SCHEDULE_BY_DATE)
     public Response getAllSchedulesOfDay(@RequestBody Date date) {
         return managerService.getAllSchedulesOfDay(date);
+    }
+
+
+    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
+    public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+    }
+
+    @PostMapping(URLConfigs.WORK_CHECKED)
+    public Response workCheckeds(@RequestBody List<Timekeeping> timekeepings){
+        return managerService.workCheckeds(timekeepings);
     }
 
 }

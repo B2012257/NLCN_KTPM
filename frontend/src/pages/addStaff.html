@@ -9,8 +9,11 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/addStaff.css">
     <title>Thêm nhân sự</title>
 </head>
 
@@ -19,13 +22,13 @@
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
             <div class=" container-fluid">
-                <a class="navbar-brand fs-3" href="/src/index.html">SUBA MANAGER</a>
+                <a class="navbar-brand fs-3" href="/src/index.html">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                         <li class="nav-item">
                             <a class="nav-link fs-6" aria-current="page" href="../index.html">Trang chủ</a>
                         </li>
@@ -35,10 +38,10 @@
                                 Quản lý nhân sự
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item active" href="./updateEmployee.html">Thêm nhân
+                                <li><a class="dropdown-item active" href="#">Thêm nhân
                                         sự</a>
                                 </li>
-                                <li><a class="dropdown-item " href="./listEmployee.html">Danh sách nhân sự</a>
+                                <li><a class="dropdown-item " href="./listStaff.html">Danh sách nhân sự</a>
                                 </li>
 
                                 <li><a class="dropdown-item" href="#"> </a></li>
@@ -52,20 +55,19 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="./shedule.html">Cập nhật & Xem
                                         lịch</a></li>
-                                <li><a class="dropdown-item" href="#">Chấm công</a></li>
+                                <li><a class="dropdown-item" href="./workChecked.html">Chấm công</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link fs-6" href="./statistics.html">
                                 Thống kê & báo cáo
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Về nhân sự</a></li>
-                                <li><a class="dropdown-item" href="#">Về làm việc</a></li>
 
-                                <li><a class="dropdown-item" href="#"> Về lương</a></li>
-                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" role="button" href="./setupCompany.html">
+                                Cài đặt thông tin quản lý
+                            </a>
                         </li>
                     </ul>
 
@@ -82,7 +84,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item logout-btn" href="#">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>
@@ -107,13 +109,84 @@
                 </div>
             </div>
         </div>
-        <div class="row add_employee mt-3">
-            <form class="row col">
-                <div class="col-12 col-xl-6 mb-2">
-                    <input type="text" class="form-control" placeholder="Họ và tên" aria-label="FullName">
+        <label for="formFile" class="form-label fw-bold">Thêm thông tin nhân sự:</label>
+
+        <div class="row add_employee mt-2">
+            <form class="row col-xl-8 col-12 mb-2">
+                <div class="col-8">
+                    <input type="text" class="form-control h-100 fullname-add-employee-input" required
+                        placeholder="Họ và tên" aria-label="FullName">
                 </div>
 
-                <div class="col  mb-1">
+                <div class="col-4">
+                    <div class="input-group">
+                        <span class="input-group-text w-100 " id="addon-wrapping" role="button">
+                            <select
+                                class="p-1 border border-0 bg-transparent w-100 type-select staff-type-add-employee-select"
+                                title="Chọn loại nhân sự">
+                                <option checked value="0">Chọn loại nhân sự</option>
+                                <!-- <option value="Phụ bếp">Phụ bếp</option>
+                                <option value="Bán hàng">Bán hàng</option> -->
+
+                            </select>
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <div class="col-12 mt-2">
+                    <div class="input-group">
+                        <span class="input-group-text " id="addon-wrapping" role="button">
+                            <select
+                                class="p-1 border border-0 bg-transparent salary-add-employee-salect w-100 salary-select">
+                                <option checked value="0">Chọn bậc lương</option>
+
+
+                            </select>
+                        </span>
+                        <input type="text" class="form-control salary-detail" value="Vui lòng chọn bậc lương trước"
+                            disabled aria-label="search_employer" aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+
+                <div class="col-7 mt-3 mb-1">
+                    <input type="text" class="form-control w-100 h-100 location-add-employee-input" required
+                        placeholder="Địa chỉ">
+                </div>
+                <div class="col-5 mt-3 mb-1">
+                    <input type="text" class="form-control phone-add-employee-input" required
+                        placeholder="Số điện thoại" aria-label="phone">
+                </div>
+                <!-- <div class="col-12 col-xl-6 mt-2 mb-1">
+                    <input type="text" class="form-control" placeholder="Tên tài khoản" aria-label="place">
+                </div>
+                <div class="col-12 col-xl-6 mt-2 mb-1">
+                    <input type="password" class="form-control" placeholder="Mật khẩu" aria-label="place">
+                </div> -->
+                <div class="col-xl-8 col-12 mt-2 mb-1">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text " id="addon-wrapping" role="button">
+                            <select class="p-1 border border-0 bg-transparent bank-name-add-employee-select">
+                                <option checked value="0">Tên ngân hàng</option>
+                                <option value="Agribank">Agribank</option>
+                                <option value="Vietcombank">Vietcombank</option>
+                                <option value="Sacombank">Sacombank</option>
+
+                                <option value="BIDV">BIDV</option>
+                                <option value="VPBank">VPBank</option>
+                                <option value="MBBank">MBBank</option>
+                                <option value="ACB">ACB</option>
+                                <option value="HDBank">HDBank</option>
+                                <option value="VIB">VIB</option>
+
+                            </select>
+                        </span>
+                        <input type="text" class="form-control bank-number-employee-input" required
+                            placeholder="Số tài khoản" aria-label="search_employer" aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+                <!-- <div class="col-4  mb-1">
                     <div class="form-floating ">
                         <select class="form-select" id="floatingSelect" aria-label="">
                             <option selected value="male">Nam</option>
@@ -121,86 +194,82 @@
                         </select>
                         <label for="floatingSelect">Giới tính</label>
                     </div>
-                </div>
-                <div class="col mb-1">
-                    <div class="form-floating ">
-                        <select class="form-select" id="floatingSelect" aria-label="">
-                            <option value="#">Chọn chức vụ</option>
-                            <option value="bep">Phụ bếp</option>
-                            <option value="banhang">Bán hàng</option>
-                        </select>
-                        <label for="floatingSelect">Chức vụ</label>
-                    </div>
-                </div>
+                </div> -->
+                <div class="col-4 mt-2 mb-1">
+                    <div class="input-group">
+                        <span class="input-group-text w-100" id="addon-wrapping" role="button">
+                            <select class="p-1 border border-0 bg-transparent w-100 gender-employee-select">
+                                <option checked value="0">Giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
 
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-                </div>
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="text" class="form-control" placeholder="Số điện thoại" aria-label="phone">
-                </div>
-                <div class="col-12 col-xl-6 mt-2 mb-1">
-                    <input type="text" class="form-control" placeholder="Địa chỉ" aria-label="place">
-                </div>
-                <div class="col-xl-6 col-12 mt-2 mb-1">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text" id="addon-wrapping" role="button">
-                            <select class="p-1 border border-0 bg-transparent">
-                                <option checked value="#">Tên ngân hàng</option>
-                                <option value="Agribank">Agribank</option>
                             </select>
                         </span>
-                        <input type="text" class="form-control" placeholder="Số tài khoản" aria-label="search_employer"
-                            aria-describedby="addon-wrapping">
+
                     </div>
                 </div>
-                <div class="col mt-2 mb-1">
+                <div class="input-group flex-nowrap mt-2 mb-1">
+                    <span class="input-group-text" id="addon-wrapping">Ngày bắt đầu làm việc:</span>
+                    <input type="date" class="form-control begin-work-employee-input" required
+                        aria-describedby="addon-wrapping">
+                </div>
+                <div class="col mt-3 mb-1">
                     <div class="avatar_input">
                         <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
-                        <input class="form-control w-100" type="file" id="formFile" placeholder="">
+                        <span role="button" id="upload_widget"
+                            class="ms-2 cloudinary-span text-white bg-secondary p-1 rounded">Chọn tập
+                            tin</span>
+
                     </div>
 
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button style="width: 100px;" type="submit" class="btn btn-primary mt-2">Thêm</button>
+                        <input type="submit" class="btn btn-primary mt-2 add-staff-btn" value="Thêm nhân sự">
 
                     </div>
                 </div>
             </form>
-            <div class="col-5 just_add">
+            <div class="col-xl-4 col-12 just_add mb-1">
                 <div class="card">
-                    <div class="card-header text-white fw-bold bg-success">Gần đây</div>
-                    <div class="card-body">
-                        <div class="list-group">
-                            <button class="list-group-item list-group-item-action"
-                                onclick="handleClickJustAddEmployee(this)" data-bs-toggle="modal"
-                                data-bs-target="#modal">
-                                <div class="d-flex w-100 justify-content-between modalEmployeeInput">
-                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
-                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
-                                    </p>
-                                    <small class="text-body-secondary">1 ngày trước</small>
-                                </div>
-                                <small class="text-body-secondary">And some muted small print.</small>
-                            </button>
-
-                            <button class="list-group-item list-group-item-action"
-                                onclick="handleClickJustAddEmployee(this)" data-bs-toggle="modal"
-                                data-bs-target="#modal">
+                    <div class="card-header text-white fw-bold bg-success">
+                        <i class="fa-solid fa-clock-rotate-left "></i>
+                        <span class="ms-1">7 ngày gần đây</span>
+                    </div>
+                    <div class="card-body card-body-recent" style="max-height: 400px;overflow-y: scroll;">
+                        <!-- <div class="list-group">
+                            <button class="list-group-item list-group-item-action mt-1" onclick=""
+                                data-bs-toggle="modal" data-bs-target="#modal">
                                 <div class="d-flex w-100 justify-content-between">
                                     <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
                                         <span class="badge bg-primary ms-1">Phụ Bếp</span>
                                     </p>
                                     <small class="text-body-secondary">1 ngày trước</small>
                                 </div>
-                                <small class="text-body-secondary">And some muted small print.</small>
                             </button>
+                        </div>
+                        <div class="list-group">
+                            <button class="list-group-item list-group-item-action mt-1" onclick=""
+                                data-bs-toggle="modal" data-bs-target="#modal">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
+                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
+                                    </p>
+                                    <small class="text-body-secondary">1 ngày trước</small>
+                                </div>
+                            </button>
+                        </div> -->
+                        <div class="recent-spinner text-center d-none">
+                            <td colspan="6">
+                                <div class="spinner-border text-primary " role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
                         </div>
                     </div>
 
                 </div>
-                <div class="modal fade modal-lg" id="modal" tabindex="-1">
+                <div class="modal fade modal-xl" id="modal" tabindex="-1">
                     <div class="modal-dialog-centered modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -213,7 +282,7 @@
                             <div class="modal-body ">
                                 <form class="row col">
                                     <div class="col-12 col-xl-6 mb-2">
-                                        <input type="text" class="form-control" placeholder="Họ và tên"
+                                        <input type="text" class="form-control" requỉed placeholder="Họ và tên"
                                             aria-label="FullName">
                                     </div>
 
@@ -238,14 +307,15 @@
                                     </div>
 
                                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                                        <input type="email" class="form-control" requỉed placeholder="Email"
+                                            aria-label="Email">
                                     </div>
                                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" placeholder="Số điện thoại"
+                                        <input type="text" class="form-control" requỉed placeholder="Số điện thoại"
                                             aria-label="phone">
                                     </div>
                                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" placeholder="Địa chỉ"
+                                        <input type="text" class="form-control" requỉed placeholder="Địa chỉ"
                                             aria-label="place">
                                     </div>
                                     <div class="col-xl-6 col-12 mt-2 mb-1">
@@ -256,23 +326,21 @@
                                                     <option value="Agribank">Agribank</option>
                                                 </select>
                                             </span>
-                                            <input type="text" class="form-control" placeholder="Số tài khoản"
+                                            <input type="text" class="form-control" requỉed placeholder="Số tài khoản"
                                                 aria-label="search_employer" aria-describedby="addon-wrapping">
                                         </div>
                                     </div>
                                     <div class="col mt-2 mb-1">
                                         <div class="avatar_input">
                                             <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
-                                            <input class="form-control w-100" type="file" id="formFile" placeholder="">
+                                            <input class="form-control  requỉedw-100" type="file" id="formFile"
+                                                placeholder="">
                                         </div>
 
                                     </div>
 
                                 </form>
                             </div>
-
-
-
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger">Xóa</button>
@@ -284,12 +352,16 @@
                 </div>
             </div>
         </div>
-
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-<script src="/src/assets/javascript/updateEmployee.js"></script>
+
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script src="../assets/javascript/loadingSpinner.js"></script>
+
+<script src="/src/assets/javascript/addStaff.js"></script>
+<script src="../assets/javascript/logout.js"></script>
 
 </html>
