@@ -43,7 +43,7 @@ function loginSuccess(resData) {
   //Ngược lại qua trang nhân sự
   if (resData.data.type.name.toLowerCase().trim().includes("quản lý"))
     return (location.href = "/src/index.html");
-  return (location.href = "/src/pages/staffIndex.html");
+  return (location.href = "/src/pages/indexStaff.html");
 }
 
 //Khi đang nhập thất bại
