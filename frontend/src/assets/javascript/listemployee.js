@@ -51,6 +51,7 @@ function renderStaff(staffs) {
         data-bs-target="#modal">
         <td>${staff.uid}</td>
         <td>${staff.fullName}</td>
+        <td>${staff.userName}</td>
         <td>${staff.gender}</td>
         <td>
             <div class="badge bg-primary">${typeName}</div>

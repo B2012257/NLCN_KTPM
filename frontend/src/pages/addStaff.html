@@ -22,13 +22,13 @@
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
             <div class=" container-fluid">
-                <a class="navbar-brand fs-3" href="/src/index.html">SUBA MANAGER</a>
+                <a class="navbar-brand fs-3" href="/src/index.html">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                         <li class="nav-item">
                             <a class="nav-link fs-6" aria-current="page" href="../index.html">Trang chủ</a>
                         </li>
@@ -38,7 +38,7 @@
                                 Quản lý nhân sự
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item active" href="./updateEmployee.html">Thêm nhân
+                                <li><a class="dropdown-item active" href="#">Thêm nhân
                                         sự</a>
                                 </li>
                                 <li><a class="dropdown-item " href="./listStaff.html">Danh sách nhân sự</a>
@@ -55,20 +55,19 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="./shedule.html">Cập nhật & Xem
                                         lịch</a></li>
-                                <li><a class="dropdown-item" href="#">Chấm công</a></li>
+                                <li><a class="dropdown-item" href="./workChecked.html">Chấm công</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link fs-6" href="./statistics.html">
                                 Thống kê & báo cáo
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Về nhân sự</a></li>
-                                <li><a class="dropdown-item" href="#">Về làm việc</a></li>
 
-                                <li><a class="dropdown-item" href="#"> Về lương</a></li>
-                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" role="button" href="./setupCompany.html">
+                                Cài đặt thông tin quản lý
+                            </a>
                         </li>
                     </ul>
 
@@ -260,6 +259,13 @@
                                 </div>
                             </button>
                         </div> -->
+                        <div class="recent-spinner text-center d-none">
+                            <td colspan="6">
+                                <div class="spinner-border text-primary " role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </div>
                     </div>
 
                 </div>
@@ -353,6 +359,7 @@
     crossorigin="anonymous"></script>
 
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script src="../assets/javascript/loadingSpinner.js"></script>
 
 <script src="/src/assets/javascript/addStaff.js"></script>
 <script src="../assets/javascript/logout.js"></script>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Phong -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/image/HRM_lg.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../assets/css/reset.css">
+
+    <title>Thông tin tài khoản</title>
+</head>
+
+<body>
+    <div id="header bg-dark">
+        <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
+            data-bs-theme="dark">
+            <div class=" container-fluid">
+                <a class="navbar-brand fs-3" href="./indexStaff.html">SUBA MANAGER</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                            style="--bs-scroll-height: 100px;">
+                            <li class="nav-item">
+                                <a class="nav-link fs-6 " aria-current="page" href="./registerShifts.html">Đăng ký ca
+                                    làm</a>
+                            </li>
+                            <li class="nav-item ">
+
+                                <a class="nav-link fs-6 " href="./scheduleStaff.html" role="button" aria-expanded="false">
+                                    Xem lịch làm
+                                </a>
+                            </li>
+
+                        </ul>
+                    </ul>
+
+                    <div class="d-flex">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Xin chào <span id="username"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#">Thông tin tài
+                                        khoản</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main class="container mt-3">
+        <div class="row">
+            <div class="col">
+
+                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item text-primary">Quản lý tài khoản</li>
+                        <li class="breadcrumb-item active">Thông tin tài khoản</li>
+
+                    </ol>
+                </nav>
+                <div class="text-success">
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="row info">
+            <!-- <div class="col col-md-8 mx-auto">
+                <div class="row mb-3">
+                    <div class="col text-center">
+                        <img style="width: 200px;" src="./assets/image/—Pngtree—user vector avatar_4830521.png"
+                            class="img-thumbnail rounded mx-auto d-block" alt="avatar">
+                          
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>Thông tin cá nhân
+
+                        </h5>
+                    </div>
+                    <div class="col">
+
+                        <button type="button" class="btn btn-outline-primary float-end">Chỉnh sửa </button>
+                    </div>
+
+                </div>
+                <hr>
+
+                <form class="row col">
+                    <div class="col-12 col-xl-6 mb-2">
+                        <input disabled type="text" class="form-control disabled" placeholder="Họ và tên"
+                            aria-label="FullName">
+                    </div>
+                    <div class="col  mb-1">
+                        <div class="form-floating ">
+                            <select disabled class="form-select" id="floatingSelect" aria-label="">
+                                <option selected value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                            </select>
+                            <label for="floatingSelect">Giới tính</label>
+                        </div>
+                    </div>
+                    <div class="col mb-1">
+                        <div class="form-floating ">
+                            <select disabled class="form-select" id="floatingSelect" aria-label="">
+                                <option value="#">Chọn chức vụ</option>
+                                <option value="bep">Phụ bếp</option>
+                                <option value="banhang">Bán hàng</option>
+                            </select>
+                            <label for="floatingSelect">Chức vụ</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6 mt-2 mb-1">
+                        <input disabled type="email" class="form-control" placeholder="Email" aria-label="Email">
+                    </div>
+                    <div class="col-12 col-xl-6 mt-2 mb-1">
+                        <input disabled type="text" class="form-control" placeholder="Số điện thoại" aria-label="phone">
+                    </div>
+                    <div class="col-12 col-xl-6 mt-2 mb-1">
+                        <input disabled type="text" class="form-control" placeholder="Địa chỉ" aria-label="place">
+                    </div>
+                    <div class="col-xl-6 col-12 mt-2 mb-1">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping" role="button">
+                                <select disabled class="p-1 border border-0 bg-transparent">
+                                    <option checked value="#">Tên ngân hàng</option>
+                                    <option value="Agribank">Agribank</option>
+                                </select>
+                            </span>
+                            <input disabled type="text" class="form-control" placeholder="Số tài khoản"
+                                aria-label="search_employer" aria-describedby="addon-wrapping">
+                        </div>
+                    </div>
+                    <div class="col mt-2 mb-1">
+                        <div class="avatar_input">
+                            <label for="formFile" class="form-label fw-bold">Đổi ảnh chân dung:</label>
+                            <input class="form-control w-100" type="file" id="formFile" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+        </div>
+    </main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+<script src="../assets/javascript/accountInformation.js"></script>
+   
+</html>

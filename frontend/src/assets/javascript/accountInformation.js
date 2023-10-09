@@ -1,9 +1,10 @@
 const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
-
+console.log(userObject);
 const uid = userObject.uid;
 
 const api = `http://localhost:8081/api/v1/manager/infoStaff?uid=${uid}`;
+const editInfo = `http://localhost:8081/api/v1/staff/editStaff`;
 let data = [];
 function start() {
   getStaff(function (fetchedData) {
@@ -61,9 +62,31 @@ function renderStaff(users) {
 
             </h5>
         </div>
-        <div class="col">
+        <div class="col" >
 
-            <button type="button" class="btn btn-outline-primary float-end">Chỉnh sửa </button>
+
+            <button type="button" class="btn btn-outline-primary float-end update" >Chỉnh sửa </button>
+            <button type="button" class="btn btn-outline-primary float-end exit" style="display:none">Hủy</button>           
+            <button type="button" class="btn btn-outline-primary float-end save" style="margin-right: 10px;display:none"  data-bs-toggle="modal" data-bs-target="#exampleModal" >Lưu thay đổi </button>
+         
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Thay đổi thông tin cá nhân thành công !!!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
 
     </div>
@@ -75,27 +98,16 @@ function renderStaff(users) {
                 aria-label="FullName" value="${user.fullName}">
         </div>
         <div class="col  mb-1">
-            <div class="form-floating ">
-                <select disabled class="form-select" id="floatingSelect" aria-label="">
-                    <option selected value="male">${user.gender}</option>
-                    <option value="female">Nữ</option>
-                </select>
-                <label for="floatingSelect">Giới tính</label>
-            </div>
+          
+            <input disabled type="text" class="form-control disabled" 
+            aria-label="Gender" value="${user.gender}">
         </div>
         <div class="col mb-1">
-            <div class="form-floating ">
-                <select disabled class="form-select" id="floatingSelect" aria-label="">
-                    <option value="#">${typeName}</option>
-                    <option value="bep">Phụ bếp</option>
-                    <option value="banhang">Bán hàng</option>
-                </select>
-                <label for="floatingSelect">Chức vụ</label>
-            </div>
+          
+            <input disabled type="text" class="form-control disabled" 
+            aria-label="TypeName" value="${typeName}">
         </div>
-        <div class="col-12 col-xl-6 mt-2 mb-1">
-            <input disabled type="email" class="form-control" placeholder="Email" aria-label="Email">
-        </div>
+       
         <div class="col-12 col-xl-6 mt-2 mb-1">
             <input disabled type="text" class="form-control" placeholder="Số điện thoại" aria-label="phone" value=" ${user.phone}">
         </div>
@@ -104,16 +116,17 @@ function renderStaff(users) {
         </div>
         <div class="col-xl-6 col-12 mt-2 mb-1">
             <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping" role="button">
-                    <select disabled class="p-1 border border-0 bg-transparent">
-                        <option checked value="#">${user.bankName}</option>
-                        <option value="Agribank">Agribank</option>
-                    </select>
-                </span>
+                
+                <input disabled type="text" class="form-control disabled" 
+                aria-label="BankName" value="${user.bankName}">
+
                 <input disabled type="text" class="form-control" placeholder="Số tài khoản" value="${user.bankAccount}"
                     aria-label="search_employer" aria-describedby="addon-wrapping">
             </div>
         </div>
+        <div class="col-12 col-xl-6 mt-2 mb-1">
+        <input disabled type="text" class="form-control" placeholder="Ngày bắt đầu làm" aria-label="beginWork" value= "${user.beginWork}">
+    </div>
         <div class="col mt-2 mb-1">
             <div class="avatar_input">
                 <label for="formFile" class="form-label fw-bold">Đổi ảnh chân dung:</label>
@@ -125,18 +138,127 @@ function renderStaff(users) {
     justify-content: center;
     align-items: center;">
 
-    <button style="margin: 20px 0 ;padding: 10px 15px" type="button" class="btn btn-outline-primary savebtn ">Lưu </button>
 </div>
 </div> 
           `;
     return returnHTML;
   });
   info.innerHTML = htmls.join("");
-  const btnUpdate = document.querySelector(".float-end");
+
+  const btnUpdate = document.querySelector(".update");
+  const btnExit = document.querySelector(".exit");
+  const btnSave = document.querySelector(".save");
   btnUpdate.addEventListener("click", function () {
     const inputs = document.querySelectorAll("input, select");
     inputs.forEach((input) => {
       input.removeAttribute("disabled");
     });
+    btnExit.style.display = "block";
+    btnSave.style.display = "block";
+    btnUpdate.style.display = "none";
   });
+
+  btnExit.addEventListener("click", function () {
+    const inputs = document.querySelectorAll("input, select");
+    inputs.forEach((input) => {
+      input.setAttribute("disabled", "disabled");
+    });
+
+    btnSave.style.display = "none";
+    btnExit.style.display = "none";
+    btnUpdate.style.display = "block";
+  });
+
+  btnSave.addEventListener("click", function () {
+    const inputs = document.querySelectorAll("input, select");
+    inputs.forEach((input) => {
+      input.setAttribute("disabled", "disabled");
+    });
+
+    btnSave.style.display = "none";
+    btnExit.style.display = "none";
+    btnUpdate.style.display = "block";
+  });
+
+  btnSave.addEventListener("click", updateInfo);
+  const avatar = document.getElementById("formFile");
+  avatar.addEventListener("change", imgToUrl);
+
+  //update tên cho nhân viên với username "Xin chào username"
+  const infoStaff = document.querySelector("#username");
+  var htmls2 = users.map(function (user) {
+    const returnHTML = `
+    ${user.userName}
+          `;
+    return returnHTML;
+  });
+  infoStaff.innerHTML = htmls2.join("");
+}
+
+function imgToUrl(e) {
+  const avatar = document.getElementById("formFile");
+  const file = avatar.files[0];
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    console.log(reader.result);
+  });
+  reader.readAsDataURL(file);
+}
+
+function updateInfo() {
+  const dataInfo = {};
+  // Lấy dữ liệu từ các trường input và select
+  const fullName = document.querySelector("input[aria-label='FullName']");
+  const gender = document.querySelector("input[aria-label='Gender']");
+  const phone = document.querySelector("input[aria-label='phone']");
+  const location = document.querySelector("input[aria-label='place']");
+  const bankName = document.querySelector("input[aria-label='BankName']");
+  const bankAccount = document.querySelector(
+    "input[aria-describedby='addon-wrapping']"
+  );
+  const beginWork = document.querySelector("input[aria-label='beginWork']");
+
+  dataInfo.uid = uid;
+  dataInfo.fullName = fullName.value;
+  dataInfo.gender = gender.value;
+  dataInfo.phone = phone.value;
+  dataInfo.location = location.value;
+  dataInfo.bankName = bankName.value;
+  dataInfo.bankAccount = bankAccount.value;
+  dataInfo.beginWork = beginWork.value;
+  dataInfo.urlAvatar = avatar.value;
+  // Gửi dữ liệu lên server sử dụng fetch API
+  if (
+    dataInfo.fullName !== "" &&
+    dataInfo.gender !== "" &&
+    dataInfo.phone !== "" &&
+    dataInfo.location !== "" &&
+    dataInfo.bankName !== "" &&
+    dataInfo.bankAccount !== "" &&
+    dataInfo.beginWork !== ""
+  ) {
+    return updateStaff(dataInfo);
+  } else alert("Vui lòng nhập đầy đủ trường");
+}
+
+function updateStaff(dataInfo) {
+  fetch(`${editInfo}`, {
+    method: "PUT",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataInfo),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      if (res.status === "OK") {
+        console.log(res);
+        return location.reload();
+      }
+
+      return console.log(res);
+    });
 }
