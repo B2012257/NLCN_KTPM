@@ -39,7 +39,7 @@
                                 Quản lý nhân sự
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item " href="./updateEmployee.html">Cập nhật nhân sự</a>
+                                <li><a class="dropdown-item " href="./addStaff.html">Cập nhật nhân sự</a>
                                 </li>
                                 <li><a class="dropdown-item active" href="#">Danh sách nhân sự</a></li>
 
@@ -121,13 +121,17 @@
 
         </div>
         <div class="row mt-3 view_type">
-            <div class="col-4">
+            <div class="col-4"  style="display: flex;"> 
                 <div class="form-check form-check-inline">
-                    <input checked class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                        value="tatca">
-                    <label class="form-check-label" for="inlineRadio1">Tất cả</label>
+                    <input checked class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio"
+                        value="Tất cả">
+                    <label class="form-check-label" for="inlineRadio">Tất cả</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div id="typeStaff">
+
+                </div>
+
+                <!-- <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                         value="phubep">
                     <label class="form-check-label" for="inlineRadio1">Phụ bếp</label>
@@ -136,7 +140,7 @@
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
                         value="banhang">
                     <label class="form-check-label" for="inlineRadio2">Bán hàng</label>
-                </div>
+                </div> -->
 
             </div>
         </div>
