@@ -48,4 +48,6 @@ function loginSuccess(resData) {
 
 //Khi đang nhập thất bại
 //Hiện thông báo lỗi
-function loginError() { }
+function loginError(res) {
+  alert(res.message)
+}

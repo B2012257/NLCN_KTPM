@@ -11,7 +11,7 @@ let salaries
 let staffTypes
 let recentStaff // Danh sách nhân sự vừa thêm lần trước
 async function setUp() {
-
+    turnOnLoadingFunction("recent-spinner")
     salaries = await getAllSalary()
     staffTypes = await getAllType()
     //Load bậc lương vào thẻ select
@@ -166,7 +166,6 @@ function renderElementInnerParent(parentElementClassName, childrenElement) {
 
 //Thêm các bậc lương vào giao diện
 function loadSalariesHtml(salaries) {
-
     salaries.forEach(salary => {
         //Tạo 1 thẻ option 
         let optionTag = document.createElement("option")
@@ -275,14 +274,20 @@ async function postAddStaffApi(data) {
 }
 
 function loadStaffRecentHtml(staffs) {
+
     if (staffs.length === 0) {
         let divTag = document.createElement("div")
         divTag.classList.add("list-group")
         divTag.innerHTML = `
        <p class="center"> Không có thông tin  </p>
 `
+        turnOffLoadingFunction("recent-spinner")
+
         renderElementInnerParent("card-body-recent", divTag)
+
     }
+    turnOffLoadingFunction("recent-spinner")
+
     staffs.forEach(staff => {
         //Tạo 1 thẻ option 
         let divTag = document.createElement("div")
