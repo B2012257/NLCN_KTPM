@@ -107,6 +107,8 @@ public interface ManagerService {
     //Xóa 1 danh sách nhân viên ra khỏi ca
 //    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift);
 
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDate(ShiftType shiftType, Date date);
+
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ca
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);
 

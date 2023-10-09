@@ -19,6 +19,7 @@ import java.util.List;
 public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
         List<ShiftDetail>findAllByShift(Shift shift);
 
+
         ShiftDetail findOneById(Long id);
         Boolean existsShiftDetailByShiftAndStaff(Shift shift, Staff staff);
 

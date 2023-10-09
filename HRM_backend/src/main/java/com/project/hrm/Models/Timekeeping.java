@@ -20,4 +20,22 @@ public class Timekeeping {
    private ShiftDetail shiftDetail;
     public Timekeeping() {
     }
+
+    public Timekeeping(Long id, Time start, Time end, Long overTime, ShiftDetail shiftDetail) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.overTime = overTime;
+        this.shiftDetail = shiftDetail;
+    }
+
+    public Timekeeping(Timekeeping timekeeping) {
+        this.id=timekeeping.getId();
+        this.start=timekeeping.getStart();
+        this.end=timekeeping.getEnd();
+        this.shiftDetail=timekeeping.getShiftDetail();
+        this.overTime=timekeeping.getOverTime();
+
+    }
+
 }

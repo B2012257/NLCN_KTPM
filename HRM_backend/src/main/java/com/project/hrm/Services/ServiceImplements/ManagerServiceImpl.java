@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.tools.StandardLocation;
 import java.util.*;
 import java.util.Date;
 
@@ -40,6 +41,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Autowired
     ShiftDetailRepository shiftDetailRepository;
+
+    @Autowired
+    TimeKeepingRepository timeKeepingRepository;
 
     private Argon2PasswordEncoder encoder;
 
@@ -601,20 +605,73 @@ public class ManagerServiceImpl implements ManagerService {
 //    }
 
     @Override
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDate(ShiftType shiftType, Date date) {
+        com.project.hrm.Models.Date date1 = new com.project.hrm.Models.Date(date);
+        List<Shift> shiftOfDate = shiftRepository.findAllByShiftTypeAndDate(shiftType,date1);
+        List<ShiftDetail> shiftDetails = new ArrayList<>();
+        System.out.println(date1);
+        for (Shift shiftId : shiftOfDate) {
+
+            List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
+            shiftDetails.addAll(shiftDetailList);
+        }
+
+
+        List<ShiftDetail> shiftDetailsNotInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetails) {
+            boolean isInTimekeeping = isShiftDetailInTimekeeping(shiftDetailID);
+            if (!isInTimekeeping) {
+                shiftDetailsNotInTimekeeping.add(shiftDetailID);
+            }
+        }
+        if (shiftDetails.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
+        }
+        return new ResponseWithData<>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc");
+
+    }
+
+    private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
+        // Lấy danh sách Timekeeping mà có ShiftDetail tương ứng
+        List<Timekeeping> timekeepingList = timeKeepingRepository.findByShiftDetail(shiftDetail);
+
+        // Kiểm tra xem có bất kỳ Timekeeping nào chứa ShiftDetail này không
+        return !timekeepingList.isEmpty();
+    }
+
+
+
+    @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
 
         return null;
     }
 
+
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date) {
+
         return null;
     }
 
     @Override
     public Response workCheckeds(List<Timekeeping> timeKeepings) {
-        return null;
+        List<Timekeeping> savedTimekeepings = new ArrayList<>();
+
+        for (Timekeeping timekeeping : timeKeepings) {
+            // Save each Timekeeping object to the database
+            Timekeeping savedTimekeeping = timeKeepingRepository.save(timekeeping);
+            savedTimekeepings.add(savedTimekeeping);
+        }
+
+        if (savedTimekeepings.isEmpty()) {
+            return new Response(HttpStatus.NOT_FOUND, "Không có chấm công");
+        }
+
+        return new Response(HttpStatus.OK, "Chấm công thành công");
     }
+
+
 
     @Override
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {

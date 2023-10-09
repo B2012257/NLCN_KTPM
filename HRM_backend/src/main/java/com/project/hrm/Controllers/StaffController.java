@@ -8,6 +8,7 @@ import com.project.hrm.Models.WorkRegister;
 import com.project.hrm.Services.ServiceImplements.StaffServiceImpl;
 
 import com.project.hrm.Utils.LoginRequired;
+import com.project.hrm.Utils.RoleRequired;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,7 @@ public class StaffController {
 
     private StaffServiceImpl staffService;
 
-//    @LoginRequired
-
+    //@LoginRequired
     @GetMapping(URLConfigs.GET_INFO_STA)
     public ResponseWithData<Staff> getInformation(@RequestParam(name = "Uid") String Uid){
         return staffService.getInformation(Uid);
@@ -54,7 +54,7 @@ public class StaffController {
     }
 
 
-    @LoginRequired
+//    @LoginRequired
 
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BETWEEN)
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(@RequestParam("start") Date start, @RequestParam("end") Date end){
@@ -63,7 +63,7 @@ public class StaffController {
 
 
 
-    @LoginRequired
+//    @LoginRequired
 
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
     public Response registerSchedule(@RequestBody WorkRegister newWorkRegister){

@@ -206,4 +206,15 @@ public class ManagerController {
         return managerService.getAllSchedulesOfDay(date);
     }
 
+
+    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
+    public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+    }
+
+    @PostMapping(URLConfigs.WORK_CHECKED)
+    public Response workCheckeds(@RequestBody List<Timekeeping> timekeepings){
+        return managerService.workCheckeds(timekeepings);
+    }
+
 }
