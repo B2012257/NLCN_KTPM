@@ -63,6 +63,12 @@ public class ManagerController {
     }
 
     @LoginRequired
+    @GetMapping(URLConfigs.GET_RECENT_STAFF)
+    public Response getRecentStaff(@RequestParam java.util.Date start, @RequestParam java.util.Date end){
+        return managerService.getRecentStaff(start, end);
+    }
+
+    @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_STAFF)
     public Response addStaff(@RequestBody Staff newStaff) {

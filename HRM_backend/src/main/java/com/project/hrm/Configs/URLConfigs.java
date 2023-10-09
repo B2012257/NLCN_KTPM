@@ -55,6 +55,8 @@ public class URLConfigs {
     public static final String SEARCH_STAFF = "/search/staff";
 
     public static final String GET_ALL_STAFF ="/allStaff";
+    public static final String GET_RECENT_STAFF ="/staff/recent";
+
     public static final String ADD_SALARY = "/addSalary";
     public static final String GET_ALL_SALARY = "/salaries";
     public static final String EDIT_SALARY = "/editSalary";
