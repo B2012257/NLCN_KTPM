@@ -23,7 +23,15 @@ function enableEdit() {
 
 // Hàm gọi API và xử lý dữ liệu lấy thông tin nhân sự
 function fetchStaffInfo() {
-  fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`)
+  fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`,{
+    method: 'GET',
+    mode:'cors',
+    credentials:'include',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+   
+}) 
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
