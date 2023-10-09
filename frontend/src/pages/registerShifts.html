@@ -23,7 +23,7 @@
         <nav class="navbar container-fluid navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark"
             data-bs-theme="dark">
             <div class=" container-fluid">
-                <a class="navbar-brand fs-3" href="../index.html">HR-Management</a>
+                <a class="navbar-brand fs-3" href="./indexStaff.html">HR-Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                     aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,16 +31,19 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link fs-6" aria-current="page" href="../pages/staffIndex.html">Trang chủ</a>
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/indexStaff.html">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" aria-current="page" href="../pages/registerShifts.html">Đăng ký lịch làm</a>
+                            <a class="nav-link fs-6" aria-current="page" href="#">Đăng ký
+                                lịch làm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" aria-current="page" href="../pages/">Xem lịch làm</a>
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/scheduleStaff.html">Xem lịch
+                                làm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" aria-current="page" href="../pages/staffStatistics.html">Thống kê</a>
+                            <a class="nav-link fs-6" aria-current="page" href="../pages/staffStatistics.html">Xem
+                                chấm công</a>
                         </li>
                     </ul>
 
@@ -51,7 +54,8 @@
                                 Xin chào <span id="username"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="./accountInfomationStaff.html">Thông tin tài khoản</a></li>
+                                <li><a class="dropdown-item" href="./accountInfomationStaff.html">Thông tin tài
+                                        khoản</a></li>
 
                                 <li>
                                     <hr class="dropdown-divider">
@@ -91,7 +95,9 @@
                         <tr id="monday">
                             <td>
                                 <div class="sttNameWeek">Thứ 2</div>
-                                <div class="sttOfWeek"><p id="value1"></p></div>
+                                <div class="sttOfWeek">
+                                    <p id="value1"></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -108,7 +114,9 @@
                         <tr id="tuesday">
                             <td>
                                 <div class="sttNameWeek">Thứ 3</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -125,7 +133,9 @@
                         <tr id="wednesday">
                             <td>
                                 <div class="sttNameWeek">Thứ 4</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -142,7 +152,9 @@
                         <tr id="thursday">
                             <td>
                                 <div class="sttNameWeek">Thứ 5</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -159,7 +171,9 @@
                         <tr id="friday">
                             <td>
                                 <div class="sttNameWeek">Thứ 6</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -176,7 +190,9 @@
                         <tr id="saturday">
                             <td>
                                 <div class="sttNameWeek">Thứ 7</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
@@ -193,7 +209,9 @@
                         <tr id="sunday">
                             <td>
                                 <div class="sttNameWeek">Chủ nhật</div>
-                                <div class="sttOfWeek"><p></p></div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
                             <td class="text-center">
                                 <input class="" type="time" name="" id="" disabled>
                                 <br>
@@ -208,7 +226,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);" onclick="workRegister(this)">Gửi lịch</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);"
+                    onclick="workRegister(this)">Gửi lịch</button>
             </div>
         </div>
     </main>
@@ -217,5 +236,5 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
 <script src="../assets/javascript/registerShifts.js"></script>
-<script src="../assets/javascript/indexStaff.js"></script>
+
 </html>
