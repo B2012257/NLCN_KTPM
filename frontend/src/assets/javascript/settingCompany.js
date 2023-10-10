@@ -480,10 +480,14 @@ function setTotalTime(e) {
     console.log(totalTime);
     //set totalTime to input
     //check giờ hợp lệ
-    if (totalTime.split(" ")[0] >= 0 && (totalTime.split(" ")[2] >= 0 || totalTime.split(" ")[2] === null)) {
+    console.log(typeof totalTime.split(" ")[0], totalTime.split(" ")[2], totalTime.split(" ")[2]);
+    if (totalTime.split(" ")[0] >= 0) {
+        console.log(totalTime);
         document.querySelector(".shift-type-add-total-input").value = totalTime
+        console.log(document.querySelector(".shift-type-add-total-input"));
         return;
     } else {
+        console.log(totalTime);
         document.querySelector(".shift-type-add-total-input").value = ""
 
     }
@@ -509,10 +513,11 @@ function calcTotalTime(EndTime, StartTime) {
     const hours = Math.floor(timeDifferenceSeconds / 3600);
     const minutes = Math.floor((timeDifferenceSeconds % 3600) / 60);
     let total = hours + " tiếng " + minutes + " phút"
-    if (minutes !== "0" && minutes !== 0) {
+    if (hours !== 0 && minutes !== 0) {
         return total
     }
-
-    return hours + " tiếng";
+    else if (hours !== 0 && minutes === 0)
+        return hours + " tiếng"
+    return + minutes + " phút";
 
 }
