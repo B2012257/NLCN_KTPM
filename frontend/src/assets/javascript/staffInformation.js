@@ -1,7 +1,8 @@
 const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
 const uid = userObject.uid;
-let avatar,dbAvatar;
+let avatar="";
+let dbAvatar;
 
 function enableEdit() {
     const inputElements = document.querySelectorAll('.editInfo');
@@ -24,6 +25,8 @@ function enableEdit() {
     }, false
       
     );
+
+   
     
 }
 
@@ -40,6 +43,7 @@ var myWidget = cloudinary.createUploadWidget({
   }
 }
 )
+
 
 
 
@@ -102,6 +106,7 @@ function fillStaffInfo(data) {
     document.getElementById('avatar').src=data.data.urlAvatar;
     document.getElementById('beginWork').value=data.data.beginWork;
     dbAvatar=data.data.urlAvatar;
+    console.log(dbAvatar);
 }
 
 //Lấy thông tin từ giao diện thông tin cá nhân
@@ -112,11 +117,10 @@ function updateStaffInfoHandler(){
     const newLocation = document.getElementById('location').value;
     const newBankAccount = document.getElementById('bankAccount').value;
     const newBankName = document.getElementById('bankName').value;
-    
     const beginWork = document.getElementById('beginWork').value;
     const dataUpdate = {};
 
-    if(avatar!==null){
+    if(avatar!== ""){
       dataUpdate.urlAvatar=avatar;
       console.log(avatar);
     }
@@ -131,7 +135,6 @@ function updateStaffInfoHandler(){
     dataUpdate.location=newLocation;
     dataUpdate.bankAccount=newBankAccount;
     dataUpdate.bankName= newBankName;
-    
     dataUpdate.beginWork=beginWork;
     
   
