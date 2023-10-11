@@ -208,7 +208,7 @@ public class ManagerController {
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @GetMapping (URLConfigs.GET_ALL_SCHEDULE_BY_DATE)
-    public Response getAllSchedulesOfDay(@RequestBody Date date) {
+    public Response getAllSchedulesOfDay(@RequestParam Date date) {
         return managerService.getAllSchedulesOfDay(date);
     }
 

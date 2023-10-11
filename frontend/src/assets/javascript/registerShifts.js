@@ -1,3 +1,8 @@
+const userData = localStorage.getItem("u");
+const userObject = JSON.parse(userData);
+const uid = userObject.uid;
+
+
 
 function operationTimeInput(checkbox) {
     const timeInputs = checkbox.parentNode.parentNode.getElementsByTagName('input');
@@ -98,19 +103,22 @@ function workRegister() {
         const checkbox = document.getElementById(day).querySelector("input[type='checkbox']");
         if (checkbox.checked) {
             const timeInputs = document.getElementById(day).querySelectorAll("input[type='time']");
-            const startTime = timeInputs[0].value;
-            const endTime = timeInputs[1].value;
+            const startTime = timeInputs[0].value+":00";
+            const endTime = timeInputs[1].value+":00";
 
             const divValues = document.getElementById(day).querySelector(".sttOfWeek").innerText;
             const name = document.getElementById(day).querySelector(".sttNameWeek").innerText;
             const dateU ={};
+            const staffID={};
 
             dateU.date=divValues;
+            staffID.uid=uid;
 
             selectedDays.start=startTime;
             selectedDays.end=endTime;
             selectedDays.weekName=name;
             selectedDays.date=dateU;
+            selectedDays.staff=staffID;
 
 
             console.log(selectedDays);

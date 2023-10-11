@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
@@ -16,14 +17,17 @@ public class WorkRegister {
     private String weekName;
 
     @NotNull
-    private String start;
+    private Time start;
 
     @NotNull
-    private String end;
+    private Time end;
 
     @NotNull
     @ManyToOne
     private Date date;
+
+    @ManyToOne
+    private Staff staff;
 
     public WorkRegister() {
     }
@@ -35,12 +39,14 @@ public class WorkRegister {
         this.start = newWorkRegister.getStart();
         this.end = newWorkRegister.getEnd();
         this.date = newWorkRegister.getDate();
+        this.staff=newWorkRegister.getStaff();
     }
 
-    public WorkRegister(String weekName, String start, String end, Date date) {
+    public WorkRegister(String weekName, Time start, Time end, Date date) {
         this.weekName = weekName;
         this.start = start;
         this.end = end;
         this.date = date;
+
     }
 }
