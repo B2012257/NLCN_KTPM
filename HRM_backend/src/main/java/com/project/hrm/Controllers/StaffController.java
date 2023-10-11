@@ -4,11 +4,10 @@ package com.project.hrm.Controllers;
 import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.Models.ShiftDetail;
 import com.project.hrm.Models.Staff;
-import com.project.hrm.Models.WorkRegister;
+import com.project.hrm.Models.FreeTime;
 import com.project.hrm.Services.ServiceImplements.StaffServiceImpl;
 
 import com.project.hrm.Utils.LoginRequired;
-import com.project.hrm.Utils.RoleRequired;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,16 +65,16 @@ public class StaffController {
 //    @LoginRequired
 
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
-    public Response registerSchedule(@RequestBody WorkRegister newWorkRegister){
-        return staffService.registerSchedule(newWorkRegister);
+    public Response registerSchedule(@RequestBody FreeTime newFreeTime){
+        return staffService.registerSchedule(newFreeTime);
     }
 
 
     @LoginRequired
 
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
-    public Response editRegisterSchedule(@RequestBody List<WorkRegister> workRegisters){
-        return staffService.editRegisterSchedule(workRegisters);
+    public Response editRegisterSchedule(@RequestBody List<FreeTime> freeTimes){
+        return staffService.editRegisterSchedule(freeTimes);
 
     }
 
