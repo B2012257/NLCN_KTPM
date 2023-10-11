@@ -1,7 +1,8 @@
 const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
 const uid = userObject.uid;
-let avatar, dbAvatar;
+let avatar = "";
+let dbAvatar;
 
 function enableEdit() {
   const inputElements = document.querySelectorAll(".editInfo");
