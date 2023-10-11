@@ -110,7 +110,7 @@ function updateStaffInfoHandler() {
   const beginWork = document.getElementById("beginWork").value;
   const dataUpdate = {};
 
-  if (avatar !== null) {
+  if (avatar !== "") {
     dataUpdate.urlAvatar = avatar;
     console.log(avatar);
   } else {

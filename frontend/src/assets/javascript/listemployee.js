@@ -86,6 +86,7 @@ function renderStaff(staffs) {
     // Tính số năm và số tháng
     const years = Math.floor(monthsDiff / 12);
     const months = monthsDiff % 12;
+    const month = months > 0 ? `${months}` : "0";
     const year = years > 0 ? `${years} năm ` : "";
     const returnHTML = `
         <tr style="text-align: center" role="button" title="Bấm để xem chi tiết" data-bs-toggle="modal"
@@ -99,7 +100,7 @@ function renderStaff(staffs) {
         </td>
         <td>${staff.location}</td>
         <td>${staff.phone}</td>
-        <td>${year} ${months} tháng</td>
+        <td>${year} ${month} tháng</td>
    
         
     </tr>

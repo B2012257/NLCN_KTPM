@@ -63,7 +63,7 @@ function renderStaff(users) {
   var htmls = users.map(function (user) {
     const typeName = user.type ? user.type.name : "";
     const returnHTML = `
-    ${user.userName}
+    ${user.fullName}
           `;
     return returnHTML;
   });
