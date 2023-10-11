@@ -59,7 +59,7 @@
                 Xin chào <span id="username"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="./accountInfomationStaff.html">Thông tin tài
+                <li><a class="dropdown-item" href="./staffInformation.html">Thông tin tài
                     khoản</a></li>
 
                 <li>
@@ -87,10 +87,12 @@
           <hr>
         </div>
         <div class="d-flex gap-4">
-          <!-- <div>
-                        <h4>Ngày</h4>
-                        <input type="date" id="dateInput">
-                    </div> -->
+          <div>
+            <span>Từ ngày</span>
+            <span id="firstDay"></span>
+            <span>Đến ngày</span>
+            <span id="lastDay"></span>
+          </div>
 
         </div>
       </div>
@@ -103,34 +105,34 @@
           <div class="card-header bg-success text-white fw-bold">
             Lịch ca <span style="padding: 0 20px;" id="result"></span>
           </div>
-          <div class="card-body overflow-x-scroll">
+          <div class="card-body overflow-x-scroll" id = "shiftTable">
 
             <table class="table table-bordered table-xl align-middle">
               <thead>
-                <tr class="text-center">
-                  <th scope="col">
-                  </th>
-                  <th scope="col">Ca sáng <br> (7.00 - 12.00)
-                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                <tr class="text-center shiftType">
+                  <!-- <th scope="col">
+                  </th> -->
+                  <!-- <th scope="col">Ca sáng <br> (7.00 - 12.00)
+                   
                     <br>
 
                   </th>
                   <th scope="col">Ca chiều <br> (12.00 - 17.00)
-                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                 
                     <br>
 
                   </th>
                   <th scope="col">Ca tối <br> (17.00 - 22.00)
-                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                  
                     <br>
 
-                  </th>
+                  </th> -->
 
 
                 </tr>
               </thead>
-              <tbody class="text-center">
-                <tr>
+              <tbody class="text-center nameStaff">
+                <!-- <tr>
                   <th scope="row">Thứ 2</th>
                   <td class=" add_employee_schedule_btn">
                     <span class="badge bg-primary">
@@ -265,7 +267,6 @@
                     Nguyễn Trung Tín
                   </span>
                 </td>
-
                 </tr>
                 <tr>
                   <th scope="row">Thứ 5</th>
@@ -342,7 +343,7 @@
 
                   </td>
 
-                </tr>
+                </tr> -->
 
               </tbody>
             </table>
@@ -360,7 +361,7 @@
   integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
   </script>
 
-<script src="../assets/javascript/indexStaff.js"></script>
+<!-- <script src="../assets/javascript/indexStaff.js"></script> -->
 <script src="../assets/javascript/scheduleStaff.js  "></script>
 
 </html>

@@ -1,10 +1,14 @@
 const api = `http://localhost:8081/api/v1/manager/allStaff`;
+const apiType = `http://localhost:8081/api/v1/manager/types`;
+
 let data = [];
+
 function start() {
   getStaff(function (fetchedData) {
     data = fetchedData;
-    filterStaffByRole(data, "tatca");
+    filterStaffByRole(data, "Tất cả");
   });
+  getType();
 }
 start();
 
@@ -26,12 +30,49 @@ async function getStaff(callback) {
     console.error(error);
   }
 }
-const radioButtons = document.querySelectorAll(
-  'input[name="inlineRadioOptions"]'
-);
+
+function getType() {
+  fetch(apiType, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status == "OK") {
+        const data = res.data;
+        console.log(data);
+        const type = document.getElementById("typeStaff");
+        var html = data.map(function (type, index) {
+          const uniqueId = `inlineRadio${index + 1}`; // Sử dụng index để tạo id duy nhất
+          return `
+          <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="${uniqueId}"
+              value="${type.name}">
+          <label class="form-check-label" for="${uniqueId}">${type.name}</label>
+      </div>
+      
+          `;
+        });
+        type.innerHTML = html.join("");
+      }
+      const radioButtons = document.querySelectorAll(".form-check-input");
+      console.log(radioButtons);
+      radioButtons.forEach((radio) => {
+        radio.addEventListener("change", function () {
+          console.log("Selected value:", this.value);
+          filterStaffByRole(data, this.value); // Truyền thêm tham số data vào hàm filterStaffByRole
+        });
+      });
+    });
+}
 
 function renderStaff(staffs) {
   const listStaff = document.getElementById("list-staff");
+  const modal = document.getElementById("modal");
   var htmls = staffs.map(function (staff) {
     const typeName = staff.type ? staff.type.name : "";
 
@@ -69,36 +110,38 @@ function renderStaff(staffs) {
   listStaff.innerHTML = htmls.join("");
 }
 
-function removeDiacriticsAndSpaces(str) {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s/g, "")
-    .toLowerCase();
-}
+// function removeDiacriticsAndSpaces(str) {
+//   return str
+//     .normalize("NFD")
+//     .replace(/[\u0300-\u036f]/g, "")
+//     .replace(/\s/g, "")
+//     .toLowerCase();
+// }
 
 function filterStaffByRole(data, role) {
-  console.log("Role selected:", role);
-  if (role === "tatca") {
+  // console.log("Role selected:", role);
+  if (role === "Tất cả") {
     renderStaff(data);
   } else {
     const filteredStaff = data.filter((staff) => {
       let name = staff.type && staff.type.name;
       if (name) {
-        let remove = removeDiacriticsAndSpaces(name);
-        console.log(remove);
-        return remove === role;
+        return name === role;
       }
     });
     renderStaff(filteredStaff);
   }
 }
+// const radioButtons = document.querySelectorAll(
+//   'input[name="inlineRadioOptions"]'
+// );
 
-radioButtons.forEach((radio) => {
-  radio.addEventListener("change", function () {
-    filterStaffByRole(data, this.value); // Truyền thêm tham số data vào hàm filterStaffByRole
-  });
-});
+// radioButtons.forEach((radio) => {
+//   radio.addEventListener("change", function () {
+//     console.log("Selected value:", this.value);
+//     filterStaffByRole(data, this.value); // Truyền thêm tham số data vào hàm filterStaffByRole
+//   });
+// });
 
 function filterStaffByName(data, searchTerm) {
   return data.filter((staff) => {

@@ -1,9 +1,23 @@
 const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
+var currentDate = new Date();
+var day = currentDate.getDate();
+var month = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1
+var year = currentDate.getFullYear();
+// Định dạng lại chuỗi ngày thành "YYYY/MM/DD"
+var formattedDate =
+  year +
+  "/" +
+  (month < 10 ? "0" : "") +
+  month +
+  "/" +
+  (day < 10 ? "0" : "") +
+  day;
 
+console.log(formattedDate, formattedDate); // Kết quả: "10/10/2023"
 const uid = userObject.uid;
-
 const api = `http://localhost:8081/api/v1/manager/infoStaff?uid=${uid}`;
+const apiShift = `http://localhost:8081/api/v1/staff/getAllSchedule`;
 
 let data = [];
 function start() {
@@ -11,6 +25,7 @@ function start() {
     data = fetchedData;
     renderStaff(data);
   });
+  getMyShift(formattedDate, formattedDate, uid);
 }
 start();
 async function getStaff(callback) {
@@ -55,78 +70,77 @@ function renderStaff(users) {
   info.innerHTML = htmls.join("");
 }
 
-//Thời gian ngày hiện tại ở trang indexStaff
+function getMyShift(startDate, endDate, userId) {
+  fetch(`${apiShift}?start=${startDate}&end=${endDate}`, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === "OK") {
+        const datas = res.data;
+        let shiftData = {};
 
-var dateInput = document.getElementById("dateInput");
-var resultDiv = document.getElementById("result");
+        // Tổ chức dữ liệu theo ca làm việc
+        datas.forEach((item) => {
+          const shiftTypeId = item.shift.shiftType.id;
+          const shiftTypeName = `${item.shift.shiftType.name} (${item.shift.shiftType.start} - ${item.shift.shiftType.end})`;
 
-// Lắng nghe sự kiện khi giá trị của thẻ input thay đổi
-// dateInput.addEventListener("input", function () {
-//   var selectedDate = dateInput.value;
+          if (!shiftData[shiftTypeId]) {
+            shiftData[shiftTypeId] = {
+              shiftTypeName: shiftTypeName,
+              staffData: [
+                {
+                  fullName: item.staff.fullName,
+                  uid: item.staff.uid,
+                },
+              ],
+            };
+          } else {
+            shiftData[shiftTypeId].staffData.push({
+              fullName: item.staff.fullName,
+              uid: item.staff.uid,
+            });
+          }
+        });
 
-//   var selectDay = new Date(dateInput.value);
+        // Tạo header cho bảng
+        let headerRowHTML = "<tr>";
+        Object.values(shiftData).forEach((shiftInfo) => {
+          headerRowHTML += `<th>${shiftInfo.shiftTypeName}</th>`;
+        });
+        headerRowHTML += "</tr>";
+        document.querySelector(".shiftType").innerHTML = headerRowHTML;
 
-//   var daysOfWeek = [
-//     "Chủ Nhật",
-//     "Thứ Hai",
-//     "Thứ Ba",
-//     "Thứ Tư",
-//     "Thứ Năm",
-//     "Thứ Sáu",
-//     "Thứ Bảy",
-//   ];
-//   var dayOfWeek = daysOfWeek[selectDay.getDay()];
-
-//   resultDiv.textContent = dayOfWeek + ", " + selectedDate;
-// });
-
-function displayCurrentDate() {
-  var currentDate = new Date();
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  var formattedDate = currentDate.toLocaleDateString(undefined, options);
-
-  var divElement = document.getElementById("resultDate");
-  divElement.textContent = formattedDate;
+        // Tạo dữ liệu cho bảng
+        let bodyRowsHTML = "";
+        const maxStaffCount = Math.max(
+          ...Object.values(shiftData).map(
+            (shiftInfo) => shiftInfo.staffData.length
+          )
+        );
+        console.log("shiftData", shiftData);
+        for (let i = 0; i < maxStaffCount; i++) {
+          let rowHTML = "<tr>";
+          Object.values(shiftData).forEach((shiftInfo) => {
+            const staffInfo = shiftInfo.staffData[i];
+            const isCurrentUser = staffInfo && staffInfo.uid === userId;
+            rowHTML += `<td><span ${
+              isCurrentUser
+                ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100"'
+                : ""
+            } style="font-size: 16px; padding: 8px 0">${
+              staffInfo ? staffInfo.fullName : ""
+            }</span></td>`;
+          });
+          rowHTML += "</tr>";
+          bodyRowsHTML += rowHTML;
+        }
+        document.querySelector(".nameStaff").innerHTML = bodyRowsHTML;
+      }
+    });
 }
-
-displayCurrentDate();
-
-//////Test lấy người có giá trị trong tuần
-//Lấy ra người có lịch trùng ngày hôm nay
-var dataTest = [
-  { id: 1, name: "thái", dateGoWork: "10/10/2023" },
-  { id: 2, name: "tring", dateGoWork: "6/10/2023" },
-  { id: 3, name: "phong", dateGoWork: "6/10/2023" },
-  { id: 4, name: "Linh", dateGoWork: "8/10/2023" },
-  { id: 5, name: "phong", dateGoWork: "8/10/2023" },
-  { id: 6, name: "phong", dateGoWork: "5/10/2023" },
-  { id: 7, name: "phong", dateGoWork: "7/10/2023" },
-];
-
-var currentDate = new Date();
-
-var formattedCurrentDate = currentDate.toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
-function parseDate(dateString) {
-  var parts = dateString.split("/");
-  return new Date(parts[2], parts[1] - 1, parts[0]);
-}
-
-var filteredData2 = dataTest.filter(function (item) {
-  var dateGoWork = parseDate(item.dateGoWork).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-  return dateGoWork === formattedCurrentDate;
-});
-console.log(filteredData2);
