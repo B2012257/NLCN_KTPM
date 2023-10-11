@@ -16,17 +16,20 @@ public class Timekeeping {
     private Time end;
     private Long overTime;
 
+    private String note;
+
    @OneToOne
    private ShiftDetail shiftDetail;
-    public Timekeeping() {
-    }
 
-    public Timekeeping(Long id, Time start, Time end, Long overTime, ShiftDetail shiftDetail) {
+    public Timekeeping() {}
+
+    public Timekeeping(Long id, Time start, Time end, Long overTime, ShiftDetail shiftDetail, String note) {
         this.id = id;
         this.start = start;
         this.end = end;
         this.overTime = overTime;
         this.shiftDetail = shiftDetail;
+        this.note = note;
     }
 
     public Timekeeping(Timekeeping timekeeping) {
@@ -35,6 +38,7 @@ public class Timekeeping {
         this.end=timekeeping.getEnd();
         this.shiftDetail=timekeeping.getShiftDetail();
         this.overTime=timekeeping.getOverTime();
+        this.note = timekeeping.getNote();
 
     }
 

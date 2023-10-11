@@ -109,9 +109,9 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Response registerSchedule(WorkRegister workRegister) {
+    public Response registerSchedule(FreeTime freeTime) {
         try {
-            com.project.hrm.Models.Date dateToCheck = workRegister.getDate();
+            com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
 
             // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
             boolean dateExists = workRegisterRepository.existsByDate(dateToCheck);
@@ -122,9 +122,9 @@ public class StaffServiceImpl implements StaffService {
                 dateRepository.saveAndFlush(newDate);
             }
 
-            // Thêm workRegister
-            WorkRegister workRegisterID = new WorkRegister(workRegister);
-            workRegisterRepository.saveAndFlush(workRegisterID);
+            // Thêm freeTime
+            FreeTime freeTimeID = new FreeTime(freeTime);
+            workRegisterRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
         } catch (RuntimeException ex) {
@@ -135,34 +135,33 @@ public class StaffServiceImpl implements StaffService {
 
 
     @Override
-    public Response editRegisterSchedule(List<WorkRegister> workRegisters) {
-        for (WorkRegister workRegister : workRegisters) {
-
-            // Lấy thông tin workRegister theo ID
-            WorkRegister existingWorkRegister = workRegisterRepository.findById(workRegister.getId()).orElse(null);
-
-            if (existingWorkRegister != null) {
-                // Cập nhật thông tin workRegister
-                existingWorkRegister.setWeekName(workRegister.getWeekName());
-                existingWorkRegister.setStart(workRegister.getStart());
-                existingWorkRegister.setEnd(workRegister.getEnd());
-
-                // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
-                com.project.hrm.Models.Date dateToCheck = workRegister.getDate();
-                boolean dateExists = workRegisterRepository.existsByDate(dateToCheck);
-                if (!dateExists) {
-                    // Nếu ngày chưa tồn tại, thêm mới ngày
-                    com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
-                    dateRepository.saveAndFlush(newDate);
-                }
-                existingWorkRegister.setDate(workRegister.getDate());
-                workRegisterRepository.saveAndFlush(existingWorkRegister);
-            }
-        }
-        return new Response(HttpStatus.OK, "Cập nhật thành công");
+    public Response editRegisterSchedule(List<FreeTime> freeTimes) {
+//        for (FreeTime freeTime : freeTimes) {
+//
+//            // Lấy thông tin freeTime theo ID
+//            FreeTime existingFreeTime = workRegisterRepository.findById(freeTime.getId()).orElse(null);
+//
+//            if (existingFreeTime != null) {
+//                // Cập nhật thông tin freeTime
+//                existingFreeTime.setWeekName(freeTime.getWeekName());
+//                existingFreeTime.setStart(freeTime.getStart());
+//                existingFreeTime.setEnd(freeTime.getEnd());
+//
+//                // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
+//                com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
+//                boolean dateExists = workRegisterRepository.existsByDate(dateToCheck);
+//                if (!dateExists) {
+//                    // Nếu ngày chưa tồn tại, thêm mới ngày
+//                    com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
+//                    dateRepository.saveAndFlush(newDate);
+//                }
+//                existingFreeTime.setDate(freeTime.getDate());
+//                workRegisterRepository.saveAndFlush(existingFreeTime);
+//            }
+//        }
+//        return new Response(HttpStatus.OK, "Cập nhật thành công");
+        return null;
     }
 
-
-
-
+    
 }
