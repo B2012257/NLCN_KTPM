@@ -1,11 +1,11 @@
 package com.project.hrm.Services;
 
 
+import com.project.hrm.Models.FreeTime;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.ShiftDetail;
-import com.project.hrm.Models.WorkRegister;
 
 import java.util.Date;
 import java.util.List;
@@ -33,8 +33,8 @@ public interface StaffService {
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end);
 
     //Đăng ký lịch làm, đăng ký khoảng thời gian rảnh có thể đi làm
-    public Response registerSchedule(WorkRegister workRegister);
+    public Response registerSchedule(FreeTime freeTime);
 
     //Chỉnh sửa lich làm, nhận vào danh sách
-    public Response editRegisterSchedule(List<WorkRegister> workRegisters);
+    public Response editRegisterSchedule(List<FreeTime> freeTimes);
 }
