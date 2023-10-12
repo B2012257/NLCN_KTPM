@@ -146,6 +146,9 @@ function loadScheduleHtml(schedules) {
 
     } else {
         console.log("Không có ca");
+        document.querySelectorAll(".weekname").forEach(item => {
+            item.style = "min-width: 166.8px"
+        })
     }
 
 }
