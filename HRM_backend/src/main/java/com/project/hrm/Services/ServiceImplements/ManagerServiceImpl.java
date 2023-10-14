@@ -625,6 +625,24 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<>(shiftDetailRepository.findByShiftIn(shiftOfDate), HttpStatus.OK, "Danh sách thông tin lịch làm ngày: " + date.getDate());
     }
 
+    @Override
+    public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end) {
+        com.project.hrm.Models.Date dateStart = new com.project.hrm.Models.Date(start);
+        com.project.hrm.Models.Date dateEnd = new com.project.hrm.Models.Date(end);
+        List<Shift> shift = shiftRepository.findAllByDateBetween(dateStart, dateEnd);
+        List<ShiftDetail> shiftDetails = new ArrayList<>();
+
+        for (Shift shiftId : shift) {
+
+            List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
+            shiftDetails.addAll(shiftDetailList);
+        }
+
+        if (shiftDetails.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
+        }
+        return new ResponseWithData<>(shiftDetails, HttpStatus.OK, "Danh sách làm việc");
+    }
 //    @Override
 //    public Response deleteListStaffOnSchedule(List<Staff> staffs, Shift shift) {
 //        return null;
