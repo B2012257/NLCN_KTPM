@@ -13,3 +13,7 @@
 .min-h-200 {
     height: 200px;
 }
+
+.min-w-166 {
+    min-width: 166.8px;
+}

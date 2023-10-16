@@ -86,6 +86,11 @@ public class ManagerController {
         return managerService.getAllStaff();
     }
 
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BETWEEN)
+    public Response getAllMyScheduleBetweenStartAndEnd(@RequestParam java.util.Date startDay, @RequestParam java.util.Date endDay){
+        return managerService.getAllMyScheduleBetweenStartAndEnd(startDay, endDay);
+    }
 
 //    @LoginRequired
 //    @PutMapping(URLConfigs.CHANGE_PASSWORD_STAFF)

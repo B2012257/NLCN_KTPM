@@ -86,9 +86,13 @@ function getMyShift(startDate, endDate, userId) {
         let shiftData = {};
 
         // Tổ chức dữ liệu theo ca làm việc
+        console.log("datas", datas);
         datas.forEach((item) => {
           const shiftTypeId = item.shift.shiftType.id;
+          const userId = item.staff.uid;
           const shiftTypeName = `${item.shift.shiftType.name} (${item.shift.shiftType.start} - ${item.shift.shiftType.end})`;
+
+          console.log("shiftData[shiftTypeId]", shiftData[shiftTypeId]);
 
           if (!shiftData[shiftTypeId]) {
             shiftData[shiftTypeId] = {
@@ -105,10 +109,14 @@ function getMyShift(startDate, endDate, userId) {
               fullName: item.staff.fullName,
               uid: item.staff.uid,
             });
+
+            // Thêm dữ liệu vào staffData bất kể userId là gì
           }
         });
+        console.log("shift", shiftData);
 
         // Tạo header cho bảng
+
         let headerRowHTML = "<tr>";
         Object.values(shiftData).forEach((shiftInfo) => {
           headerRowHTML += `<th>${shiftInfo.shiftTypeName}</th>`;
