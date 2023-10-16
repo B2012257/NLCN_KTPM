@@ -16,17 +16,22 @@ async function setup(weekList) {
     let scheduleRes = await getAllScheduleAtWeek(weekList)
     loadScheduleHtml(scheduleRes.data)
 
-
-    //Thêm sự kiện tiến và lùi tuần
-
-
+    //Thêm sự kiện ấn nút lập lịch cho 1 ca trong ngày hoặc chỉnh sửa
+    let actionScheduleBtnList = document.querySelectorAll(".action-schedule-btn")
+    actionScheduleBtnList.forEach(actionBtn => {
+        actionBtn.addEventListener("click", (e) => actionBtnClickHandler(e))
+    })
+    //Nếu có class edit-schedule-btn thì vô hàm xử lí edit
 }
+
 let weekList = getWeekList(new Date())
 document.querySelector(".dayInWeek").innerText = weekList[0].day
 setup(weekList)
+
 //Thêm sự kiện tiến lùi tuần
 document.querySelector(".previous-week").addEventListener("click", () => getPreviousWeek())
 document.querySelector(".next-week").addEventListener("click", () => getNextWeek())
+
 async function getAllShiftType() {
     return await getApi(getAllShiftTypeApi)
 }
@@ -47,46 +52,46 @@ function loadShiftTypeHtml(shiftTypes) {
                                 <br />
                                 <small class="fw-normal" style="font-size: 14px;"> ${startTime} - ${endTime} </small>
                                 </th>
-                                <span class="d-none">${shiftType.id} </span>
+                                <span class="d-none shift-type-id">${shiftType.id} </span>
                                 <td class="add_employee_schedule_btn t2">
 
 
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus mt-2 fs-4 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus mt-2 fs-4 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t3">
 
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class=" add_employee_schedule_btn t4">
 
 
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t5">
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t6">
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t7">
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t0">
 
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
-                                        <i class="fa-solid fa-plus fs-5 fw-lighter "></i>
+                                        <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
         `
@@ -103,13 +108,21 @@ function reversedDateString(dateString) {
 //Lấy tuần của ngày hiện tại và hiển thị vào bảng
 function loadWeekDay(weekList) {
     let weekNameElementList = document.querySelectorAll(".weekname")
-
+    let addEmployeeScheduleBtn = document.querySelectorAll(".add_employee_schedule_btn")
     weekNameElementList.forEach((element, index) => {
         element.innerHTML =
             `${(weekList[index].stt > 7) ? "Chủ nhật" : "Thứ " + weekList[index].stt}
         <br>
         <small class="fw-light fst-italic">${reversedDateString(weekList[index].day)}</small>`
     })
+    let index = 0; //0 - 6
+    addEmployeeScheduleBtn.forEach((element) => {
+        if (index > 6) index = 0;
+        element.innerHTML +=
+            `<span class="d-none dayOfThisShiftDetail">${weekList[index].day}</span>`
+        index++
+    })
+
 }
 function loadScheduleHtml(schedules) {
     console.log(schedules);
@@ -139,7 +152,7 @@ function loadScheduleHtml(schedules) {
             td.insertBefore(spanNode, td.querySelector("div"))
 
 
-            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen" title="Chỉnh sửa"></i>`
+            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen edit-schedule-btn action-schedule-btn d-block" title="Chỉnh sửa"></i>`
             // td.querySelector("div").removeAttribute("data-bs-toggle")
             // td.querySelector("div").removeAttribute("data-bs-target")
         });
@@ -238,11 +251,6 @@ function getNextDay(date) {
     //Khởi tạo đối tượng
     const targetDate = new Date(date);
     targetDate.setDate(targetDate.getDate() + 1); // Tăng giá trị ngày lên 1
-    //Nếu ngày khi tăng lên bằng 1 thì qua tháng mới
-    if (targetDate.getDate() === 1) {
-        targetDate.setMonth((targetDate.getMonth() + 1) + 1); // Tăng giá trị tháng lên 1
-        targetDate.setDate(1); // Đặt ngày thành 1
-    }
     return targetDate;
 }
 //Lấy ngày cuối trước ngày truyền vào
@@ -280,7 +288,6 @@ function getPreviousWeek() {
     let startWeekNow = weekNow[0].day //yyyy-mm-dd
     let endNextWeek = getPreviousDay(startWeekNow) //Lấy ngày cuối của tuần trước
     let preWeek = getWeekList(endNextWeek) //Lấy ra tuần trước
-    console.log(preWeek);
 
     //Clear hết dữ liệu của tuần cũ
     clearOldDataTable()
@@ -293,4 +300,27 @@ function clearOldDataTable() {
         item.innerText = ""
     })
     document.querySelector(".schedule-table .shedule-tbody").innerHTML = ""
+}
+function actionBtnClickHandler(event) {
+    let iTagTarget = event.target
+    //Lấy ngày target và id ca target
+    //Lấy ngày target
+    let dateTargetTd = iTagTarget.parentNode.parentNode
+    let dateTarget = dateTargetTd.querySelector(".dayOfThisShiftDetail").innerText //Nếu chưa có ca thì không lấy được ngày // -----BUGS --Fixed
+    //Lấy shiftTypeId target
+    let shiftTypeIdTarget = dateTargetTd.parentNode
+    let shiftTypeId = shiftTypeIdTarget.querySelector(".shift-type-id").innerText //Lấy shiftTypeId của ca target
+    let shiftTypeNameTh = shiftTypeIdTarget.querySelector("th")
+    let shiftTypeName = shiftTypeNameTh.firstChild.data.trim().toLowerCase()
+    String.up
+    document.querySelector(".schedule-date").innerHTML = `ngày ${reversedDateString(dateTarget)}`
+    document.querySelector(".schedule-shift-type-name").innerText = `Ca ${shiftTypeName}`
+    document.querySelector(".schedule-shift-type-id").innerText = `${shiftTypeId}`
+
+
+
+    //Lấy danh sách lịch làm của ngày hiện tại
+
+    //Lấy danh sách nhân viên có đăng ký lịch rảnh vào ca sáng và ngày này
+
 }
