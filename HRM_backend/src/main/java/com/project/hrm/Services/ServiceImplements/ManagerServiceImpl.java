@@ -658,11 +658,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
-        // Lấy danh sách Timekeeping mà có ShiftDetail tương ứng
-        List<Timekeeping> timekeepingList = timeKeepingRepository.findByShiftDetail(shiftDetail);
-
-        // Kiểm tra xem có bất kỳ Timekeeping nào chứa ShiftDetail này không
-        return !timekeepingList.isEmpty();
+        Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetail);
+        return timekeeping != null;
     }
 
 

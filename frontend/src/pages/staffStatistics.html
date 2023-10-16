@@ -48,8 +48,8 @@
                     <div class="d-flex">
                         <div class="dropdown">
                             <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Xin chào
+                                data-bs-toggle="dropdown" aria-expanded="false" id="helloUserName">
+                                
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item active" href="../pages/staffInformation.html">Thông tin tài
@@ -84,66 +84,61 @@
         <div class="row mt-3">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-success text-white fw-bold">
-                        Hôm nay
+                    <div class="card-header bg-success text-white fw-bold" id="toDay" style="text-align: center;">
+                        
                     </div>
                     <table
                         class="table table-striped table-bordered table-hover table-sm align-middle ps-2  ">
                         <thead>
                             <tr>
-                                <th scope="col">Số thứ tự
+                                <th scope="col" style="text-align: center;">Số thứ tự
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                              <th scope="col">Ngày làm
+                              <th scope="col" style="text-align: center;">Ngày làm
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Loại ca
+                                <th scope="col" style="text-align: center;">Ca làm việc
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Giờ vào ca
+                                <th scope="col" style="text-align: center;">Giờ tăng ca
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Giờ ra ca
+                                <th scope="col" style="text-align: center;">Giờ vào ca thực tế
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Giờ vào ca thực tế
+                                <th scope="col" style="text-align: center;">Giờ ra ca thực tế
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Giờ ra ca thực tế
+                                <th scope="col" style="text-align: center;">Tăng ca thực tế
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th scope="col">Số giờ tăng ca
+                                <th class="text-center" scope="col" style="text-align: center;">Tổng giờ
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th class="text-center" scope="col">Tổng giờ
+                                <th class="text-center" scope="col" style="text-align: center;">Tổng lương
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th class="text-center" scope="col">Tổng lương
+                                <th class="text-center" scope="col" style="text-align: center;">Ghi chú
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
-                                <th class="text-center" scope="col">Ghi chú
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th class="text-center" scope="col">Trạng thái
+                                <th class="text-center" scope="col" style="text-align: center;">Trạng thái
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="text-start">
+                        <tbody class="text-start" id="timeKeepingToday">
                             <tr style="text-align: center">
-                                <td>01</td>
+                                <!-- <td>01</td>
                                 
                                 <td>11/10/2023</td>
                                 
                                 <td>
-                                    Ca sáng
+                                    Sáng (07:00 - 12:00)
                                 </td>
                                 <td>
-                                    07:00
+                                    2 giờ
                                 </td>
-                                <td>
-                                    12:00
-                                </td>
+                               
                                 <td>
                                     7:00
                                 </td>
@@ -164,7 +159,7 @@
                                 </td>
                                 <td>
                                     <div class="badge bg-warning">Chưa chấm công</div>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -175,66 +170,64 @@
         <div class="row mt-3">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-success text-white fw-bold">
-                        Tháng này
+                    <div class="card-header bg-success text-white fw-bold " style="text-align: center">
+                        <button onclick="changeMonth(-1)" class="btn btn-link float-start"><i class="fas fa-chevron-left text-white"></i></button>
+                        <label id="currentMonthLabel" style="margin-top: 7px;">Tháng:</label>
+                        <label id="currentYearLabel">Năm:</label>
+                        <button onclick="changeMonth(1)" class="btn btn-link float-end"><i class="fas fa-chevron-right chevron-icon right text-white"></i></button>
                     </div>
                     <table
-                        class="table table-striped table-bordered table-hover table-sm align-middle ps-2 ">
-                        <thead>
-                            <tr>
-                                <th scope="col">Số thứ tự
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                              <th scope="col">Ngày làm
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Loại ca
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Giờ vào ca
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Giờ ra ca
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Giờ vào ca thực tế
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Giờ ra ca thực tế
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th scope="col">Số giờ tăng ca
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th class="text-center" scope="col">Tổng giờ
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th class="text-center" scope="col">Tổng lương
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th class="text-center" scope="col">Ghi chú
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                                <th class="text-center" scope="col">Trạng thái
-                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
-                                </th>
-                            </tr>
+                    class="table table-striped table-bordered table-hover table-sm align-middle ps-2  ">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: center;">Số thứ tự
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                          <th scope="col" style="text-align: center;">Ngày làm
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th scope="col" style="text-align: center;">Ca làm việc
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th scope="col" style="text-align: center;">Giờ tăng ca
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th scope="col" style="text-align: center;">Giờ vào ca thực tế
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th scope="col" style="text-align: center;">Giờ ra ca thực tế
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th scope="col" style="text-align: center;">Tăng ca thực tế
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th class="text-center" scope="col" style="text-align: center;">Tổng giờ
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th class="text-center" scope="col" style="text-align: center;">Tổng lương
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th class="text-center" scope="col" style="text-align: center;">Ghi chú
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                            <th class="text-center" scope="col" style="text-align: center;">Trạng thái
+                                <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                            </th>
+                        </tr>
                         </thead>
-                        <tbody class="text-start">
+                        <tbody class="text-start" id="timeKeepingMonth">
                             <tr style="text-align: center">
-                                <td>01</td>
+                                <!-- <td>01</td>
                                 
                                 <td>11/10/2023</td>
                                 
                                 <td>
-                                    Ca sáng
+                                    Sáng (07:00 - 12:00)
                                 </td>
                                 <td>
-                                    07:00
+                                    2 giờ
                                 </td>
-                                <td>
-                                    12:00
-                                </td>
+                               
                                 <td>
                                     7:00
                                 </td>
@@ -254,80 +247,8 @@
                                     8
                                 </td>
                                 <td>
-                                    <div class="badge bg-success">Đã chấm công</div>
-                                </td>
-                            </tr>
-                            <tr style="text-align: center">
-                                <td>02</td>
-                                
-                                <td>11/10/2023</td>
-                                
-                                <td>
-                                    Ca sáng
-                                </td>
-                                <td>
-                                    07:00
-                                </td>
-                                <td>
-                                    12:00
-                                </td>
-                                <td>
-                                    7:00
-                                </td>
-                                <td>
-                                    15:00
-                                </td>
-                                <td>
-                                    3 giờ
-                                </td>
-                                <td>
-                                    8
-                                </td>
-                                <td>
-                                    2400000
-                                </td>
-                                <td>
-                                    8
-                                </td>
-                                <td>
-                                    <div class="badge bg-success">Đã chấm công</div>
-                                </td>
-                            </tr>
-                            <tr style="text-align: center">
-                                <td>03</td>
-                                
-                                <td>11/10/2023</td>
-                                
-                                <td>
-                                    Ca sáng
-                                </td>
-                                <td>
-                                    07:00
-                                </td>
-                                <td>
-                                    12:00
-                                </td>
-                                <td>
-                                    7:00
-                                </td>
-                                <td>
-                                    15:00
-                                </td>
-                                <td>
-                                    3 giờ
-                                </td>
-                                <td>
-                                    8
-                                </td>
-                                <td>
-                                    2400000
-                                </td>
-                                <td>
-                                    8
-                                </td>
-                                <td>
-                                    <div class="badge bg-success">Đã chấm công</div>
-                                </td>
+                                    <div class="badge bg-warning">Chưa chấm công</div>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -340,5 +261,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
+<script src="../assets/javascript/staffStatistics.js"></script>
 
 </html>
