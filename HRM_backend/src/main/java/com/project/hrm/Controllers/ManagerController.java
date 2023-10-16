@@ -217,10 +217,18 @@ public class ManagerController {
         return managerService.getAllSchedulesOfDay(date);
     }
 
-
+    //Lấy danh scáh nhân sự làm trong 1 ca trong 1 ngày
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
     public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
         return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE)
+    public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllFreeTimeNotScheduledOfShiftTypeAndDate(shiftType, date);
     }
 
     @PostMapping(URLConfigs.WORK_CHECKED)
