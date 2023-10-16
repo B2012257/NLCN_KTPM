@@ -29,6 +29,9 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private DateRepository dateRepository;
 
+    @Autowired
+    private TimeKeepingRepository timeKeepingRepository;
+
     @Override
     public ResponseWithData<Staff> getInformation(String Uid) {
 
@@ -162,6 +165,109 @@ public class StaffServiceImpl implements StaffService {
 //        return new Response(HttpStatus.OK, "Cập nhật thành công");
         return null;
     }
+
+
+
+    @Override
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid){
+        com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
+        List<Shift> shiftList = shiftRepository.findByDate(dateModel);
+        List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
+
+        List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
+        for(ShiftDetail shiftDetail : shiftDetailList){
+            if(shiftDetail.getStaff().getUid().equals(Uid)){
+                shiftDetailForStaff.add(shiftDetail);
+            }
+        }
+
+        List<Timekeeping> shiftDetailsInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetailForStaff) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping != null) {
+                shiftDetailsInTimekeeping.add(timekeeping);
+            }
+        }
+
+        if(shiftDetailForStaff.isEmpty()){
+            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        }
+
+
+        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc đã chấm công");
+    }
+
+
+
+
+
+
+
+    @Override
+    public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid){
+        com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
+        List<Shift> shiftList = shiftRepository.findByDate(dateModel);
+        List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
+
+        List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
+        for(ShiftDetail shiftDetail : shiftDetailList){
+            if(shiftDetail.getStaff().getUid().equals(Uid)){
+                shiftDetailForStaff.add(shiftDetail);
+            }
+        }
+
+        List<ShiftDetail> shiftDetailsInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetailForStaff) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping == null) {
+                shiftDetailsInTimekeeping.add(shiftDetailID);
+            }
+        }
+
+        if(shiftDetailForStaff.isEmpty()){
+            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        }
+
+
+        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc chưa chấm công");
+    }
+
+
+    @Override
+    public ResponseWithData<List<Timekeeping>> getAllTimeKeeping (Date start, Date end , String Uid){
+        com.project.hrm.Models.Date startDate = new com.project.hrm.Models.Date(start);
+        com.project.hrm.Models.Date endDate = new com.project.hrm.Models.Date(end);
+
+        List<Shift> shiftList = shiftRepository.findAllByDateBetween(startDate,endDate);
+        List<ShiftDetail> shiftDetailList= shiftDetailRepository.findByShiftIn(shiftList);
+
+        List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
+        for(ShiftDetail shiftDetail : shiftDetailList){
+            if(shiftDetail.getStaff().getUid().equals(Uid)){
+                shiftDetailForStaff.add(shiftDetail);
+            }
+        }
+
+        List<Timekeeping> shiftDetailsInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetailForStaff) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping != null) {
+                shiftDetailsInTimekeeping.add(timekeeping);
+            }
+        }
+
+        if(shiftDetailForStaff.isEmpty()){
+            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        }
+
+
+        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc đã chấm công");
+    }
+
+
+
+
+
 
     
 }

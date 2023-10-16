@@ -679,11 +679,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
-        // Lấy danh sách Timekeeping mà có ShiftDetail tương ứng
-        List<Timekeeping> timekeepingList = timeKeepingRepository.findByShiftDetail(shiftDetail);
-
-        // Kiểm tra xem có bất kỳ Timekeeping nào chứa ShiftDetail này không
-        return !timekeepingList.isEmpty();
+        Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetail);
+        return timekeeping != null;
     }
 
     //Lấy danh sách lịch rảnh của nhân sự chưa được sắp vào lịch dựa vào 1 ca trong 1 ngày

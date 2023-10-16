@@ -3,6 +3,7 @@ package com.project.hrm.Services;
 
 import com.project.hrm.Models.FreeTime;
 import com.project.hrm.Models.Staff;
+import com.project.hrm.Models.Timekeeping;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.ShiftDetail;
@@ -37,4 +38,12 @@ public interface StaffService {
 
     //Chỉnh sửa lich làm, nhận vào danh sách
     public Response editRegisterSchedule(List<FreeTime> freeTimes);
+
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid);
+
+
+
+    public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid);
+
+    public ResponseWithData<List<Timekeeping>> getAllTimeKeeping (Date start, Date end , String Uid);
 }
