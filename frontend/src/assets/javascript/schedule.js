@@ -316,6 +316,7 @@ function clearOldDataTable() {
 //Dữ liệu cũ
 let dataDb = [];
 async function actionBtnClickHandler(event) {
+
     let iTagTarget = event.target
     //Lấy ngày target và id ca target
     //Lấy ngày target
@@ -398,6 +399,7 @@ async function actionBtnClickHandler(event) {
         saveInfoInScheduledTable()
 
     } else { //Nếu không có nhân sự trong ca làm
+        dataDb = []
         tbody.innerHTML =
             `
         <tr class="center">
@@ -411,10 +413,12 @@ async function actionBtnClickHandler(event) {
     let getFreeTimeNotScheduled = `http://localhost:8081/api/v1/manager/getFreeTimeNotScheduled?shiftType=${shiftTypeId}&date=${dateTargetFormat}`
     const freeTimes = await getApi(getFreeTimeNotScheduled)
     if (freeTimes.status === "OK") {
-        return loadFreeTimeHtml(freeTimes.data)
+        loadFreeTimeHtml(freeTimes.data)
+        return;
 
     }
     console.log(freeTimes.message)
+    loadFreeTimeHtml([])
 }
 
 //Tính thời gian chênh lệch
