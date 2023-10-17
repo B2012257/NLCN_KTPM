@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface TimeKeepingRepository extends JpaRepository<Timekeeping,Long> {
-    List<Timekeeping> findByShiftDetail(ShiftDetail shiftDetail);
 
+    Timekeeping findByShiftDetail(ShiftDetail shiftDetail);
 }

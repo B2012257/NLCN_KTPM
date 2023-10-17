@@ -8,3 +8,9 @@ a {
     text-decoration: none !important;
 
 }
+
+.center {
+    text-align: center;
+    margin: auto;
+    vertical-align: middle;
+}

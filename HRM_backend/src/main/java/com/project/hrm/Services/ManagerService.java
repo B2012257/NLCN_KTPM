@@ -125,5 +125,7 @@ public interface ManagerService {
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings);
 
 
-    //...
+    //...Lấy danh sách lịch rảnh của các nhân sự trong 1 ca tng ngày,, trả về các freeTime chưa lặp lịch
+    public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(ShiftType shiftType, Date date);
+
 }

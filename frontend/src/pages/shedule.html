@@ -120,7 +120,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-12">
-                <span class="dayInWeek d-none"></span>
+                <span class="dayInWeek"></span>
 
                 <div class="card">
                     <div class="card-header bg-success text-white fw-bold">
@@ -225,7 +225,11 @@
             <div class="modal-dialog-centered modal-dialog modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Danh sách nhân viên có thể đi làm vào ca sáng ngày 29/02/2023</h5>
+                        <h5 class="modal-title">Lịch làm:
+                            <span class="schedule-shift-type-name">ShiftTypeName</span>
+                            <span class="schedule-shift-type-id d-none"> shiftTypeId</span>
+                            <span class="schedule-date"> date</span>
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -233,33 +237,29 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                <table class="table table-striped table-hover table-sm align-middle">
+                                <h5># Danh sách nhân viên đã thêm vào ca làm</h5>
+                                <p class="text-danger" style="font-size: 18px; font-style: italic;">Lưu ý: Giờ tăng ca
+                                    chưa cộng vào giờ vào và ra
+                                    ca</p>
+                                <table class="table table-striped table-hover table-sm align-middle scheduled-list ">
                                     <thead>
                                         <tr>
                                             <th scope="col">Chọn
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+
                                             </th>
-                                            <th scope="col">Tên
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+                                            <th scope="col" class="center">Tên
+
                                             </th>
                                             <th scope="col">Giới tính
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+
                                             </th>
                                             <th scope="col">Chức vụ
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+
                                             </th>
-                                            <th scope="col">Giờ vào đăng ký
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+                                            <th scope="col">Ca làm đã đăng ký
+
                                             </th>
-                                            <th scope="col">Giờ ra đăng ký
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
-                                            </th>
+
                                             <th scope="col">Giờ vào ca
 
                                             </th>
@@ -267,24 +267,21 @@
                                             <th scope="col">Giờ ra ca
 
                                             </th>
-                                            <th scope="col">Tăng ca
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+                                            <th scope="col">Tăng ca (h)
+
                                             </th>
-                                            <th scope="col">Tổng giờ
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+                                            <th scope="col">Tổng giờ (h)
+
                                             </th>
 
                                             <th scope="col">Thâm niên
-                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
-                                                    title="Sắp xếp"></i>
+
                                             </th>
 
                                         </tr>
                                     </thead>
-                                    <tbody class="text-start">
-                                        <tr role="button" title="Bấm để xem chi tiết">
+                                    <tbody class="text-start scheduled-modal-table center">
+                                        <!-- <tr role="button" title="Bấm để xem chi tiết">
                                             <td class="text-center">
                                                 <input
                                                     class="form-check-input mt-0 fs-3 align-middle border border-primary"
@@ -299,19 +296,22 @@
                                             <td>
                                                 <div class="badge bg-primary">Phụ bếp</div>
                                             </td>
+                                            <select>
+                                                <option value="">,àđa</option>
+                                            </select>
+                                            
                                             <td>
-                                                <input style="width: 80px;" min="0" max="20" type="time"
-                                                    class="form-control" disabled value="07:00">
-                                            </td>
-                                            <td>
-                                                <input style="width: 80px;" min="0" max="20" type="time"
-                                                    class="form-control" disabled value="12:00">
+                                                <select name="" id="" class="form-select">
+                                                    <option value="">Sang</option>
+                                                    <option value="">Chieu</option>
+                                                    <option value="">Toi</option>
+
+                                                </select>
                                             </td>
                                             <td>
                                                 <input style="width: 120px;" type="time" class="form-control"
                                                     value="07:00">
                                             </td>
-
                                             <td>
                                                 <input style="width: 120px;" type="time" class="form-control"
                                                     value="12:00">
@@ -325,51 +325,52 @@
                                                     class="form-control" disabled value="5">
                                             </td>
                                             <td>9 tháng</td>
+
+                                        </tr> -->
+
+                                    </tbody>
+                                </table>
+
+
+                                <h5># Danh sách nhân viên có thể sắp lịch</h5>
+                                <table class="table table-striped table-hover table-sm align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Chọn
+
+                                            </th>
+                                            <th scope="col">Tên
+
+                                            </th>
+                                            <th scope="col">Giới tính
+
+                                            </th>
+                                            <th scope="col">Chức vụ
+
+                                            </th>
+                                            <th scope="col">Ca làm đã đăng ký
+
+                                            </th>
+                                            <th scope="col">Giờ vào
+
+                                            </th>
+                                            <th scope="col">Giờ ra
+                                                <i role="button" class="fa-solid fa-sort p-1 text-primary"
+                                                    title="Sắp xếp"></i>
+                                            </th>
+                                            <th scope="col">Tổng giờ làm
+
+                                            </th>
+
+                                            <th scope="col">Thâm niên
+
+                                            </th>
 
                                         </tr>
-                                        <tr role="button" title="Bấm để xem chi tiết">
-                                            <td class="text-center">
-                                                <input
-                                                    class="form-check-input mt-0 fs-3 align-middle border border-primary"
-                                                    type="checkbox">
-                                            </td>
-                                            <td>
-
-                                                <span>Phạm Quang thái</span>
-                                            </td>
-                                            <td>
-                                                Nam
-                                            </td>
-                                            <td>
-                                                <div class="badge bg-primary">Phụ bếp</div>
-                                            </td>
-                                            <td>
-                                                <input style="width: 80px;" min="0" max="20" type="time"
-                                                    class="form-control" disabled value="07:00">
-                                            </td>
-                                            <td>
-                                                <input style="width: 80px;" min="0" max="20" type="time"
-                                                    class="form-control" disabled value="12:00">
-                                            </td>
-                                            <td>
-                                                <input style="width: 120px;" type="time" class="form-control"
-                                                    value="07:00">
-                                            </td>
-
-                                            <td>
-                                                <input style="width: 120px;" type="time" class="form-control"
-                                                    value="12:00">
-                                            </td>
-                                            <td>
-                                                <input style="width: 80px;" min="0" max="20" disabled value="0"
-                                                    type="number" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input style="width: 80px;" min="0" max="20" type="number"
-                                                    class="form-control" disabled value="5">
-                                            </td>
-                                            <td>9 tháng</td>
-
+                                    </thead>
+                                    <tbody class="text-center tbody-freeTime-schedule">
+                                        <tr>
+                                            <td colspan="9">Không có nhân sự đăng ký lịch làm</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -377,7 +378,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary disabled">Lưu lịch</button>
+                        <button type="button" class="btn btn-primary save-schedule">Lưu lịch</button>
                     </div>
                 </div>
             </div>

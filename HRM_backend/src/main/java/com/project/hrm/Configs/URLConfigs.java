@@ -38,6 +38,14 @@ public class URLConfigs {
 
     public static final String EDIT_REGISTER_SCHEDULE="/editRegister";
 
+    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING="/getAllScheduleOfStaffInTimeKeeping";
+
+
+
+    public static final String GET_SCHEDULE_OF_STAFF_NOT_IN_TIMEKEEPING="/getAllScheduleOfStaffNotInTimeKeeping";
+
+    public static final String GET_ALL_TIMEKEEPING = "/getAllTimeKeeping";
+
     //Chức năng quản lý
     public static final String ADD_TYPE = "/addType";
     public static final String GET_ALL_TYPE = "/types";
@@ -75,6 +83,8 @@ public class URLConfigs {
 
 
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
+    public static final String GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE="/getFreeTimeNotScheduled";
+
 
     public static final String WORK_CHECKED="/workCheckeds";
     public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.project.hrm.Models.Staff;
 
-
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ import java.util.List;
 public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> {
         List<ShiftDetail>findAllByShift(Shift shift);
 
-      
+        List<ShiftDetail> findByShiftDateBetweenAndStaff(com.project.hrm.Models.Date start, com.project.hrm.Models.Date end, Staff staff); //Tìm trong khoảng thời gian và 1 nhân sự
         ShiftDetail findOneById(Long id);
         Boolean existsShiftDetailByShiftAndStaff(Shift shift, Staff staff);
 

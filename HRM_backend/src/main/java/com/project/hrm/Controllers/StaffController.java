@@ -86,4 +86,22 @@ public class StaffController {
     }
 
 
+    @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING)
+    public Response getAllScheduleOfStaffInTimeKeeping(@RequestParam("date") Date date, @RequestParam("Uid") String Uid){
+        return staffService.getAllScheduleOfStaffInTimeKeeping(date,Uid);
+    }
+
+
+
+
+    @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_NOT_IN_TIMEKEEPING)
+    public Response getAllScheduleOfStaffNotInTimeKeeping(@RequestParam("date") Date date, @RequestParam("Uid") String Uid){
+        return staffService.getAllScheduleOfStaffNotInTimeKeeping(date,Uid);
+    }
+
+    @GetMapping(URLConfigs.GET_ALL_TIMEKEEPING)
+    public Response getAllTimeKeeping(@RequestParam("start") Date start, @RequestParam("end") Date end, @RequestParam("Uid") String Uid){
+        return staffService.getAllTimeKeeping(start,end,Uid);
+    }
+
 }
