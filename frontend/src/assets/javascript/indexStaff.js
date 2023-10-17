@@ -84,39 +84,48 @@ function getMyShift(startDate, endDate, userId) {
       if (res.status === "OK") {
         const datas = res.data;
         let shiftData = {};
-
-        // Tổ chức dữ liệu theo ca làm việc
         console.log("datas", datas);
+        // Lấy shiftType.id của người dùng hiện tại từ datas
+        let userShiftTypeIds = [];
+
+        // Lần đầu tiên đi qua datas để tìm và lưu trữ shiftTypeId của người có userId cùng với uid người đăng nhập
+        datas.forEach((item) => {
+          if (item.staff.uid === uid) {
+            userShiftTypeIds.push(item.shift.shiftType.id);
+          }
+        });
+        console.log("userShiftTypeIds", userShiftTypeIds);
+        console.log("shift", shiftData);
+
+        // Lần thứ hai đi qua datas để tạo các dữ liệu cho bảng
         datas.forEach((item) => {
           const shiftTypeId = item.shift.shiftType.id;
           const userId = item.staff.uid;
           const shiftTypeName = `${item.shift.shiftType.name} (${item.shift.shiftType.start} - ${item.shift.shiftType.end})`;
-
-          console.log("shiftData[shiftTypeId]", shiftData[shiftTypeId]);
-
-          if (!shiftData[shiftTypeId]) {
-            shiftData[shiftTypeId] = {
-              shiftTypeName: shiftTypeName,
-              staffData: [
-                {
-                  fullName: item.staff.fullName,
-                  uid: item.staff.uid,
-                },
-              ],
-            };
-          } else {
-            shiftData[shiftTypeId].staffData.push({
-              fullName: item.staff.fullName,
-              uid: item.staff.uid,
-            });
-
-            // Thêm dữ liệu vào staffData bất kể userId là gì
+          const currentUserShift = userId === uid;
+          const currentUserSameShift =
+            currentUserShift || userShiftTypeIds.includes(shiftTypeId);
+          if (currentUserSameShift) {
+            if (!shiftData[shiftTypeId]) {
+              shiftData[shiftTypeId] = {
+                shiftTypeName: shiftTypeName,
+                staffData: [
+                  {
+                    fullName: item.staff.fullName,
+                    uid: userId,
+                  },
+                ],
+              };
+            } else {
+              shiftData[shiftTypeId].staffData.push({
+                fullName: item.staff.fullName,
+                uid: userId,
+              });
+            }
           }
         });
-        console.log("shift", shiftData);
 
         // Tạo header cho bảng
-
         let headerRowHTML = "<tr>";
         Object.values(shiftData).forEach((shiftInfo) => {
           headerRowHTML += `<th>${shiftInfo.shiftTypeName}</th>`;
@@ -126,6 +135,8 @@ function getMyShift(startDate, endDate, userId) {
 
         // Tạo dữ liệu cho bảng
         let bodyRowsHTML = "";
+
+        //Lấy số lượng staff trong staffData
         const maxStaffCount = Math.max(
           ...Object.values(shiftData).map(
             (shiftInfo) => shiftInfo.staffData.length

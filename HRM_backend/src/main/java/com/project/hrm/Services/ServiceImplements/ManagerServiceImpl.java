@@ -693,9 +693,14 @@ public class ManagerServiceImpl implements ManagerService {
 
 
     @Override
-    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date) {
-
-        return null;
+    public Response getAllWorkCheckeds() {
+        try {
+            List<Timekeeping> timekeepings = timeKeepingRepository.findAll();
+            return new ResponseWithData<>(timekeepings, HttpStatus.OK, "Tìm kiếm thành công");
+        } catch (Exception ex) {
+            // Xử lý ngoại lệ tại đây
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong việc lấy thông tin chấm công");
+        }
     }
 
     @Override
@@ -721,4 +726,8 @@ public class ManagerServiceImpl implements ManagerService {
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {
         return null;
     }
+
+
+
+
 }

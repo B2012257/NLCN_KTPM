@@ -77,5 +77,7 @@ public class URLConfigs {
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
 
     public static final String WORK_CHECKED="/workCheckeds";
+    public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";
+    public static final String GET_ALL_TIMEKEEPING_START_END_BUY_UID ="/getAllKeepingBuyUid";
 
 }

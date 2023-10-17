@@ -116,13 +116,14 @@ public interface ManagerService {
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end);
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ngày (tất cả các ca trong ngày)
-    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date);
+    public Response getAllWorkCheckeds();
 
     //Chấm công một danh sách nhân sự
     public Response workCheckeds(List<Timekeeping> timeKeepings);
 
     //Xóa chấm công một danh sách nhân sự
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings);
+
 
     //...
 }

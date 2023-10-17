@@ -29,6 +29,8 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private DateRepository dateRepository;
 
+    @Autowired
+    private ShiftTypeRepository shiftTypeRepository;
     @Override
     public ResponseWithData<Staff> getInformation(String Uid) {
 
@@ -163,5 +165,10 @@ public class StaffServiceImpl implements StaffService {
         return null;
     }
 
-    
+    @Override
+    public ResponseWithData<List<ShiftType>> getAllShiftType() {
+        List<ShiftType> shiftTypeList = shiftTypeRepository.findAll();
+        return new ResponseWithData<List<ShiftType>>(shiftTypeList, HttpStatus.OK, "Danh sách loại ca làm");
+
+    }
 }

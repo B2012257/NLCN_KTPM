@@ -70,12 +70,19 @@ public class StaffController {
     }
 
 
+
     @LoginRequired
 
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
     public Response editRegisterSchedule(@RequestBody List<FreeTime> freeTimes){
         return staffService.editRegisterSchedule(freeTimes);
 
+    }
+
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_SHIFT_TYPE)
+    public Response getAllShiftType() {
+        return staffService.getAllShiftType();
     }
 
 

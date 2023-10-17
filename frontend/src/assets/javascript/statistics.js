@@ -1,3 +1,54 @@
+// var currentDate = new Date();
+// var firstDayOfMonth = new Date(
+//   currentDate.getFullYear(),
+//   currentDate.getMonth(),
+//   1
+// );
+// var lastDayOfMonth = new Date(
+//   currentDate.getFullYear(),
+//   currentDate.getMonth() + 1,
+//   0
+// );
+// console.log("Ngày đầu tiên của tháng: " + firstDayOfMonth.toLocaleDateString());
+// console.log("Ngày cuối cùng của tháng: " + lastDayOfMonth.toLocaleDateString());
+// document.getElementById("firstDay").value = firstDayOfMonth
+//   .toISOString()
+//   .split("T")[0];
+
+// console.log(firstDayOfMonth.toLocaleDateString().split("T")[0]);
+// document.getElementById("lastDay").value = lastDayOfMonth
+//   .toISOString()
+//   .split("T")[0];
+
+var currentDate = new Date();
+var currentMonth = currentDate.getMonth();
+var currentYear = currentDate.getFullYear();
+
+// Kiểm tra nếu ngày hiện tại là ngày cuối cùng của tháng
+if (
+  currentDate.getDate() === new Date(currentYear, currentMonth + 1, 0).getDate()
+) {
+  // Nếu là ngày cuối cùng của tháng, tăng tháng lên 1
+  currentMonth++;
+}
+
+var firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+var lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+
+console.log("Ngày đầu tiên của tháng: " + firstDayOfMonth.toLocaleDateString());
+console.log("Ngày cuối cùng của tháng: " + lastDayOfMonth.toLocaleDateString());
+
+// Hiển thị ngày bắt đầu và kết thúc trong ô input
+document.getElementById("firstDay").value = firstDayOfMonth
+  .toLocaleDateString("en-CA")
+  .split("/")
+  .reverse()
+  .join("-");
+document.getElementById("lastDay").value = lastDayOfMonth
+  .toLocaleDateString("en-CA")
+  .split("/")
+  .reverse()
+  .join("-");
 const api = `http://localhost:8081/api/v1/manager/allStaff`;
 let data = [];
 function start() {
@@ -120,37 +171,37 @@ radioButtons.forEach((radio) => {
 });
 
 //test lấy các người có trong tháng
-var dataTest = [
-  { id: 1, name: "thái", dateGoWork: "10/10/2023" },
-  { id: 2, name: "tring", dateGoWork: "6/10/2023" },
-  { id: 3, name: "phong", dateGoWork: "6/10/2023" },
-  { id: 4, name: "Linh", dateGoWork: "8/12/2023" },
-  { id: 5, name: "phong", dateGoWork: "8/10/2023" },
-  { id: 6, name: "phong", dateGoWork: "5/10/2023" },
-  { id: 7, name: "phong", dateGoWork: "7/10/2023" },
-];
-var currentDate = new Date();
-var firstDayOfMonth = new Date(
-  currentDate.getFullYear(),
-  currentDate.getMonth(),
-  1
-);
-var lastDayOfMonth = new Date(
-  currentDate.getFullYear(),
-  currentDate.getMonth() + 1,
-  0
-);
+// var dataTest = [
+//   { id: 1, name: "thái", dateGoWork: "10/10/2023" },
+//   { id: 2, name: "tring", dateGoWork: "6/10/2023" },
+//   { id: 3, name: "phong", dateGoWork: "6/10/2023" },
+//   { id: 4, name: "Linh", dateGoWork: "8/12/2023" },
+//   { id: 5, name: "phong", dateGoWork: "8/10/2023" },
+//   { id: 6, name: "phong", dateGoWork: "5/10/2023" },
+//   { id: 7, name: "phong", dateGoWork: "7/10/2023" },
+// ];
+// var currentDate = new Date();
+// var firstDayOfMonth = new Date(
+//   currentDate.getFullYear(),
+//   currentDate.getMonth(),
+//   1
+// );
+// var lastDayOfMonth = new Date(
+//   currentDate.getFullYear(),
+//   currentDate.getMonth() + 1,
+//   0
+// );
 
-function parseDate(dateString) {
-  var parts = dateString.split("/");
-  return new Date(parts[2], parts[1] - 1, parts[0]);
-}
+// function parseDate(dateString) {
+//   var parts = dateString.split("/");
+//   return new Date(parts[2], parts[1] - 1, parts[0]);
+// }
 
-var filteredData = dataTest.filter(function (item) {
-  var dateGoWork = parseDate(item.dateGoWork);
-  return dateGoWork >= firstDayOfMonth && dateGoWork <= lastDayOfMonth;
-});
+// var filteredData = dataTest.filter(function (item) {
+//   var dateGoWork = parseDate(item.dateGoWork);
+//   return dateGoWork >= firstDayOfMonth && dateGoWork <= lastDayOfMonth;
+// });
 
-console.log("Ngày đầu tiên của tháng: " + firstDayOfMonth.toLocaleDateString());
-console.log("Ngày cuối cùng của tháng: " + lastDayOfMonth.toLocaleDateString());
-console.log(filteredData);
+// console.log("Ngày đầu tiên của tháng: " + firstDayOfMonth.toLocaleDateString());
+// console.log("Ngày cuối cùng của tháng: " + lastDayOfMonth.toLocaleDateString());
+// console.log(filteredData);

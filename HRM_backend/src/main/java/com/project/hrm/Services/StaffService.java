@@ -2,6 +2,7 @@ package com.project.hrm.Services;
 
 
 import com.project.hrm.Models.FreeTime;
+import com.project.hrm.Models.ShiftType;
 import com.project.hrm.Models.Staff;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
@@ -19,7 +20,7 @@ public interface StaffService {
     public ResponseWithData<Staff> getInformation(String staff);
     //Chỉnh sửa thông tin cá nhân
     public Response editProfileInformation(Staff newStaffInfo);
-
+    public ResponseWithData<List<ShiftType>> getAllShiftType();
     //Thay đổi mật khẩu
     public Response changePassword(String newPassword, String uid);
 
