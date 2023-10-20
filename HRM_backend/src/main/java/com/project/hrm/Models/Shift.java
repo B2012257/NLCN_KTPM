@@ -16,7 +16,7 @@ public class Shift {
     @ManyToOne
     private Date date;
 
-    private String task;
+    private String task; // will be deleted
 
     @ManyToOne
     @JoinColumn(name = "shiftType_id")

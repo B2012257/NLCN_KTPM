@@ -2,6 +2,7 @@
 const getAllShiftTypeApi = "http://localhost:8081/api/v1/manager/allShiftType"
 const getScheduleOfBetween = "http://localhost:8081/api/v1/manager/getAllSchedule" //?startDay=2023/10/10&endDay=2023/10/10
 let scheduleApi = "http://localhost:8081/api/v1/manager/schedule"
+let createShift = "http://localhost:8081/api/v1/manager/addShift"
 
 let firstValueTotalTime; //Lưu thời gian ca chuẩn
 
@@ -11,7 +12,6 @@ async function setup(weekList) {
     //Load các ca vào bảng
     let shiftTypesRes = await getAllShiftType()
     loadShiftTypeHtml(shiftTypesRes.data)
-
 
     loadWeekDay(weekList) //Hiển thị ngày vào bảng
     // document.querySelector(".")
@@ -24,7 +24,6 @@ async function setup(weekList) {
     actionScheduleBtnList.forEach(actionBtn => {
         actionBtn.addEventListener("click", (e) => actionBtnClickHandler(e))
     })
-
 
     //Thêm sự kiện vào nút lưu lịch 
     document.querySelector(".save-schedule").addEventListener("click", saveScheduleHandler)
@@ -62,21 +61,16 @@ function loadShiftTypeHtml(shiftTypes) {
                                 </th>
                                 <span class="d-none shift-type-id">${shiftType.id} </span>
                                 <td class="add_employee_schedule_btn t2">
-
-
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
                                         <i class="fa-solid fa-plus mt-2 fs-4 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t3">
-
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
                                         <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
                                 </td>
                                 <td class=" add_employee_schedule_btn t4">
-
-
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
                                         <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
@@ -97,7 +91,6 @@ function loadShiftTypeHtml(shiftTypes) {
                                     </div>
                                 </td>
                                 <td class="add_employee_schedule_btn t0">
-
                                     <div class="btn p-0" data-bs-toggle="modal" data-bs-target="#modal">
                                         <i class="fa-solid fa-plus fs-5 fw-lighter btn-add-schedule d-block action-schedule-btn"></i>
                                     </div>
@@ -115,13 +108,35 @@ function reversedDateString(dateString) {
 }
 //Lấy tuần của ngày hiện tại và hiển thị vào bảng
 function loadWeekDay(weekList) {
+    //Tím thứ của ngày hôm nay
+    let dnow = new Date()
+    let dayOfWeek = dnow.getDay() // 0 -> Chu nhat, 1-6 -> thu2-thu7
+    let dayNowString = `${dnow.getFullYear()}-${dnow.getMonth() + 1}-${dnow.getDate()}`
+    if (dayOfWeek === 0) dayOfWeek = 6
+    else dayOfWeek--;
     let weekNameElementList = document.querySelectorAll(".weekname")
     let addEmployeeScheduleBtn = document.querySelectorAll(".add_employee_schedule_btn")
     weekNameElementList.forEach((element, index) => {
+        //Xoa cột được tô màu trước
+        element.classList.remove("text-danger")
+
+        //index chay tu 0-6 voi 0->t2, 7->cn
+        //Kiểm tra xem ngày hôm nay có nằm trong tuần được truyền vào không -> nếu có thì là trùng tuần
+        let dayArray = Object.values(weekList[index]) //Sẽ trả về mảng các value tại 1 object
+        let dayOfIndex = dayArray[dayArray.length - 1]; //Lấy ra value cuối (tương đương key = day)
+
+        if (dayOfIndex.trim() == dayNowString.trim()) {
+            if (dayOfWeek === index) {
+                element.classList.add("text-danger")
+            }
+        }
+
         element.innerHTML =
             `${(weekList[index].stt > 7) ? "Chủ nhật" : "Thứ " + weekList[index].stt}
-        <br>
-        <small class="fw-light fst-italic">${reversedDateString(weekList[index].day)}</small>`
+            <br>
+            <small class="fw-light fst-italic">
+                ${reversedDateString(weekList[index].day)}
+            </small>`
     })
     let index = 0; //0 - 6
     addEmployeeScheduleBtn.forEach((element) => {
@@ -133,7 +148,7 @@ function loadWeekDay(weekList) {
 
 }
 function loadScheduleHtml(schedules) {
-    console.log(schedules);
+    // console.log(schedules);
     if (schedules) {
         schedules.forEach(schedule => {
             //Lấy tr thông qua id loại ca làm
@@ -212,9 +227,9 @@ async function getAllScheduleAtWeek(weekList) {
 //Trả về tuần của ngày hiện tại
 function getWeekList(dayNow) {
     //Tìm ngày đầu tuần
-    console.log(dayNow);
+    // console.log(dayNow);
     let startOfWeek = new Date(dayNow);
-    console.log(startOfWeek);
+    // console.log(startOfWeek);
     //Lấy ngày hiện tại trừ cho số ngày cách thứ 2
     startOfWeek.setDate(dayNow.getDate() - (dayNow.getDay() + 6) % 7)
 
@@ -328,16 +343,18 @@ async function actionBtnClickHandler(event) {
     let shiftTypeNameTh = shiftTypeIdTarget.querySelector("th")
     let shiftTypeName = shiftTypeNameTh.firstChild.data.trim().toLowerCase()
     document.querySelector(".schedule-date").innerHTML = `ngày ${reversedDateString(dateTarget)}`
+    document.querySelector(".schedule-date-none").innerHTML = `${dateTarget}`
+
     document.querySelector(".schedule-shift-type-name").innerText = `Ca ${shiftTypeName}`
     document.querySelector(".schedule-shift-type-id").innerText = `${shiftTypeId}`
 
     //Doi dateTarget thang dang yyyy/mm/dd
     let dateTargetFormat = dateTarget.replace(/-/g, "/")
-    console.log(dateTargetFormat);
+    // console.log(dateTargetFormat);
     let scheduledApi = `http://localhost:8081/api/v1/manager/getScheduleOfShiftOfDate?shiftType=${shiftTypeId}&date=${dateTargetFormat}` //?shiftType=3&date=2023/10/16
     //Lấy danh sách nhân viên đi làm trong ca
     const sheduled = await getApi(scheduledApi)
-    console.log(sheduled);
+    // console.log(sheduled);
 
     //Nếu đã có nhân sự trong ca
     let data = sheduled.data
@@ -351,11 +368,11 @@ async function actionBtnClickHandler(event) {
             let totalTime = calcTotalTime(endTime, startTime) //Tổng giờ trên lịch
             firstValueTotalTime = totalTime;
             let htmlTemplate = `
-            <tr role="button" title="Bấm để xem chi tiết">
-                                            <td class="text-center">
+            <tr role="button" title="Bấm để xem chi tiết" class="table-success">
+                                            <td class="text-center checked-scheduled">
                                                 <input
-                                                    class="form-check-input mt-0 fs-3 align-middle border border-primary" checked
-                                                    type="checkbox">
+                                                    class="form-check-input checked-scheduled-input mt-0 fs-5 align-middle border border-success" checked
+                                                    type="checkbox" onclick="handleClickCheckBoxScheduled(this)">
                                             </td>
                                             <td>
                                                 <span class="fullName">${shiftDetail.staff.fullName}</span>
@@ -402,7 +419,7 @@ async function actionBtnClickHandler(event) {
         dataDb = []
         tbody.innerHTML =
             `
-        <tr class="center">
+        <tr class="schedule-empty center">
             <td colspan="10">Chưa có nhân sự nào được sắp lịch</td>
         </tr>
         `
@@ -418,7 +435,7 @@ async function actionBtnClickHandler(event) {
 
     }
     console.log(freeTimes.message)
-    loadFreeTimeHtml([])
+    loadFreeTimeHtml([]) //Khi status !== OK thì trả về mảng rổng
 }
 
 //Tính thời gian chênh lệch
@@ -442,7 +459,7 @@ function calcTotalTime(EndTime, StartTime) {
     // Chuyển đổi khoản thời gian thành giờ, phút
     const hours = Math.floor(timeDifferenceSeconds / 3600);
     const minutes = (timeDifferenceSeconds % 3600) / 60 / 60; //ra dạng 0.5 giờ
-    console.log(hours, minutes);
+    // console.log(hours, minutes);
     let total = hours + minutes
     // if (hours !== 0 && minutes !== 0) {
     //     return total
@@ -465,7 +482,7 @@ function calExp(yearBegin) {
         (dnow.getFullYear() - yearBeginDate.getFullYear()) * 12 +
         dnow.getMonth() -
         yearBeginDate.getMonth()
-    console.log(monthsDiff);
+    // console.log(monthsDiff);
     // Tính số năm và số tháng
     const years = Math.floor(monthsDiff / 12);
     const months = monthsDiff % 12;
@@ -484,6 +501,7 @@ function onChangeOverTimeInput(thisElement) {
     let tdParentSibling = tdParent.nextElementSibling
     let inputSibling = tdParentSibling.querySelector("input")
     let newTotalTimeNewValue = Number(firstValueTotalTime) + Number(newValue)
+    console.log(firstValueTotalTime, newValue);
     inputSibling.value = newTotalTimeNewValue
 }
 
@@ -491,44 +509,53 @@ function onChangeOverTimeInput(thisElement) {
 //----------------------------------- Hiển thị dánh sách nhân sự rảnh vào bảng
 function loadFreeTimeHtml(data) {
     let freeTimesData = data;
-    console.log(freeTimesData);
+    // console.log(freeTimesData);
     let tbody = document.querySelector(".tbody-freeTime-schedule")
     tbody.innerHTML = ""
-
+    //Nếu k có dữ liệu lịch rảnh thì hiển thị text thông báo vào bảng
+    if (data.length === 0) {
+        let htmlTemplate =
+            `
+            <tr class="free-time-empty center">
+                <td colspan="9">Không có nhân sự đăng ký lịch làm</td>
+            </tr>
+        `
+        tbody.innerHTML += htmlTemplate
+    }
     freeTimesData.forEach(freeTime => {
         let startTime = freeTime.shiftType.start
         let endTime = freeTime.shiftType.end
         let totalTime = calcTotalTime(endTime, startTime) //Tổng giờ trên lịch
         let htmlTemplate = `
             <tr role="button" title="Bấm để xem chi tiết">
-                                            <td class="text-center">
+                                            <td class="text-center free-time-check">
                                                 <input
-                                                    class="form-check-input mt-0 fs-3 align-middle border border-primary"
-                                                    type="checkbox">
+                                                    class="form-check-input free-time-check-input mt-0 fs-5 align-middle border border-primary"
+                                                    type="checkbox" onclick="handleClickCheckBoxFreeTimeSchedule(this)">
                                             </td>
                                             <td>
                                                 <span class="fullName">${freeTime.staff.fullName}</span>
                                                 <span class="uid d-none">${freeTime.staff.uid}</span>
 
                                             </td>
-                                            <td>
+                                            <td class="gender">
                                                 ${freeTime.staff.gender || ""} 
                                             </td>
                                             <td>
-                                                <div class="badge bg-primary">${freeTime.staff.type.name}</div>
+                                                <div class="badge bg-primary type">${freeTime.staff.type.name}</div>
                                             </td>
 
                                             <td>
-                                            <input disabled type="text" style="max-width: 200px;" class="form-control"
+                                            <input disabled type="text" style="max-width: 200px;" class="form-control shift-type-name"
                                                     value="${freeTime.shiftType.name}">
                                                 
                                             </td>
                                             <td>
-                                                <input disabled style="width: 120px;" type="time" class="form-control"
+                                                <input disabled style="width: 120px;" type="time" class="form-control start"
                                                     value="${freeTime.shiftType.start}">
                                             </td>
                                             <td>
-                                                <input disabled disabled style="width: 120px;" type="time" class="form-control"
+                                                <input disabled disabled style="width: 120px;" type="time" class="form-control end"
                                                     value="${freeTime.shiftType.end}">
                                             </td>
                                             
@@ -536,7 +563,7 @@ function loadFreeTimeHtml(data) {
                                                 <input style="width: 80px;" min="0" max="20" type="number"
                                                     class="form-control totalTime" disabled value=${totalTime}>
                                             </td>
-                                            <td>${calExp(freeTime.staff.beginWork) || 0}</td>
+                                            <td class="totalWorkYear">${calExp(freeTime.staff.beginWork) || 0}</td>
                                         </tr>
         `
         tbody.innerHTML += htmlTemplate
@@ -555,17 +582,25 @@ function saveInfoInScheduledTable() {
         let overTime = tr.querySelector(".overTime").value
         dataDb.push({ uid, overTime })
     })
+    // console.log(dataDb);
 }
 
+function compareBetweenObject(data1, data2) {
+    if (data1.length === data2.length)
+        return data1.every(obj1 => data2.some(obj2 => JSON.stringify(obj1) === JSON.stringify(obj2)));
+    return false;
+}
 let dataNew = []
-function saveScheduleHandler() {
+async function saveScheduleHandler() {
+    console.log("hehe");
     dataNew = []
     //lấy thông tin trong bảng schedule
     let tbody = document.querySelector(".scheduled-modal-table")
-    let allTr = tbody.querySelectorAll("tr[role='button'] td input[type='checkbox']:checked")
+    let allTr = tbody.querySelectorAll("tr td input[type='checkbox']:checked")
+    console.log(allTr);
     let areEqual; //so sanhs khác nhau của dữ liệu
     if (allTr.length === 0) {
-        areEqual = dataDb.every(obj1 => dataNew.some(obj2 => JSON.stringify(obj1) === JSON.stringify(obj2)));
+        areEqual = compareBetweenObject(dataDb, dataNew)
     }
     allTr.forEach(tr => {
         let trHasChecked = tr.parentElement.parentElement
@@ -573,14 +608,17 @@ function saveScheduleHandler() {
         let overTime = trHasChecked.querySelector(".overTime").value
 
         dataNew.push({ uid, overTime })
-        console.log(dataNew);
         // dataDb.every(obj1 => dataNew.some(obj2 => JSON.stringify(obj1) === JSON.stringify(obj2)));
-        areEqual = dataDb.every(obj1 => dataNew.some(obj2 => JSON.stringify(obj1) === JSON.stringify(obj2)));
     })
+    console.log(dataNew, dataDb);
+
+    areEqual = compareBetweenObject(dataDb, dataNew)
     //Nếu dữ liệu khác thì nó mới call api
     if (areEqual === false) {
 
-        let shiftId = Number(document.querySelector(".schedule-shift-type-id").innerHTML)
+        let shiftTypeId = Number(document.querySelector(".schedule-shift-type-id").innerHTML)
+        let shiftDate = document.querySelector(".schedule-date-none").innerText
+        // let dateCreateShift =
         //Chuẩn hóa dataSet
         let dataSet = []
         dataNew.forEach(data => {
@@ -594,17 +632,184 @@ function saveScheduleHandler() {
             dataSet.push(dataSetObj)
         })
         console.log("Call api", dataNew, dataSet);
+
+        //Tạo shift
+        //Xong có shift rồi thì từ shift_id đó
+        let dataCreateShiftPost = {
+            date: {
+                date: shiftDate
+            },
+            shiftType: {
+                id: shiftTypeId
+            }
+        }
+
+        let shift_Rs = await postApi(createShift, dataCreateShiftPost)
+
+        console.log("API thêm nhân sự:", shift_Rs); // In phản hồi ra màn hình
+        //Xử lý thêm lịch làm
+        let shift_id = shift_Rs.data.id
         let dataPost = {
-            shift_id: shiftId,
-            dataSet
+            shift_id,
+            dataSet: [...dataSet]
         }
         console.log(dataPost);
-        postApi(scheduleApi)
+
+        let schedule_Rs = await postApi(scheduleApi, dataPost)
+        if (schedule_Rs.status === "OK") {
+            console.log(schedule_Rs);
+            //Thông báo những ng thêm thành công và thất bại
+            location.reload()
+        } else {
+            //Thông báo báo lỗi
+            console.log(schedule_Rs);
+        }
+
+        // let dataPost = {
+        //     shift_id: shiftId,
+        //     dataSet
+        // }
+        console.log(shift_Rs, "Shift_id");
+
+        // postApi(scheduleApi)
     }
 }
 //Khi mà bấm vào nút tích để tích hay bỏ tích thì cập nhật lại 
 
 
-function postApi(api) {
+async function postApi(api, data) {
+    const response = await fetch(api, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    const dataRs = await response.json();
+
+    return dataRs
+}
+
+//Bắt sự kiện bắt check vào chọn 1 nhân sự trong lịch đã sắp -> disable dòng của nhân sự đó
+function handleClickCheckBoxScheduled(element) {
+    let trOfThisElement = element.parentElement.parentElement // Lấy nguyên hàng dữ liệu
+    console.log(trOfThisElement);
+    let overTimeInput = trOfThisElement.querySelector(".overTime")
+    let type = trOfThisElement.querySelector(".badge")
+
+    //bg-secondary
+    //Bật tắt thuộc tính disabled
+    overTimeInput.toggleAttribute("disabled")
+
+    //Bật tắt đổi màu thẻ tr
+    trOfThisElement.classList.toggle("table-success")
+    trOfThisElement.classList.toggle("table-light")
+
+    //Đổi màu Type Badge
+    type.classList.toggle("bg-primary")
+    type.classList.toggle("bg-secondary")
+
+    console.log(trOfThisElement);
+    //Disabled input overTime
+
+}
+//Bắt sự kiện khi chọn vào 1 nhân sự trong danh sách lịch rảnh --> Đưa nhân sự đó lên lịch đã sắp xếp
+function handleClickCheckBoxFreeTimeSchedule(element) {
+    let trOfThisElement = element.parentElement.parentElement // Lấy nguyên hàng dữ liệu
+    console.log(trOfThisElement);
+    //Chuyển lên bảng sắp lịch
+    //Lấy dữ liệu của hàng đó
+    let fullName = trOfThisElement.querySelector(".fullName").innerText
+    let uid = trOfThisElement.querySelector(".uid").innerText
+    let gender = trOfThisElement.querySelector(".gender").innerText
+    let type = trOfThisElement.querySelector(".type").innerText
+    let shiftRegisted = trOfThisElement.querySelector(".shift-type-name").value
+    let start = trOfThisElement.querySelector(".start").value
+    let end = trOfThisElement.querySelector(".end").value
+    let totalTime = trOfThisElement.querySelector(".totalTime").value
+    let totalWorkYear = trOfThisElement.querySelector(".totalWorkYear").innerText //Thâm niên
+    firstValueTotalTime = totalTime;
+
+    moveToScheduleTale(fullName, uid, gender, type, shiftRegisted, start, end, totalTime, totalWorkYear)
+
+    //Biến hàng dữ liệu đó thành display none
+    //Đính uid lên thẻ tr để đến khi muốn hiện lại biết hiện hàng nào lên
+    trOfThisElement.classList.add(`${uid}`)
+    trOfThisElement.style.display = "none"
+}
+
+//Chuyển lên bảng lập lịch
+function moveToScheduleTale(fullName, uid, gender, type, shiftRegisted, start, end, totalTime, totalWorkYear) {
+
+    let tr = document.createElement("tr")
+    tr.innerHTML =
+        `
+                                            <td class="text-center checked-scheduled checked-schedule-from-free-time">
+                                                <input
+                                                    class="form-check-input checked-scheduled-input mt-0 fs-5 align-middle border border-success" checked
+                                                    type="checkbox" onclick="moveToFreeTimeTale(this)">
+                                            </td>
+                                            <td>
+                                                <span class="fullName">${fullName}</span>
+                                                <span class="uid d-none">${uid}</span>
+                                            </td>
+                                            <td>
+                                                ${gender || ""} 
+                                            </td>
+                                            <td>
+                                                <div class="badge bg-primary">${type}</div>
+                                            </td>
+
+                                            <td>
+                                            <input disabled type="text" style="max-width: 200px;" class="form-control"
+                                                    value="${shiftRegisted}">
+                                                
+                                            </td>
+                                            <td>
+                                                <input disabled style="width: 120px;" type="time" class="form-control"
+                                                    value="${start}">
+                                            </td>
+                                            <td>
+                                                <input disabled disabled style="width: 120px;" type="time" class="form-control"
+                                                    value="${end}">
+                                            </td>
+                                            <td>
+                                                <input onchange="onChangeOverTimeInput(this)" style="width: 80px;" min="0" max="20" value=${0}
+                                                    type="number" class="form-control overTime">
+                                            </td>
+                                            <td>
+                                                <input style="width: 80px;" min="0" max="20" type="number"
+                                                    class="form-control totalTime" disabled value=${totalTime}>
+                                            </td>
+                                            <td>${totalWorkYear}</td>
+                                        </tr>
+    `
+
+    //Kiểm tra nếu đang có thẻ tr-empty thì xóa
+    let trEmpty = document.querySelector(".schedule-empty")
+    if (trEmpty) {
+        trEmpty.remove()
+    }
+    renderElementInnerParent("scheduled-modal-table", tr)
+
+    //Lưu lại dữ liệu mới
+}
+
+//Chuyển về lại bảng lịch rảnh
+function moveToFreeTimeTale(element) {
+    //Chuyển về
+    console.log("Chuyển về");
+    let trOfThisElement = element.parentElement.parentElement
+    let classToDisplayBLock = trOfThisElement.querySelector(".uid").innerText // Lấy ra class cần hiển thị lại trong bảng freeTime
+    // let trInFreeTimeTable = 
+    //Xóa hàng ở bảng sheduled
+    trOfThisElement.remove()
+    //Hiện lại hàng ở bảng free-time
+    let elementToShow = document.querySelector(`.${classToDisplayBLock}`)
+    elementToShow.style.display = "table-row"
+    elementToShow.querySelector(".free-time-check-input").checked = false
+    //Bỏ check
 
 }

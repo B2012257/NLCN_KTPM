@@ -14,3 +14,8 @@ a {
     margin: auto;
     vertical-align: middle;
 }
+
+.form-control {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}

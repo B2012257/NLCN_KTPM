@@ -524,11 +524,12 @@ public class ManagerServiceImpl implements ManagerService {
                 dateRepository.saveAndFlush(dateToSave);
             }
 
-            shiftRepository.saveAndFlush(shiftToSave);
-            return new Response(HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate().getDate() + " thành công");
+            Shift shiftSaved = shiftRepository.saveAndFlush(shiftToSave);
+            return new ResponseWithData<>(shiftSaved ,HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate().getDate() + " thành công");
         } catch (Exception ex) {
             System.out.println("Error message " + ex.getMessage());
-            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
+            Shift rs = shiftRepository.findOneByShiftTypeAndDate(shift.getShiftType(), shift.getDate());
+            return new ResponseWithData<>( rs, HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
         }
     }
 
@@ -579,6 +580,11 @@ public class ManagerServiceImpl implements ManagerService {
                 }
                 shift.setStaff(staff);
                 shiftDetailRepository.saveAndFlush(shift);
+                //Lấy ra freeTime đã dc sắp lịch ròi đánh dấu nó
+                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDb.getShiftType() , shiftDb.getDate(), staff);
+                freeTimeScheduled.setIsSchedule(true);
+                this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
+
                 responseList.put("Success " + staff.getUid(), "Thêm thành công nhân sự: " + staff.getFullName() + " vào ca làm: " + shiftDb.getShiftType().getName() + " " + shiftDb.getDate().getDate());
             }
             return new ResponseWithData<>(responseList, HttpStatus.OK, "Lịch làm");
