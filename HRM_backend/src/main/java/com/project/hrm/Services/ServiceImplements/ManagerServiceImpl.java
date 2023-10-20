@@ -545,7 +545,57 @@ public class ManagerServiceImpl implements ManagerService {
 
     //
 //
-    //Sắp lịch làm
+//    //Sắp lịch làm
+//    @Override
+//    public Response schedule(ShiftDetailRequest shiftDetailRequests) {
+//        System.out.println(shiftDetailRequests);
+//        Integer shift_id = shiftDetailRequests.getShift_id();
+//        Map<String, String> responseList = new HashMap<>();
+//        //Check shift_id
+//        if (shift_id == null) {
+//            return new ErrorResponse(HttpStatus.BAD_REQUEST, "Mã ca không được bỏ trống");
+//        }
+//        try {
+//            //Tìm shift theo id
+//            Shift shiftDb = shiftRepository.findOneById(shift_id);
+//            if (shiftDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy ca làm");
+//            //Nếu có đúng ca làm
+//            //Lặp qua lấy ra dataSet
+//            if (shiftDetailRequests.getDataSet() == null || shiftDetailRequests.getDataSet().isEmpty())
+//                return new ErrorResponse(HttpStatus.BAD_REQUEST, "Lịch làm phải có ít nhất một nhân sự");
+//            for (ShiftDetail shift : shiftDetailRequests.getDataSet()) {
+//                shift.setShift(shiftDb);
+//                String uid = shift.getStaff().getUid();
+//                //Tìm staff
+//                Staff staff = staffRepository.findByUid(uid);
+//                //Nếu không tồn tại nhân sự thì báo lỗi và tiếp tục
+//                if (staff == null) {
+//                    responseList.put("Error: " + uid, "Lỗi thêm nhân sự " + uid + " vào ca làm! Do không tồn tại");
+//                    continue;
+//                }
+//                //Nếu đã làm trong ca rồi thì cũng báo lỗi và tiếp tục
+//                if (shiftDetailRepository.existsShiftDetailByShiftAndStaff(shiftDb, staff)) {
+//                    responseList.put("Error: " + uid, "Lỗi thêm nhân sự " + uid + " vào ca làm! Do đã làm ca này");
+//                    continue;
+//                }
+//                shift.setStaff(staff);
+//                shiftDetailRepository.saveAndFlush(shift);
+//                //Lấy ra freeTime đã dc sắp lịch ròi đánh dấu nó
+//                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDb.getShiftType() , shiftDb.getDate(), staff);
+//                freeTimeScheduled.setIsSchedule(true);
+//                this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
+//
+//                responseList.put("Success " + staff.getUid(), "Thêm thành công nhân sự: " + staff.getFullName() + " vào ca làm: " + shiftDb.getShiftType().getName() + " " + shiftDb.getDate().getDate());
+//            }
+//            return new ResponseWithData<>(responseList, HttpStatus.OK, "Lịch làm");
+//
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi xảy ra ở máy chủ");
+//
+//        }
+//    }
+    //Sắp lịch làm mới
     @Override
     public Response schedule(ShiftDetailRequest shiftDetailRequests) {
         System.out.println(shiftDetailRequests);
@@ -563,6 +613,20 @@ public class ManagerServiceImpl implements ManagerService {
             //Lặp qua lấy ra dataSet
             if (shiftDetailRequests.getDataSet() == null || shiftDetailRequests.getDataSet().isEmpty())
                 return new ErrorResponse(HttpStatus.BAD_REQUEST, "Lịch làm phải có ít nhất một nhân sự");
+
+            //Lấy ra danh sách nhân sự đã sắp lịch trước và xóa hết để thêm lại
+            List<ShiftDetail> shiftDetailScheduled = this.shiftDetailRepository.findAllByShift(shiftDb);
+            for (ShiftDetail shiftDt : shiftDetailScheduled) {
+               //Đưa trường isScheduled trong bản FreeTime về false
+                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDt.getShift().getShiftType(), shiftDt.getShift().getDate(), shiftDt.getStaff());
+                freeTimeScheduled.setIsSchedule(false);
+                this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
+
+                //Xóa shiftDetail
+                this.shiftDetailRepository.delete(shiftDt);
+                this.shiftDetailRepository.flush();
+            }
+
             for (ShiftDetail shift : shiftDetailRequests.getDataSet()) {
                 shift.setShift(shiftDb);
                 String uid = shift.getStaff().getUid();
@@ -579,6 +643,7 @@ public class ManagerServiceImpl implements ManagerService {
                     continue;
                 }
                 shift.setStaff(staff);
+
                 shiftDetailRepository.saveAndFlush(shift);
                 //Lấy ra freeTime đã dc sắp lịch ròi đánh dấu nó
                 FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDb.getShiftType() , shiftDb.getDate(), staff);

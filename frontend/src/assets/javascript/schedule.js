@@ -31,9 +31,17 @@ async function setup(weekList) {
 
 
 //Truyền vào tuần vừa mới lập lịch bằng cách lấy 1 ngày của trong tuần của lượt reload trước để tìm tuần vừa lặp, để tối ưu trải nghiệm 
-let weekList = getWeekList(new Date())
+let preDoingDate = JSON.parse(localStorage.getItem("dayScheduling"))
+let date = new Date()
+if (preDoingDate)
+    date = new Date(preDoingDate)
+
+let weekList = getWeekList(date)
 document.querySelector(".dayInWeek").innerText = weekList[0].day
 setup(weekList)
+
+//Clear localStorage 
+localStorage.removeItem("dayScheduling");
 
 //Thêm sự kiện tiến lùi tuần
 document.querySelector(".previous-week").addEventListener("click", () => getPreviousWeek())
@@ -286,6 +294,7 @@ function getPreviousDay(date) {
 }
 //Hàm tiến 1 tuần từ tuần truyền vào
 function getNextWeek() {
+    document.querySelector(".save-schedule").classList.remove("d-none")
 
 
     let dayNowElementValue = document.querySelector(".dayInWeek").innerText
@@ -304,13 +313,28 @@ function getNextWeek() {
 }
 //Hàm lùi 1 tuần từ tuần truyền vào
 function getPreviousWeek() {
-    // Lấy ngày trong tuần hiện tại
-    let dayNowElementValue = document.querySelector(".dayInWeek").innerText
+    let daynow = new Date()// Ngày hôm nay
+    let weekOfDayNow = getWeekList(daynow)//Tuan cua ngay hom nay
+    let mondayOfNowDate = new Date(weekOfDayNow[0].day) //Đầu tuần của tuần hiện tại
+    console.log(mondayOfNowDate)
+
+    // Lấy ngày đầu trong tuần hiện tại
+    let dayNowElementValue = document.querySelector(".dayInWeek").innerText // Ngày đầu của tuần đang xem
+    let dayNowElementValueDate = new Date(dayNowElementValue)
 
     let weekNow = getWeekList(new Date(dayNowElementValue))
     let startWeekNow = weekNow[0].day //yyyy-mm-dd
     let endNextWeek = getPreviousDay(startWeekNow) //Lấy ngày cuối của tuần trước
     let preWeek = getWeekList(endNextWeek) //Lấy ra tuần trước
+    //Kiểm tra xem ngày đầu của tuần đang xem mà nằm nhỏ hơn đầu tuần của tuần hôm nay thì k cho lùi
+    if (new Date(preWeek[0].day) < mondayOfNowDate) {
+
+        document.querySelector(".save-schedule").classList.add("d-none")
+        //Vẫn cho hiển thị nhưng mà k cho lưu và xóa
+
+        // return;
+
+    }
 
     //Clear hết dữ liệu của tuần cũ
     clearOldDataTable()
@@ -414,9 +438,11 @@ async function actionBtnClickHandler(event) {
 
         //Lưu lại data cũ để so sánh có thay đổi hay không, nếu có thay đổi thì khi bấm nút lưu thì mới thực hiện
         saveInfoInScheduledTable()
+        // //Hiển thị nút xóa ca
 
     } else { //Nếu không có nhân sự trong ca làm
         dataDb = []
+        //Hiển thị nút xóa ca
         tbody.innerHTML =
             `
         <tr class="schedule-empty center">
@@ -592,6 +618,7 @@ function compareBetweenObject(data1, data2) {
 }
 let dataNew = []
 async function saveScheduleHandler() {
+
     console.log("hehe");
     dataNew = []
     //lấy thông tin trong bảng schedule
@@ -653,12 +680,14 @@ async function saveScheduleHandler() {
             shift_id,
             dataSet: [...dataSet]
         }
-        console.log(dataPost);
 
         let schedule_Rs = await postApi(scheduleApi, dataPost)
         if (schedule_Rs.status === "OK") {
             console.log(schedule_Rs);
             //Thông báo những ng thêm thành công và thất bại
+            //Lưu thông tin của 1 ngày trong tuần đang sắp lịch
+            let dayNowScheduling = document.querySelector(".schedule-date-none").innerText
+            localStorage.setItem("dayScheduling", JSON.stringify(dayNowScheduling))
             location.reload()
         } else {
             //Thông báo báo lỗi
