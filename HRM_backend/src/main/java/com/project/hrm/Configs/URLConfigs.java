@@ -71,6 +71,7 @@ public class URLConfigs {
     public static final String DELETE_SALARY = "/deleteSalary";
 
     public static final String ADD_SHIFT = "/addShift";
+    public static final String DELETE_SHIFT = "/deleteShift";
 
     public static final String ADD_SHIFT_TYPE = "/addShiftType";
     public static final String GET_ALL_SHIFT_TYPE = "/allShiftType";

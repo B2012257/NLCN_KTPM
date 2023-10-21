@@ -27,6 +27,8 @@ async function setup(weekList) {
 
     //Thêm sự kiện vào nút lưu lịch 
     document.querySelector(".save-schedule").addEventListener("click", saveScheduleHandler)
+    document.querySelector(".delete-scheduled").addEventListener("click", deleteShiftHandler)
+
 }
 
 
@@ -132,7 +134,9 @@ function loadWeekDay(weekList) {
         //Kiểm tra xem ngày hôm nay có nằm trong tuần được truyền vào không -> nếu có thì là trùng tuần
         let dayArray = Object.values(weekList[index]) //Sẽ trả về mảng các value tại 1 object
         let dayOfIndex = dayArray[dayArray.length - 1]; //Lấy ra value cuối (tương đương key = day)
-
+        //so sánh 2 ngày 
+        let areEqualDate = dateCompare(dayOfIndex, dayNowString) // -1 or 0 or 1
+        // console.log(areEqualDate);
         if (dayOfIndex.trim() == dayNowString.trim()) {
             if (dayOfWeek === index) {
                 element.classList.add("text-danger")
@@ -294,8 +298,7 @@ function getPreviousDay(date) {
 }
 //Hàm tiến 1 tuần từ tuần truyền vào
 function getNextWeek() {
-    document.querySelector(".save-schedule").classList.remove("d-none")
-
+    let daynow = new Date()// Ngày hôm nay
 
     let dayNowElementValue = document.querySelector(".dayInWeek").innerText
 
@@ -314,6 +317,7 @@ function getNextWeek() {
 //Hàm lùi 1 tuần từ tuần truyền vào
 function getPreviousWeek() {
     let daynow = new Date()// Ngày hôm nay
+
     let weekOfDayNow = getWeekList(daynow)//Tuan cua ngay hom nay
     let mondayOfNowDate = new Date(weekOfDayNow[0].day) //Đầu tuần của tuần hiện tại
     console.log(mondayOfNowDate)
@@ -326,15 +330,6 @@ function getPreviousWeek() {
     let startWeekNow = weekNow[0].day //yyyy-mm-dd
     let endNextWeek = getPreviousDay(startWeekNow) //Lấy ngày cuối của tuần trước
     let preWeek = getWeekList(endNextWeek) //Lấy ra tuần trước
-    //Kiểm tra xem ngày đầu của tuần đang xem mà nằm nhỏ hơn đầu tuần của tuần hôm nay thì k cho lùi
-    if (new Date(preWeek[0].day) < mondayOfNowDate) {
-
-        document.querySelector(".save-schedule").classList.add("d-none")
-        //Vẫn cho hiển thị nhưng mà k cho lưu và xóa
-
-        // return;
-
-    }
 
     //Clear hết dữ liệu của tuần cũ
     clearOldDataTable()
@@ -383,6 +378,7 @@ async function actionBtnClickHandler(event) {
     //Nếu đã có nhân sự trong ca
     let data = sheduled.data
     let tbody = document.querySelector(".scheduled-modal-table")
+    console.log(data, data.length);
     if (data && data.length > 0) {
         tbody.innerHTML = ""
         data.forEach(shiftDetail => {
@@ -438,7 +434,9 @@ async function actionBtnClickHandler(event) {
 
         //Lưu lại data cũ để so sánh có thay đổi hay không, nếu có thay đổi thì khi bấm nút lưu thì mới thực hiện
         saveInfoInScheduledTable()
-        // //Hiển thị nút xóa ca
+
+
+
 
     } else { //Nếu không có nhân sự trong ca làm
         dataDb = []
@@ -457,11 +455,43 @@ async function actionBtnClickHandler(event) {
     const freeTimes = await getApi(getFreeTimeNotScheduled)
     if (freeTimes.status === "OK") {
         loadFreeTimeHtml(freeTimes.data)
-        return;
+        // return;
+
+    } else {
+        console.log(freeTimes.message)
+        loadFreeTimeHtml([]) //Khi status !== OK thì trả về mảng rổng
+    }
+    // //Hiển thị nút xóa ca
+    //Kiểm tra ngày đang tháo tác để ẩn hiện nút lưu và xóa
+    let daynow = new Date()// Ngày hôm nay
+    let dayNowString = `${daynow.getFullYear()}-${daynow.getMonth() + 1}-${daynow.getDate()}`
+
+    //Kiểm tra xem ngày đang thao tác có nhỏ hơn ngày hôm nay hay  không
+    let equal = dateCompare(dateTarget, dayNowString)
+    console.log(equal, data.length);
+    //Nếu equal < 0 tức là nhỏ hơn --> ẩn cả 2
+    // Nếu equal == 0 và chiều dài bằng rỗng thì ẩn nút xóa -> hiện nút lưu
+    //Nếu equal > 0 -> hiện nút lưu, nếu length == 0 thì ẩn nút xóa
+    console.log(equal < 0 && data.length == 0);
+    if (equal < 0) {
+        //Ẩn nút lưu
+        document.querySelector(".delete-scheduled").classList.add("disabled")
+        document.querySelector(".save-schedule").classList.add("disabled")
+
+        //Vẫn cho hiển thị nhưng mà k cho lưu và xóa
+
+        // return;
+    }
+    else if (equal >= 0 && data.length === 0) {
+        document.querySelector(".delete-scheduled").classList.add("disabled")
+        document.querySelector(".save-schedule").classList.remove("disabled")
+    }
+    else {
+        document.querySelector(".delete-scheduled").classList.remove("disabled")
+        document.querySelector(".save-schedule").classList.remove("disabled")
 
     }
-    console.log(freeTimes.message)
-    loadFreeTimeHtml([]) //Khi status !== OK thì trả về mảng rổng
+
 }
 
 //Tính thời gian chênh lệch
@@ -705,7 +735,14 @@ async function saveScheduleHandler() {
 }
 //Khi mà bấm vào nút tích để tích hay bỏ tích thì cập nhật lại 
 
+//Xóa cả ca làm
+function deleteShiftHandler() {
+    //Lấy id ca cần xóa
+    //Lấy xác nhận tự người dùng
+    let isDelete = confirm("Xác nhận xóa ca làm cùng toàn bộ nhân sự đã lập lịch?")
+    console.log(isDelete);
 
+}
 async function postApi(api, data) {
     const response = await fetch(api, {
         method: "POST",
@@ -840,5 +877,40 @@ function moveToFreeTimeTale(element) {
     elementToShow.style.display = "table-row"
     elementToShow.querySelector(".free-time-check-input").checked = false
     //Bỏ check
+
+}
+
+
+//Hàm hổ trợ so sánh 2 
+// Ap dung cho Date khởi tạo từ chuỗi :
+// Vd 
+//
+// let date1 = new Date('2021-10-23');
+// let date2 = new Date('2021-10-22');
+//paramater format: "yyyy-mm-dd"
+//Trả về < 0 là dateString1 < dateString2
+//Trả về = 0 là dateString1 = dateString2
+//Trả về > 0 là dateString1 > dateString2
+
+function dateCompare(dateString1, dateString2) {
+    console.log(dateString1, dateString2);
+    let date1 = new Date(dateString1)
+    let date2 = new Date(dateString2)
+
+
+    // let day1String = `${date1.getFullYear()}-${date1.getMonth() + 1}-${date1.getDate()}`.trim()
+    // let day2String = `${date2.getFullYear()}-${date2.getMonth() + 1}-${date2.getDate()}`.trim()
+    if (date1.getTime() > date2.getTime()) {
+        console.log(date1, date2, 1);
+        return 1;
+    }
+    if (date1.getTime() < date2.getTime()) {
+        console.log(date1, date2, -1);
+
+        return -1;
+    }
+    console.log(date1, date2, 0);
+
+    return 0; //Bằng nhau
 
 }
