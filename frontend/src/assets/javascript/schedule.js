@@ -3,7 +3,7 @@ const getAllShiftTypeApi = "http://localhost:8081/api/v1/manager/allShiftType"
 const getScheduleOfBetween = "http://localhost:8081/api/v1/manager/getAllSchedule" //?startDay=2023/10/10&endDay=2023/10/10
 let scheduleApi = "http://localhost:8081/api/v1/manager/schedule"
 let createShift = "http://localhost:8081/api/v1/manager/addShift"
-
+let deleteShiftApi = "http://localhost:8081/api/v1/manager/deleteShift"
 let firstValueTotalTime; //Lưu thời gian ca chuẩn
 
 //Hàm chính 
@@ -378,10 +378,15 @@ async function actionBtnClickHandler(event) {
     //Nếu đã có nhân sự trong ca
     let data = sheduled.data
     let tbody = document.querySelector(".scheduled-modal-table")
-    console.log(data, data.length);
+
+
+    //Nếu có lịch sẵn thì set shift_id để deleteShift nhận được
     if (data && data.length > 0) {
         tbody.innerHTML = ""
         data.forEach(shiftDetail => {
+            //set shift_id để deleteShift nhận được
+            let shift_id = shiftDetail.shift.id
+            document.querySelector(".schedule-shift-id").innerText = shift_id
 
             let startTime = shiftDetail.shift.shiftType.start
             let endTime = shiftDetail.shift.shiftType.end
@@ -473,19 +478,19 @@ async function actionBtnClickHandler(event) {
     // Nếu equal == 0 và chiều dài bằng rỗng thì ẩn nút xóa -> hiện nút lưu
     //Nếu equal > 0 -> hiện nút lưu, nếu length == 0 thì ẩn nút xóa
     console.log(equal < 0 && data.length == 0);
+    //Ngày nhỏ hơn thì k cho thao tác
     if (equal < 0) {
         //Ẩn nút lưu
         document.querySelector(".delete-scheduled").classList.add("disabled")
         document.querySelector(".save-schedule").classList.add("disabled")
 
-        //Vẫn cho hiển thị nhưng mà k cho lưu và xóa
-
-        // return;
     }
+    //Ngày = hoặc lớn hơn --> thì nếu không có nhân sự đang trong lịch thì cho lưu và k cho xóa, vì chưa có lập lịch thì có j mà xóa
     else if (equal >= 0 && data.length === 0) {
         document.querySelector(".delete-scheduled").classList.add("disabled")
         document.querySelector(".save-schedule").classList.remove("disabled")
     }
+    //Còn lại trường hợp (equal >= 0 và data.length !== 0) thì hiện 2 nút xóa ca và lưu (edit)
     else {
         document.querySelector(".delete-scheduled").classList.remove("disabled")
         document.querySelector(".save-schedule").classList.remove("disabled")
@@ -736,13 +741,49 @@ async function saveScheduleHandler() {
 //Khi mà bấm vào nút tích để tích hay bỏ tích thì cập nhật lại 
 
 //Xóa cả ca làm
-function deleteShiftHandler() {
+async function deleteShiftHandler() {
     //Lấy id ca cần xóa
+    //Lấy tên ca
+    //Lấy ngày
+    let shiftId = document.querySelector(".schedule-shift-id").innerText
+    let shiftTypeName = document.querySelector(".schedule-shift-type-name").innerText
+    let shiftDate = document.querySelector(".schedule-date").innerText
     //Lấy xác nhận tự người dùng
-    let isDelete = confirm("Xác nhận xóa ca làm cùng toàn bộ nhân sự đã lập lịch?")
+    let isDelete = confirm(`Xác nhận xóa ${shiftTypeName} ${shiftDate}?`)
     console.log(isDelete);
 
+    //True -> xử lí xóa ca
+    if (isDelete && shiftId) {
+        //Call api xóa
+        let deleteRs = await deleteApiWithParam(deleteShiftApi, "id", shiftId)
+        if (deleteRs.status === "OK") {
+            alert(deleteRs.message)
+            return location.reload()
+
+        }
+        alert(deleteRs.message)
+    } else {
+        return;
+    }
+
 }
+
+
+async function deleteApiWithParam(api, param, paramValue) {
+    const response = await fetch(`${api}?${param}=${paramValue}`, {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+    })
+    const dataRs = await response.json();
+
+    return dataRs
+}
+
 async function postApi(api, data) {
     const response = await fetch(api, {
         method: "POST",

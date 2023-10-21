@@ -206,6 +206,12 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SHIFT)
+    public Response deleteShift(@RequestParam Integer id) {
+        return managerService.deleteShift(id);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @DeleteMapping (URLConfigs.DELETE_SCHEDULE)
     public Response deleteSchedule(@RequestBody List<ShiftDetail> shiftDetails) {
         return managerService.deleteSchedule(shiftDetails);

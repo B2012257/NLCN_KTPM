@@ -525,17 +525,50 @@ public class ManagerServiceImpl implements ManagerService {
             }
 
             Shift shiftSaved = shiftRepository.saveAndFlush(shiftToSave);
-            return new ResponseWithData<>(shiftSaved ,HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate().getDate() + " thành công");
+            return new ResponseWithData<>(shiftSaved, HttpStatus.OK, "Thêm ca " + shiftTypeDb.getName() + " trong ngày " + shiftToSave.getDate().getDate() + " thành công");
         } catch (Exception ex) {
             System.out.println("Error message " + ex.getMessage());
             Shift rs = shiftRepository.findOneByShiftTypeAndDate(shift.getShiftType(), shift.getDate());
-            return new ResponseWithData<>( rs, HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
+            return new ResponseWithData<>(rs, HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình thêm ca làm: " + ex.getMessage());
         }
     }
 
     @Override
-    public Response deleteShift(Shift shift) {
-        return null;
+    public Response deleteShift(Integer shiftId) {
+        try {
+
+            Shift shiftDb = shiftRepository.findOneById(shiftId);
+            if (shiftDb == null) {
+                return new ErrorResponse(HttpStatus.NOT_FOUND, "Ca làm không tồn tại!");
+            }
+            //Lấy tất cả shiftDetail của ca đó
+            //Xóa hết shiftDetail
+            //Nếu xóa thành công thì xóa shift
+            //Trả về thông báo
+            List<ShiftDetail> shiftDetailsToDelete = shiftDetailRepository.findAllByShift(shiftDb);
+
+            for (ShiftDetail shiftDt : shiftDetailsToDelete) {
+                //Đưa trường isScheduled trong bản FreeTime về false
+                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDt.getShift().getShiftType(), shiftDt.getShift().getDate(), shiftDt.getStaff());
+                freeTimeScheduled.setIsSchedule(false);
+                this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
+
+                //Xóa shiftDetail
+                this.shiftDetailRepository.delete(shiftDt);
+                this.shiftDetailRepository.flush();
+            }
+            shiftDetailRepository.deleteAll(shiftDetailsToDelete);
+            shiftDetailRepository.flush();
+
+            //Xóa shift
+            shiftRepository.delete(shiftDb);
+            shiftRepository.flush();
+            return new Response(HttpStatus.OK, "Xóa thành công ca làm");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa không thành công");
+        }
+
     }
 
     @Override
@@ -617,7 +650,7 @@ public class ManagerServiceImpl implements ManagerService {
             //Lấy ra danh sách nhân sự đã sắp lịch trước và xóa hết để thêm lại
             List<ShiftDetail> shiftDetailScheduled = this.shiftDetailRepository.findAllByShift(shiftDb);
             for (ShiftDetail shiftDt : shiftDetailScheduled) {
-               //Đưa trường isScheduled trong bản FreeTime về false
+                //Đưa trường isScheduled trong bản FreeTime về false
                 FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDt.getShift().getShiftType(), shiftDt.getShift().getDate(), shiftDt.getStaff());
                 freeTimeScheduled.setIsSchedule(false);
                 this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
@@ -646,7 +679,7 @@ public class ManagerServiceImpl implements ManagerService {
 
                 shiftDetailRepository.saveAndFlush(shift);
                 //Lấy ra freeTime đã dc sắp lịch ròi đánh dấu nó
-                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDb.getShiftType() , shiftDb.getDate(), staff);
+                FreeTime freeTimeScheduled = this.freeTimeRepository.findOneByShiftTypeAndDateAndStaff(shiftDb.getShiftType(), shiftDb.getDate(), staff);
                 freeTimeScheduled.setIsSchedule(true);
                 this.freeTimeRepository.saveAndFlush(freeTimeScheduled);
 
@@ -765,8 +798,8 @@ public class ManagerServiceImpl implements ManagerService {
 //        //Lấy danh sách Staff đã được sắp lịch
 //        List<Staff> staff = new ArrayList<>();
 //        List<ShiftDetail> listShiftDetail = rs.getData();
-        if(freeTimes.isEmpty())
-            return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy lịch rảnh ca " + shiftTypeRq.getName() + " ngày "  + dateToFind.getDate());
+        if (freeTimes.isEmpty())
+            return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy lịch rảnh ca " + shiftTypeRq.getName() + " ngày " + dateToFind.getDate());
         return new ResponseWithData<>(freeTimes, HttpStatus.OK, "Danh sách lịch rảnh ca " + shiftTypeRq.getName() + " ngày " + dateToFind.getDate()); //TEST
     }
 
@@ -810,8 +843,6 @@ public class ManagerServiceImpl implements ManagerService {
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings) {
         return null;
     }
-
-
 
 
 }
