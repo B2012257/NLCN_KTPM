@@ -140,10 +140,10 @@ public class ManagerController {
     }
 
     //
-//    @DeleteMapping(URLConfigs.DELETE_SALARY)
-//    public Response deleteSalary(@RequestBody Salary salary){
-//        return managerService.deleteSalary(salary);
-//    }
+    @DeleteMapping(URLConfigs.DELETE_SALARY)
+    public Response deleteSalary(@RequestBody Salary salary){
+        return managerService.deleteSalary(salary);
+    }
 //
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})

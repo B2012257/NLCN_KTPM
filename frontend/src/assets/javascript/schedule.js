@@ -758,6 +758,9 @@ async function deleteShiftHandler() {
         let deleteRs = await deleteApiWithParam(deleteShiftApi, "id", shiftId)
         if (deleteRs.status === "OK") {
             alert(deleteRs.message)
+            //Xóa thì cũng cập nhật lại trong localStorage để load lại tuần đang làm việc
+            let dayNowScheduling = document.querySelector(".schedule-date-none").innerText
+            localStorage.setItem("dayScheduling", JSON.stringify(dayNowScheduling))
             return location.reload()
 
         }

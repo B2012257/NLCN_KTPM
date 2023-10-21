@@ -25,3 +25,7 @@ a {
     right: 0 !important;
     left: auto !important;
 }
+
+.hide {
+    display: none;
+}

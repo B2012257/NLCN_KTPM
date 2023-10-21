@@ -385,39 +385,30 @@ public class ManagerServiceImpl implements ManagerService {
 //    //Xoó những role phụ thuộc của salary trước (Dựa vào level của salary). Rồi mới xóa salary, Client sẽ có thông báo xác thực
     @Override
     public Response deleteSalary(Salary salary) {
-//
-//        Salary salaryDB = salaryRepository.findOneByLevel(salary.getLevel());
-//        if (salaryDB == null) {
-//            return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
-//        }
-//        System.out.println(salaryDB);
-//        List<Role> rolesToDelete = roleRepository.findAllBySalary(salaryDB);
-//        //Nếu rỗng thì xóa luôn salary
-//        if (rolesToDelete.isEmpty()) {
-//            salaryRepository.delete(salaryDB);
-//            salaryRepository.flush();
-//            // Kiểm tra xem đối tượng đã bị xóa thành công hay chưa
-//            Salary deletedSalary = salaryRepository.findOneByLevel(salaryDB.getLevel());
-//            if (deletedSalary == null) {
-//                // Đối tượng đã bị xóa thành công
-//                return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
-//            } else {
-//                // Đối tượng chưa được xóa
-//                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa không thành công");
-//            }
-//        }
-//        roleRepository.deleteAll(rolesToDelete);
-//        roleRepository.flush();
-//
-//        if (roleRepository.findAllBySalary(salaryDB).isEmpty()) {
-//            salaryRepository.delete(salaryDB);
-//            salaryRepository.flush();
-//            return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
-//        } else {
-//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa bậc lương không thành công");
-//        }
-        return null;
-//
+
+        Salary salaryDB = salaryRepository.findOneByLevel(salary.getLevel());
+        if (salaryDB == null) {
+            return new ErrorResponse(HttpStatus.NOT_FOUND, "Bậc lương không tồn tại");
+        }
+
+        List<Staff> staffTRef = staffRepository.findAllBySalary(salaryDB);
+        //Nếu rỗng thì xóa luôn salary
+        if (staffTRef.isEmpty()) {
+            salaryRepository.delete(salaryDB);
+            salaryRepository.flush();
+            // Kiểm tra xem đối tượng đã bị xóa thành công hay chưa
+            Salary deletedSalary = salaryRepository.findOneByLevel(salaryDB.getLevel());
+            if (deletedSalary == null) {
+                // Đối tượng đã bị xóa thành công
+                return new Response(HttpStatus.OK, "Xóa bậc lương thành công");
+            } else {
+                // Đối tượng chưa được xóa
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Xóa không thành công do có lỗi ở mấy chủ");
+            }
+        }
+       return new ErrorResponse(HttpStatus.FAILED_DEPENDENCY, "Xóa không thành công do đã được gán quyền cho nhân sự");
+
+
     }
 
     //
