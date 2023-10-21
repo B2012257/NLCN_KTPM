@@ -57,3 +57,25 @@ function renderFullName() {
         })
 
 }
+
+// container -> toast-container
+//Hiển thị thông báo
+function turnOnToast(title, content) {
+    let toastHtmlTemplate =
+        ` <div class="toast show" role="alert" data-bs-animation="false" data-bs-autohide="false"">
+                <div class="toast-header">
+                    <span class="rounded me-2 bg-success" style="width: 22px;height: 22px;"> </span>
+                    <strong class="me-auto message-title">${title}</strong>
+                    <small class="text-muted">Bây giờ</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        <div class="toast-body message-content">
+            ${content}
+        </div>
+    </div>`
+
+    let toastContainer = document.querySelector(".toast-container")
+    if (toastContainer) {
+        toastContainer.innerHTML += toastHtmlTemplate
+    } else return;
+}

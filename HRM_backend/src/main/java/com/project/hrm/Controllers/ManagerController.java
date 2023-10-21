@@ -132,6 +132,8 @@ public class ManagerController {
 //        return managerService.editRole(role);
 //    }
 //
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @DeleteMapping(URLConfigs.DELETE_TYPE)
     public Response deleteType(@RequestBody Type type) {
         return managerService.deleteType(type);
@@ -143,7 +145,8 @@ public class ManagerController {
 //        return managerService.deleteSalary(salary);
 //    }
 //
-
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SALARY)
     public ResponseWithData<List<Salary>> getAllSalary() {
         return managerService.getAllSalary();

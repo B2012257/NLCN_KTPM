@@ -19,3 +19,9 @@ a {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
 }
+
+.dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+}

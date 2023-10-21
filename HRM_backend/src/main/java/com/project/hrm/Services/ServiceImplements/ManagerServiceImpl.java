@@ -173,10 +173,10 @@ public class ManagerServiceImpl implements ManagerService {
             Staff addStaff = new Staff(newStaff);
             addStaff.setPassword(encoder.encode(newStaff.getPassword()));
             Staff saveStaff = staffRepository.saveAndFlush(addStaff);
-            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Tạo thành công");
+            return new ResponseWithData<>(saveStaff, HttpStatus.OK, "Thêm nhân sự thành công");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình tạo nhân viên");
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình thêm nhân viên");
         }
     }
 

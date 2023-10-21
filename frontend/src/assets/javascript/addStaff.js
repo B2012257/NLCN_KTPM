@@ -55,10 +55,18 @@ var myWidget = cloudinary.createUploadWidget({
         console.log('Done! Here is the image info: ', result.info);
         let url = result.info.url
         avatarUrl = url
+        turnOnToast("Tải lên thành công", "Ảnh đã được tải lên thành công!");
     }
 }
 )
-
+//Init toast
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl, {
+        autohide: true,
+        animation: true
+    })
+})
 document.getElementById("upload_widget").addEventListener("click", function () {
     myWidget.open();
 }, false
@@ -246,9 +254,11 @@ async function handleClickAddStaff(e) {
         let responsePostApi = await postAddStaffApi(data)
         console.log(responsePostApi);
 
+        setTimeout(() => {
+            document.location.reload()
 
-        document.location.reload()
-    } else alert("Vui lòng nhập đầy đủ thông tin nhân sự")
+        }, 2000)
+    } else turnOnToast("Không thành công", "Vui lòng nhập đầy đủ thông tin!")
     //Sinh username
 }
 
@@ -267,6 +277,7 @@ async function postAddStaffApi(data) {
     const dataRs = await response.json();
     if (dataRs.status === "OK") {
         alert("Thêm thành công nhân sự")
+        turnOnToast("Thành công", dataRs.message)
         console.log("Phản hồi từ API thêm nhân sự:", dataRs); // In phản hồi ra màn hình
         return dataRs.data
     }
