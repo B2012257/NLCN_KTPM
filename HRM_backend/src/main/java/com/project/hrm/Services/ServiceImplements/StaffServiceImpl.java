@@ -33,6 +33,7 @@ public class StaffServiceImpl implements StaffService {
 
     private ShiftTypeRepository shiftTypeRepository;
 
+    @Autowired
     private TimeKeepingRepository timeKeepingRepository;
 
     @Autowired
@@ -279,7 +280,7 @@ public class StaffServiceImpl implements StaffService {
 
         List<Timekeeping> shiftDetailsInTimekeeping = new ArrayList<>();
         for (ShiftDetail shiftDetailID : shiftDetailForStaff) {
-            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            Timekeeping timekeeping = this.timeKeepingRepository.findByShiftDetail(shiftDetailID);
             if (timekeeping != null) {
                 shiftDetailsInTimekeeping.add(timekeeping);
             }

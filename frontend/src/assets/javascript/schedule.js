@@ -473,7 +473,7 @@ async function actionBtnClickHandler(event) {
 
     //Kiểm tra xem ngày đang thao tác có nhỏ hơn ngày hôm nay hay  không
     let equal = dateCompare(dateTarget, dayNowString)
-    console.log(equal, data.length);
+    // console.log(equal, data.length);
     //Nếu equal < 0 tức là nhỏ hơn --> ẩn cả 2
     // Nếu equal == 0 và chiều dài bằng rỗng thì ẩn nút xóa -> hiện nút lưu
     //Nếu equal > 0 -> hiện nút lưu, nếu length == 0 thì ẩn nút xóa

@@ -19,7 +19,7 @@ async function setUp() {
     staffTypes = await getAllType()
 
     //Load bậc lương vào thẻ select
-    loadSalariesHtml(salaries, "salary-select", "salary-add-employee-salect", handleChangeSalaryLevel)
+    loadSalariesHtml(salaries, "salary-select", "salary-select", (e) => handleChangeSalaryLevel(e, "salary-detail"))
     //Load loại nhân sự vào thẻ select
     loadStaffTypeHtml(staffTypes, "type-select")
 
