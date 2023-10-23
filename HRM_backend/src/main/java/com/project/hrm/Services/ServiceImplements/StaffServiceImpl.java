@@ -33,7 +33,6 @@ public class StaffServiceImpl implements StaffService {
 
     private ShiftTypeRepository shiftTypeRepository;
 
-    @Autowired
     private TimeKeepingRepository timeKeepingRepository;
 
 

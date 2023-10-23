@@ -14,35 +14,98 @@ var formattedDate =
   (day < 10 ? "0" : "") +
   day;
 
-// format ngày theo dạng yyyy/mm/dd
-function getFormattedDate(date) {
-  const year = date.getFullYear();
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-  return `${year}/${month}/${day}`;
-}
-
 var firstDayOfWeek = new Date(
   currentDate.getFullYear(),
   currentDate.getMonth(),
   currentDate.getDate() - currentDate.getDay() + 1
 );
 
-var formattedFirstDayOfWeek = getFormattedDate(firstDayOfWeek);
-
-function getNextDay(firstDayOfWeek, i) {
-  var nextDay = new Date(firstDayOfWeek);
-  nextDay.setDate(firstDayOfWeek.getDate() + i);
-  var formatDay = getFormattedDate(nextDay);
-  return formatDay;
-}
+var formattedFirstDayOfWeek =
+  firstDayOfWeek.getFullYear() +
+  "/" +
+  ("0" + (firstDayOfWeek.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + firstDayOfWeek.getDate()).slice(-2);
 
 var lastDayOfWeek = new Date(
   currentDate.getFullYear(),
   currentDate.getMonth(),
   currentDate.getDate() + (7 - currentDate.getDay())
 );
-var formattedLastDayOfWeek = getFormattedDate(lastDayOfWeek);
+var formattedLastDayOfWeek =
+  lastDayOfWeek.getFullYear() +
+  "/" +
+  ("0" + (lastDayOfWeek.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + lastDayOfWeek.getDate()).slice(-2);
+
+var Tuesday = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth(),
+  currentDate.getDate() - currentDate.getDay() + 2
+);
+
+var formattedTuesdayOfWeek =
+  Tuesday.getFullYear() +
+  "/" +
+  ("0" + (Tuesday.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + Tuesday.getDate()).slice(-2);
+
+var Wednesday = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth(),
+  currentDate.getDate() - currentDate.getDay() + 3
+);
+
+var formattedWednesdayOfWeek =
+  Wednesday.getFullYear() +
+  "/" +
+  ("0" + (Wednesday.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + Wednesday.getDate()).slice(-2);
+
+var Thursday = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth(),
+  currentDate.getDate() - currentDate.getDay() + 4
+);
+
+var formattedThursdayOfWeek =
+  Thursday.getFullYear() +
+  "/" +
+  ("0" + (Thursday.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + Thursday.getDate()).slice(-2);
+
+var Friday = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth(),
+  currentDate.getDate() - currentDate.getDay() + 5
+);
+
+var formattedFridayOfWeek =
+  Friday.getFullYear() +
+  "/" +
+  ("0" + (Friday.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + Friday.getDate()).slice(-2);
+
+var Saturday = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth(),
+  currentDate.getDate() - currentDate.getDay() + 6
+);
+
+var formattedSaturdayOfWeek =
+  Saturday.getFullYear() +
+  "/" +
+  ("0" + (Saturday.getMonth() + 1)).slice(-2) +
+  "/" +
+  ("0" + Saturday.getDate()).slice(-2);
+
+document.getElementById("firstDay").textContent = formattedFirstDayOfWeek;
+document.getElementById("lastDay").textContent = formattedLastDayOfWeek;
 
 const uid = userObject.uid;
 const api = `http://localhost:8081/api/v1/staff/info?Uid=${uid}`;
@@ -55,7 +118,7 @@ function start() {
       data = fetchedData;
       renderStaff(data);
     });
-    getShiftOfWeek(firstDayOfWeek, lastDayOfWeek);
+    getShiftOfWeek(formattedFirstDayOfWeek, formattedLastDayOfWeek, uid);
   }, 500);
 }
 start();
@@ -89,6 +152,21 @@ async function getStaff(callback) {
   }
 }
 
+function renderFullName(cell) {
+  document.querySelector(cell).innerHTML = names
+    .map(
+      (name) =>
+        `<span
+      ${
+        name.userId == uid
+          ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+          : ""
+      }
+      >${name.fullName}</span> <br>`
+    )
+    .join("");
+}
+
 function renderStaff(users) {
   const info = document.querySelector("#username");
   var htmls = users.map(function (user) {
@@ -116,10 +194,8 @@ async function fetchData(url) {
 }
 
 //Gọi 2 api
-async function getShiftOfWeek(startDate, endDate) {
-  const apiShift1 = `${apiShift}?start=${getFormattedDate(
-    startDate
-  )}&end=${getFormattedDate(endDate)}`;
+async function getShiftOfWeek(startDate, endDate, userId) {
+  const apiShift1 = `${apiShift}?start=${startDate}&end=${endDate}`;
   const apiShift2 = getAllShiftTypeApi;
 
   const [shiftData1, shiftData2] = await Promise.all([
@@ -146,13 +222,13 @@ async function getShiftOfWeek(startDate, endDate) {
 
   let bodyRowsHTML = "";
   const daysOfWeek = [
-    { thu: "Thứ 2", day: getNextDay(startDate, 0) },
-    { thu: "Thứ 3", day: getNextDay(startDate, 1) },
-    { thu: "Thứ 4", day: getNextDay(startDate, 2) },
-    { thu: "Thứ 5", day: getNextDay(startDate, 3) },
-    { thu: "Thứ 6", day: getNextDay(startDate, 4) },
-    { thu: "Thứ 7", day: getNextDay(startDate, 5) },
-    { thu: "Chủ nhật", day: getNextDay(startDate, 6) },
+    { thu: "Thứ 2", day: formattedFirstDayOfWeek },
+    { thu: "Thứ 3", day: formattedTuesdayOfWeek },
+    { thu: "Thứ 4", day: formattedWednesdayOfWeek },
+    { thu: "Thứ 5", day: formattedThursdayOfWeek },
+    { thu: "Thứ 6", day: formattedFridayOfWeek },
+    { thu: "Thứ 7", day: formattedSaturdayOfWeek },
+    { thu: "Chủ nhật", day: formattedLastDayOfWeek },
   ];
   daysOfWeek.forEach((day) => {
     let rowHTML = `<tr><th>${day.thu}
@@ -168,95 +244,153 @@ async function getShiftOfWeek(startDate, endDate) {
   document.querySelector(".nameStaff").innerHTML = bodyRowsHTML;
 
   const shiftData3 = {};
-  {
-    schedule
-      ? schedule.forEach((item) => {
-          let date = item.shift.date.date;
-          let formattedShiftDate = date.replace(/-/g, "/");
+  schedule.forEach((item) => {
+    let date = item.shift.date.date;
+    let formattedShiftDate = date.replace(/-/g, "/");
 
-          let shiftType = item.shift.shiftType.id;
-          let fullName = item.staff.fullName;
-          let userId = item.staff.uid;
+    let shiftType = item.shift.shiftType.id;
+    let fullName = item.staff.fullName;
+    let userId = item.staff.uid;
 
-          if (!shiftData3[date]) {
-            shiftData3[date] = {};
-          }
+    if (!shiftData3[date]) {
+      shiftData3[date] = {};
+    }
 
-          if (!shiftData3[date][shiftType]) {
-            shiftData3[date][shiftType] = [];
-          }
+    if (!shiftData3[date][shiftType]) {
+      shiftData3[date][shiftType] = [];
+    }
 
-          shiftData3[date][shiftType].push({ fullName, userId });
-          console.log("numberOfKeys", numberOfKeys);
-          console.log("shiftData3", shiftData3);
-          for (let Type = 1; Type <= numberOfKeys; Type++) {
-            if (shiftData3[date] && shiftData3[date][Type]) {
-              for (let i = 0; i <= 6; i++) {
-                if (formattedShiftDate === getNextDay(startDate, i)) {
-                  let m = i + 1;
-                  const names = shiftData3[date][Type];
-                  const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
-                  document.querySelector(cellSelector).innerHTML = names
-                    .map(
-                      (name) =>
-                        `<span
-                  ${
-                    name.userId == uid
-                      ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
-                      : ""
-                  }
-                  >${name.fullName}</span> <br>`
-                    )
-                    .join("");
+    shiftData3[date][shiftType].push({ fullName, userId });
+
+    for (let Type = 1; Type <= numberOfKeys; Type++) {
+      if (shiftData3[date] && shiftData3[date][Type]) {
+        if (formattedShiftDate === formattedFirstDayOfWeek) {
+          let m = 1;
+          const names = shiftData3[date][Type];
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
                 }
-              }
-            }
-          }
-        })
-      : "";
-  }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+
+        if (formattedShiftDate === formattedTuesdayOfWeek) {
+          let m = 2;
+          const names = shiftData3[date][Type];
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+        if (formattedShiftDate === formattedWednesdayOfWeek) {
+          let m = 3;
+          const names = shiftData3[date][Type];
+          console.log("names1 ", names);
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+        if (formattedShiftDate === formattedThursdayOfWeek) {
+          let m = 4;
+          const names = shiftData3[date][Type];
+          console.log("names1 ", names);
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+        if (formattedShiftDate === formattedFridayOfWeek) {
+          let m = 5;
+          const names = shiftData3[date][Type];
+          console.log("names1 ", names);
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+        if (formattedShiftDate === formattedSaturdayOfWeek) {
+          let m = 6;
+          const names = shiftData3[date][Type];
+          console.log("names1 ", names);
+
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+        if (formattedShiftDate === formattedLastDayOfWeek) {
+          let m = 7;
+          const names = shiftData3[date][Type];
+          console.log("names1 ", names);
+          const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+          document.querySelector(cellSelector).innerHTML = names
+            .map(
+              (name) =>
+                `<span
+                ${
+                  name.userId == uid
+                    ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                    : ""
+                }
+                >${name.fullName}</span> <br>`
+            )
+            .join("");
+        }
+      }
+    }
+  });
 }
-
-// Lưu trữ ngày đầu tiên của tuần hiện tại
-let currentWeekStart = new Date();
-currentWeekStart.setDate(
-  currentWeekStart.getDate() - currentWeekStart.getDay() + 1
-);
-
-// Hàm để lấy ngày đầu và cuối của tuần dựa trên ngày cho trước
-function getWeekDates(startDate) {
-  const firstDayOfWeek = new Date(startDate);
-  const lastDayOfWeek = new Date(startDate);
-  lastDayOfWeek.setDate(startDate.getDate() + 6);
-
-  return {
-    firstDay: firstDayOfWeek,
-    lastDay: lastDayOfWeek,
-  };
-}
-
-// Hiển thị tuần hiện tại
-async function displayCurrentWeek() {
-  const weekDates = getWeekDates(currentWeekStart);
-  document.getElementById(
-    "weekDates"
-  ).innerHTML = `Ngày đầu tuần: ${getFormattedDate(
-    weekDates.firstDay
-  )} - Ngày cuối tuần: ${getFormattedDate(weekDates.lastDay)}`;
-  await getShiftOfWeek(weekDates.firstDay, weekDates.lastDay);
-}
-
-// Hiển thị tuần hiện tại khi trang được tải
-displayCurrentWeek();
-
-// Sự kiện khi click nút "Lùi"
-document.getElementById("backBtn").addEventListener("click", function () {
-  currentWeekStart.setDate(currentWeekStart.getDate() - 7);
-  displayCurrentWeek();
-});
-
-// Sự kiện khi click nút "Tiến"
-document.getElementById("forwardBtn").addEventListener("click", function () {
-  currentWeekStart.setDate(currentWeekStart.getDate() + 7);
-  displayCurrentWeek();
-});
