@@ -249,15 +249,6 @@ public class ManagerController {
         return managerService.getAllWorkCheckeds();
     }
 
-    @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID)
-    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(@RequestParam("start") java.util.Date start, @RequestParam("end") java.util.Date end,@RequestParam(name = "uid") String uid){
-        return managerService.getAllScheduleOfStaffInTimeKeeping(start,end,uid);
-    }
-
-    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING)
-    public Response getAllSchedulesOfShiftOfDateInTimeKeeping(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
-        return managerService.getAllSchedulesOfShiftOfDateInTimeKeeping(shiftType,date);
-    }
 
 
 }

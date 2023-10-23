@@ -14,5 +14,5 @@ public interface StatisticsService {
     public Response SixMonthStatisticsStaff(Date dateViewStatistics);
     public Response SixMonthStatisticsWorking(Date dateViewStatistics);
 
-    public Response summaryStatisticsWorking(Date dateViewStatistics); //Trả về tổng quan của hệ thống để hiển thị vào sidebar trang chủ
+    public Response summaryStatisticsWorking(); //Trả về tổng quan của hệ thống để hiển thị vào sidebar trang chủ
 }

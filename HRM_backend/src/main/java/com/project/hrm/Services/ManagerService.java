@@ -112,9 +112,6 @@ public interface ManagerService {
 
     public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDate(ShiftType shiftType, Date date);
 
-    //Lay ca lam viec cua 1 ca trong 1 ngay da cham cong
-    public ResponseWithData<List<Timekeeping>> getAllSchedulesOfShiftOfDateInTimeKeeping(ShiftType shiftType, Date date);
-
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ca
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end);
@@ -131,6 +128,4 @@ public interface ManagerService {
     //...Lấy danh sách lịch rảnh của các nhân sự trong 1 ca tng ngày,, trả về các freeTime chưa lặp lịch
     public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(ShiftType shiftType, Date date);
 
-    //Lấy chấm công của nhân viên trong 1 khoảng tg qua uid
-    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date start,Date end, String Uid);
 }

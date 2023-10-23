@@ -79,11 +79,9 @@ function getAllScheduleTimekeeping() {
         .then(res => res.json())
 
         .then(res => {
-            if(res.data !== null){
            
             console.log(res)
             const tableBody = document.getElementById('timeKeepingToday');
-            
             const dataList = res.data;
             dataList.forEach(item => {
                 const row = document.createElement('tr');
@@ -145,18 +143,7 @@ function getAllScheduleTimekeeping() {
             count=count+1;
             
                 
-            })  }
-            else{
-                const tableBody = document.getElementById('timeKeepingToday');
-                tableBody.innerHTML = '';
-                const row = document.createElement('tr');
-                row.innerHTML=`
-                <td colspan="12">
-                <div style="text-align: center;">Hôm nay không có ca làm</div>
-                </td>`
-                tableBody.appendChild(row);
-
-            }
+            })  
             
         });
 }
@@ -193,11 +180,9 @@ function getAllScheduleNotTimekeeping() {
     .then(res => res.json())
 
         .then(res => {
-            if(res.data !== null){
             
             console.log(res)
             const tableBody = document.getElementById('timeKeepingToday');
-            
             const dataList = res.data;
             dataList.forEach(item => {
                 const row = document.createElement('tr');
@@ -244,7 +229,7 @@ function getAllScheduleNotTimekeeping() {
             count=count+1;
             
                 
-            })  }
+            })  
             
         });
 }

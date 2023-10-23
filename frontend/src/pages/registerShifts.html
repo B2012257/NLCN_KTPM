@@ -50,7 +50,7 @@
                     <div class="d-flex">
                         <div class="dropdown">
                             <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false" id="helloUserName">
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Xin chào <span id="username"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark">
@@ -68,7 +68,7 @@
             </div>
         </nav>
     </div>
-    <main class="container mt-3">
+    <main class="container-fluid">
         <div class="row">
             <div class="col">
 
@@ -83,252 +83,153 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-success text-white fw-bold" id="shiftDetailTypeInTimeKeeping" style="text-align: center;">
-                       Đăng ký lịch rảnh
-                    </div>
-                    <table
-                        class="table table-striped table-bordered table-hover table-sm align-middle ps-2  ">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="text-align: center;">Ngày
-                                    
-                                </th>
-                              
-                                <th scope="col" style="text-align: center;">Đăng ký giờ rảnh
-                                    
-                                </th>
-                                <th scope="col" style="text-align: center;">Thao tác
-                                    
-                                </th>
-
-                                <th scope="col" style="text-align: center;">Trạng thái
-                                    
-                                </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody class="text-start" id="" >
-                            <tr id="monday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 2</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="monday-data" id="monday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('monday')" disabled></button>
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-                            
-                            <tr id="tuesday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 3</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="tuesday-data" id="tuesday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('tuesday')" disabled></button>
-                                    
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-
-                            <tr id="wednesday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 4</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="wednesday-data" id="wednesday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('wednesday')" disabled></button>
-                                   
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-
-
-                            <tr id="thursday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 5</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="thursday-data" id="thursday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('thursday')" disabled></button>
-                                   
-                                    
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-                            <tr id="friday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 6</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td style="text-align: center;">
-                                <td class="text-center">
-                                    <div class="friday-data" id="friday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('friday')" disabled></button>
-                                   
-                                    
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-
-                            <tr id="saturday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Thứ 7</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="saturday-data" id="saturday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('saturday')" disabled></button>
-                                    
-                                    
-                                </td>
-                                <td style="text-align: center;"> 
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-
-
-
-
-                            <tr id="sunday">
-                                <td style="text-align: center;">
-                                    <div class="sttNameWeek" style="font-weight: bold;">Chủ nhật</div>
-                                    <div class="sttOfWeek"><small></small>
-                                    </div>
-                                <td class="text-center">
-                                    <div class="sunday-data" id="sunday-data"></div>
-                                    <button class="fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setCurrentDay('sunday')" disabled></button>
-                                    
-                                    
-                                </td>
-                                <td style="text-align: center;">
-                                    <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                        onchange="operationTimeInput(this)">
-                                </td>
-
-                                <td class="text-center">
-                                    Chưa đăng ký lịch rảnh
-                                </td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    
-                </div>
-                <br>
-                <button id="submitSchedule" onclick="workRegister()" class="btn btn-primary float-end">Gửi lịch</button>
-
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <th scope="col">Thời gian</th>
+                        <th scope="col">Đăng ký giờ rảnh</th>
+                        <th scope="col">Thao tác</th>
+                    </thead>
+                    <tbody class="align-middle daysOfWeek">
+                        <tr id="monday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 2</div>
+                                <div class="sttOfWeek">
+                                    <p id="value1"></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="tuesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 3</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="wednesday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 4</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="thursday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 5</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="friday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 6</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="saturday">
+                            <td>
+                                <div class="sttNameWeek">Thứ 7</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                        <tr id="sunday">
+                            <td>
+                                <div class="sttNameWeek">Chủ nhật</div>
+                                <div class="sttOfWeek">
+                                    <p></p>
+                                </div>
+                            <td class="text-center">
+                                <input class="" type="time" name="" id="" disabled>
+                                <br>
+                                Đến
+                                <br>
+                                <input type="time" name="" id="" disabled>
+                            </td>
+                            <td>
+                                <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
+                                    onchange="operationTimeInput(this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary" style="margin-left: calc(100% - 80px);"
+                    onclick="workRegister(this)">Gửi lịch</button>
             </div>
         </div>
-
-
-
-        <!-- Button trigger modal -->
-
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm thời gian rảnh</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" >
-
-            
-            
-            <div id="shiftType"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary" onclick="updateCheckboxInfo()" data-bs-dismiss="modal">Thêm</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-        
-
-
-       
-        
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

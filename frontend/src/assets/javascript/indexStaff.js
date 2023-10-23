@@ -147,7 +147,6 @@ function getMyShift(startDate, endDate, userId) {
           let rowHTML = "<tr>";
           Object.values(shiftData).forEach((shiftInfo) => {
             const staffInfo = shiftInfo.staffData[i];
-            console.log("staffInfo", staffInfo);
             const isCurrentUser = staffInfo && staffInfo.uid === userId;
             rowHTML += `<td><span ${
               isCurrentUser

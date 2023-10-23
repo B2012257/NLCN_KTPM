@@ -2,6 +2,7 @@ package com.project.hrm.Controllers;
 
 import com.project.hrm.Services.ServiceImplements.StatisticsServiceImplements;
 import com.project.hrm.Services.StatisticsService;
+import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,5 +19,11 @@ public class StatisticsController {
     @GetMapping("/month")
     private ResponseWithData monthStatistics() {
         return statisticsService.MonthlyStatisticsWorking(new Date());
+    }
+
+
+    @GetMapping("/work/sumary")
+    private Response summaryStatisticsWorking() {
+        return statisticsService.summaryStatisticsWorking();
     }
 }
