@@ -124,7 +124,7 @@ function renderStaff(staffs) {
         ${salaryOvertime}
         </td>
         <td>
-            23423423
+            ${totalMoney} 
         </td>
         <td>
         ${staff.bankName}
@@ -170,27 +170,30 @@ radioButtons.forEach((radio) => {
   });
 });
 
-//test lấy các người có trong tháng
-// var dataTest = [
-//   { id: 1, name: "thái", dateGoWork: "10/10/2023" },
-//   { id: 2, name: "tring", dateGoWork: "6/10/2023" },
-//   { id: 3, name: "phong", dateGoWork: "6/10/2023" },
-//   { id: 4, name: "Linh", dateGoWork: "8/12/2023" },
-//   { id: 5, name: "phong", dateGoWork: "8/10/2023" },
-//   { id: 6, name: "phong", dateGoWork: "5/10/2023" },
-//   { id: 7, name: "phong", dateGoWork: "7/10/2023" },
-// ];
-// var currentDate = new Date();
-// var firstDayOfMonth = new Date(
-//   currentDate.getFullYear(),
-//   currentDate.getMonth(),
-//   1
-// );
-// var lastDayOfMonth = new Date(
-//   currentDate.getFullYear(),
-//   currentDate.getMonth() + 1,
-//   0
-// );
+async function fetchTimeKeeping(start, end, uid) {
+  try {
+    const response = await fetch(
+      `${getTimekeeping}?uid=${uid}&start=${start}&end=${end}`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const responseData = await response.json();
+    if (responseData.status === "OK") {
+      const data = responseData.data; // Truy cập thuộc tính data từ response object
+      console.log("Data Timekeeping:", data); // Log kết quả từ API
+      console.log("length", data.length);
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // function parseDate(dateString) {
 //   var parts = dateString.split("/");
