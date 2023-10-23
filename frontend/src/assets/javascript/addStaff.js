@@ -400,11 +400,11 @@ function showStaffInfoIntoForm(staffInfo) {
     //Load bậc lương vào thẻ select
     //Làm rỗng dữ liệu
     document.querySelector(".type-select-edit").innerHTML = `<option checked value="0">Loại nhân sự</option>`
+    document.querySelector(".edit-salary-select").innerHTML = `<option checked value="0">Bậc lương</option>`
     loadSalariesHtml(salaries, "salary-edit-employee-salect", "salary-edit-employee-salect",
         (e) => handleChangeSalaryLevel(e, "edit-salary-detail"))
 
     //Load loại nhân sự vào thẻ select
-    document.querySelector(".type-select-edit").innerHTML = `<option checked value="0">Bậc lương</option>`
     loadStaffTypeHtml(staffTypes, "type-select-edit")
 
     staffTypeElement.value = staffInfo.type.id

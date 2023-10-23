@@ -5,6 +5,7 @@ import com.project.hrm.Models.Staff;
 import com.project.hrm.Repositorys.ShiftDetailRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Services.StatisticsService;
+import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.payloads.Response.StatisticsMonth;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 //Thiết lập các chức năng liên quan đến thống kê
 @Service
 public class StatisticsServiceImplements implements StatisticsService {
+
     //Thống kê theo tháng dựa vào vào ngày xem báo cáo (Từ ngày bắt đầu tháng đến ngày xem báo cáo)
     //Hàm này trả về thống kê của toàn bộ nhân sự có đi làm trong tháng
     @Autowired
@@ -51,12 +53,19 @@ public class StatisticsServiceImplements implements StatisticsService {
     }
 
     @Override
-    public void SixMonthStatisticsStaff(Date dateViewStatistics) {
-
+    public Response SixMonthStatisticsStaff(Date dateViewStatistics) {
+        return null;
     }
 
     @Override
-    public void SixMonthStatisticsWorking(Date dateViewStatistics) {
+    public Response SixMonthStatisticsWorking(Date dateViewStatistics) {
+        return null;
+    }
 
+    @Override
+    public Response summaryStatisticsWorking(Date dateViewStatistics) {
+        //Tính tổng nhân sự trên hệ thống
+        Long totalStaff = staffRepository.count();
+        return null;
     }
 }

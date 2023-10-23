@@ -253,7 +253,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response addType(Type type) {
         //Kiểm tra trùng tên nữa --------------------------------------------
-        
+
         String nameType = type.getName();
         if (nameType.equalsIgnoreCase("") || nameType.equalsIgnoreCase(" "))
             return new ErrorResponse(HttpStatus.BAD_REQUEST, "Tên loại nhân sự không được bỏ trống");
