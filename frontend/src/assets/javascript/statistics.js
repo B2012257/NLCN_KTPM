@@ -171,7 +171,7 @@ async function renderStaff(staffs, start, end) {
         ${salaryOvertime}
         </td>
         <td>
-            ${totalMoney}
+            ${totalMoney} 
         </td>
         <td>
         ${staff.bankName}
@@ -258,10 +258,17 @@ async function fetchTimeKeeping(start, end, uid) {
       }
     );
     const responseData = await response.json();
-    const data = responseData.data; // Truy cập thuộc tính data từ response object
-    console.log("Data Timekeeping:", data); // Log kết quả từ API
-    console.log("length", data.length);
-    return data;
+    console.log(responseData);
+    if (responseData.status === "OK") {
+      const data = responseData.data; // Truy cập thuộc tính data từ response object
+      console.log("Data Timekeeping:", data); // Log kết quả từ API
+      console.log("length", data.length);
+      return data;
+    }
+    // const data = responseData.data; // Truy cập thuộc tính data từ response object
+    // console.log("Data Timekeeping:", data); // Log kết quả từ API
+    // console.log("length", data.length);
+    // return data;
   } catch (error) {
     console.error(error);
   }

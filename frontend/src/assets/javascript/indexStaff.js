@@ -125,6 +125,12 @@ function getMyShift(startDate, endDate, userId) {
           }
         });
 
+        if (userShiftTypeIds.length === 0) {
+          document.querySelector(".shiftType").innerHTML =
+            "<tr><td colspan='5'>Không có ca làm việc</td></tr>";
+          return; // Kết thúc hàm nếu không có ca làm việc
+        }
+
         // Tạo header cho bảng
         let headerRowHTML = "<tr>";
         Object.values(shiftData).forEach((shiftInfo) => {
