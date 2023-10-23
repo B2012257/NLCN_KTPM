@@ -1,5 +1,6 @@
 package com.project.hrm.Repositorys;
 
+import com.project.hrm.Models.Salary;
 import com.project.hrm.Models.Staff;
 
 import com.project.hrm.Models.Type;
@@ -19,7 +20,7 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
     Staff findByBankAccount(String bankNumber);
     List<Staff> findAllByType(Type type);
     List<Staff> findByFullNameContainingIgnoreCase(String partialName);
-
+    List<Staff> findAllBySalary(Salary salary);
     List<Staff> findByCreatedDateTimeBetween(LocalDateTime start, LocalDateTime end);
 
     List<Staff> findByCreatedDateTimeBetweenOrderByCreatedDateTimeDesc(LocalDateTime start, LocalDateTime end);

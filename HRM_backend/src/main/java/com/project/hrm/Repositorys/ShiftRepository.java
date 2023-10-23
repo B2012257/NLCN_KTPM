@@ -16,7 +16,7 @@ public interface ShiftRepository extends JpaRepository<Shift, Integer> {
     List<Shift> findAllByDateBetween(Date start, Date end);
     List<Shift> findAllByShiftTypeAndDate(ShiftType shiftType, Date date);
 
-
+    Shift findOneByShiftTypeAndDate(ShiftType shiftType, Date date);
 
     List<Shift> findAllByShiftType(ShiftType shiftType);
 
@@ -24,4 +24,5 @@ public interface ShiftRepository extends JpaRepository<Shift, Integer> {
 
 
     List<Shift> findByDate(Date date);
+
 }

@@ -17,3 +17,11 @@
 .min-w-166 {
     min-width: 166.8px;
 }
+
+.table-success {
+    background-color: #198754;
+}
+
+.action-schedule-btn {
+    padding: 10px 0;
+}

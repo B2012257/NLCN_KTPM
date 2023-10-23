@@ -88,7 +88,7 @@ public interface ManagerService {
     public Response addShift(Shift shift);
 
     //Xóa 1 ca làm
-    public Response deleteShift(Shift shift);
+    public Response deleteShift(Integer shiftId);
 
     //Sửa 1 ca làm
     public Response editShift(Shift shift);

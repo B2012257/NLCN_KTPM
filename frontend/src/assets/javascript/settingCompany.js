@@ -4,6 +4,7 @@ const getAllTypeApiUrl = "http://localhost:8081/api/v1/manager/types"
 const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType"
 const addStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/addType"
 const addShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/addShiftType"
+const deleteSalaryApiUrl = "http://localhost:8081/api/v1/manager/deleteSalary"
 let salaries; //Lưu lại danh sách bậc lương
 
 
@@ -26,7 +27,7 @@ function setUp() {
 //Chạy các hàm lần đầu khi loading trang
 setUp()
 
-
+//Xử lý bấm thêm salary
 function addSalaryClickHandler() {
 
     const salaryTable = document.querySelector(".salary-setting-table")
@@ -47,12 +48,8 @@ function addSalaryClickHandler() {
                             <input type="text" class="form-control center salaryAllowanceAdd" placeholder="Nhập 1000000 = 1.000.000vnd">
                         </td>
                         <td class="center">
-                            <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Chỉnh sửa" title="Chỉnh sửa"></i>
-                            <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá"></i>
                             <i class="fa-regular fa-floppy-disk icon add-salary-save" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
+                                data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>    
                         </td>
     `
     rowAdd.innerHTML = trTemplate
@@ -140,24 +137,26 @@ function getAllSalary() {
                 datas.forEach(item => {
                     tbody.innerHTML += `
                     <tr>
-                    <td>
+                        <span class="id salary-id hide">${item.level} </span>
+                        <td class="salary-level">
                             ${item.level}
                         </td>
-                        <td>
+                        <td class="salary-basic">
                         ${item.formattedBasic}
                         </td>
-                        <td>
+                        <td class="salary-overtime">
                         ${item.formattedOvertime}
                         </td>
-                        <td>
+                        <td class="salary-allowance">
                         ${item.formattedAllowance}
                         </td>
                         <td style="vertical-align: middle;">
-                            <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Chỉnh sửa" title="Chỉnh sửa"></i>
+                            <i class=" fa-regular fa-pen-to-square icon"
+                                data-bs-placement="bottom" title="Chỉnh sửa" data-bs-toggle="modal" data-bs-target="#editSalaryModal"></i>
                             <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá"></i>
-                            
+                                data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá" onclick="deleteSalary(this)"></i>
+                            <i class="fa-regular fa-floppy-disk icon edit-salary-save hide" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
                         </td>
                     </tr>
                     `
@@ -204,12 +203,11 @@ function addStaffTypeClickHandler() {
                         </td>
                     
                         <td class="center">
-                            <i class=" fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Chỉnh sửa" title="Chỉnh sửa"></i>
-                            <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá"></i>
+                           
+                            
                             <i class="fa-regular fa-floppy-disk icon add-type-save" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
+                               
                         </td>
     `
     rowAdd.innerHTML = trTemplate
@@ -256,9 +254,9 @@ function getAllType() {
                     <td>${item.name || "Không có"}</td>
                     
                     <td>
-                        <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
+                        <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal" 
                             data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
-                            data-bs-target="#exampleModal"></i>
+                            data-bs-target="#editTypeModal"></i>
                         <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
                             data-bs-placement="bottom" data-bs-title="Xoá"></i>
                     </td>
@@ -315,20 +313,20 @@ function getAllShiftType() {
                     tbody.innerHTML += `
                     <tr>
                                 <td>${item.name}</td>
-                                <td>
+                                <td style="vertical-align: middle;">
                                     <input type="time" disabled value="${item.start}">
                                 </td>
-                                <td>
+                                <td style="vertical-align: middle;">
                                     <input type="time" disabled value="${item.end}">
                                 </td>
                                 <td>
                                     <input type="text" disabled value="${calcTotalTime(item.end, item.start)}" class="form-control w-auto shift-type-add-total center">
                                 </td>
                                 <td class="center">
-                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
-                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
+                                    <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal"
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa" data-bs-target="#editShiftTypeModal"></i>
                                     <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
-                                        data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                                        data-bs-placement="bottom" data-bs-title="Xoá" ></i>
                                 </td>
                     </tr >
                     `
@@ -424,12 +422,10 @@ function addShiftTypeClickHandler() {
             <input type="text" disabled class="form-control w-auto shift-type-add-total-input center">
         </td>
         <td class="center">
-            <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="tooltip"
-                data-bs-placement="bottom" data-bs-title="Chỉnh sửa"></i>
-            <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
-                data-bs-placement="bottom" data-bs-title="Xoá"></i>
+            
                 <i class="fa-regular fa-floppy-disk icon add-shift-type-save" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Lưu" title="Lưu"></i>
+                                
         </td>
     `
     rowAdd.innerHTML = trTemplate
@@ -520,4 +516,53 @@ function calcTotalTime(EndTime, StartTime) {
         return hours + " tiếng"
     return + minutes + " phút";
 
+}
+
+// function closeRow(thisElement) {
+//     let tr = thisElement.parentElement.parentElement
+//     let tbody = tr.parentElement
+//     //Xóa hàng
+//     tr.remove()
+//     //Thêm dấu cộng vào cuối
+//     let trAddBtnElement = document.createElement("tr")
+//     trAddBtnElement.innerHTML = `
+//                      <td colspan="5" class="salaryLevel add-salary-btn" data-bs-toggle="tooltip"
+//                          data-bs-placement="bottom" data-bs-title="Thêm một bậc lương mới">
+//                          <i class=" fa-solid fa-plus" title="Thêm một bậc lương mới"></i>
+
+//                      </td>
+//      `
+//     renderHtmlInnerParent(tbody, trAddBtnElement)
+// }
+
+//Chức năng xóa các thông tin
+//Xóa Salary -> body khác, còn lại xóa loại ca với loại nhân sự truyền body {id} viết chung 1 hàm
+async function deleteSalary(thisElement) {
+    let trInfo = thisElement.parentElement.parentElement
+    let levelToDeleted = trInfo.querySelector(".salary-level").innerHTML.trim()
+    console.log(levelToDeleted);
+    let dataDelete = {
+        level: levelToDeleted
+    }
+    let deleteRs = await deleteApi(deleteSalaryApiUrl, dataDelete)
+    if (deleteRs.status === "OK") {
+        //Thành công
+        alert(deleteRs.message)
+        return location.reload()
+    }
+    return alert(deleteRs.message)
+}
+
+async function deleteApi(apiUrl, dataBody) {
+    const response = await fetch(apiUrl, {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataBody)
+    })
+    const data = await response.json();
+    return data;
 }

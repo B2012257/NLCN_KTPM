@@ -132,18 +132,21 @@ public class ManagerController {
 //        return managerService.editRole(role);
 //    }
 //
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @DeleteMapping(URLConfigs.DELETE_TYPE)
     public Response deleteType(@RequestBody Type type) {
         return managerService.deleteType(type);
     }
 
     //
-//    @DeleteMapping(URLConfigs.DELETE_SALARY)
-//    public Response deleteSalary(@RequestBody Salary salary){
-//        return managerService.deleteSalary(salary);
-//    }
+    @DeleteMapping(URLConfigs.DELETE_SALARY)
+    public Response deleteSalary(@RequestBody Salary salary){
+        return managerService.deleteSalary(salary);
+    }
 //
-
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SALARY)
     public ResponseWithData<List<Salary>> getAllSalary() {
         return managerService.getAllSalary();
@@ -204,6 +207,12 @@ public class ManagerController {
         return managerService.schedule(shiftDetailRequest);
     }
 
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SHIFT)
+    public Response deleteShift(@RequestParam Integer id) {
+        return managerService.deleteShift(id);
+    }
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
     @DeleteMapping (URLConfigs.DELETE_SCHEDULE)

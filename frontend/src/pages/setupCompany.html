@@ -72,9 +72,9 @@
 
                     <div class="d-flex">
                         <div class="dropdown">
-                            <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
+                            <button class="btn btn-secondary fs-6 dropdown-toggle fullName-btn" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Xin chào Admin
+                                Xin chào
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" href="./accountInformation.html">Thông tin tài
@@ -294,6 +294,107 @@
             </form>
 
         </div>
+
+        <!-- List modal -->
+        <!-- Chỉnh sửa bậc lương -->
+        <div class="modal fade edit-salary-modal" id="editSalaryModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Chỉnh sửa bậc lương</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-2">
+                                <label for="salary-name" class="col-form-label">Tên:</label>
+                                <input type="text" class="form-control" id="salary-name">
+                            </div>
+                            <div class="mb-2">
+                                <label for="salary-basic-name" class="col-form-label">Cơ bản:</label>
+                                <input type="text" class="form-control" id="salary-basic-name">
+                            </div>
+                            <div class="mb-2">
+                                <label for="salary-overtime-name" class="col-form-label">Tăng ca:</label>
+                                <input type="text" class="form-control" id="salary-overtime-name">
+                            </div>
+                            <div class="mb-2">
+                                <label for="salary-allowance-name" class="col-form-label">Phụ cấp/tháng:</label>
+                                <input type="text" class="form-control" id="salary-allowance-name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Mặc định</button>
+                        <button type="button" class="btn btn-primary edit-salary-save">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chỉnh sửa loại nhân sự -->
+        <div class="modal fade edit-type" id="editTypeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Chỉnh sửa loại nhân sự</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-2">
+                                <label for="type-name" class="col-form-label">Tên:</label>
+                                <input type="text" class="form-control" id="type-name">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Mặc định</button>
+                        <button type="button" class="btn btn-primary edit-type">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal chỉnh sửa loại ca làm -->
+        <div class="modal fade edit-shift-type-modal" id="editShiftTypeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Chỉnh sửa bậc lương</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-2">
+                                <label for="shift-type-name" class="col-form-label">Tên:</label>
+                                <input type="text" class="form-control" id="shift-type-name">
+                            </div>
+                            <div class="mb-2">
+                                <label for="start" class="col-form-label">Giờ vào ca</label>
+                                <input type="time" class="form-control" id="start">
+                            </div>
+                            <div class="mb-2">
+                                <label for="end" class="col-form-label">Giờ ra ca:</label>
+                                <input type="time" class="form-control" id="end">
+                            </div>
+                            <div class="mb-2">
+                                <label for="total-time" class="col-form-label">Tổng giờ</label>
+                                <input type="text" class="form-control" disabled id="total-time">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Mặc định</button>
+                        <button type="button" class="btn btn-primary edit-shift-type-save">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </main>
 </body>
 
@@ -304,8 +405,8 @@
 <script src="../assets/javascript/loadingSpinner.js"></script>
 <script src="../assets/javascript/settingCompany.js"></script>
 <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    // const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    // const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 
 </html>
