@@ -34,5 +34,6 @@ public class FreeTime {
        this.isSchedule = newFreeTime.getIsSchedule();
         this.date = newFreeTime.getDate();
         this.staff= newFreeTime.getStaff();
+        this.shiftType=newFreeTime.getShiftType();
     }
 }
