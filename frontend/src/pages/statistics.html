@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        <div class="d-flex gap-4">
+        <div class="d-flex gap-4 align-items-center">
             <div>
                 <!-- <h4>Từ ngày</h4> -->
                 <input type="date" id="firstDay" style="padding: 8px; border-radius: 25px;"> 
@@ -123,16 +123,13 @@
                 <!-- <h4>Đến ngày </h4> -->
                 <input type="date" id="lastDay" style="padding: 8px; border-radius: 25px;">
             </div>
-            <!-- <div>
-                <span>Từ ngày</span>
-                <span id="firstDay"></span>
-                <span>Đến ngày</span>
-                <span id="lastDay"></span>
-              </div> -->
+            <div>
+                <button type="button" class="btn btn-success" id="statistics">Thống kê</button>
+            </div>
         </div>
 
-        <div class="row mt-3 view_type">
-            <div class="col-4">
+        <!-- <div class="row mt-3 view_type">
+            <div class="col-12">
                 <div class="form-check form-check-inline">
                     <input checked class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                         value="tatca">
@@ -154,6 +151,18 @@
                     <label class="form-check-label" for="inlineRadio4">Bán hàng</label>
                 </div>
 
+            </div>
+        </div> -->
+        <div class="row mt-3 view_type">
+            <div class="col-12"  style="display: flex;"> 
+                <div class="form-check form-check-inline">
+                    <input checked class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio"
+                        value="Tất cả">
+                    <label class="form-check-label" for="inlineRadio">Tất cả</label>
+                </div>
+                <div id="typeStaff">
+
+                </div>
             </div>
         </div>
         <div class="row mt-3">

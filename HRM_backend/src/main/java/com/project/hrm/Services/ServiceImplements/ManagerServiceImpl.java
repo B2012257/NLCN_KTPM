@@ -741,6 +741,36 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
 
+    //Lấy chấm công của nhan viên qua uid trong khoản tg
+    @Override
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date start,Date end, String Uid){
+        com.project.hrm.Models.Date dateStart = new com.project.hrm.Models.Date(start);
+        com.project.hrm.Models.Date dateEnd = new com.project.hrm.Models.Date(end);
+        List<Shift> shiftList = shiftRepository.findAllByDateBetween(dateStart, dateEnd);
+        List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
+
+        List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
+        for(ShiftDetail shiftDetail : shiftDetailList){
+            if(shiftDetail.getStaff().getUid().equals(Uid)){
+                shiftDetailForStaff.add(shiftDetail);
+            }
+        }
+
+        List<Timekeeping> shiftDetailsInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetailForStaff) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping != null) {
+                shiftDetailsInTimekeeping.add(timekeeping);
+            }
+        }
+
+        if(shiftDetailForStaff.isEmpty()){
+            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        }
+
+
+        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc đã chấm công");
+    }
 
 
 }
