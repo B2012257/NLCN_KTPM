@@ -36,6 +36,9 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private TimeKeepingRepository timeKeepingRepository;
 
+    @Autowired
+    private FreeTimeRepository freeTimeRepository;
+
 
     @Override
     public ResponseWithData<Staff> getInformation(String Uid) {
@@ -170,6 +173,20 @@ public class StaffServiceImpl implements StaffService {
 //        return new Response(HttpStatus.OK, "Cập nhật thành công");
         return null;
     }
+
+
+    @Override
+    public ResponseWithData<List<FreeTime>> getFreeTimeOfStaffInDate(Date date, Staff staff){
+        com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
+        List<FreeTime> freeTimeList = freeTimeRepository.findByDateAndStaff(dateModel,staff);
+        if(freeTimeList.isEmpty()){
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND,"Không tìm thấy lịch rảnh");
+        }
+        else
+            return new ResponseWithData<>(freeTimeList, HttpStatus.OK,"Danh sách lịch rảnh");
+
+    }
+
 
 
     @Override

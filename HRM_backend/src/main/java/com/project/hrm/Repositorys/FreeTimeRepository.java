@@ -15,4 +15,6 @@ public interface FreeTimeRepository extends JpaRepository<FreeTime, Long> {
 
    FreeTime findOneByShiftTypeAndDateAndStaff(ShiftType shiftType, Date date, Staff staff);
 
+    List<FreeTime> findByDateAndStaff(Date date, Staff staff);
+
 }

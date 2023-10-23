@@ -47,6 +47,9 @@ public class URLConfigs {
 
     public static final String GET_ALL_TIMEKEEPING = "/getAllTimeKeeping";
 
+
+    public static final String GET_FREE_TIME_OF_STAFF_IN_DATE = "/getFreeTimeOfStaffInDate";
+
     //Chức năng quản lý
     public static final String ADD_TYPE = "/addType";
     public static final String GET_ALL_TYPE = "/types";

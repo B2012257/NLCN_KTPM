@@ -818,6 +818,10 @@ public class ManagerServiceImpl implements ManagerService {
         return new ResponseWithData<>(freeTimes, HttpStatus.OK, "Danh sách lịch rảnh ca " + shiftTypeRq.getName() + " ngày " + dateToFind.getDate()); //TEST
     }
 
+    @Override
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date start, Date end, String Uid) {
+        return null;
+    }
 
 
     @Override

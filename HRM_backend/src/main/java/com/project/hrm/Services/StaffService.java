@@ -40,6 +40,9 @@ public interface StaffService {
     //Chỉnh sửa lich làm, nhận vào danh sách
     public Response editRegisterSchedule(List<FreeTime> freeTimes);
 
+
+    public ResponseWithData<List<FreeTime>> getFreeTimeOfStaffInDate(Date date, Staff staff);
+
     public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid);
 
 
