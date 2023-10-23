@@ -258,17 +258,12 @@ async function fetchTimeKeeping(start, end, uid) {
       }
     );
     const responseData = await response.json();
-    console.log(responseData);
     if (responseData.status === "OK") {
       const data = responseData.data; // Truy cập thuộc tính data từ response object
       console.log("Data Timekeeping:", data); // Log kết quả từ API
       console.log("length", data.length);
       return data;
     }
-    // const data = responseData.data; // Truy cập thuộc tính data từ response object
-    // console.log("Data Timekeeping:", data); // Log kết quả từ API
-    // console.log("length", data.length);
-    // return data;
   } catch (error) {
     console.error(error);
   }
