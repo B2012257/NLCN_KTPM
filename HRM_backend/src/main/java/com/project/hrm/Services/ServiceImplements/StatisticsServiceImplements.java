@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,9 @@ public class StatisticsServiceImplements implements StatisticsService {
     private StaffRepository staffRepository;
     @Autowired
     private ShiftDetailRepository shiftDetailRepository;
+
+    @Autowired
+    ManagerServiceImpl managerService;
 
     @Override
     public ResponseWithData MonthlyStatisticsWorking(Date dateViewStatistics) {
@@ -63,9 +68,29 @@ public class StatisticsServiceImplements implements StatisticsService {
     }
 
     @Override
-    public Response summaryStatisticsWorking(Date dateViewStatistics) {
+    public Response summaryStatisticsWorking() {
         //Tính tổng nhân sự trên hệ thống
         Long totalStaff = staffRepository.count();
+
+        //Tính nhân sự mới thêm trong tháng
+        //Lấy ra tháng hiện tại
+        Date dateNow = new Date();
+        // Lấy ngày hiện tại
+        LocalDate currentDate = LocalDate.now();
+
+        // Lấy ngày cuối của tháng
+        YearMonth yearMonth = YearMonth.from(currentDate);
+        LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
+        // In ngày cuối của tháng
+
+        int year = dateNow.getYear();
+        int month = dateNow.getMonth() ;
+
+        Date startDate = new Date(year, month, 1);
+        Date lastDate = new Date(year, month, lastDayOfMonth.getDayOfMonth());
+        System.out.println(startDate + " "+ lastDate);
+        System.out.println(managerService.getRecentStaff(startDate, lastDate));
         return null;
     }
 }

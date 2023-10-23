@@ -194,6 +194,7 @@ public class ManagerServiceImpl implements ManagerService {
         try {
             LocalDateTime start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
             LocalDateTime end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            System.out.println(start+ " " + end);
             // Chuyển đổi chuỗi thành LocalDateTime
             return new ResponseWithData<>(staffRepository.findByCreatedDateTimeBetweenOrderByCreatedDateTimeDesc(start, end), HttpStatus.OK, "Danh sách nhân sự vừa mới thêm từ ngày: " + startDate + " đến " + endDate);
 
