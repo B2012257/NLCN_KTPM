@@ -292,7 +292,7 @@
                     </div>
 
                 </div>
-                <div class="modal fade modal-xl" id="modal" tabindex="-1">
+                <div class="modal fade modal-xl edit-recent-modal" id="modal" tabindex="-1">
                     <div class="modal-dialog-centered modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -301,63 +301,133 @@
                                     aria-label="Close"></button>
                             </div>
 
-
-                            <div class="modal-body ">
-                                <form class="row col">
-                                    <div class="col-12 col-xl-6 mb-2">
-                                        <input type="text" class="form-control" requỉed placeholder="Họ và tên"
-                                            aria-label="FullName">
+                            <div class="modal-body">
+                                <form class="row col-xl-8 col-12 mb-2 edit-recent-form mx-auto">
+                                    <div class="col-12 text-center mb-2">
+                                        <img style="width: 200px;" id="avatar"
+                                            src="../assets/image/—Pngtree—user vector avatar_4830521.png"
+                                            class="img-thumbnail rounded mx-auto d-block edit-avatar"
+                                            alt="Ảnh chân dung">
+                                    </div>
+                                    <label for="" class="mt-1">Họ và tên:</label>
+                                    <div class="col-8 col-sm-12 mb-1">
+                                        <input type="text" class="form-control h-100 fullname-edit-employee-input"
+                                            required placeholder="Họ và tên" aria-label="FullName">
                                     </div>
 
-                                    <div class="col  mb-1">
-                                        <div class="form-floating ">
-                                            <select class="form-select" id="floatingSelect" aria-label="">
-                                                <option selected value="male">Nam</option>
-                                                <option value="female">Nữ</option>
-                                            </select>
-                                            <label for="floatingSelect">Giới tính</label>
-                                        </div>
-                                    </div>
-                                    <div class="col mb-1">
-                                        <div class="form-floating ">
-                                            <select class="form-select" id="floatingSelect" aria-label="">
-                                                <option value="#">Chọn chức vụ</option>
-                                                <option value="bep">Phụ bếp</option>
-                                                <option value="banhang">Bán hàng</option>
-                                            </select>
-                                            <label for="floatingSelect">Chức vụ</label>
-                                        </div>
+                                    <label for="" class="mt-1">Tên đăng nhập:</label>
+                                    <div class="col-8 col-sm-12 mb-1">
+                                        <input type="text" class="form-control h-100 username-edit-employee-input "
+                                            disabled required placeholder="Tên đăng nhập" aria-label="username">
                                     </div>
 
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="email" class="form-control" requỉed placeholder="Email"
-                                            aria-label="Email">
-                                    </div>
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" requỉed placeholder="Số điện thoại"
-                                            aria-label="phone">
-                                    </div>
-                                    <div class="col-12 col-xl-6 mt-2 mb-1">
-                                        <input type="text" class="form-control" requỉed placeholder="Địa chỉ"
-                                            aria-label="place">
-                                    </div>
-                                    <div class="col-xl-6 col-12 mt-2 mb-1">
-                                        <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" id="addon-wrapping" role="button">
-                                                <select class="p-1 border border-0 bg-transparent">
-                                                    <option checked value="#">Tên ngân hàng</option>
-                                                    <option value="Agribank">Agribank</option>
+                                    <label for="" class="mt-1">Loại nhân sự:</label>
+                                    <div class="col-4 mb-1 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text w-100 " id="addon-wrapping" role="button">
+                                                <select
+                                                    class="p-1 border border-0 bg-transparent w-100 type-select-edit staff-type-edit-employee-select"
+                                                    title="Chọn loại nhân sự">
+                                                    <option checked value="0">Loại nhân sự</option>
+                                                    <!-- <option value="Phụ bếp">Phụ bếp</option>
+                                                    <option value="Bán hàng">Bán hàng</option> -->
+
                                                 </select>
                                             </span>
-                                            <input type="text" class="form-control" requỉed placeholder="Số tài khoản"
-                                                aria-label="search_employer" aria-describedby="addon-wrapping">
+
                                         </div>
                                     </div>
+                                    <label for="" class="mt-1">Bậc lương:</label>
+                                    <div class="col-12 mb-1">
+                                        <div class="input-group">
+                                            <span class="input-group-text " id="addon-wrapping" role="button">
+                                                <select
+                                                    class="p-1 border border-0 bg-transparent salary-edit-employee-salect w-100 edit-salary-select">
+                                                    <option checked value="0">Bậc lương</option>
+
+
+                                                </select>
+                                            </span>
+                                            <input type="text" class="form-control edit-salary-detail"
+                                                value="Chi tiết bậc lương" disabled aria-label=""
+                                                aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+
+                                    <label for="" class="mt-1">Địa chỉ:</label>
+                                    <div class="col-7 col-sm-12 mb-1">
+                                        <input type="text" class="form-control w-100 h-100 location-edit-employee-input"
+                                            required placeholder="Địa chỉ">
+                                    </div>
+
+                                    <label for="" class="mt-1">Số di động:</label>
+                                    <div class="col-5 col-sm-12 mb-1">
+                                        <input type="text" class="form-control phone-edit-employee-input" required
+                                            placeholder="Số điện thoại" aria-label="phone">
+                                    </div>
+                                    <!-- <div class="col-12 col-xl-6 mt-2 mb-1">
+                                        <input type="text" class="form-control" placeholder="Tên tài khoản" aria-label="place">
+                                    </div>
+                                    <div class="col-12 col-xl-6 mt-2 mb-1">
+                                        <input type="password" class="form-control" placeholder="Mật khẩu" aria-label="place">
+                                    </div> -->
+                                    <label for="" class="mt-1">Thông tin ngân: hàng</label>
+                                    <div class="col-xl-12 col-8  mb-1 col-sm-12">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text " id="addon-wrapping" role="button">
+                                                <select
+                                                    class="p-1 border border-0 bg-transparent bank-name-edit-employee-select">
+                                                    <option checked value="0">Tên ngân hàng</option>
+                                                    <option value="Agribank">Agribank</option>
+                                                    <option value="Vietcombank">Vietcombank</option>
+                                                    <option value="Sacombank">Sacombank</option>
+
+                                                    <option value="BIDV">BIDV</option>
+                                                    <option value="VPBank">VPBank</option>
+                                                    <option value="MBBank">MBBank</option>
+                                                    <option value="ACB">ACB</option>
+                                                    <option value="HDBank">HDBank</option>
+                                                    <option value="VIB">VIB</option>
+
+                                                </select>
+                                            </span>
+                                            <input type="text" class="form-control bank-number-employee-input-edit"
+                                                required placeholder="Số tài khoản" aria-label=""
+                                                aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+
+                                    <label for="" class="mt-1">Giới tính:</label>
+                                    <div class="col-xl-4 col-4 mb-1 col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-text w-100" id="addon-wrapping" role="button">
+                                                <select
+                                                    class="p-1 border border-0 bg-transparent w-100 edit-gender-employee-select">
+                                                    <option checked value="0">Giới tính</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
+
+                                                </select>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                    <label for="" class="mt-1">Ngày vào làm:</label>
+                                    <div class="input-group flex-nowrap  mb-1">
+                                        <span class="input-group-text" id="addon-wrapping">Ngày bắt đầu làm
+                                            việc:</span>
+                                        <input type="date" class="form-control edit-begin-work-employee-input" required
+                                            aria-describedby="addon-wrapping">
+                                    </div>
+
                                     <div class="col mt-2 mb-1">
                                         <div class="avatar_input">
-                                            <label for="formFile" class="form-label fw-bold">Thêm ảnh chân dung:</label>
-                                            <input class="form-control  requỉedw-100" type="file" id="formFile"
-                                                placeholder="">
+                                            <label for="formFile" class="form-label fw-bold">Chỉnh sửa chân
+                                                dung:</label>
+                                            <span role="button" id="upload_widget-edit"
+                                                class="ms-2 cloudinary-span text-white bg-secondary p-1 rounded">Chọn
+                                                tập
+                                                tin</span>
                                         </div>
 
                                     </div>

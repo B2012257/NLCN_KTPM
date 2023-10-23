@@ -4,6 +4,8 @@ const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType
 const addStaffApi = "http://localhost:8081/api/v1/manager/addStaff"
 const recentStaffsApiUrl = "http://localhost:8081/api/v1/manager/staff/recent"
 const defaultAvatarUrl = "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png"
+let getStaffInfoApiUrl = "http://localhost:8081/api/v1/staff/info" //?Uid=NS2283
+
 let recentStaffs;
 let avatarUrl
 
@@ -12,12 +14,14 @@ let staffTypes
 let recentStaff // Danh sách nhân sự vừa thêm lần trước
 async function setUp() {
     turnOnLoadingFunction("recent-spinner")
+
     salaries = await getAllSalary()
     staffTypes = await getAllType()
+
     //Load bậc lương vào thẻ select
-    loadSalariesHtml(salaries)
+    loadSalariesHtml(salaries, "salary-select", "salary-add-employee-salect", handleChangeSalaryLevel)
     //Load loại nhân sự vào thẻ select
-    loadStaffTypeHtml(staffTypes)
+    loadStaffTypeHtml(staffTypes, "type-select")
 
     //thêm sự kiện nút thêm nhân sự
     document.querySelector(".add-staff-btn").addEventListener("click", (e) => handleClickAddStaff(e))
@@ -67,14 +71,14 @@ var toastList = toastElList.map(function (toastEl) {
         animation: true
     })
 })
+
 document.getElementById("upload_widget").addEventListener("click", function () {
     myWidget.open();
-}, false
-    //Load chức vụ
+}, false);
 
-    //Load bậc lương
-);
-
+document.getElementById("upload_widget-edit").addEventListener("click", function () {
+    myWidget.open();
+}, false);
 //Lấy danh sách bậc lương khi vừa vào trang
 async function getAllSalary() {
     const response = await fetch(getAllSalaryApiUrl, {
@@ -173,20 +177,20 @@ function renderElementInnerParent(parentElementClassName, childrenElement) {
 
 
 //Thêm các bậc lương vào giao diện
-function loadSalariesHtml(salaries) {
+function loadSalariesHtml(salaries, salaryParentElementClassName, salarySelectInputClassName, handleChangeSalaryLevelFunction) {
     salaries.forEach(salary => {
         //Tạo 1 thẻ option 
         let optionTag = document.createElement("option")
         optionTag.value = salary.level
         optionTag.innerText = salary.level
-        renderElementInnerParent("salary-select", optionTag)
+        renderElementInnerParent(salaryParentElementClassName, optionTag)
     });
     //Thêm sự kiện đổi bậc lương để hiển thị thông tin chi tiết bậc lương đó
-    document.querySelector(".salary-add-employee-salect").addEventListener("change", (e) => handleChangeSalaryLevel(e))
+    document.querySelector(`.${salarySelectInputClassName}`).addEventListener("change", (e) => handleChangeSalaryLevelFunction(e))
 }
 
 //Thêm loại nhân sự vào giao diện
-function loadStaffTypeHtml(staffTypes) {
+function loadStaffTypeHtml(staffTypes, typeSelectElementClassName) {
     console.log(staffTypes);
 
     staffTypes.forEach(type => {
@@ -194,7 +198,7 @@ function loadStaffTypeHtml(staffTypes) {
         let optionTag = document.createElement("option")
         optionTag.value = type.id
         optionTag.innerText = type.name
-        renderElementInnerParent("type-select", optionTag)
+        renderElementInnerParent(typeSelectElementClassName, optionTag)
     });
 
 }
@@ -291,7 +295,7 @@ function loadStaffRecentHtml(staffs) {
         divTag.classList.add("list-group")
         divTag.innerHTML = `
        <p class="center"> Không có thông tin  </p>
-`
+        `
         turnOffLoadingFunction("recent-spinner")
 
         renderElementInnerParent("card-body-recent", divTag)
@@ -324,10 +328,10 @@ function loadStaffRecentHtml(staffs) {
         else
             dayTimeDifference = `${daysDifference} ngày trước`
         divTag.innerHTML = `
-                            <button class="list-group-item list-group-item-action mt-1" onclick=""
+                            <button class="list-group-item list-group-item-action mt-1" onclick="handleClickOnRecentStaff(this)"
                                 data-bs-toggle="modal" data-bs-target="#modal">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <span class="d-none">${staff.uid}</span>
+                                    <span class="d-none staff-uid">${staff.uid}</span>
                                     <p class="mb-1 fw-bold fs-6">${staff.fullName}
                                     <br />
                                         <span class="badge bg-primary">${staff.type.name}</span>
@@ -341,11 +345,95 @@ function loadStaffRecentHtml(staffs) {
     });
 }
 
+//Xử lí khi bấm vào 1 nhân sự vừa thêm
+async function handleClickOnRecentStaff(thisElement) {
+    let staffUid = thisElement.querySelector(".staff-uid").innerText
+    let staffRs = await getStaffInfo(staffUid)
+    //Thành công
+    if (staffRs.status === "OK") {
+        console.log("Lấy thông tin nhân sự thành công");
+        //Hiển thị ra giao diện
+        showStaffInfoIntoForm(staffRs.data)
+    } else {
+        alert("Lỗi lấy thông tin ", staffRs.message);
+    }
+}
+
+//Lấy thông tin nhân sự
+async function getStaffInfo(uid) {
+    let apiUrl = `${getStaffInfoApiUrl}?Uid=${uid}`
+    return await getApi(apiUrl)
+}
+
+//Hiển thị vào thông tin nhân sự vào form
+function showStaffInfoIntoForm(staffInfo) {
+    let avatar = document.querySelector(".edit-avatar")
+
+    let fullNameElement = document.querySelector(".fullname-edit-employee-input")
+    let userNameElement = document.querySelector(".username-edit-employee-input")
+
+    let staffTypeElement = document.querySelector(".staff-type-edit-employee-select")
+    let phoneElement = document.querySelector(".phone-edit-employee-input")
+
+    let salarySelectElement = document.querySelector(".edit-salary-select")
+    let salaryDetail = document.querySelector(".edit-salary-detail")
+    let locationElement = document.querySelector(".location-edit-employee-input")
+
+    let bankNameSelectElement = document.querySelector(".bank-name-edit-employee-select")
+
+    let bankNumberInputElement = document.querySelector(".bank-number-employee-input-edit")
+
+    let genderElement = document.querySelector(".edit-gender-employee-select")
+    let beginWorkElement = document.querySelector(".edit-begin-work-employee-input")
+
+    avatar.src = staffInfo.urlAvatar
+    fullNameElement.value = staffInfo.fullName
+    userNameElement.value = staffInfo.userName
+    locationElement.value = staffInfo.location
+    phoneElement.value = staffInfo.phone
+    bankNameSelectElement.value = staffInfo.bankName
+    bankNumberInputElement.value = staffInfo.bankAccount
+    genderElement.value = staffInfo.gender
+    beginWorkElement.value = staffInfo.beginWork
+
+    //Hiển thị danh sách vào select trước
+    //Load bậc lương vào thẻ select
+    //Làm rỗng dữ liệu
+    document.querySelector(".type-select-edit").innerHTML = `<option checked value="0">Loại nhân sự</option>`
+    loadSalariesHtml(salaries, "salary-edit-employee-salect", "salary-edit-employee-salect",
+        (e) => handleChangeSalaryLevel(e, "edit-salary-detail"))
+
+    //Load loại nhân sự vào thẻ select
+    document.querySelector(".type-select-edit").innerHTML = `<option checked value="0">Bậc lương</option>`
+    loadStaffTypeHtml(staffTypes, "type-select-edit")
+
+    staffTypeElement.value = staffInfo.type.id
+
+    salarySelectElement.value = staffInfo.salary.level
+    let salary = staffInfo.salary
+    let valueString = `Cơ bản: ${salary.formattedBasic}; Tăng ca ${salary.formattedOvertime}; Trợ cấp ${salary.formattedAllowance}/Tháng`
+    salaryDetail.value = valueString
+}
+
+//Hàm call api method get và return response
+async function getApi(apiUrl) {
+    const response = await fetch(apiUrl, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    const dataRs = response.json();
+    return dataRs;
+}
 
 //Xử lí sự kiện chọn bậc lương thì sẽ hiện chỉ số bậc lương đó
-function handleChangeSalaryLevel(e) {
+function handleChangeSalaryLevel(e, editSalaryDetailClassName) {
     let levelTarget = e.target.value
-    let salaryDetailInput = document.querySelector('.salary-detail')
+    console.log(levelTarget);
+    let salaryDetailInput = document.querySelector(`.${editSalaryDetailClassName}`)
     if (levelTarget !== "0") {
         let detailOfTarget
         for (const salary of salaries) {
