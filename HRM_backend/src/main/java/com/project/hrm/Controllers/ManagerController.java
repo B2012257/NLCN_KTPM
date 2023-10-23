@@ -228,4 +228,10 @@ public class ManagerController {
         return managerService.workCheckeds(timekeepings);
     }
 
+    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING)
+    public Response getAllSchedulesOfShiftOfDateInTimeKeeping(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllSchedulesOfShiftOfDateInTimeKeeping(shiftType,date);
+    }
+
+
 }

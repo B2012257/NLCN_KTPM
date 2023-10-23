@@ -84,6 +84,7 @@ public class URLConfigs {
 
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
 
+    public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING="/getAllSchedulesOfShiftOfDateInTimeKeeping";
     public static final String WORK_CHECKED="/workCheckeds";
 
 }
