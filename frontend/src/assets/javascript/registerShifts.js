@@ -140,10 +140,12 @@ function selectAllRows() {
 
 function doiDinhDangNgay(dateString) {
     // Sử dụng phương pháp split() để tách ngày, tháng và năm từ chuỗi
-    const [day, month, year] = dateString.split('/');
+    let targetDate = new Date(dateString)
+
+    const [day, month, year] = dateString.split('-');
 
     // Tạo chuỗi mới với định dạng yyyy/mm/dd
-    const newDateString = `${year}-${month}-${day}`;
+    const newDateString = `${targetDate.getFullYear()}-${targetDate.getMonth() + 1}-${targetDate.getDate()}`;
 
     return newDateString;
 }
@@ -213,7 +215,7 @@ function showDayUnderSttOfWeekTh(date) {
     let thOfWeekElementList = document.querySelectorAll(".sttOfWeek");
 
     thOfWeekElementList.forEach((item, index) => {
-        item.querySelector("p").innerText = reversedDateString(formatDateString(thisWeek[index].day));
+        item.querySelector("small").innerText = reversedDateString(formatDateString(thisWeek[index].day));
     });
 }
 
