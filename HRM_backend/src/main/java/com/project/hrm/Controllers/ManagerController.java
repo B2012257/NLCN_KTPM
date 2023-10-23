@@ -244,10 +244,12 @@ public class ManagerController {
     public Response workCheckeds(@RequestBody List<Timekeeping> timekeepings){
         return managerService.workCheckeds(timekeepings);
     }
+
     @GetMapping(URLConfigs.GET_ALL_WORK_CHECKED)
     public Response getAllWorkChecked(){
         return managerService.getAllWorkCheckeds();
     }
+
 
 
 
