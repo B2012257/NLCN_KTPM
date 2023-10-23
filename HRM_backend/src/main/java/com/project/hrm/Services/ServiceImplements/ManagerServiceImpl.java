@@ -763,21 +763,43 @@ public class ManagerServiceImpl implements ManagerService {
 
         List<ShiftDetail> shiftDetailsNotInTimekeeping = new ArrayList<>();
         for (ShiftDetail shiftDetailID : shiftDetails) {
-            boolean isInTimekeeping = isShiftDetailInTimekeeping(shiftDetailID);
-            if (!isInTimekeeping) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping==null) {
                 shiftDetailsNotInTimekeeping.add(shiftDetailID);
             }
         }
-        if (shiftDetails.isEmpty()) {
-            return new ResponseWithData<>(new ArrayList<>(), HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
+        if (shiftDetailsNotInTimekeeping.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
-        return new ResponseWithData<List<ShiftDetail>>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc");
+        return new ResponseWithData<>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc chưa chấm công");
 
     }
 
-    private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
-        Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetail);
-        return timekeeping != null;
+
+    @Override
+    public ResponseWithData<List<Timekeeping>> getAllSchedulesOfShiftOfDateInTimeKeeping(ShiftType shiftType, Date date){
+        com.project.hrm.Models.Date date1 = new com.project.hrm.Models.Date(date);
+        List<Shift> shiftOfDate = shiftRepository.findAllByShiftTypeAndDate(shiftType,date1);
+        List<ShiftDetail> shiftDetails = new ArrayList<>();
+        System.out.println(date1);
+        for (Shift shiftId : shiftOfDate) {
+
+            List<ShiftDetail> shiftDetailList = shiftDetailRepository.findAllByShift(shiftId);
+            shiftDetails.addAll(shiftDetailList);
+        }
+
+
+        List<Timekeeping> shiftDetailsInTimekeeping = new ArrayList<>();
+        for (ShiftDetail shiftDetailID : shiftDetails) {
+            Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetailID);
+            if (timekeeping!=null) {
+                shiftDetailsInTimekeeping.add(timekeeping);
+            }
+        }
+        if (shiftDetailsInTimekeeping.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
+        }
+        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK, "Danh sách làm việc da chấm công");
     }
 
     //Lấy danh sách lịch rảnh của nhân sự chưa được sắp vào lịch dựa vào 1 ca trong 1 ngày
@@ -795,6 +817,8 @@ public class ManagerServiceImpl implements ManagerService {
             return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy lịch rảnh ca " + shiftTypeRq.getName() + " ngày " + dateToFind.getDate());
         return new ResponseWithData<>(freeTimes, HttpStatus.OK, "Danh sách lịch rảnh ca " + shiftTypeRq.getName() + " ngày " + dateToFind.getDate()); //TEST
     }
+
+
 
     @Override
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
