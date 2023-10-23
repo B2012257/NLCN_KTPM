@@ -775,6 +775,12 @@ public class ManagerServiceImpl implements ManagerService {
         }
         return new ResponseWithData<List<ShiftDetail>>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc");
 
+
+    }
+
+    @Override
+    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
+        return null;
     }
 
     private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
@@ -805,11 +811,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
 
-    @Override
-    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift) {
 
-        return null;
-    }
+
 
 
     @Override
