@@ -40,6 +40,7 @@ public class URLConfigs {
 
     public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING="/getAllScheduleOfStaffInTimeKeeping";
 
+    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID="/getAllScheduleOfStaffInTimeKeepingStartEndByUid";
 
 
     public static final String GET_SCHEDULE_OF_STAFF_NOT_IN_TIMEKEEPING="/getAllScheduleOfStaffNotInTimeKeeping";
