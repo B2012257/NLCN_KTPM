@@ -770,6 +770,7 @@ public class ManagerServiceImpl implements ManagerService {
             }
         }
         if (shiftDetails.isEmpty()) {
+
             return new ResponseWithData<>(new ArrayList<>(), HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
         return new ResponseWithData<List<ShiftDetail>>(shiftDetailsNotInTimekeeping, HttpStatus.OK, "Danh sách làm việc");
@@ -779,6 +780,7 @@ public class ManagerServiceImpl implements ManagerService {
     private boolean isShiftDetailInTimekeeping(ShiftDetail shiftDetail) {
         Timekeeping timekeeping = timeKeepingRepository.findByShiftDetail(shiftDetail);
         return timekeeping != null;
+
     }
 
     //Lấy danh sách lịch rảnh của nhân sự chưa được sắp vào lịch dựa vào 1 ca trong 1 ngày
