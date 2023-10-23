@@ -25,8 +25,10 @@ function loginHandler() {
     .then((res) => {
       console.log(res);
       if (res.status === "OK") return loginSuccess(res);
-      return loginError(res);
-    });
+    })
+    .catch(err => alert("Lỗi máy chủ"))
+
+
 }
 
 //Khi đang nhập thành công

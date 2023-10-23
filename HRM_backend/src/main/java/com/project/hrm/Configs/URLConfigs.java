@@ -71,6 +71,7 @@ public class URLConfigs {
     public static final String DELETE_SALARY = "/deleteSalary";
 
     public static final String ADD_SHIFT = "/addShift";
+    public static final String DELETE_SHIFT = "/deleteShift";
 
     public static final String ADD_SHIFT_TYPE = "/addShiftType";
     public static final String GET_ALL_SHIFT_TYPE = "/allShiftType";
@@ -83,8 +84,12 @@ public class URLConfigs {
 
 
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
+    public static final String GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE="/getFreeTimeNotScheduled";
+
 
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING="/getAllSchedulesOfShiftOfDateInTimeKeeping";
     public static final String WORK_CHECKED="/workCheckeds";
+    public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";
+    public static final String GET_ALL_TIMEKEEPING_START_END_BUY_UID ="/getAllKeepingBuyUid";
 
 }

@@ -8,3 +8,24 @@ a {
     text-decoration: none !important;
 
 }
+
+.center {
+    text-align: center;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.form-control {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+}
+
+.hide {
+    display: none;
+}

@@ -88,7 +88,7 @@ public interface ManagerService {
     public Response addShift(Shift shift);
 
     //Xóa 1 ca làm
-    public Response deleteShift(Shift shift);
+    public Response deleteShift(Integer shiftId);
 
     //Sửa 1 ca làm
     public Response editShift(Shift shift);
@@ -119,7 +119,7 @@ public interface ManagerService {
     public ResponseWithData<Timekeeping> getAllWorkCheckeds(Shift shift);
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end);
     //Lấy tất cả danh sách chấm công nhân sự trong 1 ngày (tất cả các ca trong ngày)
-    public ResponseWithData<Timekeeping> getAllWorkCheckeds(Date date);
+    public Response getAllWorkCheckeds();
 
     //Chấm công một danh sách nhân sự
     public Response workCheckeds(List<Timekeeping> timeKeepings);
@@ -127,5 +127,8 @@ public interface ManagerService {
     //Xóa chấm công một danh sách nhân sự
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings);
 
-    //...
+
+    //...Lấy danh sách lịch rảnh của các nhân sự trong 1 ca tng ngày,, trả về các freeTime chưa lặp lịch
+    public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(ShiftType shiftType, Date date);
+
 }

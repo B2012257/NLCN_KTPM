@@ -147,10 +147,15 @@ function filterStaffByName(data, searchTerm) {
 const inputSearch = document.querySelector(".form-control");
 const btnSearch = document.querySelector(".input-group-text");
 btnSearch.addEventListener("click", function () {
-  const searchTerm = inputSearch.value.trim().toLowerCase();
-  console.log("input", searchTerm);
-  const filteredStaff = filterStaffByName(data, searchTerm);
-  renderStaff(filteredStaff);
+  if (inputSearch.value === "") {
+    return;
+  } else {
+    const searchTerm = inputSearch.value.trim().toLowerCase();
+    console.log("input", searchTerm);
+    const filteredStaff = filterStaffByName(data, searchTerm);
+    renderStaff(filteredStaff);
+    inputSearch.value = "";
+  }
 });
 
 async function getInfoDetailStaff(uid) {

@@ -132,18 +132,21 @@ public class ManagerController {
 //        return managerService.editRole(role);
 //    }
 //
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @DeleteMapping(URLConfigs.DELETE_TYPE)
     public Response deleteType(@RequestBody Type type) {
         return managerService.deleteType(type);
     }
 
     //
-//    @DeleteMapping(URLConfigs.DELETE_SALARY)
-//    public Response deleteSalary(@RequestBody Salary salary){
-//        return managerService.deleteSalary(salary);
-//    }
+    @DeleteMapping(URLConfigs.DELETE_SALARY)
+    public Response deleteSalary(@RequestBody Salary salary){
+        return managerService.deleteSalary(salary);
+    }
 //
-
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SALARY)
     public ResponseWithData<List<Salary>> getAllSalary() {
         return managerService.getAllSalary();
@@ -206,6 +209,12 @@ public class ManagerController {
 
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
+    @DeleteMapping (URLConfigs.DELETE_SHIFT)
+    public Response deleteShift(@RequestParam Integer id) {
+        return managerService.deleteShift(id);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @DeleteMapping (URLConfigs.DELETE_SCHEDULE)
     public Response deleteSchedule(@RequestBody List<ShiftDetail> shiftDetails) {
         return managerService.deleteSchedule(shiftDetails);
@@ -217,16 +226,30 @@ public class ManagerController {
         return managerService.getAllSchedulesOfDay(date);
     }
 
-
+    //Lấy danh scáh nhân sự làm trong 1 ca trong 1 ngày
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
     public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
         return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE)
+    public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllFreeTimeNotScheduledOfShiftTypeAndDate(shiftType, date);
     }
 
     @PostMapping(URLConfigs.WORK_CHECKED)
     public Response workCheckeds(@RequestBody List<Timekeeping> timekeepings){
         return managerService.workCheckeds(timekeepings);
     }
+    @GetMapping(URLConfigs.GET_ALL_WORK_CHECKED)
+    public Response getAllWorkChecked(){
+        return managerService.getAllWorkCheckeds();
+    }
+
+
 
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING)
     public Response getAllSchedulesOfShiftOfDateInTimeKeeping(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){

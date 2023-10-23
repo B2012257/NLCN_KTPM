@@ -116,13 +116,19 @@
 
         <div class="d-flex gap-4">
             <div>
-                <h4>Từ ngày</h4>
-                <input type="date">
+                <!-- <h4>Từ ngày</h4> -->
+                <input type="date" id="firstDay" style="padding: 8px; border-radius: 25px;"> 
             </div>
             <div>
-                <h4>Đến ngày </h4>
-                <input type="date">
+                <!-- <h4>Đến ngày </h4> -->
+                <input type="date" id="lastDay" style="padding: 8px; border-radius: 25px;">
             </div>
+            <!-- <div>
+                <span>Từ ngày</span>
+                <span id="firstDay"></span>
+                <span>Đến ngày</span>
+                <span id="lastDay"></span>
+              </div> -->
         </div>
 
         <div class="row mt-3 view_type">
@@ -133,14 +139,19 @@
                     <label class="form-check-label" for="inlineRadio1">Tất cả</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                        value="phubep">
-                    <label class="form-check-label" for="inlineRadio1">Phụ bếp</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                        value="quanly">
+                    <label class="form-check-label" for="inlineRadio2">Quản lý</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                        value="phubep">
+                    <label class="form-check-label" for="inlineRadio3">Phụ bếp</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
                         value="banhang">
-                    <label class="form-check-label" for="inlineRadio2">Bán hàng</label>
+                    <label class="form-check-label" for="inlineRadio4">Bán hàng</label>
                 </div>
 
             </div>

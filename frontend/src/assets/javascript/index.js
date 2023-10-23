@@ -17,3 +17,10 @@
 
 //         // return console.log(item);
 // })
+
+
+//Kiểm tra đăng nhập
+if (!localStorage.getItem("u")) {
+    alert("Vui lòng đăng nhập")
+    location.href = "./pages/login.html"
+}
