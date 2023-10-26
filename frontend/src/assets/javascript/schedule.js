@@ -477,7 +477,7 @@ async function actionBtnClickHandler(event) {
     //Nếu equal < 0 tức là nhỏ hơn --> ẩn cả 2
     // Nếu equal == 0 và chiều dài bằng rỗng thì ẩn nút xóa -> hiện nút lưu
     //Nếu equal > 0 -> hiện nút lưu, nếu length == 0 thì ẩn nút xóa
-    console.log(equal < 0 && data.length == 0);
+    console.log(equal, data);
     //Ngày nhỏ hơn thì k cho thao tác
     if (equal < 0) {
         //Ẩn nút lưu
@@ -486,9 +486,30 @@ async function actionBtnClickHandler(event) {
 
     }
     //Ngày = hoặc lớn hơn --> thì nếu không có nhân sự đang trong lịch thì cho lưu và k cho xóa, vì chưa có lập lịch thì có j mà xóa
-    else if (equal >= 0 && data.length === 0) {
+    if (equal < 0) {
+        //Ẩn nút lưu
         document.querySelector(".delete-scheduled").classList.add("disabled")
-        document.querySelector(".save-schedule").classList.remove("disabled")
+        document.querySelector(".save-schedule").classList.add("disabled")
+
+    }
+    //Ngày = hoặc lớn hơn --> thì nếu không có nhân sự đang trong lịch thì cho lưu và k cho xóa, vì chưa có lập lịch thì có j mà xóa
+    else if (equal >= 0) {
+        if (data) {
+            // if(data.length === 0) {
+            //     document.querySelector(".delete-scheduled").classList.add("disabled")
+            //     document.querySelector(".save-schedule").classList.remove("disabled")
+            // }
+            if (data.length > 0) {
+                document.querySelector(".delete-scheduled").classList.remove("disabled")
+                document.querySelector(".save-schedule").classList.remove("disabled")
+            }
+        } else {
+            //Cho lưu nhưng k cho xóa
+            document.querySelector(".delete-scheduled").classList.add("disabled")
+            document.querySelector(".save-schedule").classList.remove("disabled")
+        }
+        // document.querySelector(".delete-scheduled").classList.add("disabled")
+        // document.querySelector(".save-schedule").classList.remove("disabled")
     }
     //Còn lại trường hợp (equal >= 0 và data.length !== 0) thì hiện 2 nút xóa ca và lưu (edit)
     else {
