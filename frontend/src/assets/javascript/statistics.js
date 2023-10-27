@@ -129,11 +129,11 @@ async function renderStaff(staffs, start, end) {
       const salaryBasic = staff.type ? staff.salary.formattedBasic : "";
       const salaryOvertimeReal = staff.type ? staff.salary.overtime : "";
       const salaryOvertime = staff.type ? staff.salary.formattedOvertime : "";
-      const hoursShift = timeKeeping ? timeKeeping.length * 5 : "0";
+      // const hoursShift = timeKeeping ? timeKeeping.length * 5 : "0";
+      const hoursShift = timeKeeping ? calculateTotalHours(timeKeeping) : "0";
       const totalOvertime = timeKeeping && calculateTotalOvertime(timeKeeping);
       const totalMoney = timeKeeping
-        ? timeKeeping.length * 5 * salaryBasicReal +
-        totalOvertime * salaryOvertimeReal
+        ? hoursShift * salaryBasicReal + totalOvertime * salaryOvertimeReal
         : "0";
 
       console.log("totalOvertime", totalOvertime);
@@ -177,7 +177,7 @@ async function renderStaff(staffs, start, end) {
         ${staff.bankName}
         </td>
         <td>
-${staff.bankAccount}
+        ${staff.bankAccount}
         </td>
     </tr>
         `;
@@ -190,34 +190,6 @@ ${staff.bankAccount}
   });
   // listStaff.innerHTML = htmls.join("");
 }
-
-// function removeDiacriticsAndSpaces(str) {
-//   return str
-//     .normalize("NFD")
-//     .replace(/[\u0300-\u036f]/g, "")
-//     .replace(/\s/g, "")
-//     .toLowerCase();
-// }
-
-// function filterStaffByRole(data, role) {
-//   console.log("Role selected:", role);
-//   if (role === "tatca") {
-//     renderStaff(data, formattedFirstDayOfMonth, formattedLastDayOfMonth);
-//   } else {
-//     const filteredStaff = data.filter((staff) => {
-//       let name = staff.type && staff.type.name;
-//       if (name) {
-//         let remove = removeDiacriticsAndSpaces(name);
-//         return remove === role;
-//       }
-//     });
-//     renderStaff(
-//       filteredStaff,
-//       formattedFirstDayOfMonth,
-//       formattedLastDayOfMonth
-//     );
-//   }
-// }
 
 function filterStaffByRole(data, role) {
   // console.log("Role selected:", role);
@@ -269,6 +241,30 @@ async function fetchTimeKeeping(start, end, uid) {
   }
 }
 
+// Hàm tính tổng số giờ công từ một mảng dữ liệu
+function calculateTotalHours(data) {
+  var totalHours = 0;
+
+  // Lặp qua mỗi đối tượng trong mảng dữ liệu
+  for (var i = 0; i < data.length; i++) {
+    // Tách giờ, phút và giây từ chuỗi thời gian bắt đầu và kết thúc
+    var startTimeArray = data[i].start.split(":");
+    var endTimeArray = data[i].end.split(":");
+
+    // Chuyển đổi giờ, phút và giây thành số và tính tổng số giờ công
+    var hoursWorked =
+      parseInt(endTimeArray[0], 10) -
+      parseInt(startTimeArray[0], 10) +
+      (parseInt(endTimeArray[1], 10) - parseInt(startTimeArray[1], 10)) / 60 +
+      (parseInt(endTimeArray[2], 10) - parseInt(startTimeArray[2], 10)) / 3600;
+
+    // Cộng số giờ công từ đối tượng hiện tại vào tổng số giờ công
+    totalHours += hoursWorked;
+  }
+
+  return totalHours;
+}
+
 //tính tổng giờ làm thêm
 function calculateTotalOvertime(timekeepingData) {
   let totalOvertime = 0;
@@ -285,6 +281,7 @@ function dateStringFormat(dateString) {
   const day = parts[2];
   const month = parts[1];
   const year = parts[0];
+
   // Chuyển đổi ngày và tháng thành chuỗi có 2 chữ số, nếu cần
   const formattedDay = day.length === 1 ? "0" + day : day;
   const formattedMonth = month.length === 1 ? "0" + month : month;
