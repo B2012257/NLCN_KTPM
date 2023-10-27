@@ -1,13 +1,16 @@
 package com.project.hrm.Services.ServiceImplements;
 
+import com.project.hrm.Models.Shift;
 import com.project.hrm.Models.ShiftDetail;
 import com.project.hrm.Models.Staff;
+import com.project.hrm.Models.Type;
 import com.project.hrm.Repositorys.ShiftDetailRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Services.StatisticsService;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.payloads.Response.StatisticsMonth;
+import com.project.hrm.payloads.Response.SummaryStatistics;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 //Thiết lập các chức năng liên quan đến thống kê
 @Service
@@ -94,7 +95,15 @@ public class StatisticsServiceImplements implements StatisticsService {
         System.out.println(managerService.getRecentStaff(startDate, lastDate));
         ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
         List recentStaffInMonths = (List) recentStaffInMonth.getData();
+
         Long totalNewStaffInMonth = (long) recentStaffInMonths.size();
-        return new ResponseWithData<>(recentStaffInMonths, HttpStatus.OK, "");
+
+        //Số nhân sự theo từng chức vụ
+        List totalEachType = staffRepository.countStaffByType();
+
+        //Đếm số nhân sự làm việc trong ngày -> Lấy shift detail trong ngày
+        List<ShiftDetail> shiftDetailsInOneDay =  shiftDetailRepository.findByShiftDateBetweenOrderByStaffType(new com.project.hrm.Models.Date(dateNow), new com.project.hrm.Models.Date(dateNow));
+//        Long totalWorkingInDay =
+        return new ResponseWithData<>(new SummaryStatistics(totalStaff, totalNewStaffInMonth, totalEachType, shiftDetailsInOneDay.size(), shiftDetailsInOneDay),HttpStatus.OK, "");
     }
 }
