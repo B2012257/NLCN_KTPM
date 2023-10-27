@@ -8,7 +8,796 @@ let firstValueTotalTime; //Lưu thời gian ca chuẩn
 
 //Hàm chính 
 async function setup(weekList) {
-
+    let test = {
+        "status": "OK",
+        "message": "",
+        "data": [
+            {
+                "uid": "NS1222",
+                "userName": "manager",
+                "password": "$argon2id$v=19$m=15360,t=2,p=1$ZkSV9NCr3jdlD6DJ$opXQDRiffKyi9QpT4qQUzTn7wob4DKUaueZEKepRTKdLXF0u538GHuD1lCHvgzObQg4eA0NRw+OfS7K/l8kpPw",
+                "fullName": "Phạm Quang Thái",
+                "gender": "Nam",
+                "phone": "0915210966",
+                "beginWork": "2022-01-01",
+                "location": "132/32, Hưng Lợi, Cần Thơ",
+                "bankName": "Agribank",
+                "bankAccount": "9854023254546",
+                "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698039327/1545e4470a1e039d009cb79142430f54_m5jxqs.jpg",
+                "createdDateTime": "2023-10-23T12:33:46.620084",
+                "type": {
+                    "id": 1,
+                    "name": "Quản lý"
+                },
+                "salary": {
+                    "level": "Quản lý",
+                    "basic": 40000.00,
+                    "allowance": 1000000.00,
+                    "overtime": 50000.00,
+                    "formattedAllowance": "1,000,000 VND",
+                    "formattedOvertime": "50,000 VND",
+                    "formattedBasic": "40,000 VND"
+                }
+            },
+            [
+                {
+                    "id": 21,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 17,
+                        "date": {
+                            "date": "2023-10-29"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 23,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 20,
+                        "date": {
+                            "date": "2023-10-23"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 26,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 22,
+                        "date": {
+                            "date": "2023-10-25"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 3,
+                            "name": "Tối",
+                            "start": "17:00:00",
+                            "end": "22:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 152,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 52,
+                        "date": {
+                            "date": "2023-10-27"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 102,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 102,
+                        "date": {
+                            "date": "2023-10-26"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 103,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS1084",
+                        "userName": "trungtin1313",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$1rbrlka3i87+cRRJ$0ooSLWI3WtLM2cOYyxo1LHkJEi2uwf64hjp0o8AwSYFTXWgf6uQf00EiahLPgolheCIXQtmur7m6Nf+1mdCA8g",
+                        "fullName": "Nguyễn Trung Tín",
+                        "gender": "Nam",
+                        "phone": "0915238355",
+                        "beginWork": "2022-01-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "Agribank",
+                        "bankAccount": "235353557888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:02.172926",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 103,
+                        "date": {
+                            "date": "2023-10-28"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 2,
+                            "name": "Chiều",
+                            "start": "12:00:00",
+                            "end": "17:00:00"
+                        }
+                    }
+                }
+            ],
+            [
+                {
+                    "id": 2,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS2251",
+                        "userName": "hoangphong5055",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$Zj2zjtqT45yt9oV3$KabV/WvwSd85fVteCu2whnDuncusK7ntvwrvlo3PXn+FIDhYtvmukpJ8wxglr3J+Rgacq4nacHDg4yzUzfiBfA",
+                        "fullName": "Phạm Hoàng Phong",
+                        "gender": "Nam",
+                        "phone": "0914254544",
+                        "beginWork": "2023-09-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "MBBank",
+                        "bankAccount": "23541091425454",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040018/c241d365ecd9d1fa858a9fdd83088a57_oj9xzr.jpg",
+                        "createdDateTime": "2023-10-23T12:46:53.111063",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 2,
+                        "date": {
+                            "date": "2023-10-23"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 2,
+                            "name": "Chiều",
+                            "start": "12:00:00",
+                            "end": "17:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 7,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS2251",
+                        "userName": "hoangphong5055",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$Zj2zjtqT45yt9oV3$KabV/WvwSd85fVteCu2whnDuncusK7ntvwrvlo3PXn+FIDhYtvmukpJ8wxglr3J+Rgacq4nacHDg4yzUzfiBfA",
+                        "fullName": "Phạm Hoàng Phong",
+                        "gender": "Nam",
+                        "phone": "0914254544",
+                        "beginWork": "2023-09-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "MBBank",
+                        "bankAccount": "23541091425454",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040018/c241d365ecd9d1fa858a9fdd83088a57_oj9xzr.jpg",
+                        "createdDateTime": "2023-10-23T12:46:53.111063",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 3,
+                        "date": {
+                            "date": "2023-10-24"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 17,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS2251",
+                        "userName": "hoangphong5055",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$Zj2zjtqT45yt9oV3$KabV/WvwSd85fVteCu2whnDuncusK7ntvwrvlo3PXn+FIDhYtvmukpJ8wxglr3J+Rgacq4nacHDg4yzUzfiBfA",
+                        "fullName": "Phạm Hoàng Phong",
+                        "gender": "Nam",
+                        "phone": "0914254544",
+                        "beginWork": "2023-09-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "MBBank",
+                        "bankAccount": "23541091425454",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040018/c241d365ecd9d1fa858a9fdd83088a57_oj9xzr.jpg",
+                        "createdDateTime": "2023-10-23T12:46:53.111063",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 15,
+                        "date": {
+                            "date": "2023-10-27"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 3,
+                            "name": "Tối",
+                            "start": "17:00:00",
+                            "end": "22:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 25,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS2251",
+                        "userName": "hoangphong5055",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$Zj2zjtqT45yt9oV3$KabV/WvwSd85fVteCu2whnDuncusK7ntvwrvlo3PXn+FIDhYtvmukpJ8wxglr3J+Rgacq4nacHDg4yzUzfiBfA",
+                        "fullName": "Phạm Hoàng Phong",
+                        "gender": "Nam",
+                        "phone": "0914254544",
+                        "beginWork": "2023-09-23",
+                        "location": "Vĩnh Long",
+                        "bankName": "MBBank",
+                        "bankAccount": "23541091425454",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040018/c241d365ecd9d1fa858a9fdd83088a57_oj9xzr.jpg",
+                        "createdDateTime": "2023-10-23T12:46:53.111063",
+                        "type": {
+                            "id": 2,
+                            "name": "Phụ bếp"
+                        },
+                        "salary": {
+                            "level": "Phụ bếp I",
+                            "basic": 16000.00,
+                            "allowance": 200000.00,
+                            "overtime": 20000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "20,000 VND",
+                            "formattedBasic": "16,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 21,
+                        "date": {
+                            "date": "2023-10-20"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                }
+            ],
+            [
+                {
+                    "id": 8,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS5303",
+                        "userName": "chuclam8275",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$iXGBgfMAr9wtDAWA$liS3+tAq/D8r8hGgluAn1+e4+943g0CKUUzxa0OXsatj65bZWFSIHdYVn8VQ7kyZnfxOnlYCjdTmoSdm+BYB6Q",
+                        "fullName": "Phạm Chúc Lam",
+                        "gender": "Nữ",
+                        "phone": "68524347089",
+                        "beginWork": "2023-10-08",
+                        "location": "Bạc Liêu",
+                        "bankName": "Sacombank",
+                        "bankAccount": "6358284024",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040206/1545e4470a1e039d009cb79142430f54_m0tbxg.jpg",
+                        "createdDateTime": "2023-10-23T12:49:58.525112",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 9,
+                        "date": {
+                            "date": "2023-10-25"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 20,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS5303",
+                        "userName": "chuclam8275",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$iXGBgfMAr9wtDAWA$liS3+tAq/D8r8hGgluAn1+e4+943g0CKUUzxa0OXsatj65bZWFSIHdYVn8VQ7kyZnfxOnlYCjdTmoSdm+BYB6Q",
+                        "fullName": "Phạm Chúc Lam",
+                        "gender": "Nữ",
+                        "phone": "68524347089",
+                        "beginWork": "2023-10-08",
+                        "location": "Bạc Liêu",
+                        "bankName": "Sacombank",
+                        "bankAccount": "6358284024",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040206/1545e4470a1e039d009cb79142430f54_m0tbxg.jpg",
+                        "createdDateTime": "2023-10-23T12:49:58.525112",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 17,
+                        "date": {
+                            "date": "2023-10-29"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 24,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS5303",
+                        "userName": "chuclam8275",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$iXGBgfMAr9wtDAWA$liS3+tAq/D8r8hGgluAn1+e4+943g0CKUUzxa0OXsatj65bZWFSIHdYVn8VQ7kyZnfxOnlYCjdTmoSdm+BYB6Q",
+                        "fullName": "Phạm Chúc Lam",
+                        "gender": "Nữ",
+                        "phone": "68524347089",
+                        "beginWork": "2023-10-08",
+                        "location": "Bạc Liêu",
+                        "bankName": "Sacombank",
+                        "bankAccount": "6358284024",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040206/1545e4470a1e039d009cb79142430f54_m0tbxg.jpg",
+                        "createdDateTime": "2023-10-23T12:49:58.525112",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 21,
+                        "date": {
+                            "date": "2023-10-20"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 153,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS5303",
+                        "userName": "chuclam8275",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$iXGBgfMAr9wtDAWA$liS3+tAq/D8r8hGgluAn1+e4+943g0CKUUzxa0OXsatj65bZWFSIHdYVn8VQ7kyZnfxOnlYCjdTmoSdm+BYB6Q",
+                        "fullName": "Phạm Chúc Lam",
+                        "gender": "Nữ",
+                        "phone": "68524347089",
+                        "beginWork": "2023-10-08",
+                        "location": "Bạc Liêu",
+                        "bankName": "Sacombank",
+                        "bankAccount": "6358284024",
+                        "urlAvatar": "http://res.cloudinary.com/dfcjwhc7o/image/upload/v1698040206/1545e4470a1e039d009cb79142430f54_m0tbxg.jpg",
+                        "createdDateTime": "2023-10-23T12:49:58.525112",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 52,
+                        "date": {
+                            "date": "2023-10-27"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                }
+            ],
+            [
+                {
+                    "id": 3,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS6365",
+                        "userName": "kimngan71",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$YlVZdueWl9SxmQUF$/Ndl7vRdSGi24JOYfTvAuocR09SpNWoNgtGaYwyrMyvNe2aVsVmtJyYTRPmgkX2jpA+qO0Vj8CZ1XOLNxnjreQ",
+                        "fullName": "Nguyễn Kim Ngân",
+                        "gender": "Nữ",
+                        "phone": "76501245665",
+                        "beginWork": "2021-11-23",
+                        "location": "Ninh Kiều, Cần Thơ",
+                        "bankName": "Vietcombank",
+                        "bankAccount": "12401245666888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:56.096074",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 2,
+                        "date": {
+                            "date": "2023-10-23"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 2,
+                            "name": "Chiều",
+                            "start": "12:00:00",
+                            "end": "17:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 22,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS6365",
+                        "userName": "kimngan71",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$YlVZdueWl9SxmQUF$/Ndl7vRdSGi24JOYfTvAuocR09SpNWoNgtGaYwyrMyvNe2aVsVmtJyYTRPmgkX2jpA+qO0Vj8CZ1XOLNxnjreQ",
+                        "fullName": "Nguyễn Kim Ngân",
+                        "gender": "Nữ",
+                        "phone": "76501245665",
+                        "beginWork": "2021-11-23",
+                        "location": "Ninh Kiều, Cần Thơ",
+                        "bankName": "Vietcombank",
+                        "bankAccount": "12401245666888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:56.096074",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 19,
+                        "date": {
+                            "date": "2023-10-24"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 3,
+                            "name": "Tối",
+                            "start": "17:00:00",
+                            "end": "22:00:00"
+                        }
+                    }
+                },
+                {
+                    "id": 154,
+                    "overTime": 0,
+                    "staff": {
+                        "uid": "NS6365",
+                        "userName": "kimngan71",
+                        "password": "$argon2id$v=19$m=15360,t=2,p=1$YlVZdueWl9SxmQUF$/Ndl7vRdSGi24JOYfTvAuocR09SpNWoNgtGaYwyrMyvNe2aVsVmtJyYTRPmgkX2jpA+qO0Vj8CZ1XOLNxnjreQ",
+                        "fullName": "Nguyễn Kim Ngân",
+                        "gender": "Nữ",
+                        "phone": "76501245665",
+                        "beginWork": "2021-11-23",
+                        "location": "Ninh Kiều, Cần Thơ",
+                        "bankName": "Vietcombank",
+                        "bankAccount": "12401245666888",
+                        "urlAvatar": "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png",
+                        "createdDateTime": "2023-10-23T12:48:56.096074",
+                        "type": {
+                            "id": 3,
+                            "name": "Bán hàng"
+                        },
+                        "salary": {
+                            "level": "Bán hàng I",
+                            "basic": 15000.00,
+                            "allowance": 200000.00,
+                            "overtime": 17000.00,
+                            "formattedAllowance": "200,000 VND",
+                            "formattedOvertime": "17,000 VND",
+                            "formattedBasic": "15,000 VND"
+                        }
+                    },
+                    "shift": {
+                        "id": 52,
+                        "date": {
+                            "date": "2023-10-27"
+                        },
+                        "task": null,
+                        "shiftType": {
+                            "id": 1,
+                            "name": "Sáng",
+                            "start": "07:00:00",
+                            "end": "12:00:00"
+                        }
+                    }
+                }
+            ]
+        ]
+    }
+    console.log(test);
     //Load các ca vào bảng
     let shiftTypesRes = await getAllShiftType()
     loadShiftTypeHtml(shiftTypesRes.data)

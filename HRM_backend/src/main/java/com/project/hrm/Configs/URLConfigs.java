@@ -93,5 +93,6 @@ public class URLConfigs {
     public static final String WORK_CHECKED="/workCheckeds";
     public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";
     public static final String GET_ALL_TIMEKEEPING_START_END_BUY_UID ="/getAllKeepingBuyUid";
+    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID="/getAllScheduleOfStaffInTimeKeepingStartEndByUid";
 
 }

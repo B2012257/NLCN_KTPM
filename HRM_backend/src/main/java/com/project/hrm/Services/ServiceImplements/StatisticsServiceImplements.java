@@ -8,6 +8,7 @@ import com.project.hrm.Services.StatisticsService;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.payloads.Response.StatisticsMonth;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -91,6 +92,9 @@ public class StatisticsServiceImplements implements StatisticsService {
         Date lastDate = new Date(year, month, lastDayOfMonth.getDayOfMonth());
         System.out.println(startDate + " "+ lastDate);
         System.out.println(managerService.getRecentStaff(startDate, lastDate));
-        return null;
+        ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
+        List recentStaffInMonths = (List) recentStaffInMonth.getData();
+        Long totalNewStaffInMonth = (long) recentStaffInMonths.size();
+        return new ResponseWithData<>(recentStaffInMonths, HttpStatus.OK, "");
     }
 }
