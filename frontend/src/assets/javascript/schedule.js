@@ -1745,7 +1745,7 @@ function moveToFreeTimeTale(element) {
 //Trả về < 0 là dateString1 < dateString2
 //Trả về = 0 là dateString1 = dateString2
 //Trả về > 0 là dateString1 > dateString2
-
+//Thiết kế nếu như trong ngày thì không cho sửa nữa
 function dateCompare(dateString1, dateString2) {
     console.log(dateString1, dateString2);
     let date1 = new Date(dateString1)
@@ -1758,7 +1758,7 @@ function dateCompare(dateString1, dateString2) {
         console.log(date1, date2, 1);
         return 1;
     }
-    if (date1.getTime() < date2.getTime()) {
+    if (date1.getTime() <= date2.getTime()) {
         console.log(date1, date2, -1);
 
         return -1;

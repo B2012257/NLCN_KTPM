@@ -153,11 +153,11 @@ public class ManagerController {
     }
 
     //
-//    @LoginRequired
-//    @PutMapping(URLConfigs.EDIT_SALARY)
-//    public Response editSalary(@RequestBody Salary salary) {
-//        return managerService.editSalary(salary);
-//    }
+    @LoginRequired
+    @PutMapping(URLConfigs.EDIT_SALARY)
+    public Response editSalary(@RequestBody Salary salary) {
+        return managerService.editSalary(salary);
+    }
 //
 //    @LoginRequired
 //    @PostMapping(URLConfigs.DELETE_SALARY)
@@ -231,7 +231,7 @@ public class ManagerController {
     @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
     public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
-        return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+        return managerService.getSchedulesOfShiftTypeOfDate(shiftType, date);
     }
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})

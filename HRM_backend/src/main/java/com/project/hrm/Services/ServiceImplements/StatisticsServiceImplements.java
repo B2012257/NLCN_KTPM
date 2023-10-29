@@ -102,7 +102,13 @@ public class StatisticsServiceImplements implements StatisticsService {
         List totalEachType = staffRepository.countStaffByType();
 
         //Đếm số nhân sự làm việc trong ngày -> Lấy shift detail trong ngày
-        List<ShiftDetail> shiftDetailsInOneDay =  shiftDetailRepository.findByShiftDateBetweenOrderByStaffType(new com.project.hrm.Models.Date(dateNow), new com.project.hrm.Models.Date(dateNow));
+        List<ShiftDetail> shiftDetailsInOneDay =  shiftDetailRepository.findByShiftDateBetweenOrderByStaffType(new com.project.hrm.Models.Date(dateNow),
+                new com.project.hrm.Models.Date(dateNow));
+        List<Staff> staffWorkingOnDay =  new ArrayList<>();
+
+//        for (ShiftDetail s :shiftDetailsInOneDay) {
+//            staffWorkingOnDay.add()
+//        }
 //        Long totalWorkingInDay =
         return new ResponseWithData<>(new SummaryStatistics(totalStaff, totalNewStaffInMonth, totalEachType, shiftDetailsInOneDay.size(), shiftDetailsInOneDay),HttpStatus.OK, "");
     }

@@ -307,26 +307,28 @@
                     <div class="modal-body">
                         <form>
                             <div class="mb-2">
-                                <label for="salary-name" class="col-form-label">Tên:</label>
-                                <input type="text" class="form-control" id="salary-name">
+                                <label for="salary-name" class="col-form-label">Tên bậc lương:</label>
+                                <input type="text" class="form-control level-name" disabled id="salary-name">
                             </div>
                             <div class="mb-2">
                                 <label for="salary-basic-name" class="col-form-label">Cơ bản:</label>
-                                <input type="text" class="form-control" id="salary-basic-name">
+                                <input type="text" class="form-control basic" id="salary-basic-name">
                             </div>
                             <div class="mb-2">
                                 <label for="salary-overtime-name" class="col-form-label">Tăng ca:</label>
-                                <input type="text" class="form-control" id="salary-overtime-name">
+                                <input type="text" class="form-control overtime" id="salary-overtime-name">
                             </div>
                             <div class="mb-2">
                                 <label for="salary-allowance-name" class="col-form-label">Phụ cấp/tháng:</label>
-                                <input type="text" class="form-control" id="salary-allowance-name">
+                                <input type="text" class="form-control allowance" id="salary-allowance-name">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary">Mặc định</button>
-                        <button type="button" class="btn btn-primary edit-salary-save">Lưu</button>
+                        <button type="button" class="btn btn-secondary" onclick="handlerDefaultEditSalaryClick()">Mặc
+                            định</button>
+                        <button type="button" onclick="handlerSaveEditSalaryClick(this)"
+                            class="btn btn-primary edit-salary-save">Lưu</button>
                     </div>
                 </div>
             </div>
