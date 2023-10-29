@@ -16,13 +16,13 @@ public class SummaryStatistics {
     private Long newStaffInMonth;
     private List<Map<String, Long>> totalEachType; //Tổng nhân sự theo từng loại
     private Integer totalWorkToday;
-    private List<ShiftDetail >totalWorkTodayNotGroupByType; //Tổng nhân sự làm hôm nay theo từng loại
+    private Map<String, Integer> totalWorkTodayGroupByType; //Tổng nhân sự làm hôm nay theo từng loại
 
-    public SummaryStatistics(Long totalStaff, Long newStaffInMonth, List<Map<String, Long>> totalEachType, Integer totalWorkToday, List<ShiftDetail > totalWorkTodayNotGroupByType) {
+    public SummaryStatistics(Long totalStaff, Long newStaffInMonth, List<Map<String, Long>> totalEachType, Integer totalWorkToday, Map<String, Integer>totalWorkTodayGroupByType) {
         this.totalStaff = totalStaff;
         this.newStaffInMonth = newStaffInMonth;
         this.totalEachType = totalEachType;
         this.totalWorkToday = totalWorkToday;
-        this.totalWorkTodayNotGroupByType = totalWorkTodayNotGroupByType;
+        this.totalWorkTodayGroupByType = totalWorkTodayGroupByType;
     }
 }

@@ -26,4 +26,9 @@ public class StatisticsController {
     private Response summaryStatisticsWorking() {
         return statisticsService.summaryStatisticsWorking();
     }
+
+    @GetMapping("/newStaff/sumarySixMonth")
+    private Response SixMonthStatisticsStaff() {
+        return statisticsService.SixMonthStatisticsStaff();
+    }
 }

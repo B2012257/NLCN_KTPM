@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StatisticsService {
     public ResponseWithData MonthlyStatisticsWorking(Date dateViewStatistics);
-    public Response SixMonthStatisticsStaff(Date dateViewStatistics);
+    public Response SixMonthStatisticsStaff();
     public Response SixMonthStatisticsWorking(Date dateViewStatistics);
 
     public Response summaryStatisticsWorking(); //Trả về tổng quan của hệ thống để hiển thị vào sidebar trang chủ

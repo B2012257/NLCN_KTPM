@@ -108,6 +108,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Xin chào! Chúc bạn có một ngày làm việc vui vẻ</h5>
                         <p class="card-text">Hi! Have a nice day!</p>
+                        <a class="button" href="../src/pages/shedule.html">Xem lịch làm việc hôm nay</a>
                     </div>
 
                 </div>
@@ -130,40 +131,40 @@
                     <div class="card-header text-white fw-bold bg-success">
                         Tổng quan:
                     </div>
-                    <div class="card-body">
+                    <div class="card-body totalSumary">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between ">Tổng nhân sự:
-                                <span class="badge bg-primary">24</span>
+                                <span class="badge bg-primary totalStaff">24</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">Mới trong tháng
-                                <span class="badge bg-success">1</span>
+                                <span class="badge bg-success newInMonth">1</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between">Phụ bếp
-                                <span class="badge bg-secondary">14</span>
+                            <!-- <li class="list-group-item d-flex justify-content-between">Phụ bếp
+                                <span class="badge bg-secondary totalBep">14</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">Bán hàng
                                 <span class="badge bg-secondary">10</span>
-                            </li>
+                            </li> -->
 
 
                         </ul>
                     </div>
                 </div>
-                <div class="card mt-3">
+                <div class="card mt-2 mb-3">
                     <div class="card-header text-white fw-bold bg-success">
                         Làm việc hôm nay
                     </div>
-                    <div class="card-body">
+                    <div class="card-body todaySumary">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between ">Tổng:
-                                <span class="badge bg-primary">16</span>
+                                <span class="badge bg-primary totalworkingToday">16</span>
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between">Phụ bếp
-                                <span class="badge bg-secondary">9</span>
+                                <span class="badge bg-secondary phubep">9</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">Bán hàng
-                                <span class="badge bg-secondary">7</span>
+                                <span class="badge bg-secondary banhang">7</span>
                             </li>
 
 
@@ -177,51 +178,57 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"]
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Tuyển nhân sự mới',
-            data: [4, 2, 1, 0, 0, 1, 2],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-
-            ],
-            borderWidth: 1
-        },
-        {
-            label: 'Nhân sự nghỉ việc',
-            data: [1, 0, 0, 0, 4, 0, 1],
-            backgroundColor: [
-                'rgba(255, 159, 64)',
-
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-
-            ],
-            borderWidth: 1
+    fetch("http://localhost:8081/api/v1/manager/statistics/newStaff/sumarySixMonth", {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
         }
-        ]
-    };
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'OK') {
+                let label = res.data.labels
+                let value = res.data.value
 
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+                const data = {
+                    labels: label,
+                    datasets: [{
+                        label: 'Tuyển nhân sự mới',
+                        data: value,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+
+                        ],
+                        borderWidth: 1
+                    },
+                    ]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    },
+                };
+                let chart = document.getElementById("chart")
+                new Chart(chart, config)
+            } else {
+                alert("Không lấy được dữ liệu thống kê vào biểu đồ")
             }
-        },
-    };
-    let chart = document.getElementById("chart")
-    new Chart(chart, config)
+        })
+
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

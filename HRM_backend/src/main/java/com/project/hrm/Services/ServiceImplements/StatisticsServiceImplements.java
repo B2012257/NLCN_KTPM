@@ -7,10 +7,7 @@ import com.project.hrm.Models.Type;
 import com.project.hrm.Repositorys.ShiftDetailRepository;
 import com.project.hrm.Repositorys.StaffRepository;
 import com.project.hrm.Services.StatisticsService;
-import com.project.hrm.payloads.Response.Response;
-import com.project.hrm.payloads.Response.ResponseWithData;
-import com.project.hrm.payloads.Response.StatisticsMonth;
-import com.project.hrm.payloads.Response.SummaryStatistics;
+import com.project.hrm.payloads.Response.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -47,9 +44,7 @@ public class StatisticsServiceImplements implements StatisticsService {
         Date endMonth = new Date("2023/10/31");
         List rs = new ArrayList<>();
         for (Staff staff : listStaffOrderByType) {
-            List shiftDetail = shiftDetailRepository.findByShiftDateBetweenAndStaff(new com.project.hrm.Models.Date(startMonth),
-                    new com.project.hrm.Models.Date(endMonth),
-                    staff);
+            List shiftDetail = shiftDetailRepository.findByShiftDateBetweenAndStaff(new com.project.hrm.Models.Date(startMonth), new com.project.hrm.Models.Date(endMonth), staff);
             if (shiftDetail.isEmpty()) {
                 rs.add(staff);
                 continue;
@@ -59,9 +54,56 @@ public class StatisticsServiceImplements implements StatisticsService {
         return new ResponseWithData<>(rs, HttpStatus.OK, "");
     }
 
-    @Override
-    public Response SixMonthStatisticsStaff(Date dateViewStatistics) {
-        return null;
+    @Override //Thống kê thay đổi nhân sự 6 tháng
+    public Response SixMonthStatisticsStaff() {
+        Date dateNow = new Date();
+        // Lấy ngày hiện tại
+        LocalDate currentDate = LocalDate.now();
+
+        // Lấy ngày cuối của tháng
+        YearMonth yearMonth = YearMonth.from(currentDate);
+        LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+        int year = dateNow.getYear();
+        int month = dateNow.getMonth(); //0-11
+
+
+        System.out.println("Month" + " " + month);
+        int lastFiveMonth = month - 5;
+        String[] sixMonthRecentLabel = new String[6]; //Lưu tên label
+        // Tìm 6 tháng gần đây
+        int j = 0;
+
+        for(int i = lastFiveMonth+1; i >= 0; i--) {
+            sixMonthRecentLabel[j] = "Tháng " + ((month - i) + 1);
+            j++;
+        }
+
+        //Lập qua danh sách tháng để lấy số lương nhân sự mới theo tùng tháng
+        Integer[] sixMonthRecent = new Integer[6]; //Lưu tên label
+        // Tìm 6 tháng gần đây
+        int x = 0;
+        for(int i = lastFiveMonth+1; i >= 0; i--) {
+//            sixMonthRecentLabel[j] = "Tháng " + ((month - i));
+            sixMonthRecent[x] = month -i;
+            x++;
+        }
+
+        List totalStaffSixMonthRc = new ArrayList();
+        for (int newMonth:
+                sixMonthRecent) {
+            Date startDate = new Date(year, newMonth, 1);
+            Date lastDate = new Date(year, newMonth, lastDayOfMonth.getDayOfMonth());
+            ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
+            List recentStaffInMonths = (List) recentStaffInMonth.getData();
+            int totalNewStaff = recentStaffInMonths.size();
+            totalStaffSixMonthRc.add(totalNewStaff);
+        }
+//        Date startDate = new Date(year, (month - 6), 1);
+//        Date lastDate = new Date(year, month -6, lastDayOfMonth.getDayOfMonth());
+//            ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
+//            List recentStaffInMonths = (List) recentStaffInMonth.getData();
+//            System.out.println(startDate + " "+ recentStaffInMonths.size());
+            return new ResponseWithData<>(new SixMonthStatisticsStaffResponse(sixMonthRecentLabel, totalStaffSixMonthRc), HttpStatus.OK, "");
     }
 
     @Override
@@ -87,29 +129,51 @@ public class StatisticsServiceImplements implements StatisticsService {
         // In ngày cuối của tháng
 
         int year = dateNow.getYear();
-        int month = dateNow.getMonth() ;
+        int month = dateNow.getMonth();
 
         Date startDate = new Date(year, month, 1);
         Date lastDate = new Date(year, month, lastDayOfMonth.getDayOfMonth());
-        System.out.println(startDate + " "+ lastDate);
-        System.out.println(managerService.getRecentStaff(startDate, lastDate));
-        ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
-        List recentStaffInMonths = (List) recentStaffInMonth.getData();
+        try {
+            ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
+            List recentStaffInMonths = (List) recentStaffInMonth.getData();
 
-        Long totalNewStaffInMonth = (long) recentStaffInMonths.size();
+            Long totalNewStaffInMonth = (long) recentStaffInMonths.size();
 
-        //Số nhân sự theo từng chức vụ
-        List totalEachType = staffRepository.countStaffByType();
+            //Số nhân sự theo từng chức vụ
+            List totalEachType = staffRepository.countStaffByType();
 
-        //Đếm số nhân sự làm việc trong ngày -> Lấy shift detail trong ngày
-        List<ShiftDetail> shiftDetailsInOneDay =  shiftDetailRepository.findByShiftDateBetweenOrderByStaffType(new com.project.hrm.Models.Date(dateNow),
-                new com.project.hrm.Models.Date(dateNow));
-        List<Staff> staffWorkingOnDay =  new ArrayList<>();
+            //Đếm số nhân sự làm việc trong ngày -> Lấy shift detail trong ngày
+            List<ShiftDetail> shiftDetailsInOneDay = shiftDetailRepository.findByShiftDateBetweenOrderByStaffType(new com.project.hrm.Models.Date(dateNow),
+                    new com.project.hrm.Models.Date(dateNow));
+            //Lưu danh sách nhân viên làm hôm nay, hông trùng
+            Set<Staff> staffWorkingOnDay = new HashSet<>();
 
-//        for (ShiftDetail s :shiftDetailsInOneDay) {
-//            staffWorkingOnDay.add()
-//        }
-//        Long totalWorkingInDay =
-        return new ResponseWithData<>(new SummaryStatistics(totalStaff, totalNewStaffInMonth, totalEachType, shiftDetailsInOneDay.size(), shiftDetailsInOneDay),HttpStatus.OK, "");
+            for (ShiftDetail s : shiftDetailsInOneDay) {
+                staffWorkingOnDay.add(s.getStaff());
+            }
+            //Tổng số làm việc hôm nay
+            Integer totalWorkToday = staffWorkingOnDay.size();
+            // Tạo một Map để tính tổng số nhân sự cho mỗi loại
+            Map<String, Integer> totalByType = new HashMap<>();
+            //Đếm mỗi loại bao nhiêu người
+            for (Staff staff : staffWorkingOnDay) {
+                String typeName = staff.getType().getName();
+                totalByType.put(typeName, totalByType.getOrDefault(typeName, 0) + 1);
+
+            }
+
+            return new ResponseWithData<>(new SummaryStatistics(totalStaff,
+                    totalNewStaffInMonth,
+                    totalEachType,
+                    totalWorkToday,
+                    totalByType),
+                    HttpStatus.OK, "Tổng quan trong tháng và tổng quan làm việc hôm nay");
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi trong quá trình tính toán");
+        }
+
+
     }
 }

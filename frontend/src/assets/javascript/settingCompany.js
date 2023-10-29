@@ -252,8 +252,10 @@ function getAllType() {
                 datasSort.forEach(item => {
                     tbody.innerHTML += `
                     <tr>
-                    <td>${item.name || "Không có"}</td>
-                    
+                    <td>
+                    <span class="d-none type-id">${item.id}</span>
+
+                    ${item.name || "Không có"}</td>
                     <td>
                         <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal" 
                             data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
