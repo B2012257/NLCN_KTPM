@@ -129,20 +129,24 @@ async function renderStaff(staffs, start, end) {
       const salaryBasic = staff.type ? staff.salary.formattedBasic : "";
       const salaryOvertimeReal = staff.type ? staff.salary.overtime : "";
       const salaryOvertime = staff.type ? staff.salary.formattedOvertime : "";
-      // const hoursShift = timeKeeping ? timeKeeping.length * 5 : "0";
-      const hoursShift = timeKeeping ? calculateTotalHours(timeKeeping) : "0";
+      const hoursShift = timeKeeping ? calculateTotalHours(timeKeeping) : 0;
+      console.log("hoursShift", typeof hoursShift);
+      const formatHoursShift = hoursShift.toFixed(1);
       const totalOvertime = timeKeeping && calculateTotalOvertime(timeKeeping);
       const totalMoney = timeKeeping
-        ? hoursShift * salaryBasicReal + totalOvertime * salaryOvertimeReal
-        : "0";
+        ? formatHoursShift * salaryBasicReal +
+          totalOvertime * salaryOvertimeReal
+        : 0;
+
+      const lamtronSo = Math.round(totalMoney);
       const config = {
         style: "currency",
         currency: "VND",
+        currencyDisplay: "code",
         maximumFractionDigits: 9,
       };
-      const formated = new Intl.NumberFormat("vi-VN", config).format(
-        totalMoney
-      );
+      const formated = new Intl.NumberFormat("vi-VN", config).format(lamtronSo);
+
       console.log("totalOvertime", totalOvertime);
       const today = new Date();
       const beginWork = new Date(staff.beginWork);
@@ -166,7 +170,7 @@ async function renderStaff(staffs, start, end) {
         </td>
         <td>${staff.phone}</td>
         <td>${year} ${month} tháng</td>
-        <td class="hoursShift"> ${hoursShift}
+        <td class="hoursShift"> ${formatHoursShift}
         </td>
         <td>
         ${salaryBasic}
