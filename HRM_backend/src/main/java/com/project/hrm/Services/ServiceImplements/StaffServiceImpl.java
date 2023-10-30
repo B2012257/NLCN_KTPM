@@ -138,7 +138,7 @@ public class StaffServiceImpl implements StaffService {
             freeTimeRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
         }

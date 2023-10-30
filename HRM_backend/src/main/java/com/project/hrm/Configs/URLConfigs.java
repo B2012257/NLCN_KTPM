@@ -87,7 +87,7 @@ public class URLConfigs {
     public static final String DELETE_SCHEDULE = "/schedule/delete";
     public static final String GET_ALL_SCHEDULE_BY_DATE = "/getScheduleOfDate";
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_TIMEKEEPING="/getAllSchedulesOfShiftOfDateInTimeKeeping";
-
+    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID="/getAllScheduleOfStaffInTimeKeepingStartEndByUid";
     public static final String GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE="/getScheduleOfShiftOfDate";
     public static final String GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE="/getFreeTimeNotScheduled";
 
@@ -95,7 +95,6 @@ public class URLConfigs {
     public static final String WORK_CHECKED="/workCheckeds";
     public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";
     public static final String GET_ALL_TIMEKEEPING_START_END_BUY_UID ="/getAllKeepingBuyUid";
-    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID="/getAllScheduleOfStaffInTimeKeepingStartEndByUid";
 
     public static final String DELETE_TIME_KEEPING = "/deleteTimeKeeping";
 
