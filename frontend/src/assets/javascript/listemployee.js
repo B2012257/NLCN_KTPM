@@ -1,6 +1,8 @@
 const api = `http://localhost:8081/api/v1/manager/allStaff`;
 const apiType = `http://localhost:8081/api/v1/manager/types`;
+const apiSalary = `http://localhost:8081/api/v1/manager/salaries`;
 const getInfoStaff = `http://localhost:8081/api/v1/manager/infoStaff`;
+
 let data = [];
 
 let avatar = "";
@@ -11,6 +13,7 @@ function start() {
     filterStaffByRole(data, "Tất cả");
   });
   getType();
+  getSalary();
 }
 start();
 
@@ -31,6 +34,32 @@ async function getStaff(callback) {
   } catch (error) {
     console.error(error);
   }
+}
+function getSalary() {
+  fetch(apiSalary, {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.status == "OK") {
+        const data = res.data;
+        console.log("salary", data);
+        const salary = document.getElementById("levelSalary");
+        var htmls = data.map(function (salary, index) {
+          return `
+          <option id="salary" value="${salary.level}">${salary.level}
+          <label"> (Cơ bản: ${salary.formattedBasic}; Tăng ca ${salary.formattedOvertime}; Trợ cấp ${salary.formattedAllowance}/Tháng )</label>
+          </option>
+          `;
+        });
+        salary.innerHTML = htmls.join("");
+      }
+    });
 }
 
 function getType() {
@@ -60,6 +89,14 @@ function getType() {
           `;
         });
         type.innerHTML = html.join("");
+
+        const typeDetail = document.getElementById("type");
+        var htmls = data.map(function (type, index) {
+          return `
+          <option id="${type.id}" value="${type.name}">${type.name}</option>
+          `;
+        });
+        typeDetail.innerHTML = htmls.join("");
       }
       const radioButtons = document.querySelectorAll(".form-check-input");
       console.log(radioButtons);
@@ -192,6 +229,7 @@ function fillStaffInfo(data) {
   document.getElementById("bankName").value = data.bankName;
   document.getElementById("avatar").src = data.urlAvatar;
   document.getElementById("beginWork").value = data.beginWork;
+  document.getElementById("levelSalary").value = data.salary.level;
   dbAvatar = data.urlAvatar;
 }
 console.log("idGetDetail", idGetDetail);
@@ -252,12 +290,26 @@ function updateStaffInfoHandler() {
   const newFullName = document.getElementById("FullName").value;
   const newGender = document.getElementById("gender").value;
   const newPhone = document.getElementById("phone").value;
+  // const newTypeName = document.getElementById("type").value;
+  const newTypeSelectId =
+    document.getElementById("type").options[
+      document.getElementById("type").selectedIndex
+    ].id;
+  console.log("selectedOptionId", newTypeSelectId);
   const newLocation = document.getElementById("location").value;
   const newBankAccount = document.getElementById("bankAccount").value;
   const newBankName = document.getElementById("bankName").value;
   const uid = document.getElementById("userId").value;
   const beginWork = document.getElementById("beginWork").value;
+  const levelSalary = document.getElementById("levelSalary").value;
+  // const levelSalary =
+  //   document.getElementById("levelSalary").options[
+  //     document.getElementById("levelSalary").selectedIndex
+  //   ].id;
+  console.log("levelSalary", levelSalary);
   const dataUpdate = {};
+  dataUpdate.type = {};
+  dataUpdate.salary = {};
 
   if (avatar !== "") {
     dataUpdate.urlAvatar = avatar;
@@ -267,6 +319,7 @@ function updateStaffInfoHandler() {
   }
 
   dataUpdate.fullName = newFullName;
+  dataUpdate.type.id = newTypeSelectId; //do backend chỉ chỉnh dc id của type nên chưa update được (mai sửa)
   dataUpdate.gender = newGender;
   dataUpdate.phone = newPhone;
   dataUpdate.location = newLocation;
@@ -274,18 +327,19 @@ function updateStaffInfoHandler() {
   dataUpdate.bankName = newBankName;
 
   dataUpdate.beginWork = beginWork;
+  dataUpdate.salary.level = levelSalary;
 
   dataUpdate.uid = uid;
 
   console.log(uid);
-  console.log(dataUpdate);
+  console.log("dataUpdate", dataUpdate.type);
 
   updateStaffInfo(dataUpdate);
 }
 
 //Gọi api cập nhật thông tin cá nhân
 function updateStaffInfo(dataUpdate) {
-  fetch("http://localhost:8081/api/v1/staff/editStaff", {
+  fetch("http://localhost:8081/api/v1/manager/editStaff", {
     method: "PUT",
     mode: "cors",
     credentials: "include",
