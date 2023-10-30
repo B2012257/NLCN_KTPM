@@ -29,3 +29,11 @@ a {
 .hide {
     display: none;
 }
+
+/* /* .form-floating>.form-control:not(:placeholder-shown)~label::before{
+    background-color: none;
+} */
+.form-floating>.form-control:not(:placeholder-shown)~label::after{
+    background-color: #e9ecef;
+    position: relative;
+} 

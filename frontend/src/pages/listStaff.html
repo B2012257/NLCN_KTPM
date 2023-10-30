@@ -202,11 +202,14 @@
                                 </div>
                             </div>
                             <form class="row col">
-                                <div class="col-12 col-xl-6 mb-2">
-                                    <input disabled type="text" class="form-control editInfo" placeholder="Họ và tên"
+                                <div class="col-12 col-xl-6 mb-2 ">
+                                     <div class="form-floating">
+                                        <input disabled type="text" class="form-control editInfo" placeholder="Họ và tên"
                                         aria-label="FullName" id="FullName">
-                                   <input disabled style="display: none;" type="text" class="form-control editInfo" id="userId" placeholder="userId"
-                                        aria-label="uid">
+                                    <label for="FullName">Họ và tên</label>  
+                                    <input disabled style="display: none;" type="text" class="form-control editInfo" id="userId" placeholder="userId"
+                                        aria-label="uid"> 
+                                     </div>       
                                 </div>
 
                                 <div class="col  mb-1">
@@ -219,47 +222,71 @@
                                     </div>
                                 </div>
                                 <div class="col mb-1">
-                                    <!-- <input disabled type="text" class="form-control" id="type" placeholder="Chức vụ"
-                                    aria-label="position"> -->
                                     <div class="form-floating ">
                                         <select disabled class="form-select editInfo" id="type" aria-label="">
-                                            <option selected value="Quản lý">Quản Lý</option>
-                                            <option value="Bán hàng">Bán hàng</option>
-                                            <option value="Phụ  bếp">Phụ bếp</option>
+                                            <!-- <option id="1" selected value="Quản lý">Quản Lý</option>
+                                            <option id="3" value="Bán hàng">Bán hàng</option>
+                                            <option id="2" value="Phụ  bếp">Phụ bếp</option> -->
                                         </select>
                                         <label for="floatingSelect">Chức vụ</label>
                                     </div>
                                 </div>
-
+                                <br>
+                                <div class=" mb-1">
+                                    <!-- <input disabled type="text" class="form-control" id="type" placeholder="Chức vụ"
+                                    aria-label="position"> -->
+                                    <div class="form-floating ">
+                                        <select disabled class="form-select editInfo" id="levelSalary" aria-label="">
+                                            <!-- <option id="1" selected value="Quản lý">Quản Lý</option>
+                                            <option id="3" value="Bán hàng">Bán hàng</option>
+                                            <option id="2" value="Phụ  bếp">Phụ bếp</option> -->
+                                        </select>
+                                        <label for="floatingSelect">Bậc lương</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 mt-2 mb-1 ">
+                                    <div class="form-floating">
+                                        <input disabled type="text" class="form-control editInfo" placeholder="Begin work" id="beginWork" aria-label="beginWork ">
+                                        <label for="beginWork">Ngày bắt đầu</label>  
+                                    </div>
+                                </div>
+                                
                                 <div class="col-12 col-xl-6 mt-2 mb-1">
-                                    <input disabled type="text" class="form-control editInfo" placeholder="Begin work" id="beginWork" aria-label="beginWork ">
+                                    <div class="form-floating">
+                                        <input disabled type="text" class="form-control editInfo" placeholder="Số điện thoại"
+                                            aria-label="phone" id="phone">
+                                            <label for="phone">Số điện thoại</label>  
+                                    </div>
                                 </div>
                                 <div class="col-12 col-xl-6 mt-2 mb-1">
-                                    <input disabled type="text" class="form-control editInfo" placeholder="Số điện thoại"
-                                        aria-label="phone" id="phone">
-                                </div>
-                                <div class="col-12 col-xl-6 mt-2 mb-1">
-                                    <input disabled type="text" class="form-control editInfo " placeholder="Địa chỉ" aria-label="place" id="location">
+                                    <div class="form-floating">                                     
+                                        <input disabled type="text" class="form-control editInfo " placeholder="Địa chỉ" aria-label="place" id="location">
+                                        <label for="location">Địa chỉ</label>  
+                                    </div>
                                 </div>
                                 <div class="col-xl-6 col-12 mt-2 mb-1">
                                     <div class="input-group flex-nowrap" >
                                         <span  class="input-group-text" id="addon-wrapping" role="button">
-                                            <select disabled class="p-1 border border-0 bg-transparent editInfo" id="bankName">
-                                                <option checked value="#">Tên ngân hàng</option>
-                                                <option value="Agribank">Agribank</option>
-                                                <option value="Vietcombank">Vietcombank</option>
-                                                <option value="Sacombank">Sacombank</option>
-                
-                                                <option value="BIDV">BIDV</option>
-                                                <option value="VPBank">VPBank</option>
-                                                <option value="MBBank">MBBank</option>
-                                                <option value="ACB">ACB</option>
-                                                <option value="HDBank">HDBank</option>
-                                                <option value="VIB">VIB</option>
-                                            </select>
+                                                <select disabled class="p-1 border border-0 bg-transparent editInfo" id="bankName">
+                                                    <option checked value="#">Tên ngân hàng</option>
+                                                    <option value="Agribank">Agribank</option>
+                                                    <option value="Vietcombank">Vietcombank</option>
+                                                    <option value="Sacombank">Sacombank</option>
+                                                    
+                                                    <option value="BIDV">BIDV</option>
+                                                    <option value="VPBank">VPBank</option>
+                                                    <option value="MBBank">MBBank</option>
+                                                    <option value="ACB">ACB</option>
+                                                    <option value="HDBank">HDBank</option>
+                                                    <option value="VIB">VIB</option>
+                                                </select>    
                                         </span>
-                                        <input disabled type="text" class="form-control editInfo" id="bankAccount"
-                                    placeholder="Số tài khoản" >
+
+                                        <div class="form-floating">
+                                            <input disabled type="text" class="form-control editInfo" id="bankAccount"
+                                         placeholder="Số tài khoản" >
+                                         <label for="bankAccount">Số tài khoản</label>  
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col mt-2 mb-1">
