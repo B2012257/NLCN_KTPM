@@ -70,8 +70,8 @@ function showSumary(data) {
     let totalStaffWorkingToday = todaySumary.querySelector(".totalworkingToday")
     totalStaffWorkingToday.innerHTML = data.totalWorkToday
     //Hiển thị tổng làm việc hôm nay theo từng chức vụ
-    document.querySelector(".phubep").innerHTML = data.totalWorkTodayGroupByType["Phụ bếp"]
-    document.querySelector(".banhang").innerHTML = data.totalWorkTodayGroupByType["Bán hàng"]
+    document.querySelector(".phubep").innerHTML = data.totalWorkTodayGroupByType["Phụ bếp"] || 0
+    document.querySelector(".banhang").innerHTML = data.totalWorkTodayGroupByType["Bán hàng"] || 0
 
 
 
