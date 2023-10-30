@@ -968,6 +968,7 @@ function loadScheduleHtml(schedules) {
             let endFormat = end.split(":")[0] + ":" + end.split(":")[2]
             let spanNode = document.createElement("span")
             spanNode.classList.add("badge")
+            spanNode.classList.add("rounded-pill")
             spanNode.classList.add("bg-primary")
             spanNode.innerText = `${schedule.staff.fullName}
             `
@@ -1196,7 +1197,7 @@ async function actionBtnClickHandler(event) {
                                                 ${shiftDetail.staff.gender || ""} 
                                             </td>
                                             <td>
-                                                <div class="badge bg-primary">${shiftDetail.staff.type.name}</div>
+                                                <div class="badge bg-primary rounded-pill">${shiftDetail.staff.type.name}</div>
                                             </td>
 
                                             <td>
@@ -1413,7 +1414,7 @@ function loadFreeTimeHtml(data) {
                                                 ${freeTime.staff.gender || ""} 
                                             </td>
                                             <td>
-                                                <div class="badge bg-primary type">${freeTime.staff.type.name}</div>
+                                                <div class="badge bg-primary type rounded-pill">${freeTime.staff.type.name}</div>
                                             </td>
 
                                             <td>
@@ -1679,7 +1680,7 @@ function moveToScheduleTale(fullName, uid, gender, type, shiftRegisted, start, e
                                                 ${gender || ""} 
                                             </td>
                                             <td>
-                                                <div class="badge bg-primary">${type}</div>
+                                                <div class="badge bg-primary rounded-pill">${type}</div>
                                             </td>
 
                                             <td>
