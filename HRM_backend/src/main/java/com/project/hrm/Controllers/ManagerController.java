@@ -235,6 +235,12 @@ public class ManagerController {
     }
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
+    @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE_NOT_TIMEKEEPING)
+    public Response getAllSchedulesOfShiftOfDateNotInTimeKeeping(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
+        return managerService.getAllSchedulesOfShiftOfDateNotInTimeKeeping(shiftType, date);
+    }
+    @LoginRequired
+    @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_FREE_TIME_SCHEDULED_BY_SHIFT_TYPE_BY_DATE)
     public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
         return managerService.getAllFreeTimeNotScheduledOfShiftTypeAndDate(shiftType, date);

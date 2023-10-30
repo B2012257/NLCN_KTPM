@@ -769,7 +769,7 @@ public class ManagerServiceImpl implements ManagerService {
 //    }
 
     @Override //Lay lich lam chua cham cong
-    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDate(ShiftType shiftType, Date date) {
+    public ResponseWithData<List<ShiftDetail>> getAllSchedulesOfShiftOfDateNotInTimeKeeping(ShiftType shiftType, Date date) {
         com.project.hrm.Models.Date date1 = new com.project.hrm.Models.Date(date);
         List<Shift> shiftOfDate = shiftRepository.findAllByShiftTypeAndDate(shiftType, date1);
         List<ShiftDetail> shiftDetails = new ArrayList<>();
@@ -847,7 +847,7 @@ public class ManagerServiceImpl implements ManagerService {
     //Lấy danh sách lịch rảnh của nhân sự chưa được sắp vào lịch dựa vào 1 ca trong 1 ngày
     @Override
     public Response getAllFreeTimeNotScheduledOfShiftTypeAndDate(ShiftType shiftType, Date date) {
-        ResponseWithData<List<ShiftDetail>> rs = this.getAllSchedulesOfShiftOfDate(shiftType, date); //Lấy danh sách lịch làm của ca đó và ngày đó
+        ResponseWithData<List<ShiftDetail>> rs = this.getSchedulesOfShiftTypeOfDate(shiftType, date); //Lấy danh sách lịch làm của ca đó và ngày đó
         com.project.hrm.Models.Date dateToFind = new com.project.hrm.Models.Date(date);
         ShiftType shiftTypeRq = new ShiftType(shiftType);
         //Lấy danh sách freeTime chưa được lập lịch

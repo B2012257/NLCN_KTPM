@@ -246,7 +246,7 @@ function getAllShiftType() {
 
 
 function getAllShiftDetail(date, shiftDetailID) {
-    fetch(`http://localhost:8081/api/v1/manager/getScheduleOfShiftOfDate?date=${date}&shiftType=${shiftDetailID}`, {
+    fetch(`http://localhost:8081/api/v1/manager/getAllSchedulesOfShiftOfDateNotTimeKeeping?date=${date}&shiftType=${shiftDetailID}`, {
         method: "GET",
         mode: "cors",
         credentials: "include",
