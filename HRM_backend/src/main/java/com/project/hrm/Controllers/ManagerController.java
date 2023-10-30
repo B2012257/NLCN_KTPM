@@ -1,4 +1,4 @@
-package com.project.hrm.Controllers;
+    package com.project.hrm.Controllers;
 
 import com.project.hrm.Configs.URLConfigs;
 import com.project.hrm.Models.*;
@@ -153,11 +153,11 @@ public class ManagerController {
     }
 
     //
-//    @LoginRequired
-//    @PutMapping(URLConfigs.EDIT_SALARY)
-//    public Response editSalary(@RequestBody Salary salary) {
-//        return managerService.editSalary(salary);
-//    }
+    @LoginRequired
+    @PutMapping(URLConfigs.EDIT_SALARY)
+    public Response editSalary(@RequestBody Salary salary) {
+        return managerService.editSalary(salary);
+    }
 //
 //    @LoginRequired
 //    @PostMapping(URLConfigs.DELETE_SALARY)
@@ -231,7 +231,7 @@ public class ManagerController {
     @RoleRequired(value = {"Quản lý"})
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BY_SHIFT_BY_DATE)
     public Response getAllSchedulesOfShiftOfDate(@RequestParam("shiftType") ShiftType shiftType, @RequestParam("date") java.util.Date date){
-        return managerService.getAllSchedulesOfShiftOfDate(shiftType, date);
+        return managerService.getSchedulesOfShiftTypeOfDate(shiftType, date);
     }
     @LoginRequired
     @RoleRequired(value = {"Quản lý"})
@@ -262,5 +262,9 @@ public class ManagerController {
         return managerService.deleteTimeKeeping(timekeeping);
     }
 
+    @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID)
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(@RequestParam("start") java.util.Date start, @RequestParam("end") java.util.Date end,@RequestParam(name = "uid") String uid){
+        return managerService.getAllScheduleOfStaffInTimeKeeping(start,end,uid);
+    }
 
 }
