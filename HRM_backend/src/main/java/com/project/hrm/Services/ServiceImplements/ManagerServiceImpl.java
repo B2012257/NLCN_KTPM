@@ -475,11 +475,12 @@ public class ManagerServiceImpl implements ManagerService {
         if (shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
 
         //Kiểm tra trùng tên
-        if (shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
-            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
-        }
+
         try {
-            shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
+            shiftTypeDb.setName(shiftType.getName());
+            shiftTypeDb.setStart(shiftType.getStart());
+            shiftTypeDb.setEnd(shiftType.getEnd());
+            shiftTypeRepository.saveAndFlush(shiftTypeDb);
             return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
