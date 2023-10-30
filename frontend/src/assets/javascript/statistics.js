@@ -135,7 +135,14 @@ async function renderStaff(staffs, start, end) {
       const totalMoney = timeKeeping
         ? hoursShift * salaryBasicReal + totalOvertime * salaryOvertimeReal
         : "0";
-
+      const config = {
+        style: "currency",
+        currency: "VND",
+        maximumFractionDigits: 9,
+      };
+      const formated = new Intl.NumberFormat("vi-VN", config).format(
+        totalMoney
+      );
       console.log("totalOvertime", totalOvertime);
       const today = new Date();
       const beginWork = new Date(staff.beginWork);
@@ -171,7 +178,7 @@ async function renderStaff(staffs, start, end) {
         ${salaryOvertime}
         </td>
         <td>
-            ${totalMoney} 
+            ${formated} 
         </td>
         <td>
         ${staff.bankName}
