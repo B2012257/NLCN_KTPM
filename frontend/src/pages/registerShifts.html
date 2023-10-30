@@ -49,7 +49,7 @@
 
                     <div class="d-flex">
                         <div class="dropdown">
-                            <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
+                            <button class="btn btn-secondary fs-6 dropdown-toggle fullName-btn" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false" id="helloUserName">
                                 Xin chào <span id="username"></span>
                             </button>
@@ -86,10 +86,13 @@
             </div>
 
 
+            
 
-
-
-
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-outline-primary" id="prevWeekButton">Lùi 1 tuần</button>
+                <button type="button" class="btn btn-outline-primary" id="currentWeekButton">Tuần này</button>
+                <button type="button" class="btn btn-outline-primary" id="nextWeekButton">Tiến 1 tuần</button>
+              </div>
 
             <div class="row mt-3">
                 <div class="col-12">
@@ -105,20 +108,18 @@
 
                                     </th>
 
-                                    <th scope="col" style="text-align: center;">Đăng ký giờ rảnh
+                                    <th scope="col" style="text-align: center;">Đăng ký lịch rảnh
 
                                     </th>
+                                   
+
                                     <th scope="col" style="text-align: center;">Thao tác
-
-                                    </th>
-
-                                    <th scope="col" style="text-align: center;">Trạng thái
 
                                     </th>
 
                                 </tr>
                             </thead>
-                            <tbody class="text-start" id="">
+                            <tbody class="text-start">
                                 <tr id="monday">
                                     <td style="text-align: center;">
                                         <div class="sttNameWeek" style="font-weight: bold;">Thứ 2</div>
@@ -127,16 +128,16 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="monday-data" id="monday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('monday')"
-                                            disabled></button>
+                                       
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                   
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"  title="Thêm lịch rảnh" 
+                                            data-bs-target="#exampleModal" onclick="setCurrentDay('monday')"></button>
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('monday')"></button>
+                                            
                                     </td>
                                 </tr>
 
@@ -151,19 +152,18 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="tuesday-data" id="tuesday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('tuesday')"
-                                            disabled></button>
+                                        
 
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                   
 
 
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" onclick="setCurrentDay('tuesday')"></button>
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;"  
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('tuesday')"></button>
                                     </td>
                                 </tr>
 
@@ -178,18 +178,17 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="wednesday-data" id="wednesday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('wednesday')"
-                                            disabled></button>
-
+                                        
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                    
 
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" onclick="setCurrentDay('wednesday')"></button>
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;"  
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('wednesday')"></button>
+
                                     </td>
                                 </tr>
 
@@ -205,19 +204,19 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="thursday-data" id="thursday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('thursday')"
-                                            disabled></button>
+                                        
 
 
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                    
 
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" onclick="setCurrentDay('thursday')"></button>
+
+
+                                        <button class="fa-solid fa-trash-can" style="border: none; "  
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('thursday')"></button>
                                     </td>
                                 </tr>
 
@@ -231,19 +230,18 @@
                                     </td style="text-align: center;">
                                     <td class="text-center">
                                         <div class="friday-data" id="friday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('friday')"
-                                            disabled></button>
-
+                                        
 
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
-
+                                    
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" onclick="setCurrentDay('friday')"></button>
+
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;" 
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('friday')"></button>
+
                                     </td>
                                 </tr>
 
@@ -258,19 +256,19 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="saturday-data" id="saturday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('saturday')"
-                                            disabled></button>
+                                        
 
 
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                    
 
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" onclick="setCurrentDay('saturday')"></button>
+
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;" 
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('saturday')"></button>
                                     </td>
                                 </tr>
 
@@ -284,19 +282,19 @@
                                         </div>
                                     <td class="text-center">
                                         <div class="sunday-data" id="sunday-data"></div>
-                                        <button class="fa-solid fa-pen" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('sunday')"
-                                            disabled></button>
-
+                                       
 
                                     </td>
-                                    <td style="text-align: center;">
-                                        <input class="form-check-input mt-0 fs-3  border border-primary" type="checkbox"
-                                            onchange="operationTimeInput(this)">
-                                    </td>
+                                    
 
                                     <td class="text-center">
-                                        Chưa đăng ký lịch rảnh
+                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" onclick="setCurrentDay('sunday')"></button>
+
+
+                                        <button class="fa-solid fa-trash-can" style="border: none;" 
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('sunday')"></button>
+
                                     </td>
                                 </tr>
 
@@ -304,16 +302,14 @@
                         </table>
 
                     </div>
-                    <br>
-                    <button id="submitSchedule" onclick="workRegister()" class="btn btn-primary float-end">Gửi
-                        lịch</button>
+                   
 
                 </div>
             </div>
 
 
-
-            <!-- Button trigger modal -->
+           
+    
 
 
             <!-- Modal -->
@@ -326,21 +322,38 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
-
-
                             <div id="shiftType"></div>
                         </div>
+
+                        
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="button" class="btn btn-primary" onclick="updateCheckboxInfo()"
-                                data-bs-dismiss="modal">Thêm</button>
+                            <button type="button" class="btn btn-primary"  id="addButton"
+                                data-bs-dismiss="modal"  onclick="updateCheckboxInfo()">Thêm</button>
                         </div>
                     </div>
                 </div>
             </div>
 
 
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Xóa lịch rảnh</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="deleteFreeTime"></div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getFreeTimeOfWeek()"  >Đóng</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
 

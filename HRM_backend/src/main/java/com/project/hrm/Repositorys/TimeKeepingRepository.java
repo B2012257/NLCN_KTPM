@@ -12,4 +12,5 @@ import java.util.List;
 public interface TimeKeepingRepository extends JpaRepository<Timekeeping,Long> {
 
     Timekeeping findByShiftDetail(ShiftDetail shiftDetail);
+    Boolean existsByShiftDetail(ShiftDetail shiftDetail);
 }

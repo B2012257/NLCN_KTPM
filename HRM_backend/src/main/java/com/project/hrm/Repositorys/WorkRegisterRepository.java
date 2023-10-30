@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface WorkRegisterRepository extends JpaRepository<FreeTime,Long> {
-        Boolean existsByDate(Date date);
+
 
 
 

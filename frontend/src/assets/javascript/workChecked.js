@@ -15,6 +15,10 @@ const userObject = JSON.parse(userData);
 const uid = userObject.uid;
 console.log(uid);
 
+
+let selectedRadioButtonId = null; 
+
+
 getAllShiftType();
 fetchStaffInfo();
 
@@ -22,7 +26,7 @@ fetchStaffInfo();
 
 function getDateWorkCheck() {
     console.log("date value", dateInput);
-    formatDateInput = doiDinhDangNgay(dateInput.value);
+    formatDateInput = formatDay(dateInput.value);
     console.log("Ngày chấm", formatDateInput);
     const tableBody = document.getElementById('shiftDetail');
     tableBody.innerHTML = '';
@@ -32,7 +36,7 @@ function getDateWorkCheck() {
 
 }
 
-function doiDinhDangNgay(dateString) {
+function formatDay(dateString) {
     // Sử dụng phương pháp split() để tách ngày, tháng và năm từ chuỗi
     const [year, month, day] = dateString.split('-');
 
@@ -105,10 +109,13 @@ function reversedDateString(dateString) {
 function selectAllRows() {
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
     const checkboxes = document.querySelectorAll('.rowCheckbox');
+    
 
     // Check all individual checkboxes when "Select All" is checked initially
     checkboxes.forEach(checkbox => {
+        
         checkbox.checked = selectAllCheckbox.checked;
+       
     });
 }
 
@@ -152,9 +159,9 @@ function colorCheckbox() {
         checkbox.addEventListener('change', function () {
             const row = this.closest('tr');
             if (this.checked) {
-                row.style.backgroundColor = '#c1f0c1'; // Màu nền sáng khi checkbox được chọn
+                row.classList.add('table-success');
             } else {
-                row.style.backgroundColor = ''; // Bỏ màu nền
+                row.classList.remove('table-success');// Bỏ màu nền
             }
         });
     });
@@ -214,6 +221,8 @@ function getAllShiftType() {
             console.log(radioButtons);
             radioButtons.forEach((radio) => {
                 radio.addEventListener("change", function () {
+                    selectedRadioButtonId = this.id;
+                    console.log("selectedRadioButtonId",selectedRadioButtonId)
                     console.log("Selected value:", this.value);
                     console.log("select Id :", this.id)
                     console.log(formatDate)
@@ -266,8 +275,11 @@ function getAllShiftDetail(date, shiftDetailID) {
                     let startInput = item.shift.shiftType.start;
                     let endInput = item.shift.shiftType.end;
                     let overTimeInput = item.overTime
+                    const basic = item.staff.salary.basic;
+                    const overtime = item.staff.salary.overtime;
+                    
                     let totalTime = parseFloat(calculateOverTime(endInput, startInput)) + item.overTime;
-
+                    let salary = ((totalTime - overTimeInput)*basic+overTimeInput*overtime).toLocaleString();
                     row.innerHTML = `
 
                     <td data-column-name="fullName" style="text-align: center;" id="${item.id}">${item.staff.fullName}</td> 
@@ -281,22 +293,22 @@ function getAllShiftDetail(date, shiftDetailID) {
                         <div>${overTime} giờ</div>
                     </td>
                 
-                    <td data-column-name="startTime" style="text-align: center;"> 
-                        <input type="time" class="form-control" style="text-align: center;"
-                            value="${startInput}">
+                    <td data-column-name="startTime" style="text-align: center;">  
+                        <input type="time" class="form-control" style="text-align: center;" id="startTimeInput_${item.id}"
+                            value="${formatTime(startInput)}"  min="${formatTime(item.shift.shiftType.start)}" max="${formatTime(item.shift.shiftType.end)}">
                     </td>
                     
 
-                    <td data-column-name="endTime" style="text-align: center;">
-                        <input type="time" class="form-control" style="text-align: center;"  
+                    <td data-column-name="endTime" style="text-align: center;"> 
+                        <input type="time" class="form-control" style="text-align: center;"   id="endTimeInput_${item.id}"
                             value="${endInput}">
                     </td>
                    
-                    <td data-column-name="overTimeInput" style="text-align: center;">
-                        <input  min="0" max="20" type="number" class="form-control" value="${overTimeInput}" 
+                    <td data-column-name="overTimeInput" style="text-align: center;"> 
+                        <input  min="0" max="20" type="number" class="form-control" value="${overTimeInput}"  id="overTimeInput_${item.id}"
                     </td>
 
-                    <td style="text-align: center;">
+                    <td style="text-align: center;" id="totalTimeTimeInput_${item.id}"> 
                         
                         ${totalTime} giờ
                     </td>
@@ -306,8 +318,8 @@ function getAllShiftDetail(date, shiftDetailID) {
                         
                     </td>
 
-                    <td style="text-align: center;"> 
-                        1
+                    <td style="text-align: center;" id="salary_${item.id}"> 
+                        ${salary} đồng
                     </td>
 
                     <td style="text-align: center;">
@@ -319,9 +331,71 @@ function getAllShiftDetail(date, shiftDetailID) {
                     tableBody.appendChild(row);
                     selectAllRows();
                     selectCheckbox();
-                    colorCheckbox();
+                    //colorCheckbox();
 
 
+                    const startID = document.getElementById(`startTimeInput_${item.id}`);
+                    const endID = document.getElementById(`endTimeInput_${item.id}`);
+                    const overTimeID = document.getElementById(`overTimeInput_${item.id}`);
+                    const totalTimeID = document.getElementById(`totalTimeTimeInput_${item.id}`);
+                    const salaryID = document.getElementById(`salary_${item.id}`);
+
+
+                    startID.addEventListener('input', () => {
+                        const startTimeIDValue = startID.value;
+                        console.log('Start Time input value:', startTimeIDValue);
+                        console.log('End Time input value:',formatTime(endID.value));
+                        console.log('Over Time input value:',overTimeID.value);
+                        let tongGio = parseFloat(calculateOverTime(formatTime(endID.value), startTimeIDValue)) + parseFloat(overTimeID.value);
+                        if(tongGio>=0){
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        else{
+                            tongGio=0;
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        console.log(typeof tongGio)
+                        let salaryValue = (parseFloat(tongGio-overTimeID.value)*basic+overTimeID.value*overtime).toLocaleString();
+                        salaryID.innerText=salaryValue+" đồng";
+                    });
+
+
+                    endID.addEventListener('input', () => {
+                        const endTimeIDValue = endID.value;
+                        console.log('Start Time input value:', formatTime(startID.value));
+                        console.log('End Time input value:',endTimeIDValue);
+                        console.log('Over Time input value:',overTimeID.value);
+                        
+                        let tongGio = parseFloat(calculateOverTime(endTimeIDValue, formatTime(startID.value))) + parseFloat(overTimeID.value);
+                        if(tongGio>=0){
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        else{
+                            tongGio=0;
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        let salaryValue = (parseFloat(tongGio-overTimeID.value)*basic+overTimeID.value*overtime).toLocaleString();
+                        salaryID.innerText=salaryValue+ " đồng";
+                    });
+
+
+                    overTimeID.addEventListener('input', () => {
+                        const overTimeIDValue = overTimeID.value;
+                        console.log('Start Time input value:', formatTime(startID.value));
+                        console.log('End Time input value:',formatTime(endID.value));
+                        console.log('Over Time input value:',overTimeIDValue);
+                       
+                        let tongGio = parseFloat(calculateOverTime(formatTime(endID.value), formatTime(startID.value))) + parseFloat(overTimeIDValue);
+                        if(tongGio>=0){
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        else{
+                            tongGio=0;
+                            totalTimeID.innerText=tongGio+" giờ";
+                        }
+                        let salaryValue = (parseFloat(tongGio-overTimeID.value)*basic+overTimeID.value*overtime).toLocaleString();
+                        salaryID.innerText=salaryValue+" đồng";
+                    });
 
 
 
@@ -342,6 +416,8 @@ function getAllShiftDetail(date, shiftDetailID) {
             }
         });
 }
+
+
 
 
 
@@ -370,6 +446,7 @@ function getAllShiftDetailInTimeKeeping(date, shiftDetailID) {
 
                 dataList.forEach(item => {
                     const row = document.createElement('tr');
+                    row.id=item.id;
                     const overTime = item.shiftDetail.overTime;
                     console.log(overTime);
                     const startInput = item.start;
@@ -435,6 +512,9 @@ function getAllShiftDetailInTimeKeeping(date, shiftDetailID) {
                         </td>
                         <td style="text-align: center;" >
                             <i class="fa-solid fa-check" style="color: #045502;"></i>
+                        </td>
+                        <td style="text-align: center;" >
+                            <button style="border: none" class="fa-solid fa-trash-can" id="${item.id}" onclick="deleteRow('${item.id}')" title="Xóa chấm công"></button>
                         </td>
                 `
                     tableBody.appendChild(row);
@@ -535,7 +615,9 @@ function workChecked(data) {
         .then(data => {
             console.log('API response:', data)
             alert('Chấm công thành công');
-            getAllShiftType();
+            
+            
+            selectRadioButton();
         })
         .catch(error => console.error('Error:', error));
 
@@ -548,7 +630,7 @@ function autoSelectShiftBasedOnTime() {
     const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
     console.log("currenTime", currentTime)
     const radioButtons = document.querySelectorAll(".form-check-input");
-
+    let shiftFound = false;
     // Xác định thời gian ca và radio button tương ứng
     for (let i = 0; i < radioButtons.length; i++) {
         const radioButton = radioButtons[i];
@@ -568,6 +650,7 @@ function autoSelectShiftBasedOnTime() {
             if (currentTime >= shiftStartTime && currentTime <= shiftEndTime) {
                 // Chọn radio button và thoát khỏi vòng lặp
                 radioButton.checked = true;
+                selectedRadioButtonId = radioButton.id;
 
                 console.log("Selected value:", radioButton.value);
                 console.log("select Id :", radioButton.id)
@@ -581,11 +664,101 @@ function autoSelectShiftBasedOnTime() {
                 getAllShiftDetailInTimeKeeping(formatDateInput, shiftDetailID);
                 document.getElementById("shiftDetailType").innerText = labelElement.innerText;
                 document.getElementById("shiftDetailTypeInTimeKeeping").innerText = labelElement.innerText + " đã chấm công";
+                shiftFound = true;
                 break;
             }
         }
     }
+
+
+    if (!shiftFound && radioButtons.length > 0) {
+        const radioButton = radioButtons[0]
+        radioButton.checked = true;
+        selectedRadioButtonId = radioButton.id;
+        console.log("Selected value:", radioButton.value);
+        console.log("select Id :", radioButton.id)
+        const labelElement = document.querySelector(`label[for="${radioButton.id}"]`);
+        console.log("name:", labelElement.innerText)
+
+        console.log(formatDateInput)
+        const shiftDetailID = radioButton.id;
+
+        getAllShiftDetail(formatDateInput, shiftDetailID);
+        getAllShiftDetailInTimeKeeping(formatDateInput, shiftDetailID);
+        document.getElementById("shiftDetailType").innerText = labelElement.innerText;
+        document.getElementById("shiftDetailTypeInTimeKeeping").innerText = labelElement.innerText + " đã chấm công";
+                
+    }
 }
 
-// Gọi hàm autoSelectShiftBasedOnTime khi trang đã tải xong
 
+
+function selectRadioButton() {
+    if (selectedRadioButtonId) {
+        const radioButton = document.getElementById(selectedRadioButtonId);
+        if (radioButton) {
+           
+            radioButton.checked = true;
+        selectedRadioButtonId = radioButton.id;
+        console.log("Selected value:", radioButton.value);
+        console.log("select Id :", radioButton.id)
+        const labelElement = document.querySelector(`label[for="${radioButton.id}"]`);
+        console.log("name:", labelElement.innerText)
+
+        console.log(formatDateInput)
+        const shiftDetailID = radioButton.id;
+
+        getAllShiftDetail(formatDateInput, shiftDetailID);
+        getAllShiftDetailInTimeKeeping(formatDateInput, shiftDetailID);
+        document.getElementById("shiftDetailType").innerText = labelElement.innerText;
+        document.getElementById("shiftDetailTypeInTimeKeeping").innerText = labelElement.innerText + " đã chấm công";
+            
+        }
+    }
+};
+
+
+function validateTime() {
+    const currentTime = new Date();
+    const inputDate = new Date(document.getElementById("current-time").value);
+
+    if (inputDate > currentTime) {
+        document.getElementById("current-time").valueAsDate = currentTime;
+        alert("Thời gian chấm công không hợp lệ")
+        getDateWorkCheck();
+    }
+}
+
+function deleteRow(rowId) {
+    var row = document.getElementById(rowId);
+    if (row) {
+        confirm("Xóa chấm công này")
+        //row.parentNode.removeChild(row);
+        const data ={}
+        data.id=rowId
+        deleteTimeKeeping(data);
+    }
+}
+
+
+
+function deleteTimeKeeping(data) {
+    fetch(`http://localhost:8081/api/v1/manager/deleteTimeKeeping`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('API response:', data)
+            alert("Xóa chấm công thành công")
+            selectRadioButton();
+        })
+        .catch(error => console.error('Error:', error));
+
+}

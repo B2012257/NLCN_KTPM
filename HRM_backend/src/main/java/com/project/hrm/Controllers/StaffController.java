@@ -24,7 +24,7 @@ public class StaffController {
 
     private StaffServiceImpl staffService;
 
-    //@LoginRequired
+    @LoginRequired
     @GetMapping(URLConfigs.GET_INFO_STA)
     public ResponseWithData<Staff> getInformation(@RequestParam(name = "Uid") String Uid){
         return staffService.getInformation(Uid);
@@ -53,7 +53,7 @@ public class StaffController {
     }
 
 
-//    @LoginRequired
+    @LoginRequired
 
     @GetMapping(URLConfigs.GET_ALL_SCHEDULE_BETWEEN)
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(@RequestParam("start") Date start, @RequestParam("end") Date end){
@@ -62,7 +62,7 @@ public class StaffController {
 
 
 
-//    @LoginRequired
+    @LoginRequired
 
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
     public Response registerSchedule(@RequestBody FreeTime newFreeTime){
@@ -86,6 +86,7 @@ public class StaffController {
     }
 
 
+    @LoginRequired
     @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING)
     public Response getAllScheduleOfStaffInTimeKeeping(@RequestParam("date") Date date, @RequestParam("Uid") String Uid){
         return staffService.getAllScheduleOfStaffInTimeKeeping(date,Uid);
@@ -93,15 +94,30 @@ public class StaffController {
 
 
 
-
+    @LoginRequired
     @GetMapping(URLConfigs.GET_SCHEDULE_OF_STAFF_NOT_IN_TIMEKEEPING)
     public Response getAllScheduleOfStaffNotInTimeKeeping(@RequestParam("date") Date date, @RequestParam("Uid") String Uid){
         return staffService.getAllScheduleOfStaffNotInTimeKeeping(date,Uid);
     }
 
+    @LoginRequired
     @GetMapping(URLConfigs.GET_ALL_TIMEKEEPING)
     public Response getAllTimeKeeping(@RequestParam("start") Date start, @RequestParam("end") Date end, @RequestParam("Uid") String Uid){
         return staffService.getAllTimeKeeping(start,end,Uid);
+    }
+
+
+    @LoginRequired
+    @GetMapping(URLConfigs.GET_FREE_TIME_OF_STAFF_IN_DATE)
+    public Response getFreeTimeOfStaffInDate(@RequestParam("date") Date date,@RequestParam("staff") Staff staff){
+        return staffService.getFreeTimeOfStaffInDate(date,staff);
+    }
+
+
+    @LoginRequired
+    @DeleteMapping(URLConfigs.DELETE_FREE_TIME)
+    public Response deleteFreeTime(@RequestBody FreeTime freeTime){
+        return staffService.deleteFreeTime(freeTime);
     }
 
 }

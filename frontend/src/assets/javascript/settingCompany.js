@@ -5,6 +5,7 @@ const getAllShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/allShiftType
 const addStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/addType"
 const addShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/addShiftType"
 const deleteSalaryApiUrl = "http://localhost:8081/api/v1/manager/deleteSalary"
+let editSalaryApiUrl = "http://localhost:8081/api/v1/manager/editSalary"
 let salaries; //Lưu lại danh sách bậc lương
 
 
@@ -110,7 +111,7 @@ function addSalaryApi(dataBody) {
                 return location.reload()
             }
 
-            return console.log(res);
+            return alert(res.message)
         })
 }
 
@@ -152,7 +153,7 @@ function getAllSalary() {
                         </td>
                         <td style="vertical-align: middle;">
                             <i class=" fa-regular fa-pen-to-square icon"
-                                data-bs-placement="bottom" title="Chỉnh sửa" data-bs-toggle="modal" data-bs-target="#editSalaryModal"></i>
+                                data-bs-placement="bottom" title="Chỉnh sửa" data-bs-toggle="modal" data-bs-target="#editSalaryModal" onClick="handleEditSalaryClick(this)"></i>
                             <i class=" fa-solid fa-trash trash_icon icon" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" data-bs-title="Xoá" title="Xoá" onclick="deleteSalary(this)"></i>
                             <i class="fa-regular fa-floppy-disk icon edit-salary-save hide" data-bs-toggle="tooltip"
@@ -251,8 +252,10 @@ function getAllType() {
                 datasSort.forEach(item => {
                     tbody.innerHTML += `
                     <tr>
-                    <td>${item.name || "Không có"}</td>
-                    
+                    <td>
+                    <span class="d-none type-id">${item.id}</span>
+
+                    ${item.name || "Không có"}</td>
                     <td>
                         <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal" 
                             data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
@@ -565,4 +568,122 @@ async function deleteApi(apiUrl, dataBody) {
     })
     const data = await response.json();
     return data;
+}
+
+//Chức năng chỉnh sửa 
+
+//Bắt sự kiện click vào nút chỉnh sửa bậc lương
+let salaryOld
+function handleEditSalaryClick(thisElement) {
+    salaryOld = null
+    //Lấy thông tin lương vừa click
+    let tr = thisElement.parentElement.parentElement
+    let editModal = document.querySelector(".edit-salary-modal .modal-content")
+
+    let salaryLevel = tr.querySelector(".salary-level").innerHTML.trim()
+    let basic = tr.querySelector(".salary-basic").innerHTML.replaceAll(',', '').replaceAll('VND', '').trim()
+    let overTime = tr.querySelector(".salary-overtime").innerHTML.replaceAll(',', '').replaceAll('VND', '').trim()
+    let allowance = tr.querySelector(".salary-allowance").innerHTML.replaceAll(',', '').replaceAll('VND', '').trim()
+
+    //Lấy các input cần đổ dữ liệu vào
+    let levelNameInput = editModal.querySelector(".level-name")
+    let basicInput = editModal.querySelector(".basic")
+    let overtimeInput = editModal.querySelector(".overtime")
+    let allowanceInput = editModal.querySelector(".allowance")
+
+    //Đổ dữ liệu
+    levelNameInput.value = salaryLevel
+    basicInput.value = basic
+    overtimeInput.value = overTime
+    allowanceInput.value = allowance
+
+    salaryOld = {
+        level: salaryLevel,
+        basic,
+        overtime: overTime,
+        allowance
+    }
+}
+
+async function handlerSaveEditSalaryClick(thisElement) {
+    //Lấy dữ liệu mới để lưu
+    // console.log(salaryOld);
+    let salaryNew = {}
+    let editModal = document.querySelector(".edit-salary-modal .modal-content")
+
+    //Lấy các input lấy dữ liệu ra để kiểm tra
+
+    let levelNameInputValue = editModal.querySelector(".level-name").value.trim()
+    let basicInputValue = editModal.querySelector(".basic").value.trim()
+    let overtimeInputValue = editModal.querySelector(".overtime").value.trim()
+    let allowanceInputValue = editModal.querySelector(".allowance").value.trim()
+
+    salaryNew = {
+        level: levelNameInputValue,
+        basic: basicInputValue,
+        overtime: overtimeInputValue,
+        allowance: allowanceInputValue
+    }
+    let isEqual = areValuesEqualInObject(salaryNew, salaryOld)
+    if (!isEqual) {
+
+        console.log(isEqual, "callApi");
+        let data = await putApi(editSalaryApiUrl, salaryNew)
+        if (data.status === 'OK') {
+            alert(data.message)
+            return location.reload()
+        }
+        else alert(data.message)
+    }
+}
+
+async function putApi(url, dataBody) {
+    const rs = await fetch(url, {
+        method: "PUT",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataBody)
+    })
+    let response = rs.json()
+    return response
+}
+//Đưa về giá trị mặc định
+function handlerDefaultEditSalaryClick() {
+    if (!salaryOld) {
+        return alert("Không có giá trị mặc định")
+    }
+    let editModal = document.querySelector(".edit-salary-modal .modal-content")
+
+    let levelNameInput = editModal.querySelector(".level-name")
+    let basicInput = editModal.querySelector(".basic")
+    let overtimeInput = editModal.querySelector(".overtime")
+    let allowanceInput = editModal.querySelector(".allowance")
+
+    //Đổ dữ liệu
+    levelNameInput.value = salaryOld.level
+    basicInput.value = salaryOld.basic
+    overtimeInput.value = salaryOld.overtime
+    allowanceInput.value = salaryOld.allowance
+}
+
+
+//So sánh 2 object
+function areValuesEqualInObject(obj1, obj2) {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) {
+        return false; // Số lượng key không giống nhau
+    }
+
+    for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) {
+            return false; // Giá trị của key không giống nhau
+        }
+    }
+
+    return true; // Các key giống nhau và giá trị tương ứng cũng giống nhau
 }

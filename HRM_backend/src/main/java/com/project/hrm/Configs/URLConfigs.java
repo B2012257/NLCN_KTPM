@@ -49,6 +49,8 @@ public class URLConfigs {
 
     public static final String GET_FREE_TIME_OF_STAFF_IN_DATE = "/getFreeTimeOfStaffInDate";
 
+    public static final String DELETE_FREE_TIME = "/deleteFreeTime";
+
     //Chức năng quản lý
     public static final String ADD_TYPE = "/addType";
     public static final String GET_ALL_TYPE = "/types";
@@ -93,5 +95,8 @@ public class URLConfigs {
     public static final String WORK_CHECKED="/workCheckeds";
     public static final String GET_ALL_WORK_CHECKED="/getAllWorkChecked";
     public static final String GET_ALL_TIMEKEEPING_START_END_BUY_UID ="/getAllKeepingBuyUid";
+    public static final String GET_SCHEDULE_OF_STAFF_IN_TIMEKEEPING_START_END_BY_UID="/getAllScheduleOfStaffInTimeKeepingStartEndByUid";
+
+    public static final String DELETE_TIME_KEEPING = "/deleteTimeKeeping";
 
 }
