@@ -92,13 +92,13 @@ function getAllScheduleTimekeeping() {
                     const startInput = formatTime(item.start);
                     const endInput = formatTime(item.end);
                     const overTimeInput = item.overTime;
-                    const totalTime = calculateOverTime(item.end, item.start);
+                    const totalTime = parseFloat(calculateOverTime(item.end, item.start))+overTimeInput;
                     const allowance = item.shiftDetail.staff.salary.allowance;
                     console.log(allowance);
                     const basic = item.shiftDetail.staff.salary.basic;
                     const overtime = item.shiftDetail.staff.salary.overtime;
 
-                    let salary = overTimeInput * overtime + (totalTime - overTimeInput) * allowance;
+                    let salary = (overTimeInput * overtime + (totalTime - overTimeInput) * basic).toLocaleString();
                     let note = item.note;
                     if (note == null) {
                         note = ' ';
@@ -321,13 +321,13 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
                     const startInput = formatTime(item.start);
                     const endInput = formatTime(item.end);
                     const overTimeInput = item.overTime;
-                    const totalTime = calculateOverTime(item.end, item.start);
+                    const totalTime = parseFloat(calculateOverTime(item.end, item.start))+overTimeInput;
                     const allowance = item.shiftDetail.staff.salary.allowance;
                     console.log(allowance);
                     const basic = item.shiftDetail.staff.salary.basic;
                     const overtime = item.shiftDetail.staff.salary.overtime;
 
-                    let salary = overTimeInput * overtime + (totalTime - overTimeInput) * allowance;
+                    let salary = (overTimeInput * overtime + (totalTime - overTimeInput) * basic).toLocaleString();
                     let note = item.note;
                     if (note == null) {
                         note = ' ';

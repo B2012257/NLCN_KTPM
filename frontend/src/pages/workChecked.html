@@ -71,7 +71,7 @@
 
                     <div class="d-flex">
                         <div class="dropdown">
-                            <button class="btn btn-secondary fs-6 dropdown-toggle" type="button"
+                            <button class="btn btn-secondary fs-6 dropdown-toggle fullName-btn" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false" id="helloUserName">
                                 Xin chào Admin
                             </button>
@@ -82,7 +82,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item logout-btn" href="#">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>
@@ -113,8 +113,10 @@
 
         <h5>Chấm công ngày
 
-            <input class="rounded-pill p-1" id="current-time" type="date">
-            <div class="rounded-pill p-1 float-end" id="current-time1"></div>
+            <input class="rounded-pill p-1" id="current-time" type="date" onchange="validateTime()">
+
+        
+            <!-- <div class="rounded-pill p-1 float-end" id="current-time1"></div> -->
         </h5>
 
         <!-- <div class="row mt-3">
@@ -326,6 +328,9 @@
                                 <th class="text-center" scope="col" style="text-align: center;">Đã chấm công
                                     <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
                                 </th>
+                                <th class="text-center" scope="col" style="text-align: center;">
+                                    <!-- <i role="button" class="fa-solid fa-sort p-1 text-primary" title="Sắp xếp"></i> -->
+                                </th>
                             </tr>
                         </thead>
 
@@ -345,8 +350,6 @@
 
 
 
-
-
     </main>
 
 </body>
@@ -354,5 +357,6 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
 <script src="../assets/javascript/workChecked.js"></script>
+<script src="../assets/javascript/common.js"></script>
 
 </html>

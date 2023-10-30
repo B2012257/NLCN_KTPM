@@ -256,5 +256,11 @@ public class ManagerController {
     }
 
 
+    //@LoginRequired
+    @DeleteMapping(URLConfigs.DELETE_TIME_KEEPING)
+    public Response deleteTimeKeeping(@RequestBody Timekeeping timekeeping){
+        return managerService.deleteTimeKeeping(timekeeping);
+    }
+
 
 }

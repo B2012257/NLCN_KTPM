@@ -123,6 +123,8 @@ public interface ManagerService {
 
     //Xóa chấm công một danh sách nhân sự
     public Response deleteListWorkCheckeds(List<Timekeeping> timeKeepings);
+
+    public Response deleteTimeKeeping(Timekeeping timekeeping);
     //Lay ca lam viec cua 1 ca trong 1 ngay da cham cong
     public ResponseWithData<List<Timekeeping>> getAllSchedulesOfShiftOfDateInTimeKeeping(ShiftType shiftType, Date date);
 

@@ -43,6 +43,8 @@ public interface StaffService {
 
     public ResponseWithData<List<FreeTime>> getFreeTimeOfStaffInDate(Date date, Staff staff);
 
+    public Response deleteFreeTime(FreeTime freeTime);
+
     public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid);
 
 

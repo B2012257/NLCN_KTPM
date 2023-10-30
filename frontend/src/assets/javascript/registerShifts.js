@@ -4,98 +4,235 @@ const uid = userObject.uid;
 
 var currentDay = '';
 
+
+
+
+
+
 function setCurrentDay(day) {
     currentDay = day;
     console.log(currentDay)
-    getAllShiftType();
+    const dateFreeTime = document.getElementById(currentDay).querySelector(".sttOfWeek").querySelector("small");
+    const nameFreeTime = document.getElementById(currentDay).querySelector(".sttNameWeek");
+    const status = document.getElementById("exampleModalLabel");
+    status.innerText = "Đăng ký ca rảnh "+nameFreeTime.innerText+", ngày "+dateFreeTime.innerText
+    const freeTimeArray=getFreeTime();
+    console.log(freeTimeArray)
+    getAllShiftType(freeTimeArray);
+    
 }
 
+
+function getFreeTime(){
+    var dayCheckboxInfo = document.getElementById(currentDay + "-data");
+    var divElement = dayCheckboxInfo.getElementsByTagName("div");
+    const freeTimeArray = [];
+    console.log(divElement.length);
+    for(var i = 0; i<divElement.length;i++){
+        const divElementId = divElement[i];
+        const divElementText = divElementId.innerText;
+        console.log(divElementText)
+        freeTimeArray.push(divElementText);
+        
+    }
+    //console.log(freeTimeArray)
+    return freeTimeArray;
+
+}
 
 function updateCheckboxInfo() {
-    // Xử lý khi người dùng nhấn nút "Thêm" trong modal
-    // Ví dụ: Lấy thông tin từ biến và cập nhật vào td của ngày hiện tại
     var checkboxInput = document.querySelectorAll(".checkbox-input");
+    console.log("CurrentDay",currentDay)
+    const dateFreeTime = document.getElementById(currentDay).querySelector(".sttOfWeek").querySelector("small");
+    console.log(dateFreeTime.innerText);
+    const dateFree = formatDay(dateFreeTime.innerText);
+    
     for (let i = 0; i < checkboxInput.length; i++) {
         const checkBox = checkboxInput[i];
-
+        
         if (checkBox.checked == true) {
-            console.log(checkBox)
-            console.log(checkBox.value)
-            var dayCheckboxInfo = document.getElementById(currentDay + "-data");
-            var newDiv = document.createElement("div");
-            newDiv.id = checkBox.id;
+            const dataFreeTime = {};
+            const staff={};
+            const shiftType={};
+            const date ={}
+            // console.log(checkBox)
+            // console.log(checkBox.value)
+            // var dayCheckboxInfo = document.getElementById(currentDay + "-data");
+            // var newDiv = document.createElement("div");
+            // newDiv.id = checkBox.id;
+            // newDiv.classList.add('badge', 'rounded-pill', 'text-bg-secondary');
+            
+            // newDiv.textContent = checkBox.value;
+           
 
-            newDiv.textContent = checkBox.value;
-            dayCheckboxInfo.appendChild(newDiv);
+            // dayCheckboxInfo.appendChild(newDiv);
+            // var lineBreak = document.createElement("br");
+            // dayCheckboxInfo.appendChild(lineBreak);
+            
 
+            date.date = dateFree;
+            dataFreeTime.date=date;
+            staff.uid=uid;
+            dataFreeTime.staff=staff;
+            shiftType.id=checkBox.id;
+            dataFreeTime.shiftType=shiftType;
+            dataFreeTime.isSchedule=false;
+            console.log(dataFreeTime)
+            workRegisterAPI(dataFreeTime);
         }
+       
     }
-
-
-
-
+    
+    alert("Đăng ký lịch rảnh thành công.");
+    getFreeTimeOfWeek();
+    
 }
 
 
-function fetchStaffInfo() {
-    fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`, {
+
+
+
+function getFreeTimeOfWeek() {
+    const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    
+    daysOfWeek.forEach(day => {
+        console.log(day);
+        const dateFreeTime = document.getElementById(day).querySelector(".sttOfWeek").querySelector("small");
+        const buttonAddFreeTime = document.getElementById(day).querySelector(".fa-pen");
+        const buttonDeleteFreeTime = document.getElementById(day).querySelector(".fa-trash-can");
+        const currentDate = new Date();
+        const formatDate = currentDate.toISOString().split('T')[0].replace(/-/g, '/');
+        console.log("format : ",formatDate)
+        if ((dateFormat(dateFreeTime.innerText))>formatDate) {
+            buttonAddFreeTime.removeAttribute("disabled"); 
+            buttonDeleteFreeTime.removeAttribute("disabled"); 
+            
+        } 
+        else{
+            
+            buttonAddFreeTime.setAttribute("disabled", "disabled");
+            buttonDeleteFreeTime.setAttribute("disabled", "disabled");
+            
+          
+        }
+        
+
+        
+        console.log(dateFreeTime.innerText);
+        const date = dateFormat(dateFreeTime.innerText);
+        console.log(date)
+        console.log(uid)
+        getFreeTimeAPI(date,uid,day);
+
+
+        
+            } 
+    );
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    getFreeTimeOfWeek();
+});
+
+
+    
+function getFreeTimeAPI(date,uid,day) {
+    fetch(`http://localhost:8081/api/v1/staff/getFreeTimeOfStaffInDate?date=${date}&staff=${uid}`, {
         method: "GET",
         mode: "cors",
         credentials: "include",
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
         },
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+        .then(res => res.json())
+
+        .then(res => {
+            if (res.data !== null) {
+
+             
+                console.log(res)
+                //const tableBody = document.getElementById('shiftDetail');
+                var dayCheckboxInfo = document.getElementById(day+ "-data");
+                dayCheckboxInfo.innerHTML = '';
+                const dataList = res.data;
+                console.log(dataList)
+                var dayCheckboxInfo = document.getElementById(day + "-data");
+                // dayCheckboxInfo.innerHTML=' ';
+
+                dataList.forEach(item => {
+
+                    var dayCheckboxInfo = document.getElementById(day + "-data");
+                    var newDiv = document.createElement("div");
+                    newDiv.id = item.id;
+
+                    if(item.isSchedule){
+                        newDiv.classList.add('badge', 'rounded-pill', 'text-bg-success');
+                    }
+                    newDiv.classList.add('badge', 'rounded-pill', 'text-bg-secondary');
+                    
+                    newDiv.textContent = "Ca "+item.shiftType.name+" ("+formatTime(item.shiftType.start)+" - "+formatTime(item.shiftType.end)+")";
+                    newDiv.setAttribute("data-value",item.isSchedule)
+                    dayCheckboxInfo.appendChild(newDiv);
+                    var lineBreak = document.createElement("br");
+                    dayCheckboxInfo.appendChild(lineBreak);
+                    
+
+                })
             }
-            return response.json();
-        })
-        .then((data) => {
-            console.log(data);
-            document.getElementById("helloUserName").innerText = "Xin chào " + data.data.fullName;
-        })
-        .catch((error) => {
-            console.error("Error:", error);
+
+            else {
+
+                var dayCheckboxInfo = document.getElementById(day + "-data");
+                dayCheckboxInfo.innerHTML='';
+                
+            }
         });
 }
 
-fetchStaffInfo();
 
 
 
-// function operationTimeInput(checkbox) {
-//     const timeInputs = checkbox.parentNode.parentNode.getElementsByTagName('input');
 
-//     for (var i = 0; i < timeInputs.length; i++) {
-//         if (timeInputs[i].type === 'time') {
-//             if (checkbox.checked) {
-//                 timeInputs[i].removeAttribute('disabled');
-//             } else {
-//                 timeInputs[i].setAttribute('disabled', 'disabled');
+
+
+
+
+// function fetchStaffInfo() {
+//     fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`, {
+//         method: "GET",
+//         mode: "cors",
+//         credentials: "include",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//     })
+//         .then((response) => {
+//             if (!response.ok) {
+//                 throw new Error("Network response was not ok");
 //             }
-//         }
-//     }
+//             return response.json();
+//         })
+//         .then((data) => {
+//             console.log(data);
+//             document.getElementById("helloUserName").innerText = "Xin chào " + data.data.fullName;
+//         })
+//         .catch((error) => {
+//             console.error("Error:", error);
+//         });
 // }
 
-
-function operationTimeInput(checkbox) {
-    var dayRow = checkbox.closest("tr"); // Lấy dòng của checkbox
-    var editButton = dayRow.querySelector(".fa-pen"); // Nút chỉnh sửa trong dòng đó
-    // Cột trạng thái
-
-    if (checkbox.checked) {
-        editButton.removeAttribute("disabled"); // Cho phép chỉnh sửa
-        // Thay đổi trạng thái
-    } else {
-        editButton.setAttribute("disabled", "disabled"); // Không cho phép chỉnh sửa
-        // Thay đổi trạng thái
-    }
-}
+// fetchStaffInfo();
 
 
-function getAllShiftType() {
+
+
+
+
+
+
+function getAllShiftType(freeTimeArray) {
     fetch(`http://localhost:8081/api/v1/manager/allShiftType`, {
         method: "GET",
         mode: "cors",
@@ -113,13 +250,41 @@ function getAllShiftType() {
                 var html = data.map(function (shiftType) {
                     console.log("shiftDetail", shiftType)
                     const uniqueId = `${shiftType.id}`;
-                    return `
-          <div>
-                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="Ca ${shiftType.name} (${shiftType.start} - ${shiftType.end})"> Ca ${shiftType.name} (${shiftType.start} - ${shiftType.end})
-            </div>
+                    const valueId = `Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})`;
+                    console.log(valueId);
+                    if (!Array.isArray(freeTimeArray) || freeTimeArray.length === 0) {
+                        console.log("Mảng freeTimeArray không tồn tại hoặc trống.");
+                        return `
+                            <div>
+                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}"> Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})
+                            </div>
       
-          `;
-                });
+                        `;
+                    
+                    }else{
+                    const isValueInArray = freeTimeArray.some(value => value === valueId);
+                    console.log(isValueInArray)
+                    if(isValueInArray){
+                        return `
+                            <div style="background-color: #ccfbbc;">
+                                <input type="checkbox" class="" name="${shiftType.name}" id=${uniqueId} value="${valueId}" disabled > Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})
+                                <span style="font-size: smaller; font-style: italic; color: blue;">(Đã đăng ký)</span>                           
+                            </div>
+                            
+      
+                        `;
+
+                    }
+                    else{
+                        return `
+                            <div>
+                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}"> Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})
+                            </div>
+      
+                        `;
+                    }
+                    
+            }});
                 shiftType.innerHTML = html.join("");
             }
         });
@@ -127,34 +292,42 @@ function getAllShiftType() {
 
 
 
-function selectAllRows() {
-    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
-    const checkboxes = document.querySelectorAll('.checkbox-input-status');
-
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = selectAllCheckbox.checked;
-    });
-}
 
 
 
-function doiDinhDangNgay(dateString) {
+
+function dateFormat(dateString) {
     // Sử dụng phương pháp split() để tách ngày, tháng và năm từ chuỗi
-    let targetDate = new Date(dateString)
-
-    const [day, month, year] = dateString.split('-');
+    const [day, month, year] = dateString.split('/');
 
     // Tạo chuỗi mới với định dạng yyyy/mm/dd
-    const newDateString = `${targetDate.getFullYear()}-${targetDate.getMonth() + 1}-${targetDate.getDate()}`;
+    const newDateString = `${year}/${month}/${day}`;
+
+    return newDateString;
+}
+
+function formatDay(dateString) {
+    // Sử dụng phương pháp split() để tách ngày, tháng và năm từ chuỗi
+    const [day, month, year] = dateString.split('/');
+
+    // Tạo chuỗi mới với định dạng yyyy/mm/dd
+    const newDateString = `${year}-${month}-${day}`;
 
     return newDateString;
 }
 
 
 
+function formatTime(time) {
+    const hoursMinutes = time.split(':');
+    const formattedTime = hoursMinutes[0] + ':' + hoursMinutes[1];
+    return formattedTime;
+
+}
 
 
-getAllShiftType();
+
+
 
 
 
@@ -169,7 +342,7 @@ function reversedDateString(dateString) {
     const month = parts[1];
     const year = parts[0];
 
-    return `${year}-${month}-${day}`;
+    return `${day}/${month}/${year}`;
 }
 
 function formatDateString(dateString) {
@@ -228,60 +401,47 @@ function showStartAndEndWeek(weekList) {
 }
 
 // Call the showStartAndEndWeek and showDayUnderSttOfWeekTh functions to display the week information
-const currentDate = new Date(); // Use the current date
+let currentDate = new Date(); // Use the current date
 showStartAndEndWeek(getWeekList(currentDate));
 showDayUnderSttOfWeekTh(currentDate);
 
 
-function workRegister() {
-    const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-    const selectedDays = {};
+const prevWeekButton = document.getElementById('prevWeekButton');
+const nextWeekButton = document.getElementById('nextWeekButton');
+
+    // Add click event listeners to the buttons
+prevWeekButton.addEventListener('click', () => {
+    currentDate.setDate(currentDate.getDate() - 7); // Go back one week
+    showStartAndEndWeek(getWeekList(currentDate));
+    showDayUnderSttOfWeekTh(currentDate);
+    getFreeTimeOfWeek();
+    
+});
+
+nextWeekButton.addEventListener('click', () => {
+    currentDate.setDate(currentDate.getDate() + 7); // Advance one week
+    showStartAndEndWeek(getWeekList(currentDate));
+    showDayUnderSttOfWeekTh(currentDate);
+    console.log("Tiến 1 tuần")
+    
+        getFreeTimeOfWeek();
+    
+    
+});
 
 
-    daysOfWeek.forEach(day => {
-        const checkbox = document.getElementById(day).querySelector("input[type='checkbox']");
-        if (checkbox.checked) {
-            console.log(checkbox)
-            const dateFreeTime = document.getElementById(day).querySelector(".sttOfWeek").querySelector("small");
-            console.log(day + "-data")
-            var shiftID = document.getElementById(day).querySelector("." + day + "-data")
+const currentWeekButton = document.getElementById('currentWeekButton');
 
-            var divElement = shiftID.getElementsByTagName("div");
-            console.log(divElement.length)
-
-            for (var i = 0; i < divElement.length; i++) {
-                const dataFreeTime = {};
-                const date = {}
-                const staff = {}
-                const shiftType = {}
-                var currentDiv = divElement[i];
-                // Lấy id của thẻ con
-                var currentId = currentDiv.id;
-
-                // Lấy nội dung của thẻ con
-                var currentContent = currentDiv.innerText;
-
-                // In id và nội dung của thẻ con
-                console.log("ID của thẻ con:", currentId);
-                console.log("Nội dung của thẻ con:", currentContent);
-                date.date = doiDinhDangNgay(dateFreeTime.innerText);
-                dataFreeTime.date = date;
-                staff.uid = uid;
-                dataFreeTime.staff = staff;
-                shiftType.id = currentId;
-                dataFreeTime.shiftType = shiftType;
-                dataFreeTime.isSchedule = "false"
-
-                console.log(dataFreeTime)
-                workRegisterAPI(dataFreeTime);
-
-            }
+// Add a click event listener to the button
+currentWeekButton.addEventListener('click', () => {
+  // Set the currentDate to the current date
+  currentDate = new Date();
+  showStartAndEndWeek(getWeekList(currentDate));
+  showDayUnderSttOfWeekTh(currentDate);
+  getFreeTimeOfWeek();
+});
 
 
-        }
-    });
-
-}
 
 
 
@@ -299,13 +459,111 @@ function workRegisterAPI(selectedDays) {
         .then(response => response.json())
         .then(data => {
             console.log('API response:', data)
-            alert('Đăng ký thành công.');
+            
         })
         .catch(error => console.error('Error:', error));
 
 }
 
 
+
+
+
+function getFreeTimeDelete(currentDay){
+    var dayCheckboxInfo = document.getElementById(currentDay + "-data");
+    var divElements = dayCheckboxInfo.getElementsByTagName("div");
+    var deleteCheckbox = document.getElementById("deleteFreeTime");
+    deleteCheckbox.innerHTML=''
+    console.log(divElements.length);
+    if(divElements.length==0){
+        const statusDelete = document.createElement("div");
+        statusDelete.innerText="Chưa đăng ký lịch rảnh."
+        deleteCheckbox.appendChild(statusDelete)
+    }
+    for (var i = 0; i < divElements.length; i++) {
+        const divElement = divElements[i].getAttribute("data-value");
+        if (divElement == 'false') {
+            const divValue = divElements[i].innerText;
+            const checkBoxDiv = document.createElement("button");
+    
+            checkBoxDiv.style.border = 'none';
+            checkBoxDiv.classList.add('checkbox-delete', 'fa-solid', 'fa-trash-can');
+            checkBoxDiv.style.color="red"
+            checkBoxDiv.id = divElements[i].id;
+    
+            checkBoxDiv.addEventListener("click", function () {
+                if (confirm("Bạn có muốn xóa ca rảnh này không?")) {
+                    const dataDelete={};
+                    deleteDiv(this.id); // Gọi hàm xóa thẻ div cụ thể
+                    console.log(this.id)
+                    dataDelete.id=this.id;
+                    deleteFreeTimeAPI(dataDelete)
+                    getFreeTimeDelete(currentDay)
+                }
+            });
+    
+            var lineBreak = document.createElement("br");
+    
+            deleteCheckbox.appendChild(checkBoxDiv);
+            deleteCheckbox.appendChild(document.createTextNode(" " + divValue));
+            deleteCheckbox.appendChild(lineBreak);
+        } else {
+            const divValue = divElements[i].innerText;
+            const checkBoxDiv = document.createElement("button");
+
+            checkBoxDiv.style.border = 'none';
+            checkBoxDiv.classList.add('checkbox-delete', 'fa-solid', 'fa-trash-can');
+            checkBoxDiv.id = divElements[i].id;
+
+            checkBoxDiv.setAttribute("disabled", "disabled");
+
+            var lineBreak = document.createElement("br");
+
+            deleteCheckbox.appendChild(checkBoxDiv);
+            deleteCheckbox.appendChild(document.createTextNode(" " + divValue));
+
+            // Tạo một phần tử <span> cho chữ "ca làm việc đã sắp lịch"
+            const spanElement = document.createElement("span");
+            spanElement.style.fontSize = "smaller";
+            spanElement.style.fontStyle = "italic";
+            spanElement.style.color = "blue";
+            spanElement.innerText = " (ca rảnh đã được sắp lịch.)";
+
+            deleteCheckbox.appendChild(spanElement);
+            deleteCheckbox.appendChild(lineBreak);
+        }
+    }
+    
+    
+
+}
+
+function deleteDiv(divId) {
+    var divToDelete = document.getElementById(divId);
+    divToDelete.remove();
+}
+
+
+
+function deleteFreeTimeAPI(data) {
+    fetch(`http://localhost:8081/api/v1/staff/deleteFreeTime`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('API response:', data)
+            alert("Xóa thành công")
+        })
+        .catch(error => console.error('Error:', error));
+
+}
 
 
 

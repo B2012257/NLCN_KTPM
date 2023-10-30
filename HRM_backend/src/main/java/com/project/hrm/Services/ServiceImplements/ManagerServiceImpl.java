@@ -866,4 +866,18 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
 
+    @Override
+    public Response deleteTimeKeeping(Timekeeping timekeeping){
+        Timekeeping timekeepingID = timeKeepingRepository.findById(timekeeping.getId()).orElse(null);
+
+        if(timekeepingID!=null){
+            timeKeepingRepository.delete(timekeeping);
+            return new Response(HttpStatus.OK,"Xóa chấm công thành công");
+        }
+
+        else return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy chấm công cần xóa");
+
+    }
+
+
 }

@@ -17,4 +17,6 @@ public interface FreeTimeRepository extends JpaRepository<FreeTime, Long> {
 
     List<FreeTime> findByDateAndStaff(Date date, Staff staff);
 
+    Boolean existsByDate(Date date);
+
 }

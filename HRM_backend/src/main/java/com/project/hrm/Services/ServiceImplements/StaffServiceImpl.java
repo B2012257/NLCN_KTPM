@@ -125,7 +125,7 @@ public class StaffServiceImpl implements StaffService {
             com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
 
             // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
-            boolean dateExists = workRegisterRepository.existsByDate(dateToCheck);
+            boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
 
             // Thêm ngày vào bảng 'date' nếu chưa tồn tại
             if (!dateExists) {
@@ -135,7 +135,7 @@ public class StaffServiceImpl implements StaffService {
 
             // Thêm freeTime
             FreeTime freeTimeID = new FreeTime(freeTime);
-            workRegisterRepository.saveAndFlush(freeTimeID);
+            freeTimeRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
         } catch (RuntimeException ex) {
@@ -184,6 +184,20 @@ public class StaffServiceImpl implements StaffService {
         }
         else
             return new ResponseWithData<>(freeTimeList, HttpStatus.OK,"Danh sách lịch rảnh");
+
+    }
+
+
+    @Override
+    public Response deleteFreeTime(FreeTime freeTime){
+        FreeTime freeTimes = freeTimeRepository.findById(freeTime.getId()).orElse(null);
+
+        if(freeTimes!=null){
+            freeTimeRepository.delete(freeTimes);
+            return new Response(HttpStatus.OK,"Xóa thành công");
+        }
+
+        else return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy");
 
     }
 
