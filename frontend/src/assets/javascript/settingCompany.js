@@ -6,6 +6,11 @@ const addStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/addType"
 const addShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/addShiftType"
 const deleteSalaryApiUrl = "http://localhost:8081/api/v1/manager/deleteSalary"
 let editSalaryApiUrl = "http://localhost:8081/api/v1/manager/editSalary"
+let editTypeApiUrl = "http://localhost:8081/api/v1/manager/editType"
+let editShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/editShiftType"
+let deleteStaffTypeApiUrl = "http://localhost:8081/api/v1/manager/deleteType"
+let deleteShiftTypeApiUrl = "http://localhost:8081/api/v1/manager/deleteShiftType"
+
 let salaries; //Lưu lại danh sách bậc lương
 
 
@@ -253,15 +258,15 @@ function getAllType() {
                     tbody.innerHTML += `
                     <tr>
                     <td>
-                    <span class="d-none type-id">${item.id}</span>
-
-                    ${item.name || "Không có"}</td>
+                        <span class="d-none type-id">${item.id}</span>
+                        <span class="type-name"> ${item.name || "Không có"}</span>
+                    </td>
                     <td>
                         <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal" 
                             data-bs-placement="bottom" data-bs-title="Chỉnh sửa"
-                            data-bs-target="#editTypeModal"></i>
+                            data-bs-target="#editTypeModal" onclick="handleEditStaffType(this)"></i>
                         <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" data-bs-title="Xoá"></i>
+                            data-bs-placement="bottom" data-bs-title="Xoá" onclick="deleteStaffType(this)"></i>
                     </td>
                     </tr >
                     `
@@ -315,21 +320,23 @@ function getAllShiftType() {
                     console.log(item.start.split(":")[0]);
                     tbody.innerHTML += `
                     <tr>
-                                <td>${item.name}</td>
+                                <td >
+                                <span class="shift-type-id d-none">${item.id}</span>
+                                <span class="shift-type-name">${item.name}</span></td>
                                 <td style="vertical-align: middle;">
-                                    <input type="time" disabled value="${item.start}">
+                                    <input type="time" disabled value="${item.start}" class="start">
                                 </td>
                                 <td style="vertical-align: middle;">
-                                    <input type="time" disabled value="${item.end}">
+                                    <input type="time" disabled value="${item.end}" class="end">
                                 </td>
                                 <td>
                                     <input type="text" disabled value="${calcTotalTime(item.end, item.start)}" class="form-control w-auto shift-type-add-total center">
                                 </td>
                                 <td class="center">
                                     <i class="fa-regular fa-pen-to-square icon" data-bs-toggle="modal"
-                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa" data-bs-target="#editShiftTypeModal"></i>
+                                        data-bs-placement="bottom" data-bs-title="Chỉnh sửa" data-bs-target="#editShiftTypeModal" onclick="handleEditShiftTypeClick(this)"></i>
                                     <i class=" fa-solid fa-trash trash_icon icon " data-bs-toggle="tooltip"
-                                        data-bs-placement="bottom" data-bs-title="Xoá" ></i>
+                                        data-bs-placement="bottom" data-bs-title="Xoá" onclick="deleteShiftType(this)"></i>
                                 </td>
                     </tr >
                     `
@@ -464,11 +471,25 @@ function saveShiftType() {
             start: shiftTypeStartValue,
             end: shiftTypeEndValue
         }
-        postApi(addShiftTypeApiUrl, JSON.stringify(data))
+
+        let areTimeEqual = compartTime(data.start, data.end);
+        //True thì mới post api
+        if (areTimeEqual === true)
+            postApi(addShiftTypeApiUrl, JSON.stringify(data))
+        else alert("Thời gian không hợp lệ")
     } else {
         alert("Vui lòng nhập đầy đủ thông tin!")
     }
 
+}
+//So sanh gio
+function compartTime(startTime, endTime) {
+    const time1 = new Date(`2023-10-30T${startTime}`);
+    const time2 = new Date(`2023-10-30T${endTime}`);
+    if (time1 > time2) {
+        return false
+    }
+    return true
 }
 function setTotalTime(e) {
     let startTime = document.querySelector(".shift-type-add-start-input").value
@@ -568,6 +589,39 @@ async function deleteApi(apiUrl, dataBody) {
     })
     const data = await response.json();
     return data;
+}
+
+
+async function deleteStaffType(thisElement) {
+    let trInfo = thisElement.parentElement.parentElement
+    let idToDeleted = trInfo.querySelector(".type-id").innerHTML.trim()
+    console.log(idToDeleted);
+    let dataDelete = {
+        id: idToDeleted
+    }
+    let deleteRs = await deleteApi(deleteStaffTypeApiUrl, dataDelete)
+    if (deleteRs.status === "OK") {
+        //Thành công
+        alert(deleteRs.message)
+        return location.reload()
+    }
+    return alert(deleteRs.message)
+}
+
+async function deleteShiftType(thisElement) {
+    let trInfo = thisElement.parentElement.parentElement
+    let idToDeleted = trInfo.querySelector(".shift-type-id").innerHTML.trim()
+    console.log(idToDeleted);
+    let dataDelete = {
+        id: idToDeleted
+    }
+    let deleteRs = await deleteApi(deleteShiftTypeApiUrl, dataDelete)
+    if (deleteRs.status === "OK") {
+        //Thành công
+        alert(deleteRs.message)
+        return location.reload()
+    }
+    return alert(deleteRs.message)
 }
 
 //Chức năng chỉnh sửa 
@@ -686,4 +740,134 @@ function areValuesEqualInObject(obj1, obj2) {
     }
 
     return true; // Các key giống nhau và giá trị tương ứng cũng giống nhau
+}
+let type_default_value
+function handleEditStaffType(thisElement) {
+    type_default_value = {}
+
+    let editType_modal = document.querySelector(".edit-type")
+    let type_name_input = editType_modal.querySelector("#type-name")
+
+    let tr = thisElement.parentElement.parentElement
+    let type_id = tr.querySelector(".type-id").innerHTML //id cần chỉnh sửa
+    let type_name_default = tr.querySelector(".type-name").innerHTML
+
+    //Đổ dữ liệu mặc định vào input
+    type_name_input.value = type_name_default
+    type_default_value = {
+        id: type_id,
+        name: type_name_default
+    }
+
+}
+
+async function handleSaveEditStaffType(thisElement) {
+    //Lấy dữ liệu mới
+    let editType_modal = document.querySelector(".edit-type")
+    let type_name_input = editType_modal.querySelector("#type-name")
+    let new_name_value = type_name_input.value
+
+    let new_type_value = {
+        id: type_default_value.id,
+        name: new_name_value
+    }
+    let areObjectsEqual = areValuesEqualInObject(new_type_value, type_default_value)
+    //Nếu khác thì call api
+    if (!areObjectsEqual) {
+        const rs = await putApi(editTypeApiUrl, new_type_value)
+        if (rs.status === "OK") {
+            alert("Chỉnh sửa thành công");
+            return location.reload()
+        }
+        return alert(rs.message)
+    }
+}
+
+function handleClickDefaultEditStaffType(thisElement) {
+    //Lấy dữ liệu mới
+    let editType_modal = document.querySelector(".edit-type")
+    let type_name_input = editType_modal.querySelector("#type-name")
+    type_name_input.value = type_default_value.name
+}
+
+let shift_type_default
+function handleEditShiftTypeClick(thisElement) {
+    shift_type_default = {}
+
+    let tr = thisElement.parentElement.parentElement;
+    let editShiftTypeModal = document.querySelector(".edit-shift-type-modal")
+
+    let shift_type_name_new_input = editShiftTypeModal.querySelector("#shift-type-name")
+    let shift_type_start_new_input = editShiftTypeModal.querySelector("#start")
+    let shift_type_end_new_input = editShiftTypeModal.querySelector("#end")
+
+    let shiftTypeId = tr.querySelector(".shift-type-id").innerHTML
+    let shiftTypeName_default = tr.querySelector(".shift-type-name").innerHTML
+    let shift_type_start = tr.querySelector(".start").value
+    let shift_type_end = tr.querySelector(".end").value
+
+
+    //Rán dữ liệu cũ
+    //Cắt 2 con 0 cuối
+    let newShiftType_end = shift_type_end.split(":")[0] + ":" + shift_type_end.split(":")[1]
+    let newShiftType_start = shift_type_start.split(":")[0] + ":" + shift_type_start.split(":")[1]
+
+    shift_type_name_new_input.value = shiftTypeName_default
+    shift_type_start_new_input.value = newShiftType_start
+    shift_type_end_new_input.value = newShiftType_end
+
+
+    shift_type_default = {
+        id: shiftTypeId,
+        name: shiftTypeName_default,
+        start: shift_type_start,
+        end: shift_type_end
+    }
+
+}
+
+function handleDefaultClickShiftType() {
+    let editShiftTypeModal = document.querySelector(".edit-shift-type-modal")
+
+    let shift_type_name_new_input = editShiftTypeModal.querySelector("#shift-type-name")
+    let shift_type_start_new_input = editShiftTypeModal.querySelector("#start")
+    let shift_type_end_new_input = editShiftTypeModal.querySelector("#end")
+
+    shift_type_name_new_input.value = shift_type_default.name
+    shift_type_start_new_input.value = shift_type_default.start
+    shift_type_end_new_input.value = shift_type_default.end
+
+}
+
+async function handleSaveShiftType() {
+    //Lấy dữ liệu mới
+    let editShiftTypeModal = document.querySelector(".edit-shift-type-modal")
+
+    let shift_type_name_new_input = editShiftTypeModal.querySelector("#shift-type-name")
+    let shift_type_start_new_input = editShiftTypeModal.querySelector("#start")
+    let shift_type_end_new_input = editShiftTypeModal.querySelector("#end")
+    let new_value = {
+        id: shift_type_default.id,
+        name: shift_type_name_new_input.value,
+        start: shift_type_start_new_input.value + ":00",
+        end: shift_type_end_new_input.value + ":00"
+    }
+    //Kiểm tra so với dữ liệu cũ
+    let areObjectsEqual = areValuesEqualInObject(new_value, shift_type_default)
+    //Nếu khác thì call api
+    if (!areObjectsEqual) {
+        console.log(new_value);
+        if (compartTime(new_value.start, new_value.end)) {
+            const rs = await putApi(editShiftTypeApiUrl, new_value)
+            if (rs.status === "OK") {
+                alert("Chỉnh sửa thành công");
+                return location.reload()
+            }
+            return alert(rs.message || "Không thành công")
+        } else {
+            alert("Thời gian không hợp lệ")
+        }
+
+
+    }
 }

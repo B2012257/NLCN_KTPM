@@ -977,7 +977,7 @@ function loadScheduleHtml(schedules) {
             td.insertBefore(spanNode, td.querySelector("div"))
 
 
-            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen edit-schedule-btn action-schedule-btn d-block" title="Chỉnh sửa"></i>`
+            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen edit-schedule-btn action-schedule-btn" title="Chỉnh sửa" style="display: block;"></i>`
             // td.querySelector("div").removeAttribute("data-bs-toggle")
             // td.querySelector("div").removeAttribute("data-bs-target")
         });
