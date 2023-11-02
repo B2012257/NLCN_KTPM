@@ -72,17 +72,23 @@ public class StatisticsServiceImplements implements StatisticsService {
         String[] sixMonthRecentLabel = new String[6]; //Lưu tên label
         // Tìm 6 tháng gần đây
         int j = 0;
+        System.out.println("LastFiveMOnth" + " " + lastFiveMonth);
 
-        for(int i = lastFiveMonth+1; i >= 0; i--) {
+        for(int i = lastFiveMonth; i >= 0; i--) {
             sixMonthRecentLabel[j] = "Tháng " + ((month - i) + 1);
+            System.out.println(j);
             j++;
+        }
+        for (String a :sixMonthRecentLabel
+             ) {
+            System.out.println(a);
         }
 
         //Lập qua danh sách tháng để lấy số lương nhân sự mới theo tùng tháng
         Integer[] sixMonthRecent = new Integer[6]; //Lưu tên label
         // Tìm 6 tháng gần đây
         int x = 0;
-        for(int i = lastFiveMonth+1; i >= 0; i--) {
+        for(int i = lastFiveMonth; i >= 0; i--) {
 //            sixMonthRecentLabel[j] = "Tháng " + ((month - i));
             sixMonthRecent[x] = month -i;
             x++;
@@ -158,7 +164,7 @@ public class StatisticsServiceImplements implements StatisticsService {
             //Đếm mỗi loại bao nhiêu người
             for (Staff staff : staffWorkingOnDay) {
                 String typeName = staff.getType().getName();
-                totalByType.put(typeName, totalByType.getOrDefault(typeName, 0) + 1);
+                totalByType.put(typeName.trim(), totalByType.getOrDefault(typeName.trim(), 0) + 1);
 
             }
 
