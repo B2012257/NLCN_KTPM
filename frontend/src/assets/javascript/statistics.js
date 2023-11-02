@@ -131,7 +131,7 @@ async function renderStaff(staffs, start, end) {
       const salaryOvertime = staff.type ? staff.salary.formattedOvertime : "";
       const hoursShift = timeKeeping ? calculateTotalHours(timeKeeping) : 0;
       console.log("hoursShift", typeof hoursShift);
-      const formatHoursShift = hoursShift.toFixed(1);
+      const formatHoursShift = hoursShift > 0 ? hoursShift.toFixed(1) : 0;
       const totalOvertime = timeKeeping && calculateTotalOvertime(timeKeeping);
       const totalMoney = timeKeeping
         ? formatHoursShift * salaryBasicReal +

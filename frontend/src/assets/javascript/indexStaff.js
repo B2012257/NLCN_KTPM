@@ -61,7 +61,6 @@ async function getStaff(callback) {
 function renderStaff(users) {
   const info = document.querySelector("#username");
   var htmls = users.map(function (user) {
-    const typeName = user.type ? user.type.name : "";
     const returnHTML = `
     ${user.fullName}
           `;
