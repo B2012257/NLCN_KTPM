@@ -79,10 +79,10 @@ public class StatisticsServiceImplements implements StatisticsService {
             System.out.println(j);
             j++;
         }
-        for (String a :sixMonthRecentLabel
-             ) {
-            System.out.println(a);
-        }
+//        for (String a :sixMonthRecentLabel
+//             ) {
+//            System.out.println(a);
+//        }
 
         //Lập qua danh sách tháng để lấy số lương nhân sự mới theo tùng tháng
         Integer[] sixMonthRecent = new Integer[6]; //Lưu tên label
@@ -109,7 +109,7 @@ public class StatisticsServiceImplements implements StatisticsService {
 //            ResponseWithData recentStaffInMonth = (ResponseWithData) managerService.getRecentStaff(startDate, lastDate);
 //            List recentStaffInMonths = (List) recentStaffInMonth.getData();
 //            System.out.println(startDate + " "+ recentStaffInMonths.size());
-            return new ResponseWithData<>(new SixMonthStatisticsStaffResponse(sixMonthRecentLabel, totalStaffSixMonthRc), HttpStatus.OK, "");
+            return new ResponseWithData<>(new SixMonthStatisticsStaffResponse(sixMonthRecentLabel, totalStaffSixMonthRc), HttpStatus.OK, "Dữ liệu biểu đồ 6 tháng");
     }
 
     @Override
