@@ -236,8 +236,8 @@ async function handleClickAddStaff(e) {
         let randomNumber = Math.round(Math.random() * 10000)
         let fullnameFormat = StringFormatVietnameseSign(fullname)
         let nameArray = fullnameFormat.split(" ")
-        let name = nameArray[nameArray.length - 1]
-        let surfaceName = nameArray[nameArray.length - 2]
+        let name = nameArray[nameArray.length - 1] || ''
+        let surfaceName = nameArray[nameArray.length - 2] || ''
         let userName = surfaceName + name + randomNumber
         console.log(userName, randomNumber);
         if (!avatarUrl) {
@@ -268,7 +268,7 @@ async function handleClickAddStaff(e) {
         setTimeout(() => {
             document.location.reload()
 
-        }, 2000)
+        }, 500)
     } else turnOnToast("Không thành công", "Vui lòng nhập đầy đủ thông tin!")
     //Sinh username
 }
