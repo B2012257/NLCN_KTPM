@@ -19,7 +19,7 @@ public class FreeTime {
     @ManyToOne
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private Staff staff;
 
     @ManyToOne

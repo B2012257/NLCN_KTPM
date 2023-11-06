@@ -260,7 +260,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 
             return new Response(HttpStatus.OK, "Xóa thành công nhân sự");
-    
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
