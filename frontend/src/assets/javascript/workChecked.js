@@ -1,8 +1,14 @@
 const currentDate = new Date();
+console.log(currentDate)
 const formatDate = currentDate.toISOString().split('T')[0].replace(/-/g, '/');
-const dateNow = currentDate.toISOString().split('T')[0];
+const year = currentDate.getUTCFullYear();
+const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0');
+const day = currentDate.getUTCDate().toString().padStart(2, '0');
 
+const dateNow = `${year}-${month}-${day}`;
+console.log(dateNow);
 let dateWorkChecked = document.getElementById("current-time").value = dateNow;
+console.log(dateWorkChecked)
 
 const dateInput = document.getElementById("current-time");
 let formatDateInput = formatDate;
