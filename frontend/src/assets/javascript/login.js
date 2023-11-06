@@ -25,6 +25,7 @@ function loginHandler() {
     .then((res) => {
       console.log(res);
       if (res.status === "OK") return loginSuccess(res);
+      return alert("Thông tin tài khoản hoặc mật khẩu không chính xác")
     })
     .catch(err => alert("Lỗi máy chủ"))
 
