@@ -25,5 +25,5 @@ public interface ShiftDetailRepository extends JpaRepository<ShiftDetail, Long> 
 
         List<ShiftDetail> findByShiftIn(List<Shift> shift);
         List<ShiftDetail> findByShiftDateBetweenOrderByStaffType(com.project.hrm.Models.Date start, com.project.hrm.Models.Date end);
-
+        List<ShiftDetail> findAllByStaff(Staff staff);
 }

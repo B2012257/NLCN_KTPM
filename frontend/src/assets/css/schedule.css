@@ -3,6 +3,7 @@
 }
 
 .add_employee_schedule_btn:hover .btn {
+    background-color: #e1e1e182;
     display: block;
 }
 
@@ -23,5 +24,9 @@
 }
 
 .action-schedule-btn {
+    padding: 10px 0;
+}
+
+.edit-schedule-btn {
     padding: 10px 0;
 }

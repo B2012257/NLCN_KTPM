@@ -910,7 +910,9 @@ function loadWeekDay(weekList) {
     //Tím thứ của ngày hôm nay
     let dnow = new Date()
     let dayOfWeek = dnow.getDay() // 0 -> Chu nhat, 1-6 -> thu2-thu7
+
     let dayNowString = `${dnow.getFullYear()}-${dnow.getMonth() + 1}-${dnow.getDate()}`
+    let dayNowStringFormat = (dateStringFormat(dayNowString));
     if (dayOfWeek === 0) dayOfWeek = 6
     else dayOfWeek--;
     let weekNameElementList = document.querySelectorAll(".weekname")
@@ -924,10 +926,13 @@ function loadWeekDay(weekList) {
         let dayArray = Object.values(weekList[index]) //Sẽ trả về mảng các value tại 1 object
         let dayOfIndex = dayArray[dayArray.length - 1]; //Lấy ra value cuối (tương đương key = day)
         //so sánh 2 ngày 
-        let areEqualDate = dateCompare(dayOfIndex, dayNowString) // -1 or 0 or 1
         // console.log(areEqualDate);
-        if (dayOfIndex.trim() == dayNowString.trim()) {
+        // console.log(dayOfIndex.trim(), dayNowString.trim());
+        if (dayOfIndex.trim() === dayNowStringFormat.trim()) {
+            // console.log("vào if");
             if (dayOfWeek === index) {
+                // console.log("vào if");
+
                 element.classList.add("text-danger")
             }
         }
@@ -964,8 +969,8 @@ function loadScheduleHtml(schedules) {
             let td = tr.querySelector(`.t${weekName}`)
             let start = schedule.shift.shiftType.start
             let end = schedule.shift.shiftType.end
-            let startFormat = start.split(":")[0] + ":" + start.split(":")[2]
-            let endFormat = end.split(":")[0] + ":" + end.split(":")[2]
+            // let startFormat = start.split(":")[0] + ":" + start.split(":")[2]
+            // let endFormat = end.split(":")[0] + ":" + end.split(":")[2]
             let spanNode = document.createElement("span")
             spanNode.classList.add("badge")
             spanNode.classList.add("rounded-pill")
@@ -977,7 +982,7 @@ function loadScheduleHtml(schedules) {
             td.insertBefore(spanNode, td.querySelector("div"))
 
 
-            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen edit-schedule-btn action-schedule-btn d-block" title="Chỉnh sửa"></i>`
+            td.querySelector("div").innerHTML = `<i class="fa-solid fa-pen edit-schedule-btn action-schedule-btn" title="Chỉnh sửa" style="display: block;"></i>`
             // td.querySelector("div").removeAttribute("data-bs-toggle")
             // td.querySelector("div").removeAttribute("data-bs-target")
         });

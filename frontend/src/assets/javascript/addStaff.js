@@ -5,13 +5,13 @@ const addStaffApi = "http://localhost:8081/api/v1/manager/addStaff"
 const recentStaffsApiUrl = "http://localhost:8081/api/v1/manager/staff/recent"
 const defaultAvatarUrl = "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png"
 let getStaffInfoApiUrl = "http://localhost:8081/api/v1/staff/info" //?Uid=NS2283
-
+let editRecentStaffApiUrl = 'http://localhost:8081/api/v1/manager/editStaff'
 let recentStaffs;
 let avatarUrl
-
 let salaries
 let staffTypes
 let recentStaff // Danh sách nhân sự vừa thêm lần trước
+let edit_change_avatar // Lưu thông tin ảnh đại diện thay đổi
 async function setUp() {
     turnOnLoadingFunction("recent-spinner")
 
@@ -63,6 +63,18 @@ var myWidget = cloudinary.createUploadWidget({
     }
 }
 )
+var myWidget_Edit = cloudinary.createUploadWidget({
+    cloudName: 'dfcjwhc7o',
+    uploadPreset: 'cdootl7q'
+}, (error, result) => {
+    if (!error && result && result.event === "success") {
+        console.log('Avatar chỉnh sửa: ', result.info);
+        let url = result.info.url
+        edit_change_avatar = url
+        turnOnToast("Tải lên thành công", "Ảnh đã được tải lên thành công!");
+    }
+}
+)
 //Init toast
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))
 var toastList = toastElList.map(function (toastEl) {
@@ -77,7 +89,8 @@ document.getElementById("upload_widget").addEventListener("click", function () {
 }, false);
 
 document.getElementById("upload_widget-edit").addEventListener("click", function () {
-    myWidget.open();
+    myWidget_Edit.open();
+
 }, false);
 //Lấy danh sách bậc lương khi vừa vào trang
 async function getAllSalary() {
@@ -119,8 +132,6 @@ async function getAllType() {
 }
 
 function formatDateString(dateString) {
-
-    // console.log(dateString + " Trong ham format string");
     // Tách ngày, tháng, năm từ chuỗi đầu vào
     const parts = dateString.split('/');
     const day = parts[2];
@@ -191,7 +202,6 @@ function loadSalariesHtml(salaries, salaryParentElementClassName, salarySelectIn
 
 //Thêm loại nhân sự vào giao diện
 function loadStaffTypeHtml(staffTypes, typeSelectElementClassName) {
-    console.log(staffTypes);
 
     staffTypes.forEach(type => {
         //Tạo 1 thẻ option 
@@ -200,7 +210,6 @@ function loadStaffTypeHtml(staffTypes, typeSelectElementClassName) {
         optionTag.innerText = type.name
         renderElementInnerParent(typeSelectElementClassName, optionTag)
     });
-
 }
 
 //Xử lí sự kiện ấn nút thêm nhân sự
@@ -210,13 +219,9 @@ async function handleClickAddStaff(e) {
     let fullname = document.querySelector(".fullname-add-employee-input").value.trim()
     let typeId = document.querySelector(".staff-type-add-employee-select").value.trim()
     let salaryLevel = document.querySelector(".salary-add-employee-salect").value.trim()
-
     let location = document.querySelector(".location-add-employee-input").value.trim()
-
     let phone = document.querySelector(".phone-add-employee-input").value.trim()
-
     let bankName = document.querySelector(".bank-name-add-employee-select").value.trim()
-
     let gender = document.querySelector(".gender-employee-select").value.trim()
     let beginWork = document.querySelector(".begin-work-employee-input").value.trim()
     let bankNumber = document.querySelector(".bank-number-employee-input").value.trim()
@@ -366,23 +371,21 @@ async function getStaffInfo(uid) {
 }
 
 //Hiển thị vào thông tin nhân sự vào form
+//Recent information db data
+let recentDbData
 function showStaffInfoIntoForm(staffInfo) {
+    console.log(staffInfo);
+    recentDbData = {}
     let avatar = document.querySelector(".edit-avatar")
-
     let fullNameElement = document.querySelector(".fullname-edit-employee-input")
     let userNameElement = document.querySelector(".username-edit-employee-input")
-
     let staffTypeElement = document.querySelector(".staff-type-edit-employee-select")
     let phoneElement = document.querySelector(".phone-edit-employee-input")
-
     let salarySelectElement = document.querySelector(".edit-salary-select")
     let salaryDetail = document.querySelector(".edit-salary-detail")
     let locationElement = document.querySelector(".location-edit-employee-input")
-
     let bankNameSelectElement = document.querySelector(".bank-name-edit-employee-select")
-
     let bankNumberInputElement = document.querySelector(".bank-number-employee-input-edit")
-
     let genderElement = document.querySelector(".edit-gender-employee-select")
     let beginWorkElement = document.querySelector(".edit-begin-work-employee-input")
 
@@ -396,12 +399,35 @@ function showStaffInfoIntoForm(staffInfo) {
     genderElement.value = staffInfo.gender
     beginWorkElement.value = staffInfo.beginWork
 
+    //Lưu lại data cũ
+    recentDbData = {
+
+        uid: staffInfo.uid,
+        fullName: staffInfo.fullName,
+        gender: staffInfo.gender,
+        phone: staffInfo.phone,
+        beginWork: staffInfo.beginWork,
+        location: staffInfo.location,
+        bankName: staffInfo.bankName,
+        username: staffInfo.userName,
+        bankAccount: staffInfo.bankAccount,
+        urlAvatar: staffInfo.urlAvatar,
+        type: {
+            id: (Number)(staffInfo.type.id)
+        },
+        salary: {
+            level: staffInfo.salary.level
+        }
+    }
+    // console.log(recentDbData);
     //Hiển thị danh sách vào select trước
     //Load bậc lương vào thẻ select
     //Làm rỗng dữ liệu
     document.querySelector(".type-select-edit").innerHTML = `<option checked value="0">Loại nhân sự</option>`
     document.querySelector(".edit-salary-select").innerHTML = `<option checked value="0">Bậc lương</option>`
-    loadSalariesHtml(salaries, "salary-edit-employee-salect", "salary-edit-employee-salect",
+    loadSalariesHtml(salaries,
+        "salary-edit-employee-salect",
+        "salary-edit-employee-salect",
         (e) => handleChangeSalaryLevel(e, "edit-salary-detail"))
 
     //Load loại nhân sự vào thẻ select
@@ -412,7 +438,10 @@ function showStaffInfoIntoForm(staffInfo) {
     salarySelectElement.value = staffInfo.salary.level
     let salary = staffInfo.salary
     let valueString = `Cơ bản: ${salary.formattedBasic}; Tăng ca ${salary.formattedOvertime}; Trợ cấp ${salary.formattedAllowance}/Tháng`
+    //Hiển thị chi tiết bậc lương vào input
     salaryDetail.value = valueString
+    console.log("1");
+    //
 }
 
 //Hàm call api method get và return response
@@ -441,7 +470,6 @@ function handleChangeSalaryLevel(e, editSalaryDetailClassName) {
                 detailOfTarget = salary
                 break;
             }
-
         }
 
         let valueString = `Cơ bản: ${detailOfTarget.formattedBasic}; Tăng ca ${detailOfTarget.formattedOvertime}; Trợ cấp ${detailOfTarget.formattedAllowance}/Tháng`
@@ -450,4 +478,100 @@ function handleChangeSalaryLevel(e, editSalaryDetailClassName) {
     } else {
         salaryDetailInput.value = "Vui lòng chọn bậc lương"
     }
+}
+//Thêm sự kiện nút lưu thay đổi
+document.querySelector(".save-edit-recent-staff").addEventListener('click', editStaffJustAdd)
+//Edit staff just add - Chỉnh sửa nhân sự vừa thêm trong 7 ngày
+async function editStaffJustAdd() {
+    //Lấy dữ liệu mới
+    let avatar = document.querySelector(".edit-avatar")
+    let fullNameElement = document.querySelector(".fullname-edit-employee-input")
+    let userNameElement = document.querySelector(".username-edit-employee-input")
+    let staffTypeElement = document.querySelector(".staff-type-edit-employee-select")
+    let phoneElement = document.querySelector(".phone-edit-employee-input")
+    let salarySelectElement = document.querySelector(".edit-salary-select")
+    let salaryDetail = document.querySelector(".edit-salary-detail")
+    let locationElement = document.querySelector(".location-edit-employee-input")
+    let bankNameSelectElement = document.querySelector(".bank-name-edit-employee-select")
+    let bankNumberInputElement = document.querySelector(".bank-number-employee-input-edit")
+    let genderElement = document.querySelector(".edit-gender-employee-select")
+    let beginWorkElement = document.querySelector(".edit-begin-work-employee-input")
+
+    let newData = {
+        uid: recentDbData.uid,
+        fullName: fullNameElement.value,
+        gender: genderElement.value,
+        phone: phoneElement.value,
+        beginWork: beginWorkElement.value,
+        location: locationElement.value,
+        bankName: bankNameSelectElement.value,
+        username: userNameElement.value,
+        bankAccount: bankNumberInputElement.value,
+        urlAvatar: edit_change_avatar || avatar.src,
+        type: {
+            id: (Number)(staffTypeElement.value.trim())
+        },
+        salary: {
+            level: salarySelectElement.value
+        }
+    }
+
+
+    //So sánh 2 object
+    let areEqual = areObjectsEqual(recentDbData, newData)
+    console.log(areEqual);
+    if (!areEqual) {
+        //Enable nút lưu
+        console.log("Call api");
+        let rsData = await putApi(editRecentStaffApiUrl, newData);
+        if (rsData.status === 'OK') {
+            alert('Chỉnh sửa thành công!')
+            return location.reload()
+        }
+        alert(rsData.message)
+        return location.reload()
+    }
+
+}
+
+async function putApi(url, dataBody) {
+    const rs = await fetch(url, {
+        method: "PUT",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataBody)
+    })
+    let response = rs.json()
+    return response
+}
+//So sánh 2 object, có giá trị là 1 object khác
+function areObjectsEqual(obj1, obj2) {
+    if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+        return false;
+    }
+
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) {
+        return false; // Số lượng khóa khác nhau
+    }
+
+    for (const key of keys1) {
+        if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+            if (!areObjectsEqual(obj1[key], obj2[key])) {
+                console.log('Các khóa khác nhau');
+
+                return false; // Kiểm tra đệ quy các đối tượng lồng nhau
+            }
+        } else if (obj1[key] !== obj2[key]) {
+            console.log('Giá trị của các khóa không giống nhau');
+            return false; // Giá trị của các khóa không giống nhau
+        }
+    }
+
+    return true; // Đối tượng giống nhau
 }

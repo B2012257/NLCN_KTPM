@@ -228,9 +228,32 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Response deleteStaff(String uid) {
         try {
-            staffRepository.deleteById(uid);
-            return new Response(HttpStatus.OK, "Xóa thành công");
+            Staff staffDb = staffRepository.findByUid(uid);
+            if (staffDb == null)
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Không tìm thấy nhân sự");
+
+            //Tìm shiftDetail của nó
+            List<ShiftDetail> shiftDetails = shiftDetailRepository.findAllByStaff(staffDb);
+
+            //Lấy all freeTime
+            List<FreeTime> freeTimes = freeTimeRepository.findAllByStaff(staffDb);
+            //Xóa shift
+            //Xóa ShiftDetail
+            //Xóa freeTime
+            //Xóa timeKeepin
+
+            if(shiftDetails.isEmpty() && freeTimes.isEmpty()) {
+                            staffRepository.deleteById(uid);
+
+                return new Response(HttpStatus.OK, "Xóa thành công");
+
+            }
+            else {
+                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên! Do có dữ liệu phụ thuộc");
+            }
+
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");
         }
     }
@@ -475,11 +498,12 @@ public class ManagerServiceImpl implements ManagerService {
         if (shiftTypeDb == null) return new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin loại ca");
 
         //Kiểm tra trùng tên
-        if (shiftType.getName().equalsIgnoreCase(shiftTypeDb.getName())) {
-            return new ErrorResponse(HttpStatus.CONFLICT, "Trùng tên loại ca");
-        }
+
         try {
-            shiftTypeRepository.saveAndFlush(new ShiftType(shiftType));
+            shiftTypeDb.setName(shiftType.getName());
+            shiftTypeDb.setStart(shiftType.getStart());
+            shiftTypeDb.setEnd(shiftType.getEnd());
+            shiftTypeRepository.saveAndFlush(shiftTypeDb);
             return new Response(HttpStatus.OK, "Chỉnh sửa ca làm thành công");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -932,16 +956,15 @@ public class ManagerServiceImpl implements ManagerService {
 
         return new ResponseWithData<>(shiftDetailsInTimekeeping, HttpStatus.OK, "Danh sách ca làm việc đã chấm công");
     }
-      @Override
-    public Response deleteTimeKeeping(Timekeeping timekeeping){
+
+    @Override
+    public Response deleteTimeKeeping(Timekeeping timekeeping) {
         Timekeeping timekeepingID = timeKeepingRepository.findById(timekeeping.getId()).orElse(null);
 
-        if(timekeepingID!=null){
+        if (timekeepingID != null) {
             timeKeepingRepository.delete(timekeeping);
-            return new Response(HttpStatus.OK,"Xóa chấm công thành công");
-        }
-
-        else return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy chấm công cần xóa");
+            return new Response(HttpStatus.OK, "Xóa chấm công thành công");
+        } else return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy chấm công cần xóa");
 
     }
 }
