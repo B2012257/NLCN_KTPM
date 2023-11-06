@@ -35,7 +35,10 @@ function formatTime(time) {
 
 fetchStaffInfo();
 getAllScheduleTimekeeping();
-getAllScheduleNotTimekeeping();
+setTimeout(function() {
+    getAllScheduleNotTimekeeping();
+  }, 50); // 500 milliseconds (0.5 seconds)
+  
 getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
 
 
@@ -195,7 +198,7 @@ function getAllScheduleNotTimekeeping() {
         .then(res => {
             if (res.data !== null) {
                 console.log(res)
-                const tableBody = document.getElementById('timeKeepingToday');
+                const tableBody = document.getElementById('timeKeepingToday1');
 
                 const dataList = res.data;
                 dataList.forEach(item => {
