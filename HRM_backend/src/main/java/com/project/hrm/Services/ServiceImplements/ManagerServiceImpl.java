@@ -7,6 +7,8 @@ import com.project.hrm.payloads.Response.ErrorResponse;
 import com.project.hrm.payloads.Response.Response;
 import com.project.hrm.payloads.Response.ResponseWithData;
 import com.project.hrm.Models.*;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
@@ -51,6 +53,8 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     FreeTimeRepository freeTimeRepository;
 
+    @Autowired
+    private EntityManager entityManager;
     private Argon2PasswordEncoder encoder;
 
     public ManagerServiceImpl() {
@@ -226,6 +230,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     // Xóa nhân sự, xóa các bảng liên quan trước bảng workRegister, Bảng timeKeeping, shiftDetail,
     @Override
+    @Transactional
     public Response deleteStaff(String uid) {
         try {
             Staff staffDb = staffRepository.findByUid(uid);
@@ -241,17 +246,21 @@ public class ManagerServiceImpl implements ManagerService {
             //Xóa ShiftDetail
             //Xóa freeTime
             //Xóa timeKeepin
+            // Gọi phương thức xóa tương ứng cho các thực thể liên quan
+            timeKeepingRepository.deleteTimeKeepingsByShiftDetailStaff(staffDb);
+            timeKeepingRepository.flush();
 
-            if(shiftDetails.isEmpty() && freeTimes.isEmpty()) {
-                            staffRepository.deleteById(uid);
+            shiftDetailRepository.deleteShiftDetailsByStaffUid(staffDb.getUid());
+            shiftDetailRepository.flush();
 
-                return new Response(HttpStatus.OK, "Xóa thành công");
+            freeTimeRepository.deleteFreeTimesByStaffUid(staffDb.getUid());
+            freeTimeRepository.flush();
 
-            }
-            else {
-                return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên! Do có dữ liệu phụ thuộc");
-            }
+            entityManager.remove(staffDb);
 
+
+            return new Response(HttpStatus.OK, "Xóa thành công nhân sự");
+    
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi trong quá trình xóa nhân viên");

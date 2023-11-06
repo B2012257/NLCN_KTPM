@@ -15,8 +15,8 @@ public class ShiftDetail {
     private Long id;
 
     private Integer overTime;
-    
-    @ManyToOne
+
+    @ManyToOne()
     private Staff staff;
 
     @ManyToOne

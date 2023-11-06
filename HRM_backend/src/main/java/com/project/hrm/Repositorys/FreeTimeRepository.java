@@ -20,4 +20,5 @@ public interface FreeTimeRepository extends JpaRepository<FreeTime, Long> {
     Boolean existsByDate(Date date);
 
     List<FreeTime> findAllByStaff(Staff staff);
+    void deleteFreeTimesByStaffUid(String uid);
 }

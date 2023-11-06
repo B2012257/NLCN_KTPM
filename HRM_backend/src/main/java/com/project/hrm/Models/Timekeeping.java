@@ -18,7 +18,7 @@ public class Timekeeping {
 
     private String note;
 
-   @OneToOne
+   @OneToOne()
    private ShiftDetail shiftDetail;
 
     public Timekeeping() {}

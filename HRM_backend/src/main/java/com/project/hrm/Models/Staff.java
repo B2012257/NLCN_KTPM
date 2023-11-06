@@ -39,7 +39,7 @@ public class Staff {
 
     @CreationTimestamp
     private LocalDateTime createdDateTime;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "type_id")
     private Type type;
 

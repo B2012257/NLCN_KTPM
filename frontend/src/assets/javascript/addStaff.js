@@ -6,6 +6,8 @@ const recentStaffsApiUrl = "http://localhost:8081/api/v1/manager/staff/recent"
 const defaultAvatarUrl = "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png"
 let getStaffInfoApiUrl = "http://localhost:8081/api/v1/staff/info" //?Uid=NS2283
 let editRecentStaffApiUrl = 'http://localhost:8081/api/v1/manager/editStaff'
+let deleteRecentStaffApiUrl = 'http://localhost:8081/api/v1/manager/deleteStaff'
+
 let recentStaffs;
 let avatarUrl
 let salaries
@@ -574,4 +576,36 @@ function areObjectsEqual(obj1, obj2) {
     }
 
     return true; // Đối tượng giống nhau
+}
+
+document.querySelector(".delete-staff-btn").addEventListener('click', deleteRecentStaff)
+
+async function deleteRecentStaff() {
+    //Hiển thị bản conform
+    let deleteConform = confirm('Bạn chắc chắn muốn xóa nhân sự này')
+    if (deleteConform) {
+        let uidToDeleted = recentDbData.uid
+        deleteRecentStaffApiUrl
+        let deleteRs = await deleteApi(`${deleteRecentStaffApiUrl}/${uidToDeleted}`)
+        if (deleteRs.status === 'OK') {
+            alert(deleteRs.message)
+            return location.reload()
+        }
+        alert(deleteRs.message)
+        return location.reload()
+    }
+
+}
+
+async function deleteApi(apiUrl) {
+    const response = await fetch(apiUrl, {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    const data = await response.json();
+    return data;
 }

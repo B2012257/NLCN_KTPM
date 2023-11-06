@@ -1,6 +1,7 @@
 package com.project.hrm.Repositorys;
 
 import com.project.hrm.Models.ShiftDetail;
+import com.project.hrm.Models.Staff;
 import com.project.hrm.Models.Timekeeping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ public interface TimeKeepingRepository extends JpaRepository<Timekeeping,Long> {
 
     Timekeeping findByShiftDetail(ShiftDetail shiftDetail);
     Boolean existsByShiftDetail(ShiftDetail shiftDetail);
+    void deleteTimeKeepingsByShiftDetailStaff(Staff staff);
 }
