@@ -87,13 +87,13 @@
 
 
             
-
-            <div class="btn-group" role="group" aria-label="Basic outlined example">
+            
+            <div class="btn-group editWeek" role="group" aria-label="Basic outlined example">
                 <button type="button" class="btn btn-outline-primary" id="prevWeekButton">Lùi 1 tuần</button>
                 <button type="button" class="btn btn-outline-primary" id="currentWeekButton">Tuần này</button>
                 <button type="button" class="btn btn-outline-primary" id="nextWeekButton">Tiến 1 tuần</button>
               </div>
-
+            
             <div class="row mt-3">
                 <div class="col-12">
                     <div class="card">
@@ -108,7 +108,7 @@
 
                                     </th>
 
-                                    <th scope="col" style="text-align: center;">Đăng ký lịch rảnh
+                                    <th scope="col" style="text-align: center;"  >Đăng ký lịch rảnh
 
                                     </th>
                                    
@@ -306,6 +306,41 @@
 
                 </div>
             </div>
+
+            <button type="button" class="btn btn-primary registerLastWeek"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeek()">
+            Đăng ký theo tuần trước
+            </button>
+
+            <div class="buttonEditRegisterLastWeek" style="display: none;">
+            <button type="button" class="btn btn-primary registerLastWeekAdd"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekAdd()">
+            Đăng ký
+            </button>
+
+            <button type="button" class="btn btn-primary registerLastWeekCanCel"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekCanCel()">
+            Hủy
+            </button>
+            </div>
+
+
+           <div id="noteFreeTime">
+            <p class="">Chú ý:
+            <br>
+            - Các ca làm việc có màu <span class="badge rounded-pill text-bg-secondary">Ca làm việc</span> 
+            là những ca làm việc chưa được sắp lịch (nên có thể chỉnh sửa).
+            <br>
+            - Các ca làm việc có màu <span class="badge rounded-pill text-bg-success">Ca làm việc</span> 
+            là những ca làm việc đã được sắp lịch (nên không thể chỉnh sửa).
+            <br>
+            - Các ca làm việc có màu <span style="background-color: #FFFF99;">Ca làm việc</span> 
+            là những ca làm việc chưa đăng ký.
+            <br>
+            - Các ca làm việc có màu <span style="background-color: #ccfbbc;">Ca làm việc</span> 
+            là những ca làm việc đã đăng ký.
+            </p>
+           </div>
 
 
            
