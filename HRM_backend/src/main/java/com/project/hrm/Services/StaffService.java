@@ -52,4 +52,6 @@ public interface StaffService {
     public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid);
 
     public ResponseWithData<List<Timekeeping>> getAllTimeKeeping (Date start, Date end , String Uid);
+
+    public ResponseWithData<List<ShiftDetail>> getAllNotTimeKeepingStartAndEnd (Date start, Date end , String Uid);
 }

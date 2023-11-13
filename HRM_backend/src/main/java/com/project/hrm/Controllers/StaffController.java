@@ -120,4 +120,11 @@ public class StaffController {
         return staffService.deleteFreeTime(freeTime);
     }
 
+
+
+    //@LoginRequired
+    @GetMapping(URLConfigs.GET_ALL_NOT_TIMEKEEPING_START_AND_END)
+    public Response getAllNotTimeKeepingStartAndEnd(@RequestParam("start") Date start, @RequestParam("end") Date end, @RequestParam("Uid") String Uid){
+        return staffService.getAllNotTimeKeepingStartAndEnd(start,end,Uid);
+    }
 }

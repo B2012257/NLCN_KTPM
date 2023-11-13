@@ -13,8 +13,8 @@ const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
 const uid = userObject.uid;
 
-let count = 1;
-let countM = 1;
+
+
 
 document.getElementById("toDay").innerText = "Hôm nay : " + formatDate2;
 
@@ -35,11 +35,14 @@ function formatTime(time) {
 
 fetchStaffInfo();
 getAllScheduleTimekeeping();
-setTimeout(function() {
-    getAllScheduleNotTimekeeping();
-  }, 50); // 500 milliseconds (0.5 seconds)
-  
+
+getAllScheduleNotTimekeeping();
 getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
+
+    
+  
+  
+getAllScheduleNotTimekeepingStartAndEnd(currentYear,currentMonth);
 
 
 
@@ -109,7 +112,7 @@ function getAllScheduleTimekeeping() {
 
 
                     row.innerHTML = `
-                <td style="text-align: center;">${count}</td>
+               
                                     
                 <td style="text-align: center;">${date}</td>
                 
@@ -139,12 +142,12 @@ function getAllScheduleTimekeeping() {
                     ${note}
                 </td>
                 <td style="text-align: center;">
-                    <div class="badge bg-success">Đã chấm công</div>
+                    <i class="fa-solid fa-check" style="color: #2c511f;"></i>
                 </td>
     
     `
                     tableBody.appendChild(row);
-                    count = count + 1;
+                    
 
 
                 })
@@ -152,12 +155,12 @@ function getAllScheduleTimekeeping() {
             else {
                 const tableBody = document.getElementById('timeKeepingToday');
                 tableBody.innerHTML = '';
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td colspan="12">
-                <div style="text-align: center;">Hôm nay không có ca làm</div>
-                </td>`
-                tableBody.appendChild(row);
+                // const row = document.createElement('tr');
+                // row.innerHTML = `
+                // <td colspan="12">
+                // <div style="text-align: center;">Hôm nay không có ca làm</div>
+                // </td>`
+                // tableBody.appendChild(row);
 
             }
 
@@ -208,7 +211,7 @@ function getAllScheduleNotTimekeeping() {
                     const end = formatTime(item.shift.shiftType.end);
 
                     row.innerHTML = `
-                <td style="text-align: center;">${count}</td>
+                
                                     
                 <td style="text-align: center;">${date}</td>
                 
@@ -238,15 +241,26 @@ function getAllScheduleNotTimekeeping() {
                     
                 </td>
                 <td style="text-align: center;">
-                    <div class="badge bg-warning">Chưa chấm công</div>
+                    <i class="fa-solid fa-x" style="color: #f91515;"></i>
                 </td>
     
     `
                     tableBody.appendChild(row);
-                    count = count + 1;
+                   
 
 
                 })
+            }
+            else {
+                const tableBody = document.getElementById('timeKeepingToday1');
+                tableBody.innerHTML = '';
+                // const row = document.createElement('tr');
+                // row.innerHTML = `
+                // <td colspan="12">
+                // <div style="text-align: center;">Hôm nay không có ca làm</div>
+                // </td>`
+                // tableBody.appendChild(row);
+
             }
 
         });
@@ -320,6 +334,7 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
                     const row = document.createElement('tr');
                     const date = reversedDateString(item.shiftDetail.shift.date.date);
                     const start = formatTime(item.shiftDetail.shift.shiftType.start);
+                    console.log(item.shiftDetail.shift.shiftType.start)
                     const end = formatTime(item.shiftDetail.shift.shiftType.end);
                     const startInput = formatTime(item.start);
                     const endInput = formatTime(item.end);
@@ -338,12 +353,12 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
 
 
                     row.innerHTML = `
-                <td style="text-align: center;">${countM}</td>
+                
                                     
                 <td style="text-align: center;">${date}</td>
                 
                 <td style="text-align: center;">
-                    ${item.shiftDetail.shift.shiftType.name} (${start} - ${end} )
+                    <strong>${item.shiftDetail.shift.shiftType.name}</strong> (${start} - ${end})
                 </td>
                 <td  style="text-align: center;">
                     ${item.shiftDetail.overTime}
@@ -368,12 +383,12 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
                     ${note}
                 </td>
                 <td style="text-align: center;">
-                    <div class="badge bg-success">Đã chấm công</div>
+                    <i class="fa-solid fa-check" style="color: #2c511f;"></i>
                 </td>
     
     `
                     tableBody.appendChild(row);
-                    countM = countM + 1;
+                    
 
 
                 })
@@ -400,6 +415,13 @@ function displaySelectedMonth() {
 
     // Add logic to display the selected month in your table
     console.log('Selected month:', currentMonth, 'Selected year:', currentYear);
+
+    const isCurrentMonthYear = currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear();
+
+    // Vô hiệu hóa nút nếu là tháng và năm hiện tại
+    document.getElementById('nextMonth').disabled = isCurrentMonthYear;
+
+
 }
 
 function changeMonth(change) {
@@ -413,12 +435,109 @@ function changeMonth(change) {
         currentYear++;
     }
 
-    displaySelectedMonth();
-    countM = 1;
-    getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
+    
 
+    displaySelectedMonth();
+   
+    getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
+    getAllScheduleNotTimekeepingStartAndEnd(currentYear,currentMonth);
 }
 
 // Initial display
 displaySelectedMonth();
 
+
+
+
+
+function getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth) {
+
+    const { firstDay, lastDay } = getFirstAndLastDayOfMonth(currentYear, currentMonth);
+
+    fetch(`http://localhost:8081/api/v1/staff/getAllNotTimeKeepingStartAndEnd?start=${firstDay}&end=${lastDay}&Uid=${uid}`, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+        .then(res => res.json())
+
+        .then(res => {
+            console.log(res)
+            if (res.data !== null) {
+
+                console.log(res)
+                const tableBody = document.getElementById('timeKeepingMonthNot');
+                tableBody.innerHTML = '';
+                const dataList = res.data;
+                dataList.forEach(item => {
+                    const row = document.createElement('tr');
+                    const date = reversedDateString(item.shift.date.date);
+                    const start = formatTime(item.shift.shiftType.start);
+                    console.log(item.shift.shiftType.start)
+                    const end = formatTime(item.shift.shiftType.end);
+                   
+                    
+                    
+                    
+
+                    
+                    let note = item.note;
+                    if (note == null) {
+                        note = ' ';
+                    }
+
+
+                    row.innerHTML = `
+               
+                                    
+                <td style="text-align: center;">${date}</td>
+                
+                <td style="text-align: center;">
+                    <strong>${item.shift.shiftType.name}</strong> (${start} - ${end} )
+                </td>
+                <td  style="text-align: center;">
+                    ${item.overTime}
+                </td>
+            
+                <td style="text-align: center;">
+                    --:--
+                </td>
+                <td style="text-align: center;">
+                    --:--
+                </td>
+                <td style="text-align: center;">
+                    0
+                </td>
+                <td style="text-align: center;">
+                    0 giờ
+                </td>
+                <td style="text-align: center;">
+                    0
+                </td>
+                <td style="text-align: center;">
+                    ${note}
+                </td>
+                <td style="text-align: center;">
+                    <i class="fa-solid fa-x" style="color: #f91515;"></i>
+                </td>
+    
+    `
+                    tableBody.appendChild(row);
+                    
+
+
+                })
+            }
+
+            else {
+                const tableBody = document.getElementById('timeKeepingMonthNot');
+                tableBody.innerHTML = '';
+
+                console.log(1);
+            }
+
+        });
+}

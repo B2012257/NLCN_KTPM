@@ -1,17 +1,19 @@
 const currentDate = new Date();
 console.log(currentDate)
 const formatDate = currentDate.toISOString().split('T')[0].replace(/-/g, '/');
-const year = currentDate.getUTCFullYear();
-const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0');
-const day = currentDate.getUTCDate().toString().padStart(2, '0');
+const localYear = currentDate.getFullYear();
+const localMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+const localDay = currentDate.getDate().toString().padStart(2, '0');
 
-const dateNow = `${year}-${month}-${day}`;
-console.log(dateNow);
+// Create a formatted date string in the format 'YYYY-MM-DD' using local time
+const dateNow = `${localYear}-${localMonth}-${localDay}`;
+const dateNowFormat=`${localYear}/${localMonth}/${localDay}`;
+console.log("dateNow", dateNow);
 let dateWorkChecked = document.getElementById("current-time").value = dateNow;
 console.log(dateWorkChecked)
 
 const dateInput = document.getElementById("current-time");
-let formatDateInput = formatDate;
+let formatDateInput = dateNowFormat;
 
 dateInput.addEventListener('input', getDateWorkCheck);
 
@@ -26,7 +28,7 @@ let selectedRadioButtonId = null;
 
 
 getAllShiftType();
-fetchStaffInfo();
+// fetchStaffInfo();
 
 
 
@@ -74,29 +76,29 @@ function calculateOverTime(startTime, shiftStart) {
 
 
 
-function fetchStaffInfo() {
-    fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log(data);
-            document.getElementById("helloUserName").innerText = "Xin chào " + data.data.fullName;
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-}
+// function fetchStaffInfo() {
+//     fetch(`http://localhost:8081/api/v1/staff/info?Uid=${uid}`, {
+//         method: "GET",
+//         mode: "cors",
+//         credentials: "include",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//     })
+//         .then((response) => {
+//             if (!response.ok) {
+//                 throw new Error("Network response was not ok");
+//             }
+//             return response.json();
+//         })
+//         .then((data) => {
+//             console.log(data);
+//             document.getElementById("helloUserName").innerText = "Xin chào " + data.data.fullName;
+//         })
+//         .catch((error) => {
+//             console.error("Error:", error);
+//         });
+// }
 
 
 
@@ -158,6 +160,10 @@ function selectCheckbox() {
 }
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    colorCheckbox();
+});
+
 function colorCheckbox() {
     const checkboxes = document.querySelectorAll('.rowCheckbox');
 
@@ -167,11 +173,42 @@ function colorCheckbox() {
             if (this.checked) {
                 row.classList.add('table-success');
             } else {
-                row.classList.remove('table-success');// Bỏ màu nền
+                row.classList.remove('table-success');
             }
         });
+
+        // Kiểm tra trạng thái ban đầu của checkbox và áp dụng màu nền nếu cần thiết
+        if (checkbox.checked) {
+            const row = checkbox.closest('tr');
+            row.classList.add('table-success');
+        }
     });
 }
+
+
+
+document.addEventListener('change', function(event) {
+    var target = event.target;
+    if (target.matches('input[type="checkbox"]')) {
+        updateButtonStatus();
+    }
+});
+
+
+function updateButtonStatus() {
+    var buttonGroup = document.getElementById("markAttendanceButton")
+    
+
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    console.log("Checkbox",checkboxes)
+    var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    
+    buttonGroup.disabled = !atLeastOneChecked;
+    
+}
+
+
 
 
 
@@ -329,7 +366,7 @@ function getAllShiftDetail(date, shiftDetailID) {
                     </td>
 
                     <td style="text-align: center;">
-                        <input type="checkbox" class="rowCheckbox">
+                        <input type="checkbox" class="rowCheckbox" style="width: 16px; height: 16px;">
                     </td>
                             
     
@@ -337,7 +374,7 @@ function getAllShiftDetail(date, shiftDetailID) {
                     tableBody.appendChild(row);
                     selectAllRows();
                     selectCheckbox();
-                    //colorCheckbox();
+                    colorCheckbox();
 
 
                     const startID = document.getElementById(`startTimeInput_${item.id}`);
