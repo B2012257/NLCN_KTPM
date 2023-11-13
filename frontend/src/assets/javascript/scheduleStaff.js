@@ -60,33 +60,33 @@ function start() {
 }
 start();
 async function getStaff(callback) {
-  try {
-    const response = await fetch(api, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const responseData = await response.json();
+  // try {
+  //   const response = await fetch(api, {
+  //     method: "GET",
+  //     mode: "cors",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const responseData = await response.json();
 
-    // Kiểm tra xem responseData có phải là một mảng hay không
-    if (Array.isArray(responseData.data)) {
-      const data = responseData.data;
-      console.log("Data from API:", data);
-      callback(data);
-    } else if (typeof responseData.data === "object") {
-      // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
-      const data = [responseData.data];
-      console.log("Data from API:", data);
-      callback(data);
-    } else {
-      console.error("Invalid data format from API");
-    }
-  } catch (error) {
-    console.error(error);
-  }
+  //   // Kiểm tra xem responseData có phải là một mảng hay không
+  //   if (Array.isArray(responseData.data)) {
+  //     const data = responseData.data;
+  //     console.log("Data from API:", data);
+  //     callback(data);
+  //   } else if (typeof responseData.data === "object") {
+  //     // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
+  //     const data = [responseData.data];
+  //     console.log("Data from API:", data);
+  //     callback(data);
+  //   } else {
+  //     console.error("Invalid data format from API");
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
 }
 
 function renderStaff(users) {

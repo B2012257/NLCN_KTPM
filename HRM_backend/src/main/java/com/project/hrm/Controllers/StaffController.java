@@ -63,7 +63,6 @@ public class StaffController {
 
 
     @LoginRequired
-
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
     public Response registerSchedule(@RequestBody FreeTime newFreeTime){
         return staffService.registerSchedule(newFreeTime);
@@ -72,7 +71,6 @@ public class StaffController {
 
 
     @LoginRequired
-
     @PutMapping(URLConfigs.EDIT_REGISTER_SCHEDULE)
     public Response editRegisterSchedule(@RequestBody List<FreeTime> freeTimes){
         return staffService.editRegisterSchedule(freeTimes);

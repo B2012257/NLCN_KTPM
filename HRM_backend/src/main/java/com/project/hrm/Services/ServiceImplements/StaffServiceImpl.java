@@ -132,14 +132,13 @@ public class StaffServiceImpl implements StaffService {
                 com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
                 dateRepository.saveAndFlush(newDate);
             }
-
             // Thêm freeTime
             FreeTime freeTimeID = new FreeTime(freeTime);
             freeTimeRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getLocalizedMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
         }
     }
