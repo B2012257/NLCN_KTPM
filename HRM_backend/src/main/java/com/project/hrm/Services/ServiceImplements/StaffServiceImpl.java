@@ -120,22 +120,49 @@ public class StaffServiceImpl implements StaffService {
         return new ResponseWithData<>(shiftDetails, HttpStatus.OK, "Danh sách làm việc");
     }
 
-    @Override
-    public Response registerSchedule(FreeTime freeTime) {
+//    @Override
+//    public Response registerSchedule(FreeTime freeTime) {
+//        try {
+//            com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
+//
+//            // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
+//            boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
+//
+//            // Thêm ngày vào bảng 'date' nếu chưa tồn tại
+//            if (!dateExists) {
+//                com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
+//                dateRepository.saveAndFlush(newDate);
+//            }
+//            // Thêm freeTime
+//            FreeTime freeTimeID = new FreeTime(freeTime);
+//            freeTimeRepository.saveAndFlush(freeTimeID);
+//
+//            return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
+//        } catch (Exception ex) {
+//            System.out.println(ex.getLocalizedMessage());
+//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
+//        }
+//    }
+
+
+    public Response registerSchedule(List<FreeTime> freeTimes) {
         try {
-            com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
+            for (FreeTime freeTime : freeTimes) {
+                com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
 
-            // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
-            boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
+                // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
+                boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
 
-            // Thêm ngày vào bảng 'date' nếu chưa tồn tại
-            if (!dateExists) {
-                com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
-                dateRepository.saveAndFlush(newDate);
+                // Thêm ngày vào bảng 'date' nếu chưa tồn tại
+                if (!dateExists) {
+                    com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
+                    dateRepository.saveAndFlush(newDate);
+                }
+
+                // Thêm freeTime
+                FreeTime freeTimeID = new FreeTime(freeTime);
+                freeTimeRepository.saveAndFlush(freeTimeID);
             }
-            // Thêm freeTime
-            FreeTime freeTimeID = new FreeTime(freeTime);
-            freeTimeRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
         } catch (Exception ex) {
@@ -143,6 +170,7 @@ public class StaffServiceImpl implements StaffService {
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
         }
     }
+
 
 
     @Override

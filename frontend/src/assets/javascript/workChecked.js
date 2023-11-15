@@ -188,7 +188,7 @@ function colorCheckbox() {
 
 
 document.addEventListener('change', function(event) {
-    var target = event.target;
+    const target = event.target;
     if (target.matches('input[type="checkbox"]')) {
         updateButtonStatus();
     }
@@ -196,12 +196,12 @@ document.addEventListener('change', function(event) {
 
 
 function updateButtonStatus() {
-    var buttonGroup = document.getElementById("markAttendanceButton")
+    const buttonGroup = document.getElementById("markAttendanceButton")
     
 
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     console.log("Checkbox",checkboxes)
-    var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    const atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
     
     buttonGroup.disabled = !atLeastOneChecked;
@@ -245,7 +245,7 @@ function getAllShiftType() {
                 const data = res.data;
                 console.log(data);
                 const shiftType = document.getElementById("shiftType");
-                var html = data.map(function (shiftType) {
+                const html = data.map(function (shiftType) {
                     console.log("shiftDetail", shiftType)
                     const uniqueId = `${shiftType.id}`;
                     return `
@@ -773,7 +773,7 @@ function validateTime() {
 }
 
 function deleteRow(rowId) {
-    var row = document.getElementById(rowId);
+    const row = document.getElementById(rowId);
     if (row) {
         confirm("Xóa chấm công này")
         //row.parentNode.removeChild(row);
