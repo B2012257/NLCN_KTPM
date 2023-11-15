@@ -136,10 +136,26 @@
             
                     <!-- Button Group -->
                     <div class="col-md-4" style="margin-top: 35px;">
-                        <div class="btn-group float-end editWeek" role="group" aria-label="Basic outlined example">
+                        <div class="btn-group row editWeek" role="group" aria-label="Basic outlined example">
                             <button type="button" class="btn btn-outline-primary" id="prevWeekButton">Lùi 1 tuần</button>
                             <button type="button" class="btn btn-outline-primary" id="currentWeekButton">Tuần này</button>
                             <button type="button" class="btn btn-outline-primary" id="nextWeekButton">Tiến 1 tuần</button>
+                        </div>
+                        
+                        <div class="row">
+                            <button type="button" class="btn btn-primary  registerLastWeek"
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeek()">
+                                Đăng ký theo tuần trước
+                                </button>
+                                <div class="buttonEditRegisterLastWeek" style="display: none; margin-top: 40px;">
+                                <button type="button" class="btn btn-primary registerLastWeekAdd"
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekAdd()">
+                                Đăng ký
+                                </button>
+                                <button type="button" class="btn btn-primary registerLastWeekCanCel"
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekCanCel()">
+                                Hủy
+                                </button>
                         </div>
                     </div>
                 </div>
@@ -359,21 +375,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary float-end registerLastWeek"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeek()">
-            Đăng ký theo tuần trước
-            </button>
-
-            <div class="buttonEditRegisterLastWeek" style="display: none; float:right;">
-            <button type="button" class="btn btn-primary registerLastWeekAdd"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekAdd()">
-            Đăng ký
-            </button>
-
-            <button type="button" class="btn btn-primary registerLastWeekCanCel"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekCanCel()">
-            Hủy
-            </button>
+            
             </div>
 
 
