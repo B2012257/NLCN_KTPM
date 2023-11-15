@@ -20,54 +20,64 @@ const api = `http://localhost:8081/api/v1/manager/infoStaff?uid=${uid}`;
 const apiShift = `http://localhost:8081/api/v1/staff/getAllSchedule`;
 
 let data = [];
-function start() {
-  getStaff(function (fetchedData) {
-    data = fetchedData;
-    renderStaff(data);
-  });
-  getMyShift(formattedDate, formattedDate, uid);
-}
-start();
-async function getStaff(callback) {
-  try {
-    const response = await fetch(api, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const responseData = await response.json();
+let userShiftTypeIds = []; // số ca của user
 
-    // Kiểm tra xem responseData có phải là một mảng hay không
-    if (Array.isArray(responseData.data)) {
-      const data = responseData.data;
-      console.log("Data from API:", data);
-      callback(data);
-    } else if (typeof responseData.data === "object") {
-      // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
-      const data = [responseData.data];
-      console.log("Data from API:", data);
-      callback(data);
-    } else {
-      console.error("Invalid data format from API");
-    }
-  } catch (error) {
-    console.error(error);
+function start() {
+  // getStaff(function (fetchedData) {
+  //   data = fetchedData;
+  //   renderStaff(data);
+  // });
+  getMyShift(formattedDate, formattedDate, uid);
+  if (userShiftTypeIds.length === 0) {
+    console.log("userShiftTypeIds", userShiftTypeIds.length);
+    console.log("userShiftTypeIds2", userShiftTypeIds === null);
+    document.querySelector(".shiftType").innerHTML =
+      "<tr><td colspan='5'>Không có ca làm việc</td></tr>";
+    return; // Kết thúc hàm nếu không có ca làm việc
   }
 }
 
-function renderStaff(users) {
-  const info = document.querySelector("#username");
-  var htmls = users.map(function (user) {
-    const returnHTML = `
-    ${user.fullName}
-          `;
-    return returnHTML;
-  });
-  info.innerHTML = htmls.join("");
-}
+start();
+// async function getStaff(callback) {
+//   try {
+//     const response = await fetch(api, {
+//       method: "GET",
+//       mode: "cors",
+//       credentials: "include",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const responseData = await response.json();
+
+//     // Kiểm tra xem responseData có phải là một mảng hay không
+//     if (Array.isArray(responseData.data)) {
+//       const data = responseData.data;
+//       console.log("Data from API:", data);
+//       callback(data);
+//     } else if (typeof responseData.data === "object") {
+//       // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
+//       const data = [responseData.data];
+//       console.log("Data from API:", data);
+//       callback(data);
+//     } else {
+//       console.error("Invalid data format from API");
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+// function renderStaff(users) {
+//   const info = document.querySelector("#username");
+//   var htmls = users.map(function (user) {
+//     const returnHTML = `
+//     ${user.fullName}
+//           `;
+//     return returnHTML;
+//   });
+//   info.innerHTML = htmls.join("");
+// }
 
 function getMyShift(startDate, endDate, userId) {
   fetch(`${apiShift}?start=${startDate}&end=${endDate}`, {
@@ -85,7 +95,8 @@ function getMyShift(startDate, endDate, userId) {
         let shiftData = {};
         console.log("datas", datas);
         // Lấy shiftType.id của người dùng hiện tại từ datas
-        let userShiftTypeIds = [];
+        // let userShiftTypeIds = [];
+        const shiftTypeElement = document.querySelector(".shiftType");
 
         // Lần đầu tiên đi qua datas để tìm và lưu trữ shiftTypeId của người có userId cùng với uid người đăng nhập
         datas.forEach((item) => {
@@ -125,7 +136,9 @@ function getMyShift(startDate, endDate, userId) {
         });
 
         if (userShiftTypeIds.length === 0) {
-          document.querySelector(".shiftType").innerHTML =
+          // document.querySelector(".shiftType").innerHTML =
+          //   "<tr><td colspan='5'>Không có ca làm việc</td></tr>";
+          shiftTypeElement.innerHTML =
             "<tr><td colspan='5'>Không có ca làm việc</td></tr>";
           return; // Kết thúc hàm nếu không có ca làm việc
         }
@@ -167,4 +180,9 @@ function getMyShift(startDate, endDate, userId) {
         document.querySelector(".nameStaff").innerHTML = bodyRowsHTML;
       }
     });
+}
+
+if (window.screen.width < 500) {
+  const stylePhone = document.getElementById("listStaffStylePhone");
+  stylePhone.classList.add("overflow-x-scroll", "w-100", "d-inline-block");
 }

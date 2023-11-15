@@ -395,3 +395,8 @@ function onClickDeleteStaff() {
   const userId = document.getElementById("userId").value;
   deleteStaff(userId);
 }
+
+if (window.screen.width < 500) {
+  const stylePhone = document.getElementById("listStaffStylePhone");
+  stylePhone.classList.add("overflow-x-scroll", "w-100", "d-inline-block");
+}

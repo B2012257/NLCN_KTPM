@@ -294,7 +294,6 @@ async function postAddStaffApi(data) {
     }
     else alert(dataRs.message);
 }
-
 function loadStaffRecentHtml(staffs) {
 
     if (staffs.length === 0) {

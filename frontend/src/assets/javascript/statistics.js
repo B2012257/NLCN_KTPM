@@ -313,3 +313,8 @@ statistics.addEventListener("click", function () {
   const dayEnd = dateStringFormat(valueLastDay);
   renderStaff(data, dayStart, dayEnd);
 });
+
+if (window.screen.width < 500) {
+  const stylePhone = document.getElementById("dateStylePhone");
+  stylePhone.classList.add("overflow-x-scroll", "w-100", "d-inline-block");
+}
