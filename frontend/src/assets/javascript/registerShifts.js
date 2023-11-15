@@ -2,7 +2,7 @@ const userData = localStorage.getItem("u");
 const userObject = JSON.parse(userData);
 const uid = userObject.uid;
 
-var currentDay = '';
+let currentDay = '';
 
 
 
@@ -24,11 +24,11 @@ function setCurrentDay(day) {
 
 
 function getFreeTime(){
-    var dayCheckboxInfo = document.getElementById(currentDay + "-data");
-    var divElement = dayCheckboxInfo.getElementsByTagName("div");
+    const dayCheckboxInfo = document.getElementById(currentDay + "-data");
+    const divElement = dayCheckboxInfo.getElementsByTagName("div");
     const freeTimeArray = [];
     console.log(divElement.length);
-    for(var i = 0; i<divElement.length;i++){
+    for(let i = 0; i<divElement.length;i++){
         const divElementId = divElement[i];
         const divElementText = divElementId.innerText;
         //console.log(divElementText)
@@ -41,12 +41,12 @@ function getFreeTime(){
 }
 
 function updateCheckboxInfo() {
-    var checkboxInput = document.querySelectorAll(".checkbox-input");
+    const checkboxInput = document.querySelectorAll(".checkbox-input");
     //console.log("CurrentDay",currentDay)
     const dateFreeTime = document.getElementById(currentDay).querySelector(".sttOfWeek").querySelector("small");
     //console.log(dateFreeTime.innerText);
     const dateFree = formatDay(dateFreeTime.innerText);
-    
+    const arrayDataFreeTime=[];
     for (let i = 0; i < checkboxInput.length; i++) {
         const checkBox = checkboxInput[i];
         
@@ -57,8 +57,8 @@ function updateCheckboxInfo() {
             const date ={}
             // console.log(checkBox)
             // console.log(checkBox.value)
-            // var dayCheckboxInfo = document.getElementById(currentDay + "-data");
-            // var newDiv = document.createElement("div");
+            // const dayCheckboxInfo = document.getElementById(currentDay + "-data");
+            // const newDiv = document.createElement("div");
             // newDiv.id = checkBox.id;
             // newDiv.classList.add('badge', 'rounded-pill', 'text-bg-secondary');
             
@@ -66,7 +66,7 @@ function updateCheckboxInfo() {
            
 
             // dayCheckboxInfo.appendChild(newDiv);
-            // var lineBreak = document.createElement("br");
+            // const lineBreak = document.createElement("br");
             // dayCheckboxInfo.appendChild(lineBreak);
             
 
@@ -78,11 +78,12 @@ function updateCheckboxInfo() {
             dataFreeTime.shiftType=shiftType;
             dataFreeTime.isSchedule=false;
             console.log(dataFreeTime)
-            workRegisterAPI(dataFreeTime);
+            arrayDataFreeTime.push(dataFreeTime);
         }
        
     }
-    
+    console.log(arrayDataFreeTime);
+    workRegisterAPI(arrayDataFreeTime);
     alert("Đăng ký lịch rảnh thành công.");
     getFreeTimeOfWeek();
     
@@ -154,17 +155,17 @@ function getFreeTimeAPI(date,uid,day) {
              
                 //console.log(res)
                 //const tableBody = document.getElementById('shiftDetail');
-                var dayCheckboxInfo = document.getElementById(day+ "-data");
+                const dayCheckboxInfo = document.getElementById(day+ "-data");
                 dayCheckboxInfo.innerHTML = '';
                 const dataList = res.data;
                 //console.log(dataList)
-                var dayCheckboxInfo = document.getElementById(day + "-data");
+                //const dayCheckboxInfo = document.getElementById(day + "-data");
                 // dayCheckboxInfo.innerHTML=' ';
 
                 dataList.forEach(item => {
 
-                    var dayCheckboxInfo = document.getElementById(day + "-data");
-                    var newDiv = document.createElement("div");
+                    const dayCheckboxInfo = document.getElementById(day + "-data");
+                    const newDiv = document.createElement("div");
                     newDiv.id = item.id;
 
                     if(item.isSchedule){
@@ -177,7 +178,7 @@ function getFreeTimeAPI(date,uid,day) {
                     newDiv.style.marginLeft = "10px";
 
                     dayCheckboxInfo.appendChild(newDiv);
-                    // var lineBreak = document.createElement("br");
+                    // const lineBreak = document.createElement("br");
                     // dayCheckboxInfo.appendChild(lineBreak);
                     
 
@@ -186,7 +187,7 @@ function getFreeTimeAPI(date,uid,day) {
 
             else {
 
-                var dayCheckboxInfo = document.getElementById(day + "-data");
+                const dayCheckboxInfo = document.getElementById(day + "-data");
                 dayCheckboxInfo.innerHTML='';
                 
             }
@@ -249,7 +250,7 @@ function getAllShiftType(freeTimeArray) {
                 const data = res.data;
                 console.log(data);
                 const shiftType = document.getElementById("shiftType");
-                var html = data.map(function (shiftType) {
+                const html = data.map(function (shiftType) {
                     console.log("shiftDetail", shiftType)
                     const uniqueId = `${shiftType.id}`;
                     const valueId = `Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})`;
@@ -258,7 +259,7 @@ function getAllShiftType(freeTimeArray) {
                         console.log("Mảng freeTimeArray không tồn tại hoặc trống.");
                         return `
                             <div>
-                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}">
+                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}"  style="width: 16px; height: 16px;">
                                 <label for="${uniqueId}">Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})</label>
                             </div>
       
@@ -270,7 +271,7 @@ function getAllShiftType(freeTimeArray) {
                     if(isValueInArray){
                         return `
                             <div style="background-color: #ccfbbc;">
-                                <input type="checkbox" class="" name="${shiftType.name}" id=${uniqueId} value="${valueId}" disabled > Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})
+                                <input type="checkbox" class="" name="${shiftType.name}" id=${uniqueId} value="${valueId}" disabled  style="width: 16px; height: 16px;"> Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})
                                 <span style="font-size: smaller; font-style: italic; color: blue;">(Đã đăng ký)</span>                           
                             </div>
                             
@@ -281,7 +282,7 @@ function getAllShiftType(freeTimeArray) {
                     else{
                         return `
                             <div>
-                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}"> 
+                                <input type="checkbox" class="checkbox-input" name="${shiftType.name}" id=${uniqueId} value="${valueId}"  style="width: 16px; height: 16px;"> 
                                 <label for="${uniqueId}">Ca ${shiftType.name} (${formatTime(shiftType.start)} - ${formatTime(shiftType.end)})</label>
                             </div>
       
@@ -474,9 +475,9 @@ function workRegisterAPI(selectedDays) {
 
 
 function getFreeTimeDelete(currentDay){
-    var dayCheckboxInfo = document.getElementById(currentDay + "-data");
-    var divElements = dayCheckboxInfo.getElementsByTagName("div");
-    var deleteCheckbox = document.getElementById("deleteFreeTime");
+    const dayCheckboxInfo = document.getElementById(currentDay + "-data");
+    const divElements = dayCheckboxInfo.getElementsByTagName("div");
+    const deleteCheckbox = document.getElementById("deleteFreeTime");
     deleteCheckbox.innerHTML=''
     console.log(divElements.length);
     if(divElements.length==0){
@@ -484,7 +485,7 @@ function getFreeTimeDelete(currentDay){
         statusDelete.innerText="Chưa đăng ký lịch rảnh."
         deleteCheckbox.appendChild(statusDelete)
     }
-    for (var i = 0; i < divElements.length; i++) {
+    for (let i = 0; i < divElements.length; i++) {
         const divElement = divElements[i].getAttribute("data-value");
         if (divElement == 'false') {
             const divValue = divElements[i].innerText;
@@ -506,7 +507,7 @@ function getFreeTimeDelete(currentDay){
                 }
             });
     
-            var lineBreak = document.createElement("br");
+            const lineBreak = document.createElement("br");
     
             deleteCheckbox.appendChild(checkBoxDiv);
             deleteCheckbox.appendChild(document.createTextNode(" " + divValue));
@@ -521,7 +522,7 @@ function getFreeTimeDelete(currentDay){
 
             checkBoxDiv.setAttribute("disabled", "disabled");
 
-            var lineBreak = document.createElement("br");
+            const lineBreak = document.createElement("br");
 
             deleteCheckbox.appendChild(checkBoxDiv);
             deleteCheckbox.appendChild(document.createTextNode(" " + divValue));
@@ -543,7 +544,7 @@ function getFreeTimeDelete(currentDay){
 }
 
 function deleteDiv(divId) {
-    var divToDelete = document.getElementById(divId);
+    const divToDelete = document.getElementById(divId);
     divToDelete.remove();
 }
 
@@ -576,9 +577,15 @@ function registerLastWeek(){
    
     const registerLastWeek=document.querySelector(".registerLastWeek");
     const buttonEditRegisterLastWeek=document.querySelector(".buttonEditRegisterLastWeek")
-    var buttonGroup = document.querySelector('.btn-group.editWeek');
-    var buttons = buttonGroup.querySelectorAll('button');
+    const buttonGroup = document.querySelector('.btn-group.editWeek');
+    const buttons = buttonGroup.querySelectorAll('button');
 
+    const noteRegister=document.getElementById("noteRegister")
+    const noteRegisterLastWeek=document.getElementById("noteRegisterLastWeek");
+
+    noteRegister.style.display="none"
+    noteRegisterLastWeek.style.display="block"
+    
     buttons.forEach(function(button) {
         button.disabled = true;
     });
@@ -604,9 +611,13 @@ function registerLastWeek(){
             count=count+1;
             if(count == 6){
                 alert("Đã hết thời gian đăng ký tuần này");
-                var buttonGroup = document.querySelector('.btn-group.editWeek');
-                var buttons = buttonGroup.querySelectorAll('button');
+               
+                
+                const noteRegister=document.getElementById("noteRegister")
+                const noteRegisterLastWeek=document.getElementById("noteRegisterLastWeek");
             
+                noteRegister.style.display="block"
+                noteRegisterLastWeek.style.display="none"
                 buttons.forEach(function(button) {
                     button.disabled = false;
                 });
@@ -745,16 +756,16 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
     .then(res => res.json())
     .then(res => {
         if (res.data !== null) {
-            var dayCheckboxInfo = document.getElementById(day + "-data");
+            const dayCheckboxInfo = document.getElementById(day + "-data");
             dayCheckboxInfo.innerHTML = '';
             const dataList = res.data;
 
             
             dataList.forEach(item => {
-                var dayCheckboxInfo = document.getElementById(day + "-data");
+                const dayCheckboxInfo = document.getElementById(day + "-data");
                 //console.log(item)
                 // Tạo thẻ input checkbox
-                var newCheckbox = document.createElement("input");
+                const newCheckbox = document.createElement("input");
                 newCheckbox.type = "checkbox";
                 newCheckbox.id = item.id+day;
                
@@ -765,7 +776,7 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
 
                 
                 // Tạo nhãn cho checkbox
-                var label = document.createElement("label");
+                const label = document.createElement("label");
                 label.textContent = "Ca " + item.name + " (" + formatTime(item.start) + " - " + formatTime(item.end) + ")";
                 label.setAttribute("for", item.id+day);
                 newCheckbox.value=item.id;
@@ -802,7 +813,7 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
                 dayCheckboxInfo.appendChild(newCheckbox);
                 dayCheckboxInfo.appendChild(label);
 
-                // var lineBreak = document.createElement("br");
+                //const lineBreak = document.createElement("br");
                 // dayCheckboxInfo.appendChild(lineBreak);
 
                 
@@ -810,7 +821,7 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
 
             
         } else {
-            var dayCheckboxInfo = document.getElementById(day + "-data");
+            const dayCheckboxInfo = document.getElementById(day + "-data");
             dayCheckboxInfo.innerHTML = '';
         }
 
@@ -825,8 +836,14 @@ function registerLastWeekCanCel(){
     getFreeTimeOfWeek();
     const registerLastWeek=document.querySelector(".registerLastWeek");
     const buttonEditRegisterLastWeek=document.querySelector(".buttonEditRegisterLastWeek")
-    var buttonGroup = document.querySelector('.btn-group.editWeek');
-    var buttons = buttonGroup.querySelectorAll('button');
+    const buttonGroup = document.querySelector('.btn-group.editWeek');
+    const buttons = buttonGroup.querySelectorAll('button');
+
+    const noteRegister=document.getElementById("noteRegister")
+    const noteRegisterLastWeek=document.getElementById("noteRegisterLastWeek");
+
+    noteRegister.style.display="block"
+    noteRegisterLastWeek.style.display="none"
 
     buttons.forEach(function(button) {
         button.disabled = false;
@@ -839,7 +856,7 @@ function registerLastWeekCanCel(){
 
 function registerLastWeekAdd(){
     const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-    
+    const arrayDataFreeTimeLastWeek=[];
     daysOfWeek.forEach(day => {
         const dateFreeTime = document.getElementById(day).querySelector(".sttOfWeek").querySelector("small");
         const dataCheckInfo=document.getElementById(day).querySelector('.'+day+'-data');
@@ -868,7 +885,7 @@ function registerLastWeekAdd(){
                     dataRegister.date=dateRegister;
                     dataRegister.isSchedule=false;
                     console.log(dataRegister)
-                    workRegisterAPI(dataRegister);
+                    arrayDataFreeTimeLastWeek.push(dataRegister)
                 }
             
             })
@@ -876,14 +893,22 @@ function registerLastWeekAdd(){
 
     } 
     );
+    console.log(arrayDataFreeTimeLastWeek);
+    workRegisterAPI(arrayDataFreeTimeLastWeek);
     alert("Đăng ký lịch rảnh thành công.");
     const registerLastWeek=document.querySelector(".registerLastWeek");
     const buttonEditRegisterLastWeek=document.querySelector(".buttonEditRegisterLastWeek")
-    var buttonGroup = document.querySelector('.btn-group.editWeek');
-    var buttons = buttonGroup.querySelectorAll('button');
+    const buttonGroup = document.querySelector('.btn-group.editWeek');
+    const buttons = buttonGroup.querySelectorAll('button');
+
+    const noteRegister=document.getElementById("noteRegister")
+    const noteRegisterLastWeek=document.getElementById("noteRegisterLastWeek");
+
+    noteRegister.style.display="block"
+    noteRegisterLastWeek.style.display="none"
 
     buttons.forEach(function(button) {
-        button.disabled = true;
+        button.disabled = false;
     });
     registerLastWeek.style.display="block";
     buttonEditRegisterLastWeek.style.display="none"
@@ -896,12 +921,12 @@ function registerLastWeekAdd(){
 
 
 function updateButtonStatus() {
-    var buttonGroup = document.querySelector('.registerLastWeekAdd');
+    const buttonGroup = document.querySelector('.registerLastWeekAdd');
     
 
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     console.log("Checkbox",checkboxes)
-    var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    const atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
     
     buttonGroup.disabled = !atLeastOneChecked;
@@ -910,7 +935,7 @@ function updateButtonStatus() {
 
 // Attach the function to checkbox change events using event delegation
 document.addEventListener('change', function(event) {
-    var target = event.target;
+    const target = event.target;
     if (target.matches('input[type="checkbox"]')) {
         updateButtonStatus();
     }
@@ -918,12 +943,12 @@ document.addEventListener('change', function(event) {
 
 
 function updateButtonAddStatus() {
-    var buttonGroup = document.getElementById("addButton")
+    const buttonGroup = document.getElementById("addButton")
     
 
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     console.log("Checkbox",checkboxes)
-    var atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    const atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
     
     buttonGroup.disabled = !atLeastOneChecked;
@@ -932,7 +957,7 @@ function updateButtonAddStatus() {
 
 // Attach the function to checkbox change events using event delegation
 document.addEventListener('change', function(event) {
-    var target = event.target;
+    const target = event.target;
     if (target.matches('input[type="checkbox"]')) {
         updateButtonAddStatus();
     }

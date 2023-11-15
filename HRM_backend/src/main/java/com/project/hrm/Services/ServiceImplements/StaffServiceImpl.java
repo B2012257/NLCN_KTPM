@@ -9,6 +9,7 @@ import com.project.hrm.payloads.Response.ResponseWithData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,30 +120,57 @@ public class StaffServiceImpl implements StaffService {
         return new ResponseWithData<>(shiftDetails, HttpStatus.OK, "Danh sách làm việc");
     }
 
-    @Override
-    public Response registerSchedule(FreeTime freeTime) {
+//    @Override
+//    public Response registerSchedule(FreeTime freeTime) {
+//        try {
+//            com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
+//
+//            // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
+//            boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
+//
+//            // Thêm ngày vào bảng 'date' nếu chưa tồn tại
+//            if (!dateExists) {
+//                com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
+//                dateRepository.saveAndFlush(newDate);
+//            }
+//            // Thêm freeTime
+//            FreeTime freeTimeID = new FreeTime(freeTime);
+//            freeTimeRepository.saveAndFlush(freeTimeID);
+//
+//            return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
+//        } catch (Exception ex) {
+//            System.out.println(ex.getLocalizedMessage());
+//            return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
+//        }
+//    }
+
+
+    public Response registerSchedule(List<FreeTime> freeTimes) {
         try {
-            com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
+            for (FreeTime freeTime : freeTimes) {
+                com.project.hrm.Models.Date dateToCheck = freeTime.getDate();
 
-            // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
-            boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
+                // Kiểm tra xem ngày đã tồn tại trong bảng 'date' chưa
+                boolean dateExists = freeTimeRepository.existsByDate(dateToCheck);
 
-            // Thêm ngày vào bảng 'date' nếu chưa tồn tại
-            if (!dateExists) {
-                com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
-                dateRepository.saveAndFlush(newDate);
+                // Thêm ngày vào bảng 'date' nếu chưa tồn tại
+                if (!dateExists) {
+                    com.project.hrm.Models.Date newDate = new com.project.hrm.Models.Date(dateToCheck.getDate());
+                    dateRepository.saveAndFlush(newDate);
+                }
+
+                // Thêm freeTime
+                FreeTime freeTimeID = new FreeTime(freeTime);
+                freeTimeRepository.saveAndFlush(freeTimeID);
             }
-
-            // Thêm freeTime
-            FreeTime freeTimeID = new FreeTime(freeTime);
-            freeTimeRepository.saveAndFlush(freeTimeID);
 
             return new Response(HttpStatus.OK, "Đăng ký thời gian rảnh thành công");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getLocalizedMessage());
             return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Có lỗi");
         }
     }
+
 
 
     @Override
@@ -176,32 +204,27 @@ public class StaffServiceImpl implements StaffService {
 
 
     @Override
-    public ResponseWithData<List<FreeTime>> getFreeTimeOfStaffInDate(Date date, Staff staff){
+    public ResponseWithData<List<FreeTime>> getFreeTimeOfStaffInDate(Date date, Staff staff) {
         com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
-        List<FreeTime> freeTimeList = freeTimeRepository.findByDateAndStaff(dateModel,staff);
-        if(freeTimeList.isEmpty()){
-            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND,"Không tìm thấy lịch rảnh");
-        }
-        else
-            return new ResponseWithData<>(freeTimeList, HttpStatus.OK,"Danh sách lịch rảnh");
+        List<FreeTime> freeTimeList = freeTimeRepository.findByDateAndStaff(dateModel, staff);
+        if (freeTimeList.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy lịch rảnh");
+        } else
+            return new ResponseWithData<>(freeTimeList, HttpStatus.OK, "Danh sách lịch rảnh");
 
     }
 
 
     @Override
-    public Response deleteFreeTime(FreeTime freeTime){
+    public Response deleteFreeTime(FreeTime freeTime) {
         FreeTime freeTimes = freeTimeRepository.findById(freeTime.getId()).orElse(null);
 
-        if(freeTimes!=null){
+        if (freeTimes != null) {
             freeTimeRepository.delete(freeTimes);
-            return new Response(HttpStatus.OK,"Xóa thành công");
-        }
-
-        else return new Response(HttpStatus.NOT_FOUND,"Không tìm thấy");
+            return new Response(HttpStatus.OK, "Xóa thành công");
+        } else return new Response(HttpStatus.NOT_FOUND, "Không tìm thấy");
 
     }
-
-
 
     @Override
     public ResponseWithData<List<ShiftType>> getAllShiftType() {
@@ -210,17 +233,15 @@ public class StaffServiceImpl implements StaffService {
 
     }
 
-
-
     @Override
-    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid){
+    public ResponseWithData<List<Timekeeping>> getAllScheduleOfStaffInTimeKeeping(Date date, String Uid) {
         com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
         List<Shift> shiftList = shiftRepository.findByDate(dateModel);
         List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
 
         List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
-        for(ShiftDetail shiftDetail : shiftDetailList){
-            if(shiftDetail.getStaff().getUid().equals(Uid)){
+        for (ShiftDetail shiftDetail : shiftDetailList) {
+            if (shiftDetail.getStaff().getUid().equals(Uid)) {
                 shiftDetailForStaff.add(shiftDetail);
             }
         }
@@ -233,29 +254,23 @@ public class StaffServiceImpl implements StaffService {
             }
         }
 
-        if(shiftDetailForStaff.isEmpty()){
-            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        if (shiftDetailForStaff.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
 
 
-        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc đã chấm công");
+        return new ResponseWithData<>(shiftDetailsInTimekeeping, HttpStatus.OK, "Danh sách ca làm việc đã chấm công");
     }
 
-
-
-
-
-
-
     @Override
-    public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid){
+    public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid) {
         com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
         List<Shift> shiftList = shiftRepository.findByDate(dateModel);
         List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
 
         List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
-        for(ShiftDetail shiftDetail : shiftDetailList){
-            if(shiftDetail.getStaff().getUid().equals(Uid)){
+        for (ShiftDetail shiftDetail : shiftDetailList) {
+            if (shiftDetail.getStaff().getUid().equals(Uid)) {
                 shiftDetailForStaff.add(shiftDetail);
             }
         }
@@ -268,26 +283,26 @@ public class StaffServiceImpl implements StaffService {
             }
         }
 
-        if(shiftDetailForStaff.isEmpty()){
-            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        if (shiftDetailForStaff.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
 
 
-        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc chưa chấm công");
+        return new ResponseWithData<>(shiftDetailsInTimekeeping, HttpStatus.OK, "Danh sách ca làm việc chưa chấm công");
     }
 
 
     @Override
-    public ResponseWithData<List<Timekeeping>> getAllTimeKeeping (Date start, Date end , String Uid){
+    public ResponseWithData<List<Timekeeping>> getAllTimeKeeping(Date start, Date end, String Uid) {
         com.project.hrm.Models.Date startDate = new com.project.hrm.Models.Date(start);
         com.project.hrm.Models.Date endDate = new com.project.hrm.Models.Date(end);
 
-        List<Shift> shiftList = shiftRepository.findAllByDateBetween(startDate,endDate);
-        List<ShiftDetail> shiftDetailList= shiftDetailRepository.findByShiftIn(shiftList);
+        List<Shift> shiftList = shiftRepository.findAllByDateBetween(startDate, endDate);
+        List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
 
         List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
-        for(ShiftDetail shiftDetail : shiftDetailList){
-            if(shiftDetail.getStaff().getUid().equals(Uid)){
+        for (ShiftDetail shiftDetail : shiftDetailList) {
+            if (shiftDetail.getStaff().getUid().equals(Uid)) {
                 shiftDetailForStaff.add(shiftDetail);
             }
         }
@@ -300,27 +315,26 @@ public class StaffServiceImpl implements StaffService {
             }
         }
 
-        if(shiftDetailsInTimekeeping.isEmpty()){
-            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        if (shiftDetailsInTimekeeping.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
 
 
-        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc đã chấm công");
+        return new ResponseWithData<>(shiftDetailsInTimekeeping, HttpStatus.OK, "Danh sách ca làm việc đã chấm công");
     }
 
 
-
     @Override
-    public ResponseWithData<List<ShiftDetail>> getAllNotTimeKeepingStartAndEnd (Date start, Date end , String Uid){
+    public ResponseWithData<List<ShiftDetail>> getAllNotTimeKeepingStartAndEnd(Date start, Date end, String Uid) {
         com.project.hrm.Models.Date startDate = new com.project.hrm.Models.Date(start);
         com.project.hrm.Models.Date endDate = new com.project.hrm.Models.Date(end);
 
-        List<Shift> shiftList = shiftRepository.findAllByDateBetween(startDate,endDate);
-        List<ShiftDetail> shiftDetailList= shiftDetailRepository.findByShiftIn(shiftList);
+        List<Shift> shiftList = shiftRepository.findAllByDateBetween(startDate, endDate);
+        List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
 
         List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
-        for(ShiftDetail shiftDetail : shiftDetailList){
-            if(shiftDetail.getStaff().getUid().equals(Uid)){
+        for (ShiftDetail shiftDetail : shiftDetailList) {
+            if (shiftDetail.getStaff().getUid().equals(Uid)) {
                 shiftDetailForStaff.add(shiftDetail);
             }
         }
@@ -333,16 +347,13 @@ public class StaffServiceImpl implements StaffService {
             }
         }
 
-        if(shiftDetailsInTimekeeping.isEmpty()){
-            return new ResponseWithData<>(null,HttpStatus.NOT_FOUND,"Không tìm thấy ca làm việc");
+        if (shiftDetailsInTimekeeping.isEmpty()) {
+            return new ResponseWithData<>(null, HttpStatus.NOT_FOUND, "Không tìm thấy ca làm việc");
         }
 
 
-        return new ResponseWithData<>(shiftDetailsInTimekeeping,HttpStatus.OK,"Danh sách ca làm việc chưa chấm công");
+        return new ResponseWithData<>(shiftDetailsInTimekeeping, HttpStatus.OK, "Danh sách ca làm việc chưa chấm công");
     }
 
-
-
-    
 
 }
