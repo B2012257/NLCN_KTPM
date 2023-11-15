@@ -14,7 +14,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../assets/css/reset.css">
   <link rel="stylesheet" href="../assets/css/schedule.css">
-  <title>Quản lý lịch làm</title>
+  <title>Xem lịch làm</title>
 </head>
 
 <body>
@@ -54,9 +54,9 @@
 
           <div class="d-flex">
             <div class="dropdown">
-              <button class="btn btn-secondary fs-6 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              <button class="btn btn-secondary fs-6 dropdown-toggle fullName-btn" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-               <span id="username"></span>
+               <!-- <span id="username"></span> -->
               </button>
               <ul class="dropdown-menu dropdown-menu-dark">
                 <li><a class="dropdown-item" href="./staffInformation.html">Thông tin tài
@@ -117,9 +117,9 @@
           <div class="card-header bg-success text-white fw-bold">
             Lịch ca làm việc<span style="padding: 0 20px;" id="result"></span>
           </div>
-          <div class="card-body overflow-x-scroll" id="shiftTable">
+          <div class="card-body overflow-x-scroll w-100" id="shiftTable" >
 
-            <table class="table table-bordered table-xl align-middle">
+            <table class="table table-bordered table-xl align-middle overflow-x-scroll w-100">
               <thead>
                 <tr class="text-center shiftType">
                   <!-- <th scope="col">

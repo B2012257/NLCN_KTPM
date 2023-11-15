@@ -222,6 +222,7 @@ public class ManagerServiceImpl implements ManagerService {
             staff.setUrlAvatar(newStaff.getUrlAvatar());
             staff.setGender(newStaff.getGender());
             staff.setSalary(newStaff.getSalary());
+            staff.setBeginWork(newStaff.getBeginWork());
             staffRepository.saveAndFlush(staff);
             return new Response(HttpStatus.OK, "Thay đổi thông tin thành công");
         }

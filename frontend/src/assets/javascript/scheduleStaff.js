@@ -51,54 +51,54 @@ const apiShift = `http://localhost:8081/api/v1/staff/getAllSchedule`;
 let data = [];
 function start() {
   setTimeout(() => {
-    getStaff(function (fetchedData) {
-      data = fetchedData;
-      renderStaff(data);
-    });
+    // getStaff(function (fetchedData) {
+    //   data = fetchedData;
+    //   renderStaff(data);
+    // });
     getShiftOfWeek(firstDayOfWeek, lastDayOfWeek);
   }, 500);
 }
 start();
-async function getStaff(callback) {
-  try {
-    const response = await fetch(api, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const responseData = await response.json();
+// async function getStaff(callback) {
+//   try {
+//     const response = await fetch(api, {
+//       method: "GET",
+//       mode: "cors",
+//       credentials: "include",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const responseData = await response.json();
 
-    // Kiểm tra xem responseData có phải là một mảng hay không
-    if (Array.isArray(responseData.data)) {
-      const data = responseData.data;
-      console.log("Data from API:", data);
-      callback(data);
-    } else if (typeof responseData.data === "object") {
-      // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
-      const data = [responseData.data];
-      console.log("Data from API:", data);
-      callback(data);
-    } else {
-      console.error("Invalid data format from API");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
+//     // Kiểm tra xem responseData có phải là một mảng hay không
+//     if (Array.isArray(responseData.data)) {
+//       const data = responseData.data;
+//       console.log("Data from API:", data);
+//       callback(data);
+//     } else if (typeof responseData.data === "object") {
+//       // Nếu responseData.data là một đối tượng, chuyển thành mảng gồm một phần tử
+//       const data = [responseData.data];
+//       console.log("Data from API:", data);
+//       callback(data);
+//     } else {
+//       console.error("Invalid data format from API");
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
-function renderStaff(users) {
-  const info = document.querySelector("#username");
-  var htmls = users.map(function (user) {
-    const returnHTML = `
-    ${user.fullName}
-          `;
-    return returnHTML;
-  });
-  info.innerHTML = htmls.join("");
-}
+// function renderStaff(users) {
+//   const info = document.querySelector("#username");
+//   var htmls = users.map(function (user) {
+//     const returnHTML = `
+//     ${user.fullName}
+//           `;
+//     return returnHTML;
+//   });
+//   info.innerHTML = htmls.join("");
+// }
 
 const getAllShiftTypeApi = "http://localhost:8081/api/v1/staff/allShiftType";
 
@@ -143,6 +143,7 @@ async function getShiftOfWeek(startDate, endDate) {
   document.querySelector(".shiftType").innerHTML = headerRowHTML;
   const keys = Object.keys(dataShift);
   numberOfKeys = keys.length;
+  console.log("keys", keys);
 
   let bodyRowsHTML = "";
   const daysOfWeek = [
@@ -171,47 +172,51 @@ async function getShiftOfWeek(startDate, endDate) {
   {
     schedule
       ? schedule.forEach((item) => {
-        let date = item.shift.date.date;
-        let formattedShiftDate = date.replace(/-/g, "/");
+          let date = item.shift.date.date;
+          let formattedShiftDate = date.replace(/-/g, "/");
 
-        let shiftType = item.shift.shiftType.id;
-        let fullName = item.staff.fullName;
-        let userId = item.staff.uid;
+          let shiftType = item.shift.shiftType.id;
+          let fullName = item.staff.fullName;
+          let userId = item.staff.uid;
+          if (shiftType > 3) {
+            //Nếu mà thêm ca thứ tư ca đêm mà id tạo ra id ca nó ngẫu nhiên id nó lớn hơn 3 và khác 4 thì set về 4
+            shiftType = 4;
+          }
+          if (!shiftData3[date]) {
+            shiftData3[date] = {};
+          }
 
-        if (!shiftData3[date]) {
-          shiftData3[date] = {};
-        }
+          if (!shiftData3[date][shiftType]) {
+            shiftData3[date][shiftType] = [];
+          }
 
-        if (!shiftData3[date][shiftType]) {
-          shiftData3[date][shiftType] = [];
-        }
-
-        shiftData3[date][shiftType].push({ fullName, userId });
-        console.log("numberOfKeys", numberOfKeys);
-        console.log("shiftData3", shiftData3);
-        for (let Type = 1; Type <= numberOfKeys; Type++) {
-          if (shiftData3[date] && shiftData3[date][Type]) {
-            for (let i = 0; i <= 6; i++) {
-              if (formattedShiftDate === getNextDay(startDate, i)) {
-                let m = i + 1;
-                const names = shiftData3[date][Type];
-                const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
-                document.querySelector(cellSelector).innerHTML = names
-                  .map(
-                    (name) =>
-                      `<span
-                  ${name.userId == uid
-                        ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
-                        : ""
-                      }
+          shiftData3[date][shiftType].push({ fullName, userId });
+          console.log("numberOfKeys", numberOfKeys);
+          console.log("shiftData3", shiftData3);
+          for (let Type = 1; Type <= numberOfKeys; Type++) {
+            if (shiftData3[date] && shiftData3[date][Type]) {
+              for (let i = 0; i <= 6; i++) {
+                if (formattedShiftDate === getNextDay(startDate, i)) {
+                  let m = i + 1;
+                  const names = shiftData3[date][Type];
+                  const cellSelector = `.cell_${Type + (m - 1) * numberOfKeys}`;
+                  document.querySelector(cellSelector).innerHTML = names
+                    .map(
+                      (name) =>
+                        `<span
+                  ${
+                    name.userId == uid
+                      ? ' class="badge bg-primary text-white d-flex align-items-center justify-content-center h-100" style="padding: 10px;font-size: 16px;margin-bottom: -20px"'
+                      : ""
+                  }
                   >${name.fullName}</span> <br>`
-                  )
-                  .join("");
+                    )
+                    .join("");
+                }
               }
             }
           }
-        }
-      })
+        })
       : "";
   }
 }

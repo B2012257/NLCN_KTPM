@@ -130,9 +130,11 @@
 
                 <form class="row col">
                     <div class="col-12 col-xl-6 mb-2">
-
-                        <input disabled type="text" class="form-control editInfo" id="FullName" placeholder="Họ và tên"
-                            aria-label="FullName">
+                        <div class="form-floating">
+                            <input disabled type="text" class="form-control editInfo" id="FullName" placeholder="Họ và tên"
+                                aria-label="FullName">
+                            <label for="floatingSelect">Họ và tên</label>
+                        </div>
 
                     </div>
                     <div class="col  mb-1">
@@ -145,20 +147,32 @@
                         </div>
                     </div>
                     <div class="col mb-1">
-                        <input disabled type="text" class="form-control" id="type" placeholder="Chức vụ"
-                            aria-label="position">
+                        <div class="form-floating">
+                            <input disabled type="text" class="form-control" id="type" placeholder="Chức vụ"
+                                aria-label="position">
+                            <label for="floatingSelect">Chức vụ</label>
+                        </div>
                     </div>
                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                        <input disabled type="text" class="form-control" id="beginWork" placeholder="Ngày vào làm"
-                            aria-label="">
+                        <div class="form-floating">
+                            <input disabled type="text" class="form-control" id="beginWork" placeholder="Ngày vào làm"
+                                aria-label="">
+                            <label for="floatingSelect">Ngày vào làm</label>
+                        </div>
                     </div>
                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                        <input disabled type="text" class="form-control editInfo" id="phone" placeholder="Số điện thoại"
-                            aria-label="phone">
+                        <div class="form-floating">
+                            <input disabled type="text" class="form-control editInfo" id="phone" placeholder="Số điện thoại"
+                                aria-label="phone">
+                            <label for="floatingSelect">Số điện thoại</label>
+                        </div>
                     </div>
                     <div class="col-12 col-xl-6 mt-2 mb-1">
-                        <input disabled type="text" class="form-control editInfo" id="location" placeholder="Địa chỉ"
-                            aria-label="place">
+                        <div class="form-floating">
+                            <input disabled type="text" class="form-control editInfo" id="location" placeholder="Địa chỉ"
+                                aria-label="place">
+                            <label for="floatingSelect">Địa chỉ</label>
+                        </div>
                     </div>
                     <div class="col-xl-6 col-12 mt-2 mb-1">
                         <div class="input-group flex-nowrap">
@@ -177,9 +191,13 @@
                                     <option value="VIB">VIB</option>
                                 </select>
                             </span>
-                            <input disabled type="text" class="form-control editInfo" id="bankAccount"
-                                placeholder="Số tài khoản" aria-label="search_employer"
-                                aria-describedby="addon-wrapping">
+                            <div class="form-floating">
+
+                                <input disabled type="text" class="form-control editInfo" id="bankAccount"
+                                    placeholder="Số tài khoản" aria-label="search_employer"
+                                    aria-describedby="addon-wrapping">
+                                <label for="floatingSelect">Số tài khoản</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col mt-2 mb-1">
