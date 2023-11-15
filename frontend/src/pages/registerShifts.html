@@ -112,7 +112,7 @@
 
 
 
-              <div class="container">
+            <div class="container">
                 <div class="row">
                     <!-- Note Section -->
                     <div class="col-md-8">
@@ -120,269 +120,293 @@
                             <div class="" id="noteRegister">
                                 <strong>Chú ý:</strong>
                                 <br>
-                                - Các ca làm việc có màu <span class="badge rounded-pill text-bg-secondary">Ca làm việc</span> là những ca làm việc chưa được sắp lịch (nên có thể chỉnh sửa).
+                                - Các ca làm việc có màu <span class="badge rounded-pill text-bg-secondary">Ca làm
+                                    việc</span> là những ca làm việc chưa được sắp lịch (nên có thể chỉnh sửa).
                                 <br>
-                                - Các ca làm việc có màu <span class="badge rounded-pill text-bg-success">Ca làm việc</span> là những ca làm việc đã được sắp lịch (nên không thể chỉnh sửa).
+                                - Các ca làm việc có màu <span class="badge rounded-pill text-bg-success">Ca làm
+                                    việc</span> là những ca làm việc đã được sắp lịch (nên không thể chỉnh sửa).
                             </div>
                             <div class="" style="display: none;" id="noteRegisterLastWeek">
                                 <strong>Chú ý:</strong>
                                 <br>
-                                - Các ca làm việc có màu <span style="background-color: #FFFF99;">Ca làm việc</span> là những ca làm việc chưa đăng ký.
+                                - Các ca làm việc có màu <span style="background-color: #FFFF99;">Ca làm việc</span> là
+                                những ca làm việc chưa đăng ký.
                                 <br>
-                                - Các ca làm việc có màu <span style="background-color: #ccfbbc;">Ca làm việc</span> là những ca làm việc đã đăng ký.
+                                - Các ca làm việc có màu <span style="background-color: #ccfbbc;">Ca làm việc</span> là
+                                những ca làm việc đã đăng ký.
                             </div>
                         </div>
                     </div>
-            
+
                     <!-- Button Group -->
                     <div class="col-md-4" style="margin-top: 35px;">
-                        <div class="btn-group row editWeek" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary" id="prevWeekButton">Lùi 1 tuần</button>
-                            <button type="button" class="btn btn-outline-primary" id="currentWeekButton">Tuần này</button>
-                            <button type="button" class="btn btn-outline-primary" id="nextWeekButton">Tiến 1 tuần</button>
+                        <div class="btn-group editWeek" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-primary" id="prevWeekButton">Lùi 1
+                                tuần</button>
+                            <button type="button" class="btn btn-outline-primary" id="currentWeekButton">Tuần
+                                này</button>
+                            <button type="button" class="btn btn-outline-primary" id="nextWeekButton">Tiến 1
+                                tuần</button>
                         </div>
-                        
-                        <div class="row">
-                            <button type="button" class="btn btn-primary  registerLastWeek"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeek()">
-                                Đăng ký theo tuần trước
-                                </button>
-                                <div class="buttonEditRegisterLastWeek" style="display: none; margin-top: 40px;">
-                                <button type="button" class="btn btn-primary registerLastWeekAdd"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekAdd()">
-                                Đăng ký
-                                </button>
-                                <button type="button" class="btn btn-primary registerLastWeekCanCel"
-                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;" onclick="registerLastWeekCanCel()">
-                                Hủy
-                                </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-success text-white fw-bold" id="shiftDetailTypeInTimeKeeping"
-                            style="text-align: center;">
-                            Đăng ký lịch rảnh
-                        </div>
-                        <table class="table table-striped table-bordered table-hover table-sm align-middle ps-2  ">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: center;">Ngày
-
-                                    </th>
-
-                                    <th scope="col" style="text-align: center;"  >Lịch rảnh
-
-                                    </th>
-                                   
-
-                                    <th scope="col" style="text-align: center;">Thao tác
-
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody class="text-start">
-                                <tr id="monday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 2</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="monday-data" id="monday-data"></div>
-                                       
-                                    </td>
-                                   
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"  title="Thêm lịch rảnh" 
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('monday')"></button>
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;"
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('monday')"></button>
-                                            
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr id="tuesday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 3</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="tuesday-data" id="tuesday-data"></div>
-                                        
-
-                                    </td>
-                                   
-
-
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" onclick="setCurrentDay('tuesday')"></button>
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;"  
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('tuesday')"></button>
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr id="wednesday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 4</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="wednesday-data" id="wednesday-data"></div>
-                                        
-                                    </td>
-                                    
-
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('wednesday')"></button>
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;"  
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('wednesday')"></button>
-
-                                    </td>
-                                </tr>
-
-
-
-
-
-                                <tr id="thursday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 5</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="thursday-data" id="thursday-data"></div>
-                                        
-
-
-                                    </td>
-                                    
-
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('thursday')"></button>
-
-
-                                        <button class="fa-solid fa-trash-can" style="border: none; "  
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('thursday')"></button>
-                                    </td>
-                                </tr>
-
-
-
-                                <tr id="friday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 6</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td style="text-align: center;">
-                                    <td class="text-center">
-                                        <div class="friday-data" id="friday-data"></div>
-                                        
-
-                                    </td>
-                                    
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('friday')"></button>
-
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;" 
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('friday')"></button>
-
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr id="saturday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Thứ 7</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="saturday-data" id="saturday-data"></div>
-                                        
-
-
-                                    </td>
-                                    
-
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" onclick="setCurrentDay('saturday')"></button>
-
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;" 
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('saturday')"></button>
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr id="sunday">
-                                    <td style="text-align: center;">
-                                        <div class="sttNameWeek" style="font-weight: bold;">Chủ nhật</div>
-                                        <div class="sttOfWeek"><small></small>
-                                        </div>
-                                    <td class="text-center">
-                                        <div class="sunday-data" id="sunday-data"></div>
-                                       
-
-                                    </td>
-                                    
-
-                                    <td class="text-center">
-                                        <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" onclick="setCurrentDay('sunday')"></button>
-
-
-                                        <button class="fa-solid fa-trash-can" style="border: none;" 
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="getFreeTimeDelete('sunday')"></button>
-
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
 
                     </div>
-                   
 
                 </div>
+                <div class="" style="width: 200px;">
+                    <button type="button" class="btn btn-primary  registerLastWeek"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;"
+                        onclick="registerLastWeek()">
+                        Đăng ký theo tuần trước
+                    </button>
+                    <div class="buttonEditRegisterLastWeek" style="display: none; margin-top: 40px;">
+                        <button type="button" class="btn btn-primary registerLastWeekAdd"
+                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;"
+                            onclick="registerLastWeekAdd()">
+                            Đăng ký
+                        </button>
+                        <button type="button" class="btn btn-primary registerLastWeekCanCel"
+                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; margin-top: 10px;"
+                            onclick="registerLastWeekCanCel()">
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-success text-white fw-bold" id="shiftDetailTypeInTimeKeeping"
+                                style="text-align: center;">
+                                Đăng ký lịch rảnh
+                            </div>
+                            <table class="table table-striped table-bordered table-hover table-sm align-middle ps-2  ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="text-align: center;">Ngày
+
+                                        </th>
+
+                                        <th scope="col" style="text-align: center;">Lịch rảnh
+
+                                        </th>
+
+
+                                        <th scope="col" style="text-align: center;">Thao tác
+
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="text-start">
+                                    <tr id="monday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 2</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="monday-data" id="monday-data"></div>
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                title="Thêm lịch rảnh" data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('monday')"></button>
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('monday')"></button>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    <tr id="tuesday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 3</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="tuesday-data" id="tuesday-data"></div>
+
+
+                                        </td>
+
+
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('tuesday')"></button>
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('tuesday')"></button>
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    <tr id="wednesday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 4</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="wednesday-data" id="wednesday-data"></div>
+
+                                        </td>
+
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('wednesday')"></button>
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('wednesday')"></button>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                                    <tr id="thursday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 5</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="thursday-data" id="thursday-data"></div>
+
+
+
+                                        </td>
+
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('thursday')"></button>
+
+
+                                            <button class="fa-solid fa-trash-can" style="border: none; "
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('thursday')"></button>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr id="friday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 6</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td style="text-align: center;">
+                                        <td class="text-center">
+                                            <div class="friday-data" id="friday-data"></div>
+
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('friday')"></button>
+
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('friday')"></button>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    <tr id="saturday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Thứ 7</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="saturday-data" id="saturday-data"></div>
+
+
+
+                                        </td>
+
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('saturday')"></button>
+
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('saturday')"></button>
+                                        </td>
+                                    </tr>
+
+
+
+
+                                    <tr id="sunday">
+                                        <td style="text-align: center;">
+                                            <div class="sttNameWeek" style="font-weight: bold;">Chủ nhật</div>
+                                            <div class="sttOfWeek"><small></small>
+                                            </div>
+                                        <td class="text-center">
+                                            <div class="sunday-data" id="sunday-data"></div>
+
+
+                                        </td>
+
+
+                                        <td class="text-center">
+                                            <button class="fa-solid fa-pen" style="border: none;" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onclick="setCurrentDay('sunday')"></button>
+
+
+                                            <button class="fa-solid fa-trash-can" style="border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                onclick="getFreeTimeDelete('sunday')"></button>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
             </div>
 
-            
-            </div>
 
 
-          
             <div style="margin-bottom: 60px;"></div>
-           
-    
+
+
 
 
             <!-- Modal -->
@@ -398,11 +422,11 @@
                             <div id="shiftType"></div>
                         </div>
 
-                        
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="button" class="btn btn-primary"  id="addButton"
-                                data-bs-dismiss="modal"  onclick="updateCheckboxInfo()">Thêm</button>
+                            <button type="button" class="btn btn-primary" id="addButton" data-bs-dismiss="modal"
+                                onclick="updateCheckboxInfo()">Thêm</button>
                         </div>
                     </div>
                 </div>
@@ -410,23 +434,25 @@
 
 
 
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Xóa lịch rảnh</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Xóa lịch rảnh</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="deleteFreeTime"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                onclick="getFreeTimeOfWeek()">Đóng</button>
+
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div id="deleteFreeTime"></div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getFreeTimeOfWeek()"  >Đóng</button>
-                      
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
 
 
