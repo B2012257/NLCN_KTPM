@@ -35,7 +35,7 @@ public interface StaffService {
     public ResponseWithData<List<ShiftDetail>> getAllMyScheduleBetweenStartAndEnd(Date start, Date end);
 
     //Đăng ký lịch làm, đăng ký khoảng thời gian rảnh có thể đi làm
-    public Response registerSchedule(FreeTime freeTime);
+    public Response registerSchedule(List<FreeTime> freeTime);
 
     //Chỉnh sửa lich làm, nhận vào danh sách
     public Response editRegisterSchedule(List<FreeTime> freeTimes);

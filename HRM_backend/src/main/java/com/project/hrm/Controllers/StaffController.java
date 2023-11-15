@@ -64,7 +64,7 @@ public class StaffController {
 
     @LoginRequired
     @PostMapping(URLConfigs.REGISTER_SCHEDULE)
-    public Response registerSchedule(@RequestBody FreeTime newFreeTime){
+    public Response registerSchedule(@RequestBody List<FreeTime> newFreeTime){
         return staffService.registerSchedule(newFreeTime);
     }
 
@@ -120,7 +120,7 @@ public class StaffController {
 
 
 
-    //@LoginRequired
+    @LoginRequired
     @GetMapping(URLConfigs.GET_ALL_NOT_TIMEKEEPING_START_AND_END)
     public Response getAllNotTimeKeepingStartAndEnd(@RequestParam("start") Date start, @RequestParam("end") Date end, @RequestParam("Uid") String Uid){
         return staffService.getAllNotTimeKeepingStartAndEnd(start,end,Uid);
