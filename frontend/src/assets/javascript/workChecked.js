@@ -123,6 +123,7 @@ function selectAllRows() {
     checkboxes.forEach(checkbox => {
         
         checkbox.checked = selectAllCheckbox.checked;
+        
        
     });
 }
@@ -130,30 +131,42 @@ function selectAllRows() {
 
 
 
+    // Chọn hoặc bỏ chọn checkbox tổng dựa trên trạng thái của các checkbox con
+function updateSelectAllCheckbox() {
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    const checkboxes = document.querySelectorAll('.rowCheckbox');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    selectAllCheckbox.checked = allChecked;
 
+ // Remove background color when unchecking "Select All"
+ if (!selectAllCheckbox.checked) {
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        row.classList.remove('table-success');
+    });
+}
+}
 
 
 function selectCheckbox() {
     const selectAllCheckbox = document.getElementById('selectAllCheckbox');
     const checkboxes = document.querySelectorAll('.rowCheckbox');
 
-
-    // Chọn hoặc bỏ chọn checkbox tổng dựa trên trạng thái của các checkbox con
-    function updateSelectAllCheckbox() {
-        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-        selectAllCheckbox.checked = allChecked;
-    }
+    
 
     // Gắn sự kiện cho checkbox tổng
     selectAllCheckbox.addEventListener('change', function () {
         const isChecked = selectAllCheckbox.checked;
         checkboxes.forEach(checkbox => checkbox.checked = isChecked);
+        updateSelectAllCheckbox();
+        colorCheckbox();
     });
 
     // Gắn sự kiện cho các checkbox con
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             updateSelectAllCheckbox();
+            
         });
     });
 
@@ -163,6 +176,8 @@ function selectCheckbox() {
 document.addEventListener('DOMContentLoaded', function () {
     colorCheckbox();
 });
+
+
 
 function colorCheckbox() {
     const checkboxes = document.querySelectorAll('.rowCheckbox');
@@ -189,6 +204,7 @@ function colorCheckbox() {
 
 document.addEventListener('change', function(event) {
     const target = event.target;
+    colorCheckbox();
     if (target.matches('input[type="checkbox"]')) {
         updateButtonStatus();
     }

@@ -785,6 +785,7 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
                 if (dataLastWeek.includes(item.id)) {
                     newCheckbox.checked = true;
                     label.style.backgroundColor = "#FFFF99";
+                    updateButtonStatus();
                 }
 
                 if (dataNowWeek.includes(item.id)) {
@@ -825,7 +826,7 @@ function getAllShiftTypeLastWeek(day,dataLastWeek,dataNowWeek) {
             dayCheckboxInfo.innerHTML = '';
         }
 
-        updateButtonStatus();
+        
                
     });
 }
