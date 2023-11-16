@@ -21,8 +21,8 @@ public class ManagerController {
     @Autowired
     ManagerServiceImpl managerService;
 
-    @LoginRequired
-    @RoleRequired(value = {"Quản lý"})
+//    @LoginRequired
+//    @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_TYPE)
     public Response addType(@RequestBody Type type) {
         return managerService.addType(type);
@@ -42,8 +42,8 @@ public class ManagerController {
         return managerService.editType(type);
     }
 
-    @LoginRequired
-    @RoleRequired(value = {"Quản lý"})
+//    @LoginRequired
+//    @RoleRequired(value = {"Quản lý"})
     @PostMapping(URLConfigs.ADD_SALARY)
     public Response addSalary(@RequestBody Salary salary) {
         return managerService.addSalary(salary);

@@ -265,7 +265,9 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseWithData<List<ShiftDetail>> getAllScheduleOfStaffNotInTimeKeeping(Date date, String Uid) {
         com.project.hrm.Models.Date dateModel = new com.project.hrm.Models.Date(date);
+
         List<Shift> shiftList = shiftRepository.findByDate(dateModel);
+
         List<ShiftDetail> shiftDetailList = shiftDetailRepository.findByShiftIn(shiftList);
 
         List<ShiftDetail> shiftDetailForStaff = new ArrayList<>();
