@@ -177,9 +177,19 @@
                     <input type="text" class="form-control w-100 h-100 location-add-employee-input" required
                         placeholder="Địa chỉ">
                 </div>
-                <div class="col-5 mt-3 mb-1">
-                    <input type="text" class="form-control phone-add-employee-input" required
-                        placeholder="Số điện thoại" aria-label="phone">
+                <div class="col-5 mt-3 mb-1 position-relative">
+                    <input type="text" class="form-control phone-add-employee-input " required
+                        placeholder="Số điện thoại" aria-label="phone" oninput="validatePhoneNumber(this)">
+                    <span class="position-absolute phone-error d-none" style="
+                        right: 15px;
+                        left: 15px;
+                        top: 47px;
+                        z-index: 2;
+                        background-color: #ffc0c0;
+                        font-size: 16px;
+                        color: #ff0a0a;
+                        
+                        border: 1px solid red;">Vui lòng chỉ nhập số & tối đa 10 ký tự</span>
                 </div>
                 <!-- <div class="col-12 col-xl-6 mt-2 mb-1">
                     <input type="text" class="form-control" placeholder="Tên tài khoản" aria-label="place">
@@ -205,8 +215,18 @@
 
                             </select>
                         </span>
-                        <input type="text" class="form-control bank-number-employee-input" required
-                            placeholder="Số tài khoản" aria-label="search_employer" aria-describedby="addon-wrapping">
+                        <input type="text" class="form-control bank-number-employee-input position-relative" required
+                            placeholder="Số tài khoản" aria-label="search_employer" aria-describedby="addon-wrapping"
+                            oninput="validateNumber(this)" style="outline: none;">
+                        <span class="position-absolute d-none bank-error" style="
+                        right: 0;
+                        top: 56px;
+                        z-index: 2;
+                        background-color: #ffc0c0;
+                        font-size: 16px;
+                        color: #ff0a0a;
+                        left: calc(193px);
+                        border: 1px solid red;">Vui lòng chỉ nhập số</span>
                     </div>
                 </div>
                 <!-- <div class="col-4  mb-1">
@@ -260,28 +280,6 @@
                         <span class="ms-1">7 ngày gần đây</span>
                     </div>
                     <div class="card-body card-body-recent" style="max-height: 400px;overflow-y: scroll;">
-                        <!-- <div class="list-group">
-                            <button class="list-group-item list-group-item-action mt-1" onclick=""
-                                data-bs-toggle="modal" data-bs-target="#modal">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
-                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
-                                    </p>
-                                    <small class="text-body-secondary">1 ngày trước</small>
-                                </div>
-                            </button>
-                        </div>
-                        <div class="list-group">
-                            <button class="list-group-item list-group-item-action mt-1" onclick=""
-                                data-bs-toggle="modal" data-bs-target="#modal">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <p class="mb-1 fw-bold fs-6">Phạm Quang Thái
-                                        <span class="badge bg-primary ms-1">Phụ Bếp</span>
-                                    </p>
-                                    <small class="text-body-secondary">1 ngày trước</small>
-                                </div>
-                            </button>
-                        </div> -->
                         <div class="recent-spinner text-center d-none">
                             <td colspan="6">
                                 <div class="spinner-border text-primary " role="status">
@@ -361,9 +359,19 @@
                                     </div>
 
                                     <label for="" class="mt-1">Số di động:</label>
-                                    <div class="col-5 col-sm-12 mb-1">
-                                        <input type="text" class="form-control phone-edit-employee-input" required
-                                            placeholder="Số điện thoại" aria-label="phone">
+                                    <div class="col-5 col-sm-12 mb-1 position-relative">
+                                        <input type="text" class="form-control phone-edit-employee-input " required
+                                            placeholder="Số điện thoại" aria-label="phone"
+                                            oninput="validatePhoneNumber(this)">
+                                        <span class="position-absolute phone-error d-none" style="
+                                            right: 15px;
+                                            left: 15px;
+                                            top: 47px;
+                                            z-index: 2;
+                                            background-color: #ffc0c0;
+                                            font-size: 16px;
+                                            color: #ff0a0a;
+                                            border: 1px solid red;">Vui lòng chỉ nhập số & tối đa 10 ký tự</span>
                                     </div>
                                     <!-- <div class="col-12 col-xl-6 mt-2 mb-1">
                                         <input type="text" class="form-control" placeholder="Tên tài khoản" aria-label="place">
@@ -391,9 +399,19 @@
 
                                                 </select>
                                             </span>
-                                            <input type="text" class="form-control bank-number-employee-input-edit"
+                                            <input type="text"
+                                                class="form-control bank-number-employee-input-edit position-relative"
                                                 required placeholder="Số tài khoản" aria-label=""
-                                                aria-describedby="addon-wrapping">
+                                                aria-describedby="addon-wrapping" oninput="validateNumber(this)">
+                                            <span class="position-absolute d-none bank-error" style="
+                        right: 0;
+                        top: 56px;
+                        z-index: 2;
+                        background-color: #ffc0c0;
+                        font-size: 16px;
+                        color: #ff0a0a;
+                        left: calc(193px);
+                        border: 1px solid red;">Vui lòng chỉ nhập số</span>
                                         </div>
                                     </div>
 

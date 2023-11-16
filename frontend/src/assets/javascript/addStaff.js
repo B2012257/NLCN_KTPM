@@ -608,3 +608,23 @@ async function deleteApi(apiUrl) {
     const data = await response.json();
     return data;
 }
+
+function validateNumber(thisElement) {
+    const reg = new RegExp('^[0-9]+$');
+    if (reg.test(thisElement.value)) {
+        thisElement.nextElementSibling.classList.add("d-none")
+    } else {
+        thisElement.nextElementSibling.classList.remove("d-none")
+
+    }
+}
+function validatePhoneNumber(thisElement) {
+    const reg = new RegExp('^[0-9]+$');
+    if (reg.test(thisElement.value) && thisElement.value.length <= 10) {
+        console.log([thisElement]);
+        thisElement.nextElementSibling.classList.add("d-none")
+    } else {
+        thisElement.nextElementSibling.classList.remove("d-none")
+
+    }
+}
