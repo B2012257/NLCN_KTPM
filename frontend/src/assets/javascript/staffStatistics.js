@@ -39,10 +39,10 @@ getAllScheduleTimekeeping();
 getAllScheduleNotTimekeeping();
 getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
 
-    
-  
-  
-getAllScheduleNotTimekeepingStartAndEnd(currentYear,currentMonth);
+
+
+
+getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth);
 
 
 
@@ -98,7 +98,7 @@ function getAllScheduleTimekeeping() {
                     const startInput = formatTime(item.start);
                     const endInput = formatTime(item.end);
                     const overTimeInput = item.overTime;
-                    const totalTime = parseFloat(calculateOverTime(item.end, item.start))+overTimeInput;
+                    const totalTime = parseFloat(calculateOverTime(item.end, item.start)) + overTimeInput;
                     const allowance = item.shiftDetail.staff.salary.allowance;
                     console.log(allowance);
                     const basic = item.shiftDetail.staff.salary.basic;
@@ -117,7 +117,9 @@ function getAllScheduleTimekeeping() {
                 <td style="text-align: center;">${date}</td>
                 
                 <td style="text-align: center;">
-                    ${item.shiftDetail.shift.shiftType.name} (${start} - ${end} )
+                    ${item.shiftDetail.shift.shiftType.name} 
+                    <br />
+                    (${start} - ${end})
                 </td>
                 <td  style="text-align: center;">
                     ${item.shiftDetail.overTime}
@@ -147,9 +149,6 @@ function getAllScheduleTimekeeping() {
     
     `
                     tableBody.appendChild(row);
-                    
-
-
                 })
             }
             else {
@@ -216,7 +215,9 @@ function getAllScheduleNotTimekeeping() {
                 <td style="text-align: center;">${date}</td>
                 
                 <td style="text-align: center;">
-                    ${item.shift.shiftType.name} (${start} - ${end} )
+                    ${item.shift.shiftType.name}
+                    <br />
+                     (${start} - ${end})
                 </td>
                 <td  style="text-align: center;">
                     ${item.overTime}
@@ -246,7 +247,7 @@ function getAllScheduleNotTimekeeping() {
     
     `
                     tableBody.appendChild(row);
-                   
+
 
 
                 })
@@ -339,7 +340,7 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
                     const startInput = formatTime(item.start);
                     const endInput = formatTime(item.end);
                     const overTimeInput = item.overTime;
-                    const totalTime = parseFloat(calculateOverTime(item.end, item.start))+overTimeInput;
+                    const totalTime = parseFloat(calculateOverTime(item.end, item.start)) + overTimeInput;
                     const allowance = item.shiftDetail.staff.salary.allowance;
                     console.log(allowance);
                     const basic = item.shiftDetail.staff.salary.basic;
@@ -358,7 +359,9 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
                 <td style="text-align: center;">${date}</td>
                 
                 <td style="text-align: center;">
-                    <strong>${item.shiftDetail.shift.shiftType.name}</strong> (${start} - ${end})
+                    <strong>${item.shiftDetail.shift.shiftType.name}</strong>
+                    <br />
+                    (${start} - ${end})
                 </td>
                 <td  style="text-align: center;">
                     ${item.shiftDetail.overTime}
@@ -388,7 +391,7 @@ function getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth) {
     
     `
                     tableBody.appendChild(row);
-                    
+
 
 
                 })
@@ -435,12 +438,12 @@ function changeMonth(change) {
         currentYear++;
     }
 
-    
+
 
     displaySelectedMonth();
-   
+
     getAllScheduleTimekeepingStartAndEnd(currentYear, currentMonth);
-    getAllScheduleNotTimekeepingStartAndEnd(currentYear,currentMonth);
+    getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth);
 }
 
 // Initial display
@@ -478,12 +481,12 @@ function getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth) {
                     const start = formatTime(item.shift.shiftType.start);
                     console.log(item.shift.shiftType.start)
                     const end = formatTime(item.shift.shiftType.end);
-                   
-                    
-                    
-                    
 
-                    
+
+
+
+
+
                     let note = item.note;
                     if (note == null) {
                         note = ' ';
@@ -496,7 +499,9 @@ function getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth) {
                 <td style="text-align: center;">${date}</td>
                 
                 <td style="text-align: center;">
-                    <strong>${item.shift.shiftType.name}</strong> (${start} - ${end} )
+                    <strong>${item.shift.shiftType.name}</strong> 
+                    <br />
+                    (${start} - ${end})
                 </td>
                 <td  style="text-align: center;">
                     ${item.overTime}
@@ -526,7 +531,7 @@ function getAllScheduleNotTimekeepingStartAndEnd(currentYear, currentMonth) {
     
     `
                     tableBody.appendChild(row);
-                    
+
 
 
                 })
